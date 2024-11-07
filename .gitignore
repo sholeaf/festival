@@ -10,12 +10,12 @@ back_festival/*.ear          # EAR 파일
 back_festival/*.class        # 컴파일된 클래스 파일
 
 # Spring IDE 관련 설정 파일들
-back_festival/.idea/         # IntelliJ IDEA 프로젝트 설정
-back_festival/.vscode/       # Visual Studio Code 설정
+back_festival/.idea        # IntelliJ IDEA 프로젝트 설정
+back_festival/.vscode       # Visual Studio Code 설정
 back_festival/*.iml          # IntelliJ IDEA 모듈 파일
 back_festival/*.classpath    # Eclipse 클래스패스 파일
 back_festival/*.project      # Eclipse 프로젝트 파일
-back_festival/.settings/     # Eclipse 설정 폴더
+back_festival/.settings     # Eclipse 설정 폴더
 
 # Spring 환경 설정 파일들
 back_festival/.env           # 환경설정 파일
@@ -38,12 +38,12 @@ back_festival/*.out          # 실행파일
 # ================================
 
 # React 빌드 결과물
-front_festival/node_modules/  # Node.js 의존성 폴더
+front_festival/node_modules  # Node.js 의존성 폴더
 front_festival/.pnp           # Yarn PnP 파일
 front_festival/.pnp.js        # Yarn PnP 설정 파일
 
 # React 테스트 커버리지
-front_festival/coverage/      # Jest 등 테스트 커버리지
+front_festival/coverage      # Jest 등 테스트 커버리지
 
 # React 프로덕션 빌드
 front_festival/build/         # 빌드 폴더
