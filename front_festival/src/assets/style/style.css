@@ -1,0 +1,32 @@
+.navigate a {
+    margin: 20px;
+}
+
+
+/* 달력 디자인 */
+.react-calendar__navigation {
+    width: inherit;
+    height: 3.5rem;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    
+}
+
+.react-calendar__navigation__label {
+    width: 5.5rem;
+    height: 1.375rem;
+    font-size: 16px;
+    border: none;
+    font-weight: 700;
+    background-color: #fff;
+}
+
+.react-calendar__tile--active {
+    background: green;
+    color: white;
+}
+
+.react-calendar__tile--now {
+    background: green;
+}
