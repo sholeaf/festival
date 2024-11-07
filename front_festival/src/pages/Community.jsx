@@ -1,7 +1,7 @@
 const Community = () =>{
     return (
         <>
-            축제 후기
+            축제 후기 !!
         </>
     );
 }
