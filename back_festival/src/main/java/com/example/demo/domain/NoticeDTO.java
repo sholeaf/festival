@@ -9,4 +9,8 @@ public class NoticeDTO {
 	private String noticecontent;
 	private String userid;
 	private String noticeregdate;
+	private boolean isNew;
+	private long nreplyCnt;
+	private String updatenoticedate;
+	private int noticereadcount;
 }
