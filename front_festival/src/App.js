@@ -7,7 +7,6 @@ import Community from './pages/Community';
 import Notice from './pages/notice/Notice';
 import MyPage from './pages/user/MyPage';
 import Login from './pages/user/Login';
-import Header from './layout/Header';
 import Join from './pages/user/Join';
 
 function App() {

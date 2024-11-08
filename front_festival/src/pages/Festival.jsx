@@ -3,6 +3,7 @@ import axios from "axios";
 import Calendar from 'react-calendar';
 import TodayDate from "../hooks/TodayDate";
 import noimage from "../assets/images/no-image.jpg";
+import Header from "../layout/Header";
 
 // API 관련
 const API_URL = 'https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&';
@@ -44,6 +45,7 @@ const FestivalCalendar = ({ setParam, param }) => {
 
     return (
         <div>
+            <Header></Header>
             <Calendar onChange={handleDateChange} />
             {/* 축제 목록 */}
             {festivals.length > 0 && (
