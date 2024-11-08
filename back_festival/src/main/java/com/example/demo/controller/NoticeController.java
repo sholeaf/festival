@@ -57,7 +57,7 @@ public class NoticeController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	@GetMapping("{noticenum")
+	@GetMapping("{noticenum}")
 	public ResponseEntity<HashMap<String, Object>> nget (@PathVariable("noticenum") long noticenum, HttpServletRequest req){
 		HttpSession session = req.getSession();
 		String loginUser = (String)session.getAttribute("loginUser");
@@ -71,17 +71,17 @@ public class NoticeController {
 		}
 	}
 	
-	@PutMapping("{noticenum}")
-	public ResponseEntity<Long> nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception {
-		long noticenum = service.nmodify(noticenum,HttpStatus.OK);
-		if(noticenum != -1) {
-			return new ResponseEntity<>(noticenum, HttpStatus.OK);
-		}
-		else {
-			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
-	}
-	@DeleteMapping("{noticenum")
+//	@PutMapping("{noticenum}")
+//	public ResponseEntity<Long> nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception {
+//		long noticenum = service.nmodify(noticenum,HttpStatus.OK);
+//		if(noticenum != -1) {
+//			return new ResponseEntity<>(noticenum, HttpStatus.OK);
+//		}
+//		else {
+//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
+	@DeleteMapping("{noticenum}")
 	public ResponseEntity<Long> remove (@PathVariable("noticenum") long noticenum){
 		if(service.remove(noticenum) != -1) {
 			return new ResponseEntity<>(noticenum, HttpStatus.OK);
