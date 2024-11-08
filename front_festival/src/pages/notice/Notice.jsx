@@ -35,7 +35,7 @@ const Notice = () => {
         setInputs(e.target.value)
     }
     const clickSearch = (e) => {
-        e.preventDrfault();
+        e.preventDefault();
         const changedCri = {
             ...cri,
             type: document.getElementById("type").value,
@@ -52,30 +52,32 @@ const Notice = () => {
             keyword: cri.keyword,
             startrow: cri.startrow
         }
-        axios.get(`/api/notice/notice/${cri.pagenum}`, { params: cri })
-            .then((resp) => {
-                setData(resp.data);
-                setPageMaker(resp.data.pageMaker);
-                setInputs(resp.data.pageMaker.cri.keyword);
-            })
+        // axios.get(`/api/notice/notice/${cri.pagenum}`, { params: cri })
+        //     .then((resp) => {
+        //         setData(resp.data);
+        //         setPageMaker(resp.data.pageMaker);
+        //         setInputs(resp.data.pageMaker.cri.keyword);
+        //     })
     }, [cri]);
     useEffect(() => {
         if (location.state) {
             setCri(location.state)
         }
     }, [location.state]);
-    if (!data) {
-        const text = "로딩중...";
-        const [chars, setChars] = useState([]);
-
-        useEffect(() => {
-            const splitText = text.split('').map((char, index) => ({
+    const [chars, setChars] = useState([]);
+    useEffect(() => {
+        if (!data) {
+            const text = "로딩중...";
+            const splitText = text.split("").map((char, index) => ({
                 char,
                 delay: index * 0.5 // 각 글자에 0.5초씩 딜레이
             }));
             setChars(splitText);
-        }, []);
+        }
+    }, [data]); // data가 없을 때만 로딩 텍스트 준비
 
+    // 데이터가 없을 때 로딩 텍스트 표시
+    if (!data) {
         return (
             <div className="loading-text">
                 {chars.map((item, index) => (
@@ -97,14 +99,16 @@ const Notice = () => {
         if (list && list.length > 0) {
             for (const notice of list) {
                 noticeList.push(
-                    <div class="row" key="{notice.noticenum}">
+                    <div className="row" key={notice.noticenum} onClick={()=>{
+                        navigate(`/notice/${notice.noticenum}`,{state:cri})
+                    }}>
                         <div>{notice.noticenum}</div>
-                        <div>{notice.newNotice ? <sup class="noticenew">New</sup> : ""}</div>
-                        <a class="nget">
+                        <div>{notice.newNotice ? <sup className="noticenew">New</sup> : ""}</div>
+                        <a className="nget">
                             <div>{notice.title}<span id="nreply_cnt">[{notice.replyCnt}]</span></div>
                         </a>
                         <div>{notice.userid}</div>
-                        <div>{notice.regdate}{notice.regdate != notice.updatedate ? "(수정)" : ""}</div>
+                        <div>{notice.regdate}{notice.regdate !== notice.updatedate ? "(수정)" : ""}</div>
                         <div>{notice.readcount}</div>
                     </div>
                 )
@@ -126,7 +130,7 @@ const Notice = () => {
         const isAdmin = data.user && data.user.userid === "admin";
         return (
             <>
-                <div className="wrap list">
+                <div className="wrap nlist">
                     <Header></Header>
                     <div className="notice-title">NOTICE</div>
                     <div className="tar w1000 notice-cnt">글 개수 :{pageMaker.total} </div>
@@ -135,7 +139,7 @@ const Notice = () => {
                             <div className="row">
                                 <div>번호</div>
                                 <div>제목</div>
-                                <div>작성자</div>
+                               <div>작성자</div>
                                 <div>날짜</div>
                                 <div>조회수</div>
                             </div>
@@ -151,7 +155,9 @@ const Notice = () => {
                                 <tbody>
                                     <tr>
                                         <td>
-                                            <a className="nwrite nbtn" href="">글쓰기</a>
+                                            <a className="nwrite nbtn" onClick={()=>{
+                                                navigate("/notice/nwrite",{state:cri})
+                                            }}>글쓰기</a>
                                         </td>
                                     </tr>
                                 </tbody>

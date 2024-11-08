@@ -19,13 +19,6 @@
     box-sizing: border-box;
 }
 
-#wrap {
-    width: 1000px;
-    margin: 0 20px;
-    padding: 0;
-    position: relative;
-}
-
 form {
     user-select: none;
 }
@@ -49,7 +42,6 @@ td {
 a {
     text-decoration: none;
     background-color: transparent;
-    color: #ccc;
 }
 
 img {
@@ -63,10 +55,6 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 
-}
-
-.navigate a {
-    margin: 20px;
 }
 
 
@@ -99,13 +87,23 @@ img {
 }
 
 /* notice area 공지페이지 시작 */
+#nwrap {
+    width: 1000px;
+    margin: 0 20px;
+    padding: 0;
+    position: relative;
+}
+
+#nwrap .navigate a {
+    margin: 20px;
+}
 
 .notice-title {
     font-family: 'EBSJSKMedium';
     font-size: 30px;
 }
 
-#wrap>div:nth-child(1) {
+#nwrap>div:nth-child(1) {
     position: absolute;
     top: 0;
     left: 0;
@@ -124,12 +122,12 @@ img {
 }
 
 /* 헤더 */
-.nheader_area {
+#nwrap .nheader_area {
     padding: 10px;
 }
 
 /* Title */
-.ntitle {
+#nwrap .ntitle {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -140,7 +138,7 @@ img {
     font-family: 'GowunDodum-Regular';
 }
 
-.pagination {
+#nwrap .pagination {
     width: 840px;
 }
 
@@ -185,45 +183,45 @@ img {
     width: 100%;
     padding: 10px !important;
 }
-.cols-1 {
+#nwrap .cols-1 {
     width: 10%;
 }
-.cols-2 {
+#nwrap .cols-2 {
     width: 20%;
 }
-.cols-3 {
+#nwrap .cols-3 {
     width: 30%;
 }
-.cols-4 {
+#nwrap .cols-4 {
     width: 40%;
 }
-.cols-5 {
+#nwrap .cols-5 {
     width: 50%;
 }
-.cols-6 {
+#nwrap .cols-6 {
     width: 60%;
 }
-.cols-7 {
+#nwrap .cols-7 {
     width: 70%;
 }
-.cols-8 {
+#nwrap .cols-8 {
     width: 80%;
 }
-.cols-9 {
+#nwrap .cols-9 {
     width: 90%;
 }
-.cols-10 {
+#nwrap .cols-10 {
     width: 100%;
 }
-.tar {
+#nwrap .tar {
     text-align: right !important;
 }
 
-.tac {
+#nwrap .tac {
     text-align: center !important;
 }
 
-.tal {
+#nwrap .tal {
     text-align: left !important;
 }
 
@@ -271,7 +269,7 @@ img {
     width: 100% !important;
 }
 
-.row {
+#nwrap .row {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -313,7 +311,7 @@ img {
     animation: nblink 1.5s infinite, ncolorChange 2s infinite alternate, nscaleText 1.5s infinite alternate;
 }
 
-/* 2. 색상 변화 애니메이션 */
+/* 색상 변화 애니메이션 */
 @keyframes ncolorChange {
     0% {
         color: #FF5733;
@@ -328,7 +326,7 @@ img {
     }
 }
 
-/* 3. 텍스트 크기 애니메이션 */
+/* 텍스트 크기 애니메이션 */
 @keyframes nscaleText {
     0% {
         transform: scale(1);
@@ -339,33 +337,33 @@ img {
     }
 }
 
-/* 공통 스타일 */
+/* 로딩 공통 스타일 */
 .loading-text {
     font-size: 20px;
     font-weight: bold;
-    white-space: nowrap;
-    /* 텍스트가 줄 바꿈되지 않도록 */
+    white-space: nowrap;  /* 텍스트가 줄 바꿈되지 않도록 */
     font-family: Arial, sans-serif;
 }
 
-/* 3가지 애니메이션을 번갈아가며 적용 */
+/* 개별 글자에 대해 애니메이션을 적용 */
 .loading-text span:nth-child(1) {
-    animation: blink 1.5s infinite, colorChange 2s infinite alternate, scaleText 1.5s infinite alternate;
+    animation: nblink 1.5s infinite, ncolorChange 2s infinite alternate, nscaleText 1.5s infinite alternate;
 }
 
 .loading-text span:nth-child(2) {
-    animation: blink 1.5s infinite, colorChange 2s infinite alternate, scaleText 1.5s infinite alternate;
+    animation: nblink 1.5s infinite, ncolorChange 2s infinite alternate, nscaleText 1.5s infinite alternate;
 }
 
 .loading-text span:nth-child(3) {
-    animation: blink 1.5s infinite, colorChange 2s infinite alternate, scaleText 1.5s infinite alternate;
+    animation: nblink 1.5s infinite, ncolorChange 2s infinite alternate, nscaleText 1.5s infinite alternate;
 }
+
 
 /* board 공통 */
 body.nlist, body.nwrite, body.nget, body.nmodify {
     background-color: #fff;
 }
-#wrap > div:nth-child(1){
+#nwrap > div:nth-child(1){
     position: relative;
     top: 0; left: 0;
     width: 100%;
@@ -384,7 +382,7 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     border:0px;
     width: 1000px;
 }
-a.btn {
+#nwrap a.btn {
     display: inline-block;
     border-radius: 3px;
     font-weight: bold;
@@ -458,43 +456,43 @@ a.btn {
 }
 
 /* Pagination 페이지 버튼 디자인 */
-.pagination {
+#nwrap .pagination {
     margin-top: 20px;
 }
 
-.pagination tr {
+#nwrap .pagination tr {
     text-align: center;
     vertical-align: middle;
 }
 
-.pagination .nowPage {
+#nwrap .pagination .nowPage {
     margin-right: 5px;
 }
 
-.pagination a {
+#nwrap .pagination a {
     padding: 5px;
     width: 30px;
     height: 30px;
     margin-right: 5px;
 }
 
-.pagination a:hover {
+/* .pagination a:hover {
     background-color: #ccc;
-}
+} */
 
-.nowPage {
+.nnowPage {
     padding: 5px;
     width: 30px;
     height: 30px;
     display: inline-block;
     border-radius: 3px;
-    background-color: #fff;
+    /* background-color: #fff; */
     color: black;
     font-weight: bold;
 }
 
 /* 글쓰기버튼 */
-a.nwrite {
+#nwrap a.nwrite {
     padding: 5px;
     width: 80px;
     height: 35px;
@@ -548,40 +546,40 @@ a.nwrite {
     margin: 3px 0px;
     width: 100px;
 }
-.thumbnail_area{
+#nwrap .thumbnail_area{
     text-align: center;
     width: 100%;
     min-height: 10px;
 }
 /* 게시판 썸네일애니메이션 thumbnail animation*/
-img.thumbnail{
+#nwrap img.nthumbnail{
     width: 200px;
     transition: all 0.1s linear;
 }
-img.thumbnail:hover{
+#nwrap img.nthumbnail:hover{
     transform: scale(0.2);
     box-shadow: 1px 1px 4px #ccc;
 }
 .nwrite .nbtn_area, .nmodify .nbtn_area{
     justify-content: flex-end;
 }
-[class*='cont']{
+#nwrap [class*='cont']{
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: stretch;
     height: fit-content;
 }
-[class*='cont'] div:nth-child(1){
+#nwrap [class*='cont'] div:nth-child(1){
     padding: 10px;
     height: 100%;
 }
-[class*='cont'] div:nth-child(2){
+#nwap [class*='cont'] div:nth-child(2){
     height: auto;
     vertical-align: middle;
     justify-content: space-evenly;
 }
 /* get css */
-.download {
+#nwrap .download {
     display: none;
     width: fit-content;
     margin-top: 10px;
@@ -591,10 +589,10 @@ img.thumbnail:hover{
     transition: all ease 0.2s;
     line-height: 1.4;
 }
-.download:hover{
+#nwrap .download:hover{
     transform: scale(0.2);
 }
- .nget .nbtn_area{
+.nget .nbtn_area{
     justify-content: flex-end;
 }
 .nget .nbtn_area td:nth-child(2){
@@ -692,7 +690,7 @@ img.thumbnail:hover{
     text-align: center;
     border-right: 1px solid #ccc;
 }
-.nreplies li div:nth-child(1) [class*='nreply'] {
+.nreplies li div:nth-child(1) [class*='reply'] {
     width: 80%;
     padding-left: 10px;
 }
