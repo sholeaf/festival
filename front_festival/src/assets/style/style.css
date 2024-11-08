@@ -54,8 +54,13 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 }
+.navigate {
+    display: flex;
+}
 
-
+.navigate a {
+    margin : 20px;
+}
 /* 달력 디자인 */
 .react-calendar__navigation {
     width: inherit;

@@ -14,39 +14,24 @@
 }
 
 /* 헤더 */
-header .wrap{
-    width: 100%;
+.header_area{
+    padding: 10px 5px;
 }
-header .wrap .main{
-    max-width: 1400px;
-    padding: 24px 12px;
-    font-size: 24px;
-    margin: 0 auto;
-    font-family: 'GowunDodum-Regular';
-    user-select: none;
-}
-header .wrap .main .area{
+.navigate {
     display: flex;
-    justify-content: space-between;
+    justify-content: space-evenly;
 }
-header .wrap .main .area .logo{
+.navigate .logo a{
     font-family: 'EBSJSKMedium';
+    font-weight: bold;
+    font-size: 24px;
 }
-header .wrap .main .area .logo p{
-    cursor: pointer;
-}
-header .wrap .main .area .navi{
-    display: flex;
-}
-header .wrap .main .area .navi div{
-    margin-right: 0px;
-    width: 200px;
-    text-align: center;
-}
-header .wrap .main .area .navi div a{
-    cursor: pointer;
-}
-header .wrap .main .area .login_btn a{
+
+.navigate a {
+    font-family: 'GowunDodum-Regular';
+    margin : 20px;
+    font-size: 20px;
+    user-select: none;
     cursor: pointer;
 }
 
