@@ -1,3 +1,24 @@
+@font-face {
+    /* EBS주시경체 - 로고 텍스트 */
+    /* 확정 */
+    font-family: 'EBSJSKMedium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/EBSJSKMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+@font-face {
+    /* 고운돋움-일반텍스트 */
+    font-family: 'GowunDodum-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
 .navigate a {
     margin: 20px;
 }
@@ -30,3 +51,140 @@
 .react-calendar__tile--now {
     background: green;
 }
+
+/* 헤더 */
+header .wrap{
+    width: 100%;
+}
+header .wrap .main{
+    max-width: 1400px;
+    padding: 24px 12px;
+    font-size: 24px;
+    margin: 0 auto;
+    font-family: 'GowunDodum-Regular';
+    user-select: none;
+}
+header .wrap .main .area{
+    display: flex;
+    justify-content: space-between;
+}
+header .wrap .main .area .logo{
+    font-family: 'EBSJSKMedium';
+}
+header .wrap .main .area .logo p{
+    cursor: pointer;
+}
+header .wrap .main .area .navi{
+    display: flex;
+}
+header .wrap .main .area .navi div{
+    margin-right: 0px;
+    width: 200px;
+    text-align: center;
+}
+header .wrap .main .area .navi div a{
+    cursor: pointer;
+}
+header .wrap .main .area .login_btn a{
+    cursor: pointer;
+}
+
+/* 로그인 페이지 */
+.login_wrap{
+    width: 100%;
+    user-select: none;
+}
+.login_wrap .main{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.login_wrap .main .center{
+    max-width: 1000px;
+    margin: 55px auto;
+    padding: 50px;
+}
+.login_wrap .main .center .logo p{
+    font-family: 'EBSJSKMedium';
+    cursor: pointer;
+    text-align: center;
+    font-size: 55px;
+    width: 250px;
+    margin: 0 auto;
+}
+.login_wrap .main .center .float{
+    margin-top: 50px;
+}
+.login_wrap .main .center .float .img{
+    float: left;
+}
+.login_wrap .main .center .float .img img{
+    width: 400px;
+    height: 600px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.login_wrap .main .center .float .login_area{
+    float: right;
+    width: 400px;
+    height: 600px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    padding: 25px;
+}
+.login_area .text{
+    cursor: pointer;
+}
+.login_area .sns_login img{
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+    margin: 0 20px;
+}
+
+/* Join page */
+.joinpage{
+    width: 100%;
+    background: no-repeat url(../images/회원가입바탕.png) ;
+
+}
+.wrap{
+    width: 1000px;
+    margin: 0 auto;
+}
+.joinpage .wrap .logo p{
+    font-family: 'EBSJSKMedium';
+    cursor: pointer;
+    text-align: center;
+    font-size: 55px;
+    width: 250px;
+    background-color: #fff;
+    border-radius: 15px;
+}
+.joinpage .wrap form {
+    width: 500px;
+}
+.joinpage .wrap form input{
+    width: 500px;
+}
+.joinpage .wrap form .flexBox{
+    display: flex;
+    margin-top: 3px;
+}
+.joinpage .wrap form .flexBox .radio_item{
+    width: 250px;
+}
+.joinpage .wrap form .flexBox .radio_item input{
+    display: none;
+}
+.joinpage .wrap form .flexBox .radio_item label{
+    display: inline-block;
+    width: 250px;
+    background-color: #fff;
+}
+.flexBox .radio_item input[type="radio"]:checked + label {
+    background-color: lightblue;
+  }
+#id_result, #pw_result{
+    background-color: #fff;
+}
+/* joinpage end */

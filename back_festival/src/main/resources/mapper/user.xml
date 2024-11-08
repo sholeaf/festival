@@ -1,0 +1,27 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserMapper">
+	<insert id="insertUser">
+		insert into user values(#{userid},#{userpw},#{username},#{userphone},
+		#{usergender},#{useremail},#{zipcode},#{addr},#{addrdetail},#{addretc})
+	</insert>
+	<update id="updateUser">
+		update user
+		set userpw=#{userpw}, useremail=#{useremail}, zipcde=#{zipcode}, addr=#{addr},
+		addrdetail=#{addrdetail}, addretc=#{addretc}
+		where userid=#{userid}
+	</update>
+	<delete id="deleteUser">
+		delete from user where userid=#{userid}
+	</delete>
+	<select id="getUserByUserid">
+		select * from user where userid=#{userid}
+	</select>
+</mapper>
+
+
+
+
+
+
