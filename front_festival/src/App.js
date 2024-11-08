@@ -13,7 +13,6 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
         <Routes>
           <Route path="/" element={<Main></Main>}></Route>
           <Route path="/festival" element={<Festival></Festival>}></Route>

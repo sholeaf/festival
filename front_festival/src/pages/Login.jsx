@@ -1,6 +1,11 @@
+import Header from "../layout/Header";
+
 const Login = () => {
     return (
-        <>로그인</>
+        <div>
+            <Header />
+            <>로그인</>
+        </div>
     );
 }
 export default Login;
