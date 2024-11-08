@@ -564,9 +564,7 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
 .nwrite .nbtn_area, .nmodify .nbtn_area{
     justify-content: flex-end;
 }
-<<<<<<< HEAD
 
-=======
 #nwrap [class*='cont']{
     justify-content: space-between;
     flex-wrap: wrap;
@@ -582,7 +580,7 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     vertical-align: middle;
     justify-content: space-evenly;
 }
->>>>>>> 4a1c9b24dd90fae79c23792e7b408f999dfbc17a
+
 /* get css */
 #nwrap .download {
     display: none;
