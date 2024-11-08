@@ -4,7 +4,7 @@
 <mapper namespace="com.example.demo.mapper.UserMapper">
 	<insert id="insertUser">
 		insert into user values(#{userid},#{userpw},#{username},#{userphone},
-		#{usergender},#{useremail},#{zipcode},#{addr},#{addrdetail},#{addretc})
+		#{useremail},#{usergender},#{zipcode},#{addr},#{addrdetail},#{addretc})
 	</insert>
 	<update id="updateUser">
 		update user

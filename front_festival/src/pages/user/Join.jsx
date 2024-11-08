@@ -23,7 +23,10 @@ const Join = () => {
                     }
                 })
         }
-
+        if(userid.value.length == 0){
+            result.innerHTML = "아이디를 입력해 주세요!";
+            userid.focus();
+        }
     }
     const pwCheck = (e) => {
         const userpw = document.joinForm.userpw;
@@ -52,6 +55,7 @@ const Join = () => {
         }
         else{
             pw_result.innerHTML = "비밀번호 확인 완료!";
+            document.joinForm.username.focus();
         }
     }
 
@@ -185,7 +189,7 @@ const Join = () => {
                 </div>
                 <form action="/user/join" method="post" name="joinForm">
                     <input type="text" name="userid" id="userid" placeholder="아이디를 입력 하세요" onChange={checkId} />
-                    <p id="id_result">점검문자</p>
+                    <p id="id_result"></p>
                     <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력 하세요" onChange={pwCheck} />
                     <input type="password" name="userpw_re" id="userpw_re" placeholder="비밀번호확인" onChange={pwCheck} />
                     <p id="pw_result">점검문자</p>
