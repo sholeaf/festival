@@ -49,7 +49,6 @@ td {
 a {
     text-decoration: none;
     background-color: transparent;
-    color: #ccc;
 }
 
 img {
@@ -62,7 +61,6 @@ img {
     -khtml-user-drag: none;
     -o-user-drag: none;
     -user-drag: none;
-
 }
 
 .navigate a {
@@ -384,6 +382,7 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     border:0px;
     width: 1000px;
 }
+/* a태그 classname = btn 햇을 때 디자인 안맞으면 지우고 수정 */
 a.btn {
     display: inline-block;
     border-radius: 3px;
@@ -392,7 +391,7 @@ a.btn {
     width: 100px;
     height: 40px;
     cursor: pointer;
-}
+} 
 /* list css */
 
 .notice-cnt {
@@ -565,21 +564,7 @@ img.thumbnail:hover{
 .nwrite .nbtn_area, .nmodify .nbtn_area{
     justify-content: flex-end;
 }
-[class*='cont']{
-    justify-content: space-between;
-    flex-wrap: wrap;
-    align-items: stretch;
-    height: fit-content;
-}
-[class*='cont'] div:nth-child(1){
-    padding: 10px;
-    height: 100%;
-}
-[class*='cont'] div:nth-child(2){
-    height: auto;
-    vertical-align: middle;
-    justify-content: space-evenly;
-}
+
 /* get css */
 .download {
     display: none;

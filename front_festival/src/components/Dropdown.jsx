@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 const Dropdown = ({list, name, width, onChange, value}) => {
     let label;
     for(const key in list){
-        if(lsit[key] == value){
+        if(list[key] == value){
             label = key;
             break;
         }
