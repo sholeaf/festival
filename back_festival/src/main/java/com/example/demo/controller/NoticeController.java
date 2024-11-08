@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -20,6 +21,10 @@ import com.example.demo.domain.PageDTO;
 import com.example.demo.service.NoticeService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+
 
 
 @Controller
@@ -47,6 +52,39 @@ public class NoticeController {
 		long noticenum = service.regist(notice,files);
 		if(noticenum != -1) {
 			return new ResponseEntity<>(noticenum,HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	@GetMapping("{noticenum}")
+	public ResponseEntity<HashMap<String, Object>> nget (@PathVariable("noticenum") long noticenum, HttpServletRequest req){
+		HttpSession session = req.getSession();
+		String loginUser = (String)session.getAttribute("loginUser");
+		
+		HashMap<String, Object> result = service.getDetail(noticenum, loginUser);
+		if(result.get("notice") != null) {
+			return new ResponseEntity<HashMap<String,Object>>(result,HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<HashMap<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+//	@PutMapping("{noticenum}")
+//	public ResponseEntity<Long> nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception {
+//		long noticenum = service.nmodify(noticenum,HttpStatus.OK);
+//		if(noticenum != -1) {
+//			return new ResponseEntity<>(noticenum, HttpStatus.OK);
+//		}
+//		else {
+//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+//		}
+//	}
+	@DeleteMapping("{noticenum}")
+	public ResponseEntity<Long> remove (@PathVariable("noticenum") long noticenum){
+		if(service.remove(noticenum) != -1) {
+			return new ResponseEntity<>(noticenum, HttpStatus.OK);
 		}
 		else {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);

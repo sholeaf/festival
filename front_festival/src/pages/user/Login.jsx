@@ -4,7 +4,7 @@ import loginImg from '../../assets/images/로그인바탕.png'
 import naverImg from '../../assets/images/네이버.png'
 import googleImg from '../../assets/images/구글.png'
 import kakaoImg from '../../assets/images/카카오.png'
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Button from "../../components/Button";
 
@@ -13,7 +13,8 @@ const Login = () => {
     const navigate = useNavigate();
     const [inputs,setInputs] = useState({userid:"",userpw:""})
     const {userid,userpw} = inputs;
-
+    const [loginUser, setLoginUser] = useState("");
+    
     const inputRef = useRef([]);
     const addInputRef = (el) => {
         if(!inputRef.current.includes(el)){
@@ -42,6 +43,7 @@ const Login = () => {
             if(resp.data.trim() == "O"){
                 alert(`${userid}님 환영합니다!`);
                 navigate("/");
+                setLoginUser(userid);
             }
             else{
                 setInputs({userid:"",userpw:""})
@@ -50,6 +52,12 @@ const Login = () => {
         })
     }
 
+    useEffect(()=>{
+        axios.get("/api/user/joinCheck").then((resp)=>{
+            const joinid = resp.data;
+            setInputs({...inputs, userid:joinid});
+        })
+    },[])
 
     return(
         <div className="login_wrap" id="headernone">

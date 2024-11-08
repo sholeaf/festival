@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.UserDTO;
@@ -56,7 +57,7 @@ public class UserController {
 	}
 	
 	@GetMapping("login")
-	public ResponseEntity<String> login(String userid,String userpw,HttpServletRequest req) {
+	public ResponseEntity<String> login(@RequestParam String userid, @RequestParam String userpw,HttpServletRequest req) {
 		HttpSession session = req.getSession();
 		if(service.login(userid, userpw)) {
 			session.setAttribute("loginUser", userid);

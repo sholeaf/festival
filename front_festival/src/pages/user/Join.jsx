@@ -14,7 +14,6 @@ const Join = () => {
                 .then(resp => {
                     if (resp.data == "O") {
                         result.innerHTML = "사용할 수 있는 아이디입니다!";
-                        document.joinForm.userpw.focus();
                     }
                     else {
                         result.innerHTML = "중복된 아이디가 있습니다!";
@@ -171,7 +170,7 @@ const Join = () => {
         axios.post('/api/user/join', user)
             .then((resp) => {
                 alert("회원가입 성공!");
-                navigate("/");
+                navigate("/user/login");
             })
             .catch((err) => {
                 alert("회원가입 실패!");
@@ -192,7 +191,7 @@ const Join = () => {
                     <p id="id_result"></p>
                     <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력 하세요" onChange={pwCheck} />
                     <input type="password" name="userpw_re" id="userpw_re" placeholder="비밀번호확인" onChange={pwCheck} />
-                    <p id="pw_result">점검문자</p>
+                    <p id="pw_result"></p>
                     <input type="text" name="username" id="username" placeholder="이름을 입력 하세요" />
                     <input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" />
                     <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" />

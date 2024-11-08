@@ -4,8 +4,9 @@ import 'react-calendar/dist/Calendar.css';
 import Main from './pages/Main';
 import Festival from './pages/Festival';
 import Community from './pages/Community';
-import Login from './pages/user/Login';
+import Notice from './pages/notice/Notice';
 import MyPage from './pages/user/MyPage';
+import Login from './pages/user/Login';
 import Header from './layout/Header';
 import Join from './pages/user/Join';
 
@@ -13,7 +14,6 @@ function App() {
   return (
     <>
       <BrowserRouter>
-        <Header />
         <Routes>
           <Route path="/" element={<Main></Main>}></Route>
           <Route path="/festival" element={<Festival></Festival>}></Route>
@@ -21,6 +21,7 @@ function App() {
           <Route path="/user/mypage" element={<MyPage></MyPage>}></Route>
           <Route path="/user/login" element={<Login></Login>}></Route>
           <Route path="/user/join" element={<Join></Join>}></Route>
+          <Route path="/notice/notice" element={<Notice></Notice>}></Route>
         </Routes>
       </BrowserRouter>
     </>
