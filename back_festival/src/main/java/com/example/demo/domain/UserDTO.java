@@ -10,7 +10,7 @@ public class UserDTO {
 	private String userphone;
 	private String useremail;
 	private String usergender;
-	private String zipcod;
+	private String zipcode;
 	private String addr;
 	private String addrdetail;
 	private String addretc;

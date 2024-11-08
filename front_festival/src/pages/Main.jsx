@@ -4,7 +4,7 @@ const Main = () => {
     
     return (
         <>
-            <Header />
+            <Header></Header>
            여기는 메인
         </>
     );

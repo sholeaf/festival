@@ -14,7 +14,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
 * {
     box-sizing: border-box;
 }
@@ -54,6 +53,9 @@ img {
     -khtml-user-drag: none;
     -o-user-drag: none;
     -user-drag: none;
+}
+.navigate {
+    display: flex;
 }
 
 .navigate a {

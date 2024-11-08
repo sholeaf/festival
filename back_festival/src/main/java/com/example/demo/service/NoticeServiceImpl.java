@@ -105,8 +105,8 @@ public class NoticeServiceImpl implements NoticeService{
 		List<NoticeFileDTO> files = nfmapper.getFiles(noticenum);
 		 
 		if(notice != null && notice.getUserid().equals(loginUser)) {
-			nmapper.updateReadCount(notice, notice.getReadcount()+1);
-			notice.setReadcount(notice.getReadcount()+1);
+//			nmapper.updateReadCount(notice, notice.getReadcount()+1);
+//			notice.setReadcount(notice.getReadcount()+1);
 		}
 		result.put("notice", notice);
 		result.put("files", files);
