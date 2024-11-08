@@ -16,7 +16,7 @@ const Header = () => {
                         navigate("/community");
                     }}>축제 후기</a>
                     <a onClick={() => {
-                        navigate("/notice");
+                        navigate("/notice/notice");
                     }}>공지 사항</a>
                     <a onClick={() => {
                         navigate("/mypage");

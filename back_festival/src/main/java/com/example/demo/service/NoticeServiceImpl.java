@@ -11,6 +11,7 @@ import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -94,6 +95,34 @@ public class NoticeServiceImpl implements NoticeService{
 			return noticenum;
 		}
 		
+	}
+
+	@Override
+	public HashMap<String, Object> getDetail(long noticenum, String loginUser) {
+		HashMap<String, Object> result = new HashMap<>();
+		
+		NoticeDTO notice = nmapper.getNoticeByNoticenum(noticenum);
+		List<NoticeFileDTO> files = nfmapper.getFiles(noticenum);
+		 
+		if(notice != null && notice.getUserid().equals(loginUser)) {
+			nmapper.updateReadCount(notice, notice.getReadcount()+1);
+			notice.setReadcount(notice.getReadcount()+1);
+		}
+		result.put("notice", notice);
+		result.put("files", files);
+		return null;
+	}
+
+	@Override
+	public long nmodify(long noticenum, HttpStatus ok) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public int remove(long noticenum) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

@@ -12,6 +12,7 @@ public interface NoticeMapper {
 	long getTotal(Criteria cri);
 	int insertNotice(NoticeDTO notice);
 	long getLastNum(String userid);
+	NoticeDTO getNoticeByNoticenum(long noticenum);
 	
 
 }
