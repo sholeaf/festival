@@ -14,6 +14,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 * {
     box-sizing: border-box;
 }
@@ -54,12 +55,13 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 }
+
 .navigate {
     display: flex;
 }
 
 .navigate a {
-    margin : 20px;
+    margin: 20px;
 }
 
 
@@ -160,36 +162,47 @@ img {
     width: 100%;
     padding: 10px !important;
 }
+
 #nwrap .cols-1 {
     width: 10%;
 }
+
 #nwrap .cols-2 {
     width: 20%;
 }
+
 #nwrap .cols-3 {
     width: 30%;
 }
+
 #nwrap .cols-4 {
     width: 40%;
 }
+
 #nwrap .cols-5 {
     width: 50%;
 }
+
 #nwrap .cols-6 {
     width: 60%;
 }
+
 #nwrap .cols-7 {
     width: 70%;
 }
+
 #nwrap .cols-8 {
     width: 80%;
 }
+
 #nwrap .cols-9 {
     width: 90%;
 }
+
 #nwrap .cols-10 {
     width: 100%;
 }
+
 #nwrap .tar {
     text-align: right !important;
 }
@@ -318,7 +331,8 @@ img {
 .loading-text {
     font-size: 20px;
     font-weight: bold;
-    white-space: nowrap;  /* 텍스트가 줄 바꿈되지 않도록 */
+    white-space: nowrap;
+    /* 텍스트가 줄 바꿈되지 않도록 */
     font-family: Arial, sans-serif;
 }
 
@@ -337,26 +351,36 @@ img {
 
 
 /* board 공통 */
-body.nlist, body.nwrite, body.nget, body.nmodify {
+body.nlist,
+body.nwrite,
+body.nget,
+body.nmodify {
     background-color: #fff;
 }
-#nwrap > div:nth-child(1){
+
+#nwrap>div:nth-child(1) {
     position: relative;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 200;
     animation: nlistWrap 1.5s 1;
 }
-@keyframes nlistWrap{
-    from{
-    }
-    to{
+
+@keyframes nlistWrap {
+    from {}
+
+    to {
         opacity: 0;
     }
 }
-.nlist .ntable, .nwrite .ntable, .nget .ntable, .nmodify .ntable{
-    border:0px;
+
+.nlist .ntable,
+.nwrite .ntable,
+.nget .ntable,
+.nmodify .ntable {
+    border: 0px;
     width: 1000px;
 }
 
@@ -369,7 +393,8 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     width: 100px;
     height: 40px;
     cursor: pointer;
-} 
+}
+
 /* list css */
 
 .notice-cnt {
@@ -483,77 +508,102 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
 .nthead {
     border: 1px solid #000;
 }
+
 /* nwrite, nmodify, nget css */
-#noticeForm{ margin-bottom: 20px;}
-#noticeForm > .ntable > .row{
+#noticeForm {
+    margin-bottom: 20px;
+}
+
+#noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
 }
-#noticeForm > .ntable > .row:nth-child(3){
+
+#noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
 }
-#noticeForm > .ntable > .row > div:nth-child(1){
+
+#noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
 }
-#noticeForm > .ntable > .row > div:nth-child(2){
+
+#noticeForm>.ntable>.row>div:nth-child(2) {
     vertical-align: middle;
     width: 80%;
 }
-#noticeForm > .ntable > .row:nth-child(n+4){
+
+#noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
 }
-.nwrite input[type="text"],.nwrite textarea,
-.nget input[type="text"],.nget textarea,
-.nmodify input[type="text"],.nmodify textarea{
+
+.nwrite input[type="text"],
+.nwrite textarea,
+.nget input[type="text"],
+.nget textarea,
+.nmodify input[type="text"],
+.nmodify textarea {
     width: 100%;
     border: none;
     padding: 5px;
     outline: none;
 }
-.nwrite textarea, .nget textarea, .nmodify textarea{
+
+.nwrite textarea,
+.nget textarea,
+.nmodify textarea {
     resize: none;
     height: 290px;
 }
-.nget textarea{
+
+.nget textarea {
     height: auto;
 }
-.nwrite form [class*=cont] .btn, .nmodify form [class*=cont] .btn{
+
+.nwrite form [class*=cont] .btn,
+.nmodify form [class*=cont] .btn {
     width: fit-content;
     height: fit-content;
     margin: 3px 0px;
     width: 100px;
 }
-#nwrap .thumbnail_area{
+
+#nwrap .thumbnail_area {
     text-align: center;
     width: 100%;
     min-height: 10px;
 }
+
 /* 게시판 썸네일애니메이션 thumbnail animation*/
-#nwrap img.nthumbnail{
+#nwrap img.nthumbnail {
     width: 200px;
     transition: all 0.1s linear;
 }
-#nwrap img.nthumbnail:hover{
+
+#nwrap img.nthumbnail:hover {
     transform: scale(0.2);
     box-shadow: 1px 1px 4px #ccc;
 }
-.nwrite .nbtn_area, .nmodify .nbtn_area{
+
+.nwrite .nbtn_area,
+.nmodify .nbtn_area {
     justify-content: flex-end;
 }
 
-#nwrap [class*='cont']{
+#nwrap [class*='cont'] {
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: stretch;
     height: fit-content;
 }
-#nwrap [class*='cont'] div:nth-child(1){
+
+#nwrap [class*='cont'] div:nth-child(1) {
     padding: 10px;
     height: 100%;
 }
-#nwap [class*='cont'] div:nth-child(2){
+
+#nwap [class*='cont'] div:nth-child(2) {
     height: auto;
     vertical-align: middle;
     justify-content: space-evenly;
@@ -570,30 +620,36 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     transition: all ease 0.2s;
     line-height: 1.4;
 }
-#nwrap .download:hover{
+
+#nwrap .download:hover {
     transform: scale(0.2);
 }
-.nget .nbtn_area{
+
+.nget .nbtn_area {
     justify-content: flex-end;
 }
-.nget .nbtn_area td:nth-child(2){
+
+.nget .nbtn_area td:nth-child(2) {
     padding: 5px;
     outline: none;
     width: 500px;
 }
+
 /* noticecontents css */
-.nget #noticecontents{
+.nget #noticecontents {
     width: 700px;
     height: 290px;
     vertical-align: top;
 }
+
 /* 댓글 reply css */
-.nreply_line{
+.nreply_line {
     width: 1000px;
     margin-top: 20px;
     border-top: 1px solid grey;
 }
-.nreply_line > .nregist{
+
+.nreply_line>.nregist {
     display: inline-block;
     text-align: center;
     padding: 10px;
@@ -602,22 +658,27 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     margin-top: 20px;
     margin-left: 880px;
 }
-.nreply_line > .nreplyForm > div{
+
+.nreply_line>.nreplyForm>div {
     text-align: center;
     vertical-align: middle;
     color: #ccc;
     height: 150px;
 }
-.nreply_line > .nreplyForm > div:nth-child(1){
+
+.nreply_line>.nreplyForm>div:nth-child(1) {
     width: 20%;
 }
-.nreply_line > .nreplyForm > div:nth-child(2){
+
+.nreply_line>.nreplyForm>div:nth-child(2) {
     width: 65%;
 }
-.nreply_line > .nreplyForm > div:nth-child(3){
+
+.nreply_line>.nreplyForm>div:nth-child(3) {
     width: 15%;
 }
-.nreply_line > .nreplyForm > div > input[type=text]{
+
+.nreply_line>.nreplyForm>div>input[type=text] {
     display: inline-block;
     width: 120px;
     height: 40px;
@@ -625,6 +686,7 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     border-radius: 5px;
     text-align: center;
 }
+
 .nreply_line textarea {
     width: 600px;
     height: 80px;
@@ -634,68 +696,85 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     font-size: 17px;
     color: #333;
 }
-.nreplyForm > div > .btn{
+
+.nreplyForm>div>.btn {
     height: fit-content;
     padding: 8px;
 }
-.nreplyForm > div > .nfinish {
+
+.nreplyForm>div>.nfinish {
     margin-top: 50px;
     margin-bottom: 20px;
     vertical-align: middle;
 }
+
 .nreplies {
     border-top: 1px solid gray;
     padding: 0;
     padding-top: 30px;
     margin-top: 20px;
 }
-.nreplies li.no-reply{
+
+.nreplies li.no-reply {
     text-align: center;
     font-size: 20px;
     font-weight: bold;
 }
+
 .nreplies li {
     width: 1000px;
 }
+
 .nreplies li div:nth-child(1) {
     width: 75%;
 }
+
 .nreplies li div:nth-child(2) {
     width: 10%;
 }
+
 .nreplies li div:nth-child(3) {
     width: 15%;
 }
+
 .nreplies li div:nth-child(1) [class*='userid'] {
     width: 20%;
     text-align: center;
     border-right: 1px solid #ccc;
 }
+
 .nreplies li div:nth-child(1) [class*='reply'] {
     width: 80%;
     padding-left: 10px;
 }
-.nreplies li div:nth-child(2), .nreplies li div:nth-child(3) {
+
+.nreplies li div:nth-child(2),
+.nreplies li div:nth-child(3) {
     text-align: center;
 }
+
 .nreplies li div:nth-child(2) {
     font-size: 14px;
     color: #ccc;
 }
-.nreplies li div:nth-child(3) .btn{
+
+.nreplies li div:nth-child(3) .btn {
     height: fit-content;
     margin: 5 auto;
     padding: 5px 0;
 }
+
 .npage {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .nreply_line .npage * {
     text-align: center;
     margin: 0 auto;
 }
+
 .nreply_line .page-btn {
     padding: 5px;
     width: 30px;
@@ -706,6 +785,7 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     color: black;
     font-weight: bold;
 }
+
 .nreply_line .page-btn:hover {
     background-color: yellow;
 }
@@ -715,10 +795,11 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
 
 /* festival .css */
 /* 달력 디자인 */
-.button-container button{
+.button-container button {
     margin: 20px 30px;
 }
-.react-calendar{
+
+.react-calendar {
     width: 350px;
     max-width: 100%;
     height: 330px;
@@ -728,13 +809,14 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     line-height: 1.125em;
     margin: 0 auto;
 }
+
 .react-calendar__navigation {
     width: inherit;
     height: 3.5rem;
     display: flex;
     text-align: center;
     align-items: center;
-    
+
 }
 
 .react-calendar__navigation__label {
@@ -746,13 +828,129 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     background-color: #fff;
 }
 
-.festival-list{
+.festival-list {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
-.festival-list li{
+
+.festival-list li {
     width: 23%;
     margin: 15px;
+}
+
+.festival_map_detail {
+    border: 1px solid #ccc;
+    border-radius: 45px;
+    width: 50px;
+    height: 50px;
+    padding: 10px 0px 10px 8px;
+    position: absolute;
+}
+
+.festival_map_area {
+    display: flex;
+    justify-content: center;
+}
+
+.area-1{
+    left: 750px;
+    top: 180px;
+}
+
+.area-2{
+    left: 700px;
+    top: 230px;
+}
+
+.area-3{
+    top: 300px;
+    left: 700px;
+}
+
+.area-4{
+    top: 350px;
+    right: 700px;
+}
+
+.area-5{
+    top: 400px;
+    left: 650px;
+}
+
+.area-5{
+    top: 500px;
+    right: 670px;
+}
+
+.area-6 {
+    top: 500px;
+    right: 900px;
+}
+
+.area-7{
+    top: 420px;
+    right: 680px;
+}
+
+.area-8 {
+    top: 350px;
+    left: 750px;
+}
+
+.area-31{
+    top: 120px;
+    left: 780px;
+}
+
+.area-32{
+    top: 150px;
+    right: 760px;
+}
+
+.area-33{
+    top: 250px;
+    right: 700px;
+}
+
+.area-34{
+    top: 280px;
+    left: 650px;
+}
+
+.area-35{
+    top: 300px;
+    right: 600px;
+}
+
+.area-36{
+    top: 450px;
+    right: 750px;
+}
+
+.area-37{
+    top: 380px;
+    left: 700px;
+}
+
+.area-38{
+    top: 450px;
+    left: 750px;
+}
+
+.area-39{
+    top: 600px;
+    left: 750px;
+}
+
+
+.festival_map_detail:hover{
+    background-color: #92B4EC;
+    color: white;
+}
+
+.festival_map_detail.selected {
+    background-color: #92B4EC;  /* 원하는 색상으로 변경 */
+    color: white;  /* 텍스트 색상 변경 */
 }
 /* festival .css 종료 */
