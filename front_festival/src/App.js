@@ -2,7 +2,7 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom'
 import './assets/style/style.css';
 import 'react-calendar/dist/Calendar.css';
 import Main from './pages/Main';
-import Festival from './pages/Festival';
+import Festival from './pages/festival/Festival';
 import Community from './pages/Community';
 import Notice from './pages/notice/Notice';
 import MyPage from './pages/user/MyPage';
