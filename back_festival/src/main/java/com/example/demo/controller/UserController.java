@@ -26,7 +26,7 @@ public class UserController {
 	private UserService service;
 	
 	@GetMapping("checkId")
-	public ResponseEntity<String> checkId(String userid) {
+	public ResponseEntity<String> checkId(@RequestParam String userid) {
 		if(service.checkId(userid)) {
 			return new ResponseEntity<String>("O",HttpStatus.OK);
 		}
@@ -43,7 +43,6 @@ public class UserController {
 	
 	@PostMapping("join")
 	public ResponseEntity<String> join(@RequestBody UserDTO user, HttpServletResponse resp) {
-		System.out.println(user);
 		if(service.join(user)) {
 			Cookie cookie = new Cookie("joinid", user.getUserid());
 			cookie.setPath("/");

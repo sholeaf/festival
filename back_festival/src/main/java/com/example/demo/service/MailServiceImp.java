@@ -29,7 +29,7 @@ public class MailServiceImp implements MailService{
         MimeMessage message = emailSender.createMimeMessage();
 
         message.addRecipients(RecipientType.TO, to); // 메일 받을 사용자
-        message.setSubject("[Fligent] 비밀번호 변경을 위한 이메일 인증코드 입니다"); // 이메일 제목
+        message.setSubject("[모두의 축제] 회원가입을 위한 이메일 인증코드 입니다"); // 이메일 제목
 
         String msgg = "";
         // msgg += "<img src=../resources/static/image/emailheader.jpg />"; // header image
