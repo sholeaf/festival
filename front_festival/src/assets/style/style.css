@@ -56,6 +56,41 @@ img {
     -user-drag: none;
 }
 
+.navigate a {
+    margin: 20px;
+}
+
+/* Dropdown css */
+.common-dropdown {
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+
+.dropdown-button {
+    background-color: white;
+    color: black;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 10px;
+}
+
+.dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    text-align: center;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.1s ease-in-out;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+
+.dropdown-content.show {
+    max-height: 500px;
+    transition: max-height 0.1s ease-in-out;
+}
 
 /* 달력 디자인 */
 .react-calendar__navigation {
@@ -64,7 +99,7 @@ img {
     display: flex;
     text-align: center;
     align-items: center;
-    
+
 }
 
 .react-calendar__navigation__label {
@@ -93,51 +128,21 @@ img {
     position: relative;
 }
 
-#nwrap .navigate a {
-    margin: 20px;
-}
-
-.notice-title {
-    font-family: 'EBSJSKMedium';
-    font-size: 30px;
-}
-
-#nwrap>div:nth-child(1) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 200;
-    animation: nlistWrap 1.5s 1;
-}
-
-@keyframes nlistWrap {
-    from {}
-
-    to {
-        opacity: 0;
-    }
-}
-
-/* 헤더 */
-#nwrap .nheader_area {
-    padding: 10px;
-}
-
 /* Title */
-#nwrap .ntitle {
+.notice-title {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'EBSJSKMedium';
+    font-size: 80px;
 }
 
 .nlist {
-    border: 1px solid #000;
     font-family: 'GowunDodum-Regular';
+    text-align: center;
 }
 
-#nwrap .pagination {
+.pagination {
     width: 840px;
 }
 
@@ -182,45 +187,56 @@ img {
     width: 100%;
     padding: 10px !important;
 }
+
 #nwrap .cols-1 {
     width: 10%;
 }
+
 #nwrap .cols-2 {
     width: 20%;
 }
+
 #nwrap .cols-3 {
     width: 30%;
 }
+
 #nwrap .cols-4 {
     width: 40%;
 }
+
 #nwrap .cols-5 {
     width: 50%;
 }
+
 #nwrap .cols-6 {
     width: 60%;
 }
+
 #nwrap .cols-7 {
     width: 70%;
 }
+
 #nwrap .cols-8 {
     width: 80%;
 }
+
 #nwrap .cols-9 {
     width: 90%;
 }
+
 #nwrap .cols-10 {
     width: 100%;
 }
-#nwrap .tar {
+
+.tar {
     text-align: right !important;
 }
 
-#nwrap .tac {
+.tac {
     text-align: center !important;
 }
 
-#nwrap .tal {
+.tal {
     text-align: left !important;
 }
 
@@ -268,7 +284,7 @@ img {
     width: 100% !important;
 }
 
-#nwrap .row {
+.nlist .row {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -280,10 +296,21 @@ img {
     align-items: center;
 }
 
+.ntable>.row>*:nth-child(n+2) {
+    border: none;
+}
+
+.ntable>.row:nth-child(n+2)>* {
+    border: none;
+}
+
 .nbtn_table {
     text-align: right;
-    vertical-align: middle;
     margin: 10px auto;
+    position: relative;
+    float: right;
+    bottom: 35px;
+    right: 100px;
 
 }
 
@@ -340,7 +367,8 @@ img {
 .loading-text {
     font-size: 20px;
     font-weight: bold;
-    white-space: nowrap;  /* 텍스트가 줄 바꿈되지 않도록 */
+    white-space: nowrap;
+    /* 텍스트가 줄 바꿈되지 않도록 */
     font-family: Arial, sans-serif;
 }
 
@@ -359,43 +387,56 @@ img {
 
 
 /* board 공통 */
-body.nlist, body.nwrite, body.nget, body.nmodify {
-    background-color: #fff;
+.nlist,
+.nwrite,
+.nget,
+.nmodify {
+    background-color: #ffffff;
 }
-#nwrap > div:nth-child(1){
+
+#nwrap>div:nth-child(1) {
     position: relative;
-    top: 0; left: 0;
+    top: 0;
+    left: 0;
     width: 100%;
     height: 100%;
     z-index: 200;
-    animation: nlistWrap 1.5s 1;
 }
-@keyframes nlistWrap{
-    from{
-    }
-    to{
+
+@keyframes nlistWrap {
+    from {}
+
+    to {
         opacity: 0;
     }
 }
-.nlist .ntable, .nwrite .ntable, .nget .ntable, .nmodify .ntable{
-    border:0px;
+
+.nlist .ntable,
+.nwrite .ntable,
+.nget .ntable,
+.nmodify .ntable {
+    border: 0px;
     width: 1000px;
 }
 
-#nwrap a.btn {
+.nlist a.btn {
 
     display: inline-block;
     border-radius: 3px;
     font-weight: bold;
     text-decoration: none;
-    width: 100px;
     height: 40px;
     cursor: pointer;
-} 
-/* list css */
+}
+
+/* Notice list css */
 
 .notice-cnt {
     padding: 10px;
+}
+
+.nthead {
+    border: 1px solid #b3b3b3;
 }
 
 .nlist.ntable #nreply_cnt {
@@ -411,12 +452,12 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
 }
 
 /* HOT , NEW 디자인 */
-.ntable.nlist .nhot,
-.ntable.nlist .nnew {
+.ntable.nlist .noticehot,
+.ntable.nlist .noticenew {
     margin-right: 5px;
 }
 
-.ntable.nlist .nhot {
+.ntable.nlist .noticehot {
     display: inline-block;
     width: fit-content;
     font-weight: bold;
@@ -424,7 +465,7 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     animation: nhot 1s infinite alternate;
 }
 
-.ntable.nlist .nnew {
+.ntable.nlist .noticenew {
     display: inline-block;
     width: fit-content;
     font-weight: bold;
@@ -457,20 +498,20 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
 }
 
 /* Pagination 페이지 버튼 디자인 */
-#nwrap .pagination {
+.pagination {
     margin-top: 20px;
 }
 
-#nwrap .pagination tr {
+.pagination tr {
     text-align: center;
     vertical-align: middle;
 }
 
-#nwrap .pagination .nowPage {
+.pagination .nowPage {
     margin-right: 5px;
 }
 
-#nwrap .pagination a {
+.pagination a {
     padding: 5px;
     width: 30px;
     height: 30px;
@@ -479,9 +520,9 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
 
 /* .pagination a:hover {
     background-color: #ccc;
-} */
+    } */
 
-.nnowPage {
+.nowPage {
     padding: 5px;
     width: 30px;
     height: 30px;
@@ -493,96 +534,118 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
 }
 
 /* 글쓰기버튼 */
-#nwrap a.nwrite {
+a.nwrite {
     padding: 5px;
-    width: 80px;
-    height: 35px;
+    width: 60px;
+    height: 30px;
     text-align: center;
-    border: 1px solid #000;
+    cursor: pointer;
+    position: absolute;
 }
 
-
-.nthead {
-    border: 1px solid #000;
-}
 /* nwrite, nmodify, nget css */
-#noticeForm{ margin-bottom: 20px;}
-#noticeForm > .ntable > .row{
+#noticeForm {
+    margin-bottom: 20px;
+}
+
+#noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
+    background-color: #92B4EC;
 }
-#noticeForm > .ntable > .row:nth-child(3){
+
+#noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
 }
-#noticeForm > .ntable > .row > div:nth-child(1){
+#noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
+    
 }
-#noticeForm > .ntable > .row > div:nth-child(2){
+
+#noticeForm>.ntable>.row>div:nth-child(2) {
     vertical-align: middle;
     width: 80%;
 }
-#noticeForm > .ntable > .row:nth-child(n+4){
+
+#noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
 }
-.nwrite input[type="text"],.nwrite textarea,
-.nget input[type="text"],.nget textarea,
-.nmodify input[type="text"],.nmodify textarea{
-    width: 100%;
+
+.nwrite input[type="text"],
+.nwrite textarea,
+.nget input[type="text"],
+.nget textarea,
+.nmodify input[type="text"],
+.nmodify textarea {
+    width: 98%;
     border: none;
     padding: 5px;
     outline: none;
 }
-.nwrite textarea, .nget textarea, .nmodify textarea{
+
+.nwrite textarea,
+.nget textarea,
+.nmodify textarea {
+    margin-top: 20px;
     resize: none;
     height: 290px;
 }
-.nget textarea{
+
+.nget textarea {
     height: auto;
 }
-.nwrite form [class*=cont] .btn, .nmodify form [class*=cont] .btn{
+
+.nwrite form [class*=cont] .btn,
+.nmodify form [class*=cont] .btn {
     width: fit-content;
     height: fit-content;
     margin: 3px 0px;
     width: 100px;
 }
-#nwrap .thumbnail_area{
+
+#nwrap .nthumbnail_area {
     text-align: center;
     width: 100%;
     min-height: 10px;
 }
+
 /* 게시판 썸네일애니메이션 thumbnail animation*/
-#nwrap img.nthumbnail{
-    width: 200px;
-    transition: all 0.1s linear;
+#nwrap img.nthumbnail {
+    max-width: 70%;
+    transition: all 0.2s linear;
 }
-#nwrap img.nthumbnail:hover{
-    transform: scale(0.2);
+
+#nwrap img.nthumbnail:hover {
+    transform: scale(1.2);
     box-shadow: 1px 1px 4px #ccc;
 }
-.nwrite .nbtn_area, .nmodify .nbtn_area{
-    justify-content: flex-end;
-}
-<<<<<<< HEAD
 
-=======
-#nwrap [class*='cont']{
+.nwrite .nbtn_area,
+.nmodify .nbtn_area, .nget .nbtn_area{
+    display: flex;
+    justify-content: center;
+}
+
+#nwrap [class*='cont'] {
     justify-content: space-between;
     flex-wrap: wrap;
     align-items: stretch;
     height: fit-content;
 }
-#nwrap [class*='cont'] div:nth-child(1){
+
+#nwrap [class*='cont'] div:nth-child(1) {
     padding: 10px;
     height: 100%;
 }
-#nwap [class*='cont'] div:nth-child(2){
+
+#nwap [class*='cont'] div:nth-child(2) {
     height: auto;
     vertical-align: middle;
     justify-content: space-evenly;
 }
->>>>>>> 4a1c9b24dd90fae79c23792e7b408f999dfbc17a
+
 /* get css */
 #nwrap .download {
     display: none;
@@ -594,54 +657,82 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     transition: all ease 0.2s;
     line-height: 1.4;
 }
-#nwrap .download:hover{
-    transform: scale(0.2);
+
+#nwrap .download:hover {
+    transform: scale(1.2);
 }
-.nget .nbtn_area{
-    justify-content: flex-end;
+.ndownload-btn {
+    width: 120px;
+    font-size: 12px;
+    padding: 10px;
 }
-.nget .nbtn_area td:nth-child(2){
+
+
+.nget .nbtn_area td:nth-child(2) {
     padding: 5px;
     outline: none;
     width: 500px;
 }
+.nbtn_area input.btn{
+    margin: 3px;
+    float: right;
+    right: 40px;
+    position: relative;
+    top:10px;
+}
+input.modify.btn, input.mfinish.btn.hdd, input.remove.btn  {
+    width: 80px;
+}
+
+
 /* noticecontents css */
-.nget #noticecontents{
+.nget #noticecontents {
     width: 700px;
     height: 290px;
     vertical-align: top;
 }
+
 /* 댓글 reply css */
-.nreply_line{
+.nreply_line {
     width: 1000px;
     margin-top: 20px;
     border-top: 1px solid grey;
+    position: relative;
 }
-.nreply_line > .nregist{
+
+.nreply_line>.nregist {
     display: inline-block;
     text-align: center;
     padding: 10px;
     width: 90px;
-    font-size: 16px;
+    font-size: 14px;
     margin-top: 20px;
     margin-left: 880px;
 }
-.nreply_line > .nreplyForm > div{
+
+.nreply_line .nreplyForm > div {
     text-align: center;
     vertical-align: middle;
-    color: #ccc;
+    color: #f77a7a;
     height: 150px;
 }
-.nreply_line > .nreplyForm > div:nth-child(1){
+.nreplyForm.row {
+    height: 200px;
+}
+
+.nreply_line .nreplyForm>div:nth-child(1) {
     width: 20%;
 }
-.nreply_line > .nreplyForm > div:nth-child(2){
+
+.nreply_line .nreplyForm>div:nth-child(2) {
     width: 65%;
 }
-.nreply_line > .nreplyForm > div:nth-child(3){
+
+.nreply_line .nreplyForm>div:nth-child(3) {
     width: 15%;
 }
-.nreply_line > .nreplyForm > div > input[type=text]{
+
+.nreplyForm>div>input[type=text] {
     display: inline-block;
     width: 120px;
     height: 40px;
@@ -649,77 +740,115 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     border-radius: 5px;
     text-align: center;
 }
+
 .nreply_line textarea {
     width: 600px;
-    height: 80px;
+    height: 80px !important;
     border-radius: 5px;
     outline: none;
     padding: 10px;
     font-size: 17px;
     color: #333;
 }
-.nreplyForm > div > .btn{
+
+.nreplyForm>div>.btn {
     height: fit-content;
     padding: 8px;
 }
-.nreplyForm > div > .nfinish {
+
+.nreplyForm>div>.nfinish {
     margin-top: 50px;
     margin-bottom: 20px;
     vertical-align: middle;
 }
+
 .nreplies {
     border-top: 1px solid gray;
     padding: 0;
     padding-top: 30px;
     margin-top: 20px;
+    display: block;
 }
-.nreplies li.no-reply{
+
+.nreplies li.no-reply {
     text-align: center;
     font-size: 20px;
     font-weight: bold;
 }
+
 .nreplies li {
     width: 1000px;
 }
+
 .nreplies li div:nth-child(1) {
     width: 75%;
 }
+
 .nreplies li div:nth-child(2) {
     width: 10%;
 }
+
 .nreplies li div:nth-child(3) {
     width: 15%;
 }
-.nreplies li div:nth-child(1) [class*='userid'] {
+
+.nreplies li div:nth-child(1) [class*='nuserid'] {
     width: 20%;
+    display: block;
     text-align: center;
     border-right: 1px solid #ccc;
+    padding:0 20px;
 }
-.nreplies li div:nth-child(1) [class*='reply'] {
-    width: 80%;
+
+.nreplies li {
+    display: flex; /* Flexbox를 사용하여 자식 요소들을 가로로 배치 */
+    justify-content: center; /* 요소들 사이에 균등한 공간 배분 */
+    align-items: center; /* 세로 정렬을 중앙으로 맞춤 */
+    padding: 10px 0;
+}
+
+.nbtn-group {
+    display: flex; /* 버튼들을 한 줄로 배치 */
+    flex-direction: column;
+    gap: 2px; /* 버튼 간의 간격을 조정 */
+    align-items: center;
+    float: right;
+}
+.nreplies li div {
+    display: flex; /* 내부 요소들을 가로로 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 4px; /* 아이템 간의 간격 */
+}
+.nreplies li div:nth-child(1) [class*='nreply']{
     padding-left: 10px;
 }
-.nreplies li div:nth-child(2), .nreplies li div:nth-child(3) {
+.nreplies li div:nth-child(2),
+.nreplies li div:nth-child(3) {
     text-align: center;
 }
+
 .nreplies li div:nth-child(2) {
     font-size: 14px;
     color: #ccc;
 }
-.nreplies li div:nth-child(3) .btn{
+
+.nreplies li div:nth-child(3) .btn {
     height: fit-content;
     margin: 5 auto;
     padding: 5px 0;
 }
+
 .npage {
     display: flex;
     justify-content: center;
     align-items: center;
 }
+
 .nreply_line .npage * {
     text-align: center;
     margin: 0 auto;
 }
+
 .nreply_line .page-btn {
     padding: 5px;
     width: 30px;
@@ -730,8 +859,26 @@ body.nlist, body.nwrite, body.nget, body.nmodify {
     color: black;
     font-weight: bold;
 }
+
 .nreply_line .page-btn:hover {
     background-color: yellow;
+}
+
+/* Search are css 공지 검색 */
+.nsearch_area {
+    display: inline-block;
+}
+
+input#nkeyword {
+    width: 320px;
+    height: 41px;
+    margin-left: 5px;
+    border-radius: 10px;
+}
+
+a#nsearch-btn {
+    padding-top: 7px;
+    padding-left: 15px;
 }
 
 /* notice area end 공지페이지 종료 */

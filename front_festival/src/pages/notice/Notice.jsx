@@ -1,4 +1,3 @@
-import axios from "axios";
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Dropdown from "../../components/Dropdown";
@@ -7,10 +6,9 @@ import Header from "../../layout/Header";
 
 const Notice = () => {
     const navigate = useNavigate();
-
     const location = useLocation();
-    const sendedCri = location.state;
 
+    // cri 상태 정의
     const [cri, setCri] = useState({
         pagenum: 1,
         amount: 10,
@@ -19,21 +17,39 @@ const Notice = () => {
         startrow: 0
     });
 
-    const [data, setData] = useState();
-    const [pageMaker, setPageMaker] = useState({
-        startpage: 1,
-        endPage: 1,
-        realEnd: 1,
-        total: 0,
-        prev: false,
-        next: false,
-        cri: null
-    })
+    // 더미 데이터 설정
+    const [data, setData] = useState({
+        list: [
+            { noticenum: 1, title: "공지사항 제목 1", replyCnt: 5, userid: "user1", regdate: "2024-11-01", updatedate: "2024-11-02", readcount: 10, newNotice: true },
+            { noticenum: 2, title: "공지사항 제목 2", replyCnt: 3, userid: "user2", regdate: "2024-11-05", updatedate: "2024-11-05", readcount: 8, newNotice: false },
+            { noticenum: 3, title: "공지사항 제목 3", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+            { noticenum: 4, title: "공지사항 제목 4", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+            { noticenum: 5, title: "공지사항 제목 5", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+            { noticenum: 6, title: "공지사항 제목 6", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+            { noticenum: 7, title: "공지사항 제목 7", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+            { noticenum: 8, title: "공지사항 제목 8", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+            { noticenum: 9, title: "공지사항 제목 9", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+            { noticenum: 10, title: "공지사항 제목 10", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+            { noticenum: 11, title: "공지사항 제목 11", replyCnt: 2, userid: "user3", regdate: "2024-10-28", updatedate: "2024-10-30", readcount: 15, newNotice: true },
+        ],
+        pageMaker: {
+            startpage: 1,
+            endPage: 3,
+            realEnd: 3,
+            total: 3,
+            prev: false,
+            next: false,
+            cri: { ...cri }
+        },
+        user: { userid: "admin" } // admin 사용자 설정
+    });
 
     const [inputs, setInputs] = useState("");
+
     const inputkeyword = (e) => {
-        setInputs(e.target.value)
-    }
+        setInputs(e.target.value);
+    };
+
     const clickSearch = (e) => {
         e.preventDefault();
         const changedCri = {
@@ -43,27 +59,9 @@ const Notice = () => {
             pagenum: 1
         };
         setCri(changedCri);
-    }
-    useEffect(() => {
-        const temp = {
-            pagenum: cri.pagenum,
-            amount: cri.amount,
-            type: cri.type,
-            keyword: cri.keyword,
-            startrow: cri.startrow
-        }
-        // axios.get(`/api/notice/notice/${cri.pagenum}`, { params: cri })
-        //     .then((resp) => {
-        //         setData(resp.data);
-        //         setPageMaker(resp.data.pageMaker);
-        //         setInputs(resp.data.pageMaker.cri.keyword);
-        //     })
-    }, [cri]);
-    useEffect(() => {
-        if (location.state) {
-            setCri(location.state)
-        }
-    }, [location.state]);
+    };
+
+    // 데이터가 없을 때 로딩 텍스트 표시
     const [chars, setChars] = useState([]);
     useEffect(() => {
         if (!data) {
@@ -74,7 +72,7 @@ const Notice = () => {
             }));
             setChars(splitText);
         }
-    }, [data]); // data가 없을 때만 로딩 텍스트 준비
+    }, [data]);
 
     // 데이터가 없을 때 로딩 텍스트 표시
     if (!data) {
@@ -93,91 +91,91 @@ const Notice = () => {
             </div>
         );
     }
-    else {
-        const list = data.list;
-        const noticeList = [];
-        if (list && list.length > 0) {
-            for (const notice of list) {
-                noticeList.push(
-                    <div className="row" key={notice.noticenum} onClick={()=>{
-                        navigate(`/notice/${notice.noticenum}`,{state:cri})
-                    }}>
-                        <div>{notice.noticenum}</div>
-                        <div>{notice.newNotice ? <sup className="noticenew">New</sup> : ""}</div>
-                        <a className="nget">
-                            <div>{notice.title}<span id="nreply_cnt">[{notice.replyCnt}]</span></div>
-                        </a>
-                        <div>{notice.userid}</div>
-                        <div>{notice.regdate}{notice.regdate !== notice.updatedate ? "(수정)" : ""}</div>
-                        <div>{notice.readcount}</div>
-                    </div>
-                )
-            }
-        }
-        else {
+
+    // 실제 데이터가 있을 경우 리스트 처리
+    const list = data.list;
+    const noticeList = [];
+    if (list && list.length > 0) {
+        for (const notice of list) {
             noticeList.push(
-                <div className="row no-list" key={-1}>
-                    <div>등록된 공지가 없습니다.</div>
-                </div>
-            )
-        }
-        const searchType = { "전체": "a", "제목": "T", "내용": "C", "작성자": "W", "제목 또는 내용": "TC", "제목 또는 작성자": "TW", "제목 또는 내용 또는 작성자": "TCW" }
-        const changeType = (value) => {
-            const changedCri = { ...cri, type: value }
-            setCri(changedCri);
-        }
-        // 관리자인지 확인
-        const isAdmin = data.user && data.user.userid === "admin";
-        return (
-            <>
-                <div className="wrap nlist">
-                    <Header></Header>
-                    <div className="notice-title">NOTICE</div>
-                    <div className="tar w1000 notice-cnt">글 개수 :{pageMaker.total} </div>
-                    <div className="nlist ntable">
-                        <div className="nthead tac">
-                            <div className="row">
-                                <div>번호</div>
-                                <div>제목</div>
-                               <div>작성자</div>
-                                <div>날짜</div>
-                                <div>조회수</div>
-                            </div>
-                        </div>
-                        <div className="ntbody">
-                            {noticeList}
-                        </div>
+                <div className="row" key={notice.noticenum} onClick={() => {
+                    navigate(`/notice/${notice.noticenum}`, { state: cri });
+                }}>
+                    <div>{notice.noticenum}</div>
+                    <div>{notice.newNotice ? <sup className="noticenew">New</sup> : ""}
+                    <a className="nget">
+                        {notice.title}<span id="nreply_cnt">[{notice.replyCnt}]</span>
+                    </a>
                     </div>
-                    <Pagination pageMaker={pageMaker}></Pagination>
-                    {
-                        isAdmin && (
-                            <table className="nbtn_table">
-                                <tbody>
-                                    <tr>
-                                        <td>
-                                            <a className="nwrite nbtn" onClick={()=>{
-                                                navigate("/notice/nwrite",{state:cri})
-                                            }}>글쓰기</a>
-                                        </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        )
-                    }
-                    <div className="search_area">
-                        <form name="searchForm" action="/notice/notice" className="row">
-                            <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}>
-                            </Dropdown>
-                            <input type="search" id="keyword" name="keyword" onChange={inputkeyword} value={inputs} />
-                            <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
-                            <input type="hidden" name="pagenum" />
-                            <input type="hidden" name="amount" />
-                        </form>
-                    </div>
+                    <div>{notice.userid}</div>
+                    <div>{notice.regdate}{notice.regdate !== notice.updatedate ? "(수정)" : ""}</div>
+                    <div>{notice.readcount}</div>
                 </div>
-            </>
-        )
+            );
+        }
+    } else {
+        noticeList.push(
+            <div className="row no-list" key={-1}>
+                <div>등록된 공지가 없습니다.</div>
+            </div>
+        );
     }
 
-}
+    // 검색 타입
+    const searchType = { "전체": "a", "제목": "T", "내용": "C", "제목 또는 내용": "TC" };
+
+    const changeType = (value) => {
+        const changedCri = { ...cri, type: value };
+        setCri(changedCri);
+    };
+
+    // 관리자인지 확인
+    const isAdmin = data.user && data.user.userid === "admin";
+
+    return (
+        <>
+            <div className="nwrap nlist" id="nwrap">
+                <div className="notice-title">Notice</div>
+                <div className="tar w1000 notice-cnt">글 개수 :{data.pageMaker.total} </div>
+                <div className="nlist ntable">
+                    <div className="nthead tac">
+                        <div className="row">
+                            <div>번호</div>
+                            <div>제목</div>
+                            <div>작성자</div>
+                            <div>날짜</div>
+                            <div>조회수</div>
+                        </div>
+                    </div>
+                    <div className="ntbody">
+                        {noticeList}
+                    </div>
+                </div>
+                <Pagination pageMaker={data.pageMaker} />
+                {isAdmin && (
+                    <table className="nbtn_table">
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a className="nwrite nbtn" onClick={() => navigate("/notice/nwrite", { state: cri })}>글쓰기</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                )}
+                <div className="nsearch_area">
+                    <form name="searchForm" action="/notice/notice" className="row">
+                        <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}>
+                        </Dropdown>
+                        <input type="search" id="nkeyword" name="keyword" onChange={inputkeyword} value={inputs} />
+                        <a id="nsearch-btn" className="btn" onClick={clickSearch}>검색</a>
+                        <input type="hidden" name="pagenum" />
+                        <input type="hidden" name="amount" />
+                    </form>
+                </div>
+            </div>
+        </>
+    );
+};
+
 export default Notice;

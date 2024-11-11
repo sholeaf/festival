@@ -73,7 +73,7 @@ public class NoticeController {
 	
 	@PutMapping("{noticenum}")
 	public ResponseEntity<Long> nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception {
-		long noticenum = service.nmodify(noticenum,HttpStatus.OK);
+		long noticenum = service.nmodify(notice,files,deleteFiles);
 		if(noticenum != -1) {
 			return new ResponseEntity<>(noticenum, HttpStatus.OK);
 		}

@@ -1,0 +1,59 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.NoticeMapper">
+	<sql id="cri">
+		<if test="keyword != '' and keyword != null and type != 'a'.toString()">
+			<trim prefixOverrides="or" prefix="(" suffix=") and">
+				<foreach collection="typeArr" item="t">
+					or
+					<choose>
+						<when test="t == 'T'.toString()">
+							noticetitle like ('%${keyword}%')
+						</when>
+						<when test="t == 'C'.toString()">
+							noticecontents like ('%${keyword}%')
+						</when>
+						<when test="t == 'W'.toString()">
+							userid like ('%${keyword}%')
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<insert id="insertNotice">
+		insert into notice (noticetitle, noticecontent,userid) values(#{noticetitle},#{noticecontente},#{userid})
+	</insert>
+	<update id ="updateReadCount">
+		update notice
+		set readcount = #{readcount}
+		where noticenum = #{noticenum}
+	</update>
+	<update id="updateNotice">
+		update notice
+		set noticetitle = #{noticetitle}, noticecontent =#{noticecontent}, updatedate=now()
+		where noticenum = #{noticenum}
+	</update>
+	<delete id="deleteNotice">
+		delete from notice where noticenum = #{noticenum}
+	</delete>
+	<select id="getList">
+		selete * from notice
+		where
+		<include refid="cri"></include>
+		noticenum > 0 order by noticenum desc limit #{startrow}, #{amount}
+	</select>
+	<select id="getTotal">
+		select count(*) from notice
+		where
+		<include refid="cri"></include>
+		noticenum > 0
+	</select>
+	<select id="getNoticeByNoticenum">
+		select * from notice where noticenum = #{noticenum}
+	</select>
+	<select id="getLastNum">
+		select max(noticenum) from notice where userid=#{userid}
+	</select>
+</mapper>

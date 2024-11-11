@@ -1,0 +1,37 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.NoticeReplyMapper">
+	<insert id="insertNoticeReply">
+		insert into notice_reply(replycontent, boardnum, userid) value(#{replycontent},#{boardnum},#{userid})
+	</insert>
+	<select id="getLastReply">
+		select * from notice_reply where userid=#{userid}
+		order by replynum desc limit 1
+	</select>
+	<select id="getTotal">
+		select count(*) from notice_reply where boardnum=#{boardnum}
+	</select>
+	<select id="getList">
+		selet * from notice_reply where noardnum=#{boardnum} limit=#{cri.startrow},#{cri.amount}
+	</select>
+	<select id="getDetail">
+		select * from notice_reply where replynum=#{replynum}
+	</select>
+	<select id="getRecentNreplyCnt">
+		<![CDATA[ 
+			select count(*) from notice_reply where boardnum=#{boardnum} and timestampdiff(HOUR,regdate,now()) < 1
+		]]>
+	</select>
+	<update id="updateNOticeReply">
+		update notice_reply
+		set replycontent = #{replycontent}, updatedate = now()
+		where replynum = #{replynum}
+	</update>
+	<delete id="deleteNoticeReply">
+		delete from notice_reply where replynum=#{replynum}
+	</delete>
+	<delete id="deleteRepliesByNoticenum">
+		delete from notice_reply where boardnum = #{boardnum}
+	</delete>
+</mapper>

@@ -12,7 +12,7 @@ public interface NoticeService {
 	HashMap<String, Object> getList(Criteria cri);
 	long regist(NoticeDTO notice, MultipartFile[] files) throws Exception;
 	HashMap<String, Object> getDetail(long noticenum, String loginUser);
-	long nmodify(long noticenum, HttpStatus ok);
-	int remove(long noticenum);
+	long remove(long noticenum);
+	long nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception;
 
 }

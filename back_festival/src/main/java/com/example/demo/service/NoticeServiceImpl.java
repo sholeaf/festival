@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
@@ -105,7 +106,7 @@ public class NoticeServiceImpl implements NoticeService{
 		List<NoticeFileDTO> files = nfmapper.getFiles(noticenum);
 		 
 		if(notice != null && notice.getUserid().equals(loginUser)) {
-			nmapper.updateReadCount(notice, notice.getReadcount()+1);
+			nmapper.updateReadCount(noticenum, notice.getReadcount()+1);
 			notice.setReadcount(notice.getReadcount()+1);
 		}
 		result.put("notice", notice);
@@ -114,15 +115,84 @@ public class NoticeServiceImpl implements NoticeService{
 	}
 
 	@Override
-	public long nmodify(long noticenum, HttpStatus ok) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception {
+		long noticenum = notice.getNoticenum();
+		NoticeDTO orgNotice = nmapper.getNoticeByNoticenum(noticenum);
+		if(nmapper.updateNotice(notice) !=1) {
+			return -1;
+		}
+		List<NoticeFileDTO> orgFileList = nfmapper.getFiles(notice.getNoticenum());
+		if(orgFileList.size() == 0 && (files == null || files.length == 0)) {
+			return noticenum;
+		}
+		else {
+			if(files != null && files.length != 0) {
+				boolean flag = false;
+				ArrayList<String> sysnames = new ArrayList<>();
+				for(int i = 0; i < files.length; i++) {
+					MultipartFile file = files[i];
+					String orgname = file.getOriginalFilename();
+					if(orgname == null || orgname.equals("")) {
+						continue;
+					}
+					int lastIdx = orgname.lastIndexOf(".");
+					String ext = orgname.substring(lastIdx);
+					LocalDateTime now = LocalDateTime.now();
+					String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+					String systemname = time+UUID.randomUUID().toString()+ext;
+					String path = saveFolder+systemname;
+					NoticeFileDTO nfdto = new NoticeFileDTO();
+					nfdto.setOrgname(orgname);
+					nfdto.setNoticenum(notice.getNoticenum());
+					flag = nfmapper.insertFile(nfdto) == 1;
+					file.transferTo(new File(path));
+					
+					sysnames.add(systemname);
+					
+					if(!flag) {
+						break;
+					}
+				}
+				if(!flag) {
+					for(String systemname : sysnames) {
+						File file = new File(saveFolder, systemname);
+						if(file.exists()) {
+							file.delete();
+						}
+						nfmapper.deleteFileBySystemname(systemname);
+					}
+				}
+				else {
+					for(String systemname : deleteFiles) {
+						File file = new File(saveFolder, systemname);
+						if(file.exists()) {
+							file.delete();
+						}
+						nfmapper.deleteFileBySystemname(systemname);
+					}
+					return noticenum;
+				}
+			}
+		}
+		return -1;
 	}
 
 	@Override
-	public int remove(long noticenum) {
-		// TODO Auto-generated method stub
-		return 0;
+	public long remove(long noticenum) {
+		if(nmapper.deleteNotice(noticenum) == 1) {
+			nrmapper.deleteRepliesByNoticenum(noticenum);
+			List<NoticeFileDTO> files = nfmapper.getFiles(noticenum);
+			for(NoticeFileDTO nfdto : files) {
+				File file = new File(saveFolder,nfdto.getSystemname());
+				if(file.exists()) {
+					file.delete();
+					nfmapper.deleteFileBySystemname(nfdto.getSystemname());
+				}
+			}
+			return noticenum;
+		}
+		return -1;
 	}
+
 
 }

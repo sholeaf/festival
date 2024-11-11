@@ -13,4 +13,5 @@ public class NoticeDTO {
 	private long nreplyCnt;
 	private String updatenoticedate;
 	private int noticereadcount;
+	private int Readcount;
 }
