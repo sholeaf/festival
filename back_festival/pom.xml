@@ -75,6 +75,16 @@
 			<version>3.0.3</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- 메일 인증을 하기 위해서 필요 -->
+		<dependency>
+		    <groupId>org.springframework.boot</groupId>
+		    <artifactId>spring-boot-starter-mail</artifactId>
+		    <version>3.0.1</version>
+		</dependency>
+
+
+
 	</dependencies>
 
 	<build>

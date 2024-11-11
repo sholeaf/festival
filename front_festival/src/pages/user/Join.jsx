@@ -5,7 +5,7 @@ import axios from 'axios';
 const Join = () => {
     const navigate = useNavigate();
     let pwTest = [false, false, false, false, false]
-    const checkId = (e) => {
+    const idCheck = (e) => {
         const result = document.getElementById(`id_result`);
         const userid = document.joinForm.userid;
         console.log(userid.value);
@@ -56,6 +56,24 @@ const Join = () => {
             pw_result.innerHTML = "비밀번호 확인 완료!";
             document.joinForm.username.focus();
         }
+    }
+
+    const getCode = () => {
+        const formData = new FormData();
+
+        const email = document.joinForm.useremail.value;
+
+        formData.append('email', email);
+
+        console.log(email);
+
+        axios.post('/api/mail/confirm.json', formData)
+            .then((resp) => {
+                alert("인증번호 : "+resp);
+            })
+            .catch((err) => {
+                alert("실패");
+            })
     }
 
     const clickJoin = () => {
@@ -187,7 +205,7 @@ const Join = () => {
                     }}>모두의 축제</p>
                 </div>
                 <form action="/user/join" method="post" name="joinForm">
-                    <input type="text" name="userid" id="userid" placeholder="아이디를 입력 하세요" onChange={checkId} />
+                    <input type="text" name="userid" id="userid" placeholder="아이디를 입력 하세요" onChange={idCheck} />
                     <p id="id_result"></p>
                     <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력 하세요" onChange={pwCheck} />
                     <input type="password" name="userpw_re" id="userpw_re" placeholder="비밀번호확인" onChange={pwCheck} />
@@ -195,7 +213,7 @@ const Join = () => {
                     <input type="text" name="username" id="username" placeholder="이름을 입력 하세요" />
                     <input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" />
                     <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" />
-                    <input type="button" value="인증번호 받기" />
+                    <input type="button" value="인증번호 받기" onClick={getCode}/>
                     <input type="text" name="checknum" id="checknum" placeholder="인증번호를 입력 하세요" />
                     <div className="flexBox">
                         <div className="radio_item">
