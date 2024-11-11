@@ -130,8 +130,8 @@ const Notice = () => {
         const isAdmin = data.user && data.user.userid === "admin";
         return (
             <>
+                <Header></Header>
                 <div className="wrap nlist">
-                    <Header></Header>
                     <div className="notice-title">NOTICE</div>
                     <div className="tar w1000 notice-cnt">글 개수 :{pageMaker.total} </div>
                     <div className="nlist ntable">

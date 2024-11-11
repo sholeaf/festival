@@ -1,30 +1,39 @@
 import { useNavigate } from "react-router-dom";
 import DaumPostCode from "../../components/DaumPostCode";
 import axios from 'axios';
+import { useState } from "react";
 
 const Join = () => {
     const navigate = useNavigate();
-    let pwTest = [false, false, false, false, false]
-    const checkId = (e) => {
+    const [emailCode, setEmailCode] = useState("");
+    let codeFlag = false;
+
+    const idCheck = (e) => {
         const result = document.getElementById(`id_result`);
-        const userid = document.joinForm.userid;
-        console.log(userid.value);
-        if (userid.value.length >= 5) {
-            axios.get('/api/user/checkId', userid.value)
+        const user = document.joinForm.userid;
+        let userid = user.value;
+        if (user.value.length >= 5) {
+            axios.get('/api/user/checkId', { params: { userid } })
                 .then(resp => {
                     if (resp.data == "O") {
                         result.innerHTML = "사용할 수 있는 아이디입니다!";
+                        if(user.value.length > 12){
+                            result.innerHTML = "아이디는 최대 12자 입니다!";
+                        }
                     }
                     else {
                         result.innerHTML = "중복된 아이디가 있습니다!";
-                        userid.value = "";
-                        userid.focus();
+                        user.value = "";
+                        user.focus();
                     }
                 })
         }
-        if(userid.value.length == 0){
+        if(user.value.length < 5){
+            result.innerHTML = "아이디는 최소 5자 입니다!";
+        }
+        if(user.value.length == 0){
             result.innerHTML = "아이디를 입력해 주세요!";
-            userid.focus();
+            user.focus();
         }
     }
     const pwCheck = (e) => {
@@ -32,8 +41,6 @@ const Join = () => {
         const userpw_re = document.joinForm.userpw_re;
         const pw_result = document.getElementById(`pw_result`);
         const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@-]).{4,}$/;
-        console.log(userpw.value);
-        console.log(userpw_re.value);
 
         if(userpw.value.length <= 8){
             pw_result.innerHTML = "비밀번호의 길이는 9자 이상으로 해주세요!";
@@ -55,6 +62,38 @@ const Join = () => {
         else{
             pw_result.innerHTML = "비밀번호 확인 완료!";
             document.joinForm.username.focus();
+        }
+    }
+
+    const getCode = () => {
+        const formData = new FormData();
+
+        const email = document.joinForm.useremail.value;
+
+        formData.append('email', email);
+
+
+        axios.post('/api/mail/confirm.json', formData)
+            .then((resp) => {
+                alert("인증번호 : "+resp.data);
+                setEmailCode(resp.data);
+            })
+            .catch((err) => {
+                alert("실패");
+            })
+    }
+
+    const codeCheck = () => {
+        const codeCheck = document.joinForm.codeCheck;
+        if(codeCheck.value == ""){
+            codeFlag = false;
+        }
+        if(codeCheck.value != emailCode){
+            codeFlag = false;
+        }
+        if(codeCheck.value == emailCode){
+            codeFlag = true;
+            alert("인증 성공되었습니다!");
         }
     }
 
@@ -131,14 +170,27 @@ const Join = () => {
             return false;
         }
 
+        const useremail = joinForm.useremail;
+        const exp_email = /^[a-zA-Z0-9.!#$%&'*+\/=?^_`{|}~-]+@[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?(?:\.[a-zA-Z0-9](?:[a-zA-Z0-9-]{0,61}[a-zA-Z0-9])?)*$/;
+        if(useremail.value == ""){
+            alert("이메일을 입력해주세요!")
+            return false;
+        }
+        if(!exp_email.test(useremail.value)){
+            alert("이메일 형식에 맞도록 작성해 주세요!");
+            return false;
+        }
+        if(!codeFlag){
+            alert("이메일 인증을 진행해 주세요!");
+            return false;
+        }
+
+
         const usergender = joinForm.usergender;
         if (!usergender[0].checked && !usergender[1].checked) {
             alert("성별을 선택하세요!");
             return false;
         }
-
-        const useremail = joinForm.useremail;
-
 
         const zipcode = joinForm.zipcode;
         if (zipcode.value == "") {
@@ -165,7 +217,6 @@ const Join = () => {
             addrdetail: addrdetail.value,
             addretc: joinForm.addretc.value,
         }
-        console.log(user);
 
         axios.post('/api/user/join', user)
             .then((resp) => {
@@ -187,7 +238,7 @@ const Join = () => {
                     }}>모두의 축제</p>
                 </div>
                 <form action="/user/join" method="post" name="joinForm">
-                    <input type="text" name="userid" id="userid" placeholder="아이디를 입력 하세요" onChange={checkId} />
+                    <input type="text" name="userid" id="userid" placeholder="아이디를 입력 하세요" onChange={idCheck} />
                     <p id="id_result"></p>
                     <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력 하세요" onChange={pwCheck} />
                     <input type="password" name="userpw_re" id="userpw_re" placeholder="비밀번호확인" onChange={pwCheck} />
@@ -195,8 +246,10 @@ const Join = () => {
                     <input type="text" name="username" id="username" placeholder="이름을 입력 하세요" />
                     <input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" />
                     <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" />
-                    <input type="button" value="인증번호 받기" />
-                    <input type="text" name="checknum" id="checknum" placeholder="인증번호를 입력 하세요" />
+                    <input type="button" value="인증번호 받기" onClick={getCode}/>
+                    <input type="text" name="codeCheck" id="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e)=>{
+                        codeCheck(e)
+                    }}/>
                     <div className="flexBox">
                         <div className="radio_item">
                             <input type="radio" id="usergender1" name="usergender" value="M" />
@@ -205,7 +258,7 @@ const Join = () => {
                             </label>
                         </div>
                         <div className="radio_item">
-                            <input type="radio" id="usergender2" name="usergender" value="M" />
+                            <input type="radio" id="usergender2" name="usergender" value="W" />
                             <label htmlFor="usergender2">
                                 여자
                             </label>

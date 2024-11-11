@@ -10,17 +10,19 @@ const Header = () => {
         navigate(path);
     };
     const logoutClick = () => {
-        axios.get(`/api/user/logout`)
+        if(window.confirm("로그아웃하시겠습니까?")){
+            axios.get(`/api/user/logout`)
             .then(resp => {
                 if (resp.data === "O") {
                     alert("안녕히 가세요!");
                     setLoginUser("");
-                    handleNavigation("/");
-                }
-            })
-            .catch((error) => {
-                console.error("로그아웃 오류: ", error);
-            });
+                        handleNavigation("/");
+                    }
+                })
+                .catch((error) => {
+                    console.error("로그아웃 오류: ", error);
+                });
+        }
     };
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
@@ -52,7 +54,7 @@ const Header = () => {
             <div className="header_area">
                 <div className="navigate">
                     <div className="logo" onClick={() => handleNavigation("/")}>
-                        <p>모두의 축제</p>
+                        <a>모두의 축제</a>
                     </div>
                     <div className="schedule_btn">
                         <a onClick={() => handleNavigation("/festival")}>축제 일정</a>
@@ -61,7 +63,7 @@ const Header = () => {
                         <a onClick={() => handleNavigation("/community")}>축제 후기</a>
                     </div>
                     <div className="notice_btn">
-                        <a onClick={() => handleNavigation("/notice")}>공지사항</a>
+                        <a onClick={() => handleNavigation("/notice/notice")}>공지사항</a>
                     </div>
                     <div className="mypage_btn">
                         <a onClick={() => handleNavigation("/user/mypage")}>마이페이지</a>
