@@ -795,6 +795,13 @@ body.nmodify {
 
 /* festival .css */
 
+.festival_img_area{
+    width: 100%;
+    height: 400px;
+    object-fit: contain; /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center; /* 이미지 중앙 배치 */
+}
+
 .button-container{
     display: flex;
     position: relative;
