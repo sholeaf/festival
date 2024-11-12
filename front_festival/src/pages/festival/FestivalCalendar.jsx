@@ -14,10 +14,10 @@ const FestivalCalendar = ({ setParam, param, API_URL, API_KEY }) => {
             (date.getMonth() + 1).toString().padStart(2, '0') +
             date.getDate().toString().padStart(2, '0'); // YYYYMMDD 형식
 
-        // setParam을 호출하여 eventStartDate를 업데이트하고, 페이지 번호를 1로 리셋
         setParam({
             ...param,
             eventStartDate: selectedDate,
+            eventEndDate: selectedDate,
             pageNo: 1, // 날짜가 바뀔 때 페이지를 1로 리셋
         });
 
@@ -34,7 +34,7 @@ const FestivalCalendar = ({ setParam, param, API_URL, API_KEY }) => {
         if (isLoading) return;  // 로딩 중이면 API 요청을 방지
         setIsLoading(true);
 
-        axios.get(`${API_URL}numOfRows=${param.numOfRow}&pageNo=${param.pageNo}&arrange=A&serviceKey=${API_KEY}&eventStartDate=${param.eventStartDate}`)
+        axios.get(`${API_URL}numOfRows=${param.numOfRow}&pageNo=${param.pageNo}&arrange=A&serviceKey=${API_KEY}&eventStartDate=${param.eventStartDate}&eventEndDate=${param.eventEndDate}`)
             .then((resp) => {
                 const festivalsData = resp.data.response.body.items.item || [];
                 setFestivals((prevFestivals) => [
