@@ -34,13 +34,12 @@ const Festival = () => {
     const todayRef = useRef(noHyphen);
 
     useEffect(() => {
-        const month = param.eventStartDate.substring(4, 6);  // Get the month part (5th and 6th character of YYYYMMDD format)
+        const month = param.eventStartDate.substring(4, 6); 
         setSeason(month);
     }, [param.eventStartDate]);
 
     useEffect(() => {
-        if (param.areaCode == '') {
-            console.log("몇월? : ", season);
+        if (activeTab == 'calendar') {
             if (season >= '03' && season <= '05') {
                 setImg(spring);
             } else if (season >= '06' && season <= '08') {
@@ -51,12 +50,12 @@ const Festival = () => {
                 setImg(winter);
             }
         }
-        else if (param.areaCode != '') {
+        else if (activeTab == 'map') {
             if (param.areaCode == '1') {
                 setImg(summer);
             }
         }
-    }, [season, param.areaCode])
+    }, [season, param.areaCode, activeTab])
 
     useEffect(() => {
         if (activeTab !== 'calendar') {
