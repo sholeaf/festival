@@ -14,7 +14,6 @@
     font-weight: normal;
     font-style: normal;
 }
-
 * {
     box-sizing: border-box;
 }
@@ -55,11 +54,6 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 }
-
-.navigate a {
-    margin: 20px;
-}
-
 /* Dropdown css */
 .common-dropdown {
     position: relative;
@@ -99,26 +93,16 @@ img {
     display: flex;
     text-align: center;
     align-items: center;
-
 }
 
-.react-calendar__navigation__label {
-    width: 5.5rem;
-    height: 1.375rem;
-    font-size: 16px;
-    border: none;
-    font-weight: 700;
-    background-color: #fff;
+.navigate {
+    display: flex;
 }
 
-.react-calendar__tile--active {
-    background: green;
-    color: white;
+.navigate a {
+    margin : 20px;
 }
 
-.react-calendar__tile--now {
-    background: green;
-}
 
 /* notice area 공지페이지 시작 */
 #nwrap {
@@ -183,7 +167,7 @@ img {
     width: 10%;
 }
 
-.nlist.ntable .row no-list div {
+.nlist.ntable .row.no-list div {
     width: 100%;
     padding: 10px !important;
 }
@@ -309,9 +293,13 @@ img {
     margin: 10px auto;
     position: relative;
     float: right;
-    bottom: 35px;
+    bottom: 50px;
     right: 100px;
+    /* display: none; */
 
+}
+.nbtn_table.show{
+    display: block;
 }
 
 /* 로딩 텍스트 애니메이션 */
@@ -500,6 +488,8 @@ img {
 /* Pagination 페이지 버튼 디자인 */
 .pagination {
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
 .pagination tr {
@@ -590,7 +580,7 @@ a.nwrite {
 .nmodify textarea {
     margin-top: 20px;
     resize: none;
-    height: 290px;
+    height: 290px !important;
 }
 
 .nget textarea {
@@ -605,19 +595,19 @@ a.nwrite {
     width: 100px;
 }
 
-#nwrap .nthumbnail_area {
+.nthumbnail_area {
     text-align: center;
     width: 100%;
     min-height: 10px;
 }
 
 /* 게시판 썸네일애니메이션 thumbnail animation*/
-#nwrap img.nthumbnail {
+img.nthumbnail {
     max-width: 70%;
     transition: all 0.2s linear;
 }
 
-#nwrap img.nthumbnail:hover {
+img.nthumbnail:hover {
     transform: scale(1.2);
     box-shadow: 1px 1px 4px #ccc;
 }
@@ -680,7 +670,7 @@ a.nwrite {
     position: relative;
     top:10px;
 }
-input.modify.btn, input.mfinish.btn.hdd, input.remove.btn  {
+input.nrmodify.btn, input.nrfinish.btn.hdd, input.nrremove.btn  {
     width: 80px;
 }
 
@@ -846,7 +836,6 @@ input.modify.btn, input.mfinish.btn.hdd, input.remove.btn  {
 
 .nreply_line .npage * {
     text-align: center;
-    margin: 0 auto;
 }
 
 .nreply_line .page-btn {
@@ -882,3 +871,49 @@ a#nsearch-btn {
 }
 
 /* notice area end 공지페이지 종료 */
+/* notice area end 공지페이지 종료 */
+
+
+/* festival .css */
+/* 달력 디자인 */
+.button-container button{
+    margin: 20px 30px;
+}
+.react-calendar{
+    width: 350px;
+    max-width: 100%;
+    height: 330px;
+    background: white;
+    border: 1px solid #a0a096;
+    font-family: 'Arial', 'Helvetica', sans-serif;
+    line-height: 1.125em;
+    margin: 0 auto;
+}
+.react-calendar__navigation {
+    width: inherit;
+    height: 3.5rem;
+    display: flex;
+    text-align: center;
+    align-items: center;
+    
+}
+
+.react-calendar__navigation__label {
+    width: 5.5rem;
+    height: 1.375rem;
+    font-size: 16px;
+    border: none;
+    font-weight: 700;
+    background-color: #fff;
+}
+
+.festival-list{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+}
+.festival-list li{
+    width: 23%;
+    margin: 15px;
+}
+/* festival .css 종료 */

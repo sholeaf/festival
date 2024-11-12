@@ -12,7 +12,7 @@
 							noticetitle like ('%${keyword}%')
 						</when>
 						<when test="t == 'C'.toString()">
-							noticecontents like ('%${keyword}%')
+							noticecontent like ('%${keyword}%')
 						</when>
 						<when test="t == 'W'.toString()">
 							userid like ('%${keyword}%')
@@ -23,7 +23,7 @@
 		</if>
 	</sql>
 	<insert id="insertNotice">
-		insert into notice (noticetitle, noticecontent,userid) values(#{noticetitle},#{noticecontente},#{userid})
+		insert into notice (noticetitle, noticecontent,userid) values(#{noticetitle},#{noticecontent},#{userid})
 	</insert>
 	<update id ="updateReadCount">
 		update notice
@@ -39,7 +39,7 @@
 		delete from notice where noticenum = #{noticenum}
 	</delete>
 	<select id="getList">
-		selete * from notice
+		select * from notice
 		where
 		<include refid="cri"></include>
 		noticenum > 0 order by noticenum desc limit #{startrow}, #{amount}

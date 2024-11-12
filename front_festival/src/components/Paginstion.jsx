@@ -1,26 +1,36 @@
-import { useNavigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 const Pagination = ({ pageMaker }) => {
     const navigate = useNavigate();
-    const { startpage, endPage, prev, next, cri } = pageMaker;
+    const startPage = pageMaker.startPage;
+    const endPage = pageMaker.endPage;
+    const cri = pageMaker.cri;
     const pagenum = cri.pagenum;
-
+    const location = useLocation();
+    const [stateCri, setStateCri] = useState(cri);
+    useEffect(() => {
+        if (location.state) {
+            setStateCri(location.state);  // location.state가 바뀌면 cri 상태 업데이트
+        }
+    }, [location.state]);
     const elList = [];
 
     const clickBtn = (e) => {
         e.preventDefault();
-        const target = Number(e.target.getAttribute("href"));
+
+        const target = e.target.getAttribute("href");
         const temp = {
             pagenum: target,
             amount: cri.amount,
             type: cri.type,
             keyword: cri.keyword,
-            startrow: cri.startrow
+            startrow: (target - 1) * cri.amount // startrow 계산
         };
-        navigate(`/notice/notice`, { state: temp });
+        navigate(`/notice/list`, { state:temp });
     };
 
-    for (let i = startpage; i <= endPage; i++) {
+    for (let i = startPage; i <= endPage; i++) {
         if (pagenum === i) {
             elList.push(<span className="nowPage" key={i}>{i}</span>);
         } else {
@@ -32,13 +42,15 @@ const Pagination = ({ pageMaker }) => {
 
     return (
         <div className="pagination w1000 tac">
-            {prev && (
-                <a className="btn changePage" href={startpage - 1} key={startpage - 1} onClick={clickBtn}>&lt;</a>
-            )}
+            {
+                pageMaker.prev ?
+                <a className="btn changePage" href={startPage - 1} key={startPage - 1} onClick={clickBtn}>&lt;</a>:""
+            }
             {elList}
-            {next && (
-                <a className="btn changePage" href={endPage + 1} key={endPage + 1} onClick={clickBtn}>&gt;</a>
-            )}
+            {
+                pageMaker.next ? 
+                <a className="btn changePage" href={endPage + 1} key={endPage + 1} onClick={clickBtn}>&gt;</a>:""
+            }
         </div>
     );
 };

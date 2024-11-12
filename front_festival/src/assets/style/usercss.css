@@ -1,0 +1,139 @@
+@font-face {
+    font-family: 'EBSJSKMedium';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/EBSJSKMedium.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 서브포트 */
+@font-face {
+    font-family: 'GowunDodum-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/GowunDodum-Regular.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
+}
+
+/* 헤더 */
+.header_area{
+    padding: 10px 5px;
+}
+.navigate {
+    display: flex;
+    justify-content: space-evenly;
+}
+.navigate .logo a{
+    font-family: 'EBSJSKMedium';
+    font-weight: bold;
+    font-size: 24px;
+}
+
+.navigate a {
+    font-family: 'GowunDodum-Regular';
+    margin : 20px;
+    font-size: 20px;
+    user-select: none;
+    cursor: pointer;
+}
+
+/* 로그인 페이지 */
+.login_wrap + header {
+    display: none;
+}
+.login_wrap{
+    width: 100%;
+    user-select: none;
+}
+.login_wrap .main{
+    max-width: 1400px;
+    margin: 0 auto;
+}
+.login_wrap .main .center{
+    max-width: 1000px;
+    margin: 55px auto;
+    padding: 50px;
+}
+.login_wrap .main .center .logo p{
+    font-family: 'EBSJSKMedium';
+    cursor: pointer;
+    text-align: center;
+    font-size: 55px;
+    width: 250px;
+    margin: 0 auto;
+}
+.login_wrap .main .center .float{
+    margin-top: 50px;
+}
+.login_wrap .main .center .float .img{
+    float: left;
+}
+.login_wrap .main .center .float .img img{
+    width: 400px;
+    height: 600px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+}
+.login_wrap .main .center .float .login_area{
+    float: right;
+    width: 400px;
+    height: 600px;
+    border-radius: 30px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    padding: 25px;
+}
+.login_area .text{
+    cursor: pointer;
+}
+.login_area .sns_login img{
+    width: 75px;
+    height: 75px;
+    cursor: pointer;
+    margin: 0 20px;
+}
+
+/* Join page */
+.joinpage{
+    width: 100%;
+    background: no-repeat url(../images/회원가입바탕.png) ;
+
+}
+.wrap{
+    width: 1000px;
+    margin: 0 auto;
+}
+.joinpage .wrap .logo p{
+    font-family: 'EBSJSKMedium';
+    cursor: pointer;
+    text-align: center;
+    font-size: 55px;
+    width: 250px;
+    background-color: #fff;
+    border-radius: 15px;
+}
+.joinpage .wrap form {
+    width: 500px;
+}
+.joinpage .wrap form input{
+    width: 500px;
+}
+.joinpage .wrap form .flexBox{
+    display: flex;
+    margin-top: 3px;
+}
+.joinpage .wrap form .flexBox .radio_item{
+    width: 250px;
+}
+.joinpage .wrap form .flexBox .radio_item input{
+    display: none;
+}
+.joinpage .wrap form .flexBox .radio_item label{
+    display: inline-block;
+    width: 250px;
+    background-color: #fff;
+}
+.flexBox .radio_item input[type="radio"]:checked + label {
+    background-color: lightblue;
+  }
+#id_result, #pw_result{
+    background-color: #fff;
+}
+/* joinpage end */

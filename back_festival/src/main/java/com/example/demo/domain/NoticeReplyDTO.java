@@ -7,6 +7,7 @@ public class NoticeReplyDTO {
 	private long replynum;
 	private String replycontent;
 	private String userid;
-	private long boardnum;
+	private long noticenum;
 	private String replyregdate;
+	private String updatedate;
 }

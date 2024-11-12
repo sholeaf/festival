@@ -3,6 +3,7 @@ import Dropdown from "../../components/Dropdown";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "../../components/Paginstion";
+import Header from "../../layout/Header";
 
 const Adminpage = () => {
     const navigate = useNavigate();
@@ -102,6 +103,7 @@ const Adminpage = () => {
 
         return (
             <>
+            <Header />
                 <div className="adminpage" id="wrap">
                     <div className="adminpage ntable">
                         <div className="nthead tac">

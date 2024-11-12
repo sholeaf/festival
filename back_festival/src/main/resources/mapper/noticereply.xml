@@ -3,27 +3,36 @@
 	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.NoticeReplyMapper">
 	<insert id="insertNoticeReply">
-		insert into notice_reply(replycontent, boardnum, userid) value(#{replycontent},#{boardnum},#{userid})
+		insert into notice_reply(replycontent, noticenum, userid) value(#{replycontent},#{noticenum},#{userid})
 	</insert>
+	<select id="isNoticeExists" resultType="int">
+   		 SELECT COUNT(1)
+   		 FROM notice
+   		 WHERE noticenum = #{noticenum}
+	</select>
 	<select id="getLastReply">
 		select * from notice_reply where userid=#{userid}
 		order by replynum desc limit 1
 	</select>
 	<select id="getTotal">
-		select count(*) from notice_reply where boardnum=#{boardnum}
+		select count(*) from notice_reply where noticenum=#{noticenum}
 	</select>
 	<select id="getList">
-		selet * from notice_reply where noardnum=#{boardnum} limit=#{cri.startrow},#{cri.amount}
+		select * from notice_reply 
+		where 
+		noticenum = #{noticenum}
+		order by replynum desc
+   		limit #{cri.startrow}, #{cri.amount}
 	</select>
 	<select id="getDetail">
 		select * from notice_reply where replynum=#{replynum}
 	</select>
 	<select id="getRecentNreplyCnt">
 		<![CDATA[ 
-			select count(*) from notice_reply where boardnum=#{boardnum} and timestampdiff(HOUR,regdate,now()) < 1
+			select count(*) from notice_reply where noticenum=#{noticenum} and timestampdiff(HOUR,replyregdate,now()) < 1
 		]]>
 	</select>
-	<update id="updateNOticeReply">
+	<update id="updateNoticeReply">
 		update notice_reply
 		set replycontent = #{replycontent}, updatedate = now()
 		where replynum = #{replynum}
@@ -32,6 +41,6 @@
 		delete from notice_reply where replynum=#{replynum}
 	</delete>
 	<delete id="deleteRepliesByNoticenum">
-		delete from notice_reply where boardnum = #{boardnum}
+		delete from notice_reply where noticenum = #{noticenum}
 	</delete>
 </mapper>

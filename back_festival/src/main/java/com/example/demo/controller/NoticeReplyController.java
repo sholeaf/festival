@@ -29,6 +29,9 @@ public class NoticeReplyController {
 
 	@PostMapping("regist")
 	public ResponseEntity<Long> regist(@RequestBody NoticeReplyDTO reply){
+		System.out.println("Received reply content: " + reply.getReplycontent());
+	    System.out.println("Received noticenum: " + reply.getNoticenum());
+		
 		NoticeReplyDTO createReply = service.regist(reply);
 		if(createReply != null) {
 			return new ResponseEntity<>(createReply.getReplynum(), HttpStatus.OK);
@@ -38,10 +41,10 @@ public class NoticeReplyController {
 		}
 	}
 	
-	@GetMapping("/{boardnum}/{pagenum}")
-	public ResponseEntity<NoticeReplyPageDTO> list (@PathVariable("boardnum")long boardnum,@PathVariable("pagenum")int pagenum){
+	@GetMapping("/{noticenum}/{pagenum}")
+	public ResponseEntity<NoticeReplyPageDTO> list (@PathVariable("noticenum")long noticenum,@PathVariable("pagenum")int pagenum){
 		Criteria cri = new Criteria(pagenum, 5);
-		return new ResponseEntity<>(service.getList(cri,boardnum),HttpStatus.OK);
+		return new ResponseEntity<>(service.getList(cri,noticenum),HttpStatus.OK);
 	}
 	
 	@DeleteMapping("{replynum}")
@@ -51,11 +54,15 @@ public class NoticeReplyController {
 				new ResponseEntity<>(-1l,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@PutMapping("{replynum")
-	public ResponseEntity<Long> modify(@RequestBody NoticeReplyDTO reply, HttpServletRequest req){
-		return service.modify(reply) ?
-				new ResponseEntity<>(reply.getReplynum(),HttpStatus.OK) :
-				new ResponseEntity<>(-1l,HttpStatus.INTERNAL_SERVER_ERROR);
+	@PutMapping("{replynum}")
+	public ResponseEntity<Long> modify(@PathVariable Long replynum, @RequestBody NoticeReplyDTO reply, HttpServletRequest req){
+		reply.setReplynum(replynum);  // 클라이언트에서 받은 replynum을 요청 본문에 덮어 씌워줌
+
+	    boolean isModified = service.modify(reply); // 수정 서비스 호출
+
+	    return isModified ?
+	        new ResponseEntity<>(replynum, HttpStatus.OK) : 
+	        new ResponseEntity<>(-1L, HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 }
 

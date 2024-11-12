@@ -17,14 +17,14 @@ import com.example.demo.mapper.NoticeFileMapper;
 public class NoticeFileServiceImpl implements NoticeFileService{
 
 	@Value("${file.dir}")
-	private String savdFolder;
+	private String savedFolder;
 	
 	@Autowired
 	private NoticeFileMapper nfmapper;
 
 	@Override
 	public HashMap<String, Object> getTumbnailResource(String systemname) throws Exception {
-		Path path = Paths.get(savdFolder+systemname);
+		Path path = Paths.get(savedFolder+systemname);
 		String contentType = Files.probeContentType(path);
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
 		
@@ -36,7 +36,7 @@ public class NoticeFileServiceImpl implements NoticeFileService{
 
 	@Override
 	public HashMap<String, Object> downloadFile(String systemname) throws Exception {
-		Path path = Paths.get(savdFolder+systemname);
+		Path path = Paths.get(savedFolder+systemname);
 		Resource resource = new InputStreamResource(Files.newInputStream(path));
 		String orgname = nfmapper.getFileBySystemname(systemname).getOrgname();
 		
