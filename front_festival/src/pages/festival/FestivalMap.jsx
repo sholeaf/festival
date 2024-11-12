@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
-import festival_map from "../../assets/images/festival_map.png";
+import festival_map from "../../assets/images/festivalImg/festival_map.png";
 import noimage from "../../assets/images/no-image.jpg";
+
 
 const FestivalMap = ({ setParam, param, API_URL, API_KEY, noHyphen }) => {
     const [festivals, setFestivals] = useState([]);  // 축제 데이터 상태
