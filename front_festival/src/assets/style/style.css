@@ -73,51 +73,21 @@ img {
     position: relative;
 }
 
-#nwrap .navigate a {
-    margin: 20px;
-}
-
-.notice-title {
-    font-family: 'EBSJSKMedium';
-    font-size: 30px;
-}
-
-#nwrap>div:nth-child(1) {
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    z-index: 200;
-    animation: nlistWrap 1.5s 1;
-}
-
-@keyframes nlistWrap {
-    from {}
-
-    to {
-        opacity: 0;
-    }
-}
-
-/* 헤더 */
-#nwrap .nheader_area {
-    padding: 10px;
-}
-
 /* Title */
-#nwrap .ntitle {
+.notice-title {
     display: flex;
     justify-content: center;
     align-items: center;
+    font-family: 'EBSJSKMedium';
+    font-size: 80px;
 }
 
 .nlist {
-    border: 1px solid #000;
     font-family: 'GowunDodum-Regular';
+    text-align: center;
 }
 
-#nwrap .pagination {
+.pagination {
     width: 840px;
 }
 
@@ -158,7 +128,7 @@ img {
     width: 10%;
 }
 
-.nlist.ntable .row no-list div {
+.nlist.ntable .row.no-list div {
     width: 100%;
     padding: 10px !important;
 }
@@ -203,15 +173,15 @@ img {
     width: 100%;
 }
 
-#nwrap .tar {
+.tar {
     text-align: right !important;
 }
 
-#nwrap .tac {
+.tac {
     text-align: center !important;
 }
 
-#nwrap .tal {
+.tal {
     text-align: left !important;
 }
 
@@ -259,7 +229,7 @@ img {
     width: 100% !important;
 }
 
-#nwrap .row {
+.nlist .row {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -271,11 +241,26 @@ img {
     align-items: center;
 }
 
+.ntable>.row>*:nth-child(n+2) {
+    border: none;
+}
+
+.ntable>.row:nth-child(n+2)>* {
+    border: none;
+}
+
 .nbtn_table {
     text-align: right;
-    vertical-align: middle;
     margin: 10px auto;
+    position: relative;
+    float: right;
+    bottom: 50px;
+    right: 100px;
+    /* display: none; */
 
+}
+.nbtn_table.show{
+    display: block;
 }
 
 /* 로딩 텍스트 애니메이션 */
@@ -351,11 +336,11 @@ img {
 
 
 /* board 공통 */
-body.nlist,
-body.nwrite,
-body.nget,
-body.nmodify {
-    background-color: #fff;
+.nlist,
+.nwrite,
+.nget,
+.nmodify {
+    background-color: #ffffff;
 }
 
 #nwrap>div:nth-child(1) {
@@ -365,7 +350,6 @@ body.nmodify {
     width: 100%;
     height: 100%;
     z-index: 200;
-    animation: nlistWrap 1.5s 1;
 }
 
 @keyframes nlistWrap {
@@ -384,21 +368,24 @@ body.nmodify {
     width: 1000px;
 }
 
-#nwrap a.btn {
+.nlist a.btn {
 
     display: inline-block;
     border-radius: 3px;
     font-weight: bold;
     text-decoration: none;
-    width: 100px;
     height: 40px;
     cursor: pointer;
 }
 
-/* list css */
+/* Notice list css */
 
 .notice-cnt {
     padding: 10px;
+}
+
+.nthead {
+    border: 1px solid #b3b3b3;
 }
 
 .nlist.ntable #nreply_cnt {
@@ -414,12 +401,12 @@ body.nmodify {
 }
 
 /* HOT , NEW 디자인 */
-.ntable.nlist .nhot,
-.ntable.nlist .nnew {
+.ntable.nlist .noticehot,
+.ntable.nlist .noticenew {
     margin-right: 5px;
 }
 
-.ntable.nlist .nhot {
+.ntable.nlist .noticehot {
     display: inline-block;
     width: fit-content;
     font-weight: bold;
@@ -427,7 +414,7 @@ body.nmodify {
     animation: nhot 1s infinite alternate;
 }
 
-.ntable.nlist .nnew {
+.ntable.nlist .noticenew {
     display: inline-block;
     width: fit-content;
     font-weight: bold;
@@ -460,20 +447,22 @@ body.nmodify {
 }
 
 /* Pagination 페이지 버튼 디자인 */
-#nwrap .pagination {
+.pagination {
     margin-top: 20px;
+    display: flex;
+    justify-content: center;
 }
 
-#nwrap .pagination tr {
+.pagination tr {
     text-align: center;
     vertical-align: middle;
 }
 
-#nwrap .pagination .nowPage {
+.pagination .nowPage {
     margin-right: 5px;
 }
 
-#nwrap .pagination a {
+.pagination a {
     padding: 5px;
     width: 30px;
     height: 30px;
@@ -482,9 +471,9 @@ body.nmodify {
 
 /* .pagination a:hover {
     background-color: #ccc;
-} */
+    } */
 
-.nnowPage {
+.nowPage {
     padding: 5px;
     width: 30px;
     height: 30px;
@@ -496,17 +485,13 @@ body.nmodify {
 }
 
 /* 글쓰기버튼 */
-#nwrap a.nwrite {
+a.nwrite {
     padding: 5px;
-    width: 80px;
-    height: 35px;
+    width: 60px;
+    height: 30px;
     text-align: center;
-    border: 1px solid #000;
-}
-
-
-.nthead {
-    border: 1px solid #000;
+    cursor: pointer;
+    position: absolute;
 }
 
 /* nwrite, nmodify, nget css */
@@ -517,16 +502,17 @@ body.nmodify {
 #noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
+    background-color: #92B4EC;
 }
 
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
 }
-
 #noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
+    
 }
 
 #noticeForm>.ntable>.row>div:nth-child(2) {
@@ -544,7 +530,7 @@ body.nmodify {
 .nget textarea,
 .nmodify input[type="text"],
 .nmodify textarea {
-    width: 100%;
+    width: 98%;
     border: none;
     padding: 5px;
     outline: none;
@@ -553,8 +539,9 @@ body.nmodify {
 .nwrite textarea,
 .nget textarea,
 .nmodify textarea {
+    margin-top: 20px;
     resize: none;
-    height: 290px;
+    height: 290px !important;
 }
 
 .nget textarea {
@@ -569,26 +556,27 @@ body.nmodify {
     width: 100px;
 }
 
-#nwrap .thumbnail_area {
+.nthumbnail_area {
     text-align: center;
     width: 100%;
     min-height: 10px;
 }
 
 /* 게시판 썸네일애니메이션 thumbnail animation*/
-#nwrap img.nthumbnail {
-    width: 200px;
-    transition: all 0.1s linear;
+img.nthumbnail {
+    max-width: 70%;
+    transition: all 0.2s linear;
 }
 
-#nwrap img.nthumbnail:hover {
-    transform: scale(0.2);
+img.nthumbnail:hover {
+    transform: scale(1.2);
     box-shadow: 1px 1px 4px #ccc;
 }
 
 .nwrite .nbtn_area,
-.nmodify .nbtn_area {
-    justify-content: flex-end;
+.nmodify .nbtn_area, .nget .nbtn_area{
+    display: flex;
+    justify-content: center;
 }
 
 #nwrap [class*='cont'] {
@@ -622,18 +610,31 @@ body.nmodify {
 }
 
 #nwrap .download:hover {
-    transform: scale(0.2);
+    transform: scale(1.2);
+}
+.ndownload-btn {
+    width: 120px;
+    font-size: 12px;
+    padding: 10px;
 }
 
-.nget .nbtn_area {
-    justify-content: flex-end;
-}
 
 .nget .nbtn_area td:nth-child(2) {
     padding: 5px;
     outline: none;
     width: 500px;
 }
+.nbtn_area input.btn{
+    margin: 3px;
+    float: right;
+    right: 40px;
+    position: relative;
+    top:10px;
+}
+input.nrmodify.btn, input.nrfinish.btn.hdd, input.nrremove.btn  {
+    width: 80px;
+}
+
 
 /* noticecontents css */
 .nget #noticecontents {
@@ -647,6 +648,7 @@ body.nmodify {
     width: 1000px;
     margin-top: 20px;
     border-top: 1px solid grey;
+    position: relative;
 }
 
 .nreply_line>.nregist {
@@ -654,31 +656,34 @@ body.nmodify {
     text-align: center;
     padding: 10px;
     width: 90px;
-    font-size: 16px;
+    font-size: 14px;
     margin-top: 20px;
     margin-left: 880px;
 }
 
-.nreply_line>.nreplyForm>div {
+.nreply_line .nreplyForm > div {
     text-align: center;
     vertical-align: middle;
-    color: #ccc;
+    color: #f77a7a;
     height: 150px;
 }
+.nreplyForm.row {
+    height: 200px;
+}
 
-.nreply_line>.nreplyForm>div:nth-child(1) {
+.nreply_line .nreplyForm>div:nth-child(1) {
     width: 20%;
 }
 
-.nreply_line>.nreplyForm>div:nth-child(2) {
+.nreply_line .nreplyForm>div:nth-child(2) {
     width: 65%;
 }
 
-.nreply_line>.nreplyForm>div:nth-child(3) {
+.nreply_line .nreplyForm>div:nth-child(3) {
     width: 15%;
 }
 
-.nreply_line>.nreplyForm>div>input[type=text] {
+.nreplyForm>div>input[type=text] {
     display: inline-block;
     width: 120px;
     height: 40px;
@@ -689,7 +694,7 @@ body.nmodify {
 
 .nreply_line textarea {
     width: 600px;
-    height: 80px;
+    height: 80px !important;
     border-radius: 5px;
     outline: none;
     padding: 10px;
@@ -713,6 +718,7 @@ body.nmodify {
     padding: 0;
     padding-top: 30px;
     margin-top: 20px;
+    display: block;
 }
 
 .nreplies li.no-reply {
@@ -737,17 +743,36 @@ body.nmodify {
     width: 15%;
 }
 
-.nreplies li div:nth-child(1) [class*='userid'] {
+.nreplies li div:nth-child(1) [class*='nuserid'] {
     width: 20%;
+    display: block;
     text-align: center;
     border-right: 1px solid #ccc;
+    padding:0 20px;
 }
 
-.nreplies li div:nth-child(1) [class*='reply'] {
-    width: 80%;
+.nreplies li {
+    display: flex; /* Flexbox를 사용하여 자식 요소들을 가로로 배치 */
+    justify-content: center; /* 요소들 사이에 균등한 공간 배분 */
+    align-items: center; /* 세로 정렬을 중앙으로 맞춤 */
+    padding: 10px 0;
+}
+
+.nbtn-group {
+    display: flex; /* 버튼들을 한 줄로 배치 */
+    flex-direction: column;
+    gap: 2px; /* 버튼 간의 간격을 조정 */
+    align-items: center;
+    float: right;
+}
+.nreplies li div {
+    display: flex; /* 내부 요소들을 가로로 배치 */
+    align-items: center; /* 세로 중앙 정렬 */
+    gap: 4px; /* 아이템 간의 간격 */
+}
+.nreplies li div:nth-child(1) [class*='nreply']{
     padding-left: 10px;
 }
-
 .nreplies li div:nth-child(2),
 .nreplies li div:nth-child(3) {
     text-align: center;
@@ -772,7 +797,6 @@ body.nmodify {
 
 .nreply_line .npage * {
     text-align: center;
-    margin: 0 auto;
 }
 
 .nreply_line .page-btn {
@@ -790,6 +814,24 @@ body.nmodify {
     background-color: yellow;
 }
 
+/* Search are css 공지 검색 */
+.nsearch_area {
+    display: inline-block;
+}
+
+input#nkeyword {
+    width: 320px;
+    height: 41px;
+    margin-left: 5px;
+    border-radius: 10px;
+}
+
+a#nsearch-btn {
+    padding-top: 7px;
+    padding-left: 15px;
+}
+
+/* notice area end 공지페이지 종료 */
 /* notice area end 공지페이지 종료 */
 
 

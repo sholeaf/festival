@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.Criteria;
@@ -34,11 +35,15 @@ public class NoticeController {
 	@Autowired
 	private NoticeService service;
 	
-	@GetMapping("list/{pagenum}")
-	public ResponseEntity<HashMap<String, Object>> list(Criteria cri, @PathVariable("pagenum")int pagenum) {
-		cri.setPagenum(pagenum);
+	@GetMapping("list/{noticenum}")
+	public ResponseEntity<HashMap<String, Object>> list(Criteria cri, @PathVariable("noticenum")int noticenum) {
+		cri.setPagenum(noticenum);
+		cri.setStartrow((cri.getPagenum() - 1) * cri.getAmount());  // 페이지 번호에 맞는 startrow 계산
+	    System.out.println("Criteria: " + cri);
+		
 		HashMap<String, Object> result = service.getList(cri);
-		if(result != null) {
+		if(result != null && !result.isEmpty()) {
+			System.out.println("Result: " + result);
 			return new ResponseEntity<>(result, HttpStatus.OK);
 		}
 		else {
@@ -57,30 +62,34 @@ public class NoticeController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-	@GetMapping("{noticenum}")
-	public ResponseEntity<HashMap<String, Object>> nget (@PathVariable("noticenum") long noticenum, HttpServletRequest req){
-		HttpSession session = req.getSession();
-		String loginUser = (String)session.getAttribute("loginUser");
-		
-		HashMap<String, Object> result = service.getDetail(noticenum, loginUser);
-		if(result.get("notice") != null) {
-			return new ResponseEntity<HashMap<String,Object>>(result,HttpStatus.OK);
-		}
-		else {
-			return new ResponseEntity<HashMap<String,Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
-		}
+	@GetMapping("/{noticenum}")
+	public ResponseEntity<HashMap<String, Object>> nget(@PathVariable("noticenum") long noticenum, HttpServletRequest req) {
+	    HttpSession session = req.getSession();
+	    String loginUser = (String) session.getAttribute("loginUser");
+
+	    // 디버깅용 로그
+	    System.out.println("Fetching details for noticenum: " + noticenum + " by user: " + loginUser);
+
+	    HashMap<String, Object> result = service.getDetail(noticenum, loginUser);
+	    if (result.get("notice") != null) {
+	        return new ResponseEntity<HashMap<String, Object>>(result, HttpStatus.OK);
+	    } else {
+	        return new ResponseEntity<HashMap<String, Object>>(HttpStatus.INTERNAL_SERVER_ERROR);
+	    }
 	}
 	
-//	@PutMapping("{noticenum}")
-//	public ResponseEntity<Long> nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception {
-//		long noticenum = service.nmodify(noticenum,HttpStatus.OK);
-//		if(noticenum != -1) {
-//			return new ResponseEntity<>(noticenum, HttpStatus.OK);
-//		}
-//		else {
-//			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
-//		}
-//	}
+
+	@PutMapping("{noticenum}")
+	public ResponseEntity<Long> nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception {
+		long noticenum = service.nmodify(notice,files,deleteFiles);
+		if(noticenum != -1) {
+			return new ResponseEntity<>(noticenum, HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+
 	@DeleteMapping("{noticenum}")
 	public ResponseEntity<Long> remove (@PathVariable("noticenum") long noticenum){
 		if(service.remove(noticenum) != -1) {

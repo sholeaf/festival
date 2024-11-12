@@ -10,7 +10,10 @@ import com.example.demo.domain.NoticeFileDTO;
 
 @Mapper
 public interface NoticeFileMapper {
-	void insertFile(NoticeFileDTO nfdto);
+	int insertFile(NoticeFileDTO nfdto);
 	List<NoticeFileDTO> getFiles(long noticenum);
+	int deleteFileBySystemname(String systemname);
+	NoticeFileDTO getFileBySystemname(String systemname);
+	int deleteFilesByNoticenum(long noticenum);
 
 }

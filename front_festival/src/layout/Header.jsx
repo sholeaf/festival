@@ -63,7 +63,7 @@ const Header = () => {
                         <a onClick={() => handleNavigation("/community")}>축제 후기</a>
                     </div>
                     <div className="notice_btn">
-                        <a onClick={() => handleNavigation("/notice/notice")}>공지사항</a>
+                        <a onClick={() => handleNavigation("/notice/list")}>공지사항</a>
                     </div>
                     <div className="mypage_btn">
                         <a onClick={() => handleNavigation("/user/mypage")}>마이페이지</a>
