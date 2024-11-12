@@ -49,7 +49,7 @@ const FestivalMap = ({ setParam, param, API_URL, API_KEY, noHyphen }) => {
         setIsLoading(true);
 
         axios
-            .get(`${API_URL}numOfRows=${param.numOfRow}&pageNo=${param.pageNo}&arrange=A&serviceKey=${API_KEY}&eventStartDate=${param.eventStartDate}&areaCode=${param.areaCode}`)
+            .get(`${API_URL}numOfRows=${param.numOfRow}&pageNo=${param.pageNo}&arrange=A&serviceKey=${API_KEY}&eventStartDate=${param.eventStartDate}&eventEndDate=${param.eventenddate}&areaCode=${param.areaCode}`)
             .then((resp) => {
                 const festivalsData = resp.data.response.body.items.item || [];
                 setFestivals((prevFestivals) => [
