@@ -45,8 +45,13 @@ const Login = () => {
             inputRef.current[0].focus();
             return;
         }
+        if (!userpw) {
+            alert("비밀번호를 입력해주세요!");
+            inputRef.current[1].focus();
+            return;
+        }
+
         const user = { userid, userpw };
-        console.log(user)
 
         axios.get('/api/user/login', { params: user }).then((resp) => {
             if (resp.data.trim() == "O") {
@@ -55,6 +60,7 @@ const Login = () => {
                 setLoginUser(userid);
             }
             else {
+                alert("로그인을 실패하였습니다.\n아이디 및 비밀번호를 다시 확인 후 시도해 주세요.");
                 setInputs({ userid: "", userpw: "" })
                 inputRef.current[0].focus();
             }
@@ -97,9 +103,9 @@ const Login = () => {
     const findId = () => {
         const result = document.getElementById("result1");
         const result_id = document.getElementById("result_id");
+        let email = document.getElementById("useremail1").value;
 
-
-        axios.get('/api/user/userInfo', { params: { userid } })
+        axios.get('/api/user/getUserid', { params: { email } })
             .then(resp => {
                 if (!resp.data) {
                     result_id.innerHTML = "";
@@ -121,6 +127,10 @@ const Login = () => {
 
         if (!userid) {
             alert("아이디를 입력해 주세요!");
+            return;
+        }
+        if (!email.value) {
+            alert("이메일을 입력하신 후 인증번호 받기를 클릭해 주세요.");
             return;
         }
 
@@ -156,6 +166,7 @@ const Login = () => {
 
     const codeCheck2 = () => {
         const code = document.getElementById("code2");
+
         if (code.value == "") {
             alert("인증번호를 입력하신 후 확인을 클릭해 주세요.");
             return;
@@ -213,9 +224,19 @@ const Login = () => {
                     <div className="login_area">
                         <div>
                             <div>
-                                <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요." value={inputs.userid} ref={addInputRef} onChange={change} />
+                                <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요." value={inputs.userid} ref={addInputRef} onChange={change} onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        e.preventDefault();
+                                        login();
+                                    }
+                                }} />
                                 <br />
-                                <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력하세요." value={inputs.userpw} ref={addInputRef} onChange={change} />
+                                <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력하세요." value={inputs.userpw} ref={addInputRef} onChange={change} onKeyDown={(e) => {
+                                    if (e.key === 'Enter') {
+                                        e.preventDefault();
+                                        login();
+                                    }
+                                }} />
                                 <div>
                                     <div className="text">
                                         <p onClick={openModal}>아이디 찾기 / 비밀번호 찾기</p>

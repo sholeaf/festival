@@ -190,6 +190,7 @@
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
+.login_wrap .main .modal-content .mflex .findId #result1, 
 .login_wrap .main .modal-content .mflex .findPw #result2{
     display: none;
 }
@@ -203,3 +204,11 @@
     font-size: 20px;
     cursor: pointer;
 }
+/* modal end */
+
+/* 임시 테스트용 */
+.login_btn{
+    width: 125px;
+}
+
+

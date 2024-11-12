@@ -34,7 +34,7 @@ const Header = () => {
             });
     }, []);
     const renderLoginButton = () => {
-        if (loginUser === "") {
+        if (loginUser == "") {
             return (
                 <div className="login_btn">
                     <a onClick={() => handleNavigation("/user/login")}>로그인</a>
