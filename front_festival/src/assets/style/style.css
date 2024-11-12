@@ -14,6 +14,7 @@
     font-weight: normal;
     font-style: normal;
 }
+
 * {
     box-sizing: border-box;
 }
@@ -54,53 +55,13 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 }
-/* Dropdown css */
-.common-dropdown {
-    position: relative;
-    display: inline-block;
-    width: 200px;
-}
-
-.dropdown-button {
-    background-color: white;
-    color: black;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 10px;
-}
-
-.dropdown-content {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    text-align: center;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.1s ease-in-out;
-    margin-left: 1px;
-    margin-top: 1px;
-}
-
-.dropdown-content.show {
-    max-height: 500px;
-    transition: max-height 0.1s ease-in-out;
-}
-
-/* 달력 디자인 */
-.react-calendar__navigation {
-    width: inherit;
-    height: 3.5rem;
-    display: flex;
-    text-align: center;
-    align-items: center;
-}
 
 .navigate {
     display: flex;
 }
 
 .navigate a {
-    margin : 20px;
+    margin: 20px;
 }
 
 
@@ -875,11 +836,58 @@ a#nsearch-btn {
 
 
 /* festival .css */
-/* 달력 디자인 */
-.button-container button{
-    margin: 20px 30px;
+
+.festival_img_area{
+    width: 100%;
+    height: 400px;
+    object-fit: contain; /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center; /* 이미지 중앙 배치 */
 }
-.react-calendar{
+
+.button-container{
+    display: flex;
+    position: relative;
+    width: 700px;
+    height: 50px;
+    border-radius: 45px;
+    justify-content: center;
+    margin: 30px auto;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+}
+.button-container .slider {
+    position: absolute;
+    top: 2px;
+    left: -30px;
+    width: 130px; /* 버튼 너비와 동일하게 설정 */
+    height: 90%;
+    background-color: #92B4EC;
+    border-radius: 45px;
+    transition: transform 0.3s ease; /* 슬라이더 이동 애니메이션 */
+    z-index: -1; /* 버튼 뒤에 위치하도록 설정 */
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+}
+.button-container div {
+    margin: auto 80px;
+}
+.button-container .tab {
+    width: 100px; /* 각 버튼 너비 */
+    text-align: center;
+    cursor: pointer;
+    color: black;
+    transition: color 0.3s ease;
+    z-index: 1;
+}
+
+.button-container .tab.selected {
+    color: white; /* 선택된 탭 텍스트 색상 */
+}
+
+/* 달력 디자인 */
+
+.react-calendar__tile{
+    border-radius: 45px;
+}
+.react-calendar {
     width: 350px;
     max-width: 100%;
     height: 330px;
@@ -889,13 +897,14 @@ a#nsearch-btn {
     line-height: 1.125em;
     margin: 0 auto;
 }
+
 .react-calendar__navigation {
     width: inherit;
     height: 3.5rem;
     display: flex;
     text-align: center;
     align-items: center;
-    
+
 }
 
 .react-calendar__navigation__label {
@@ -907,13 +916,298 @@ a#nsearch-btn {
     background-color: #fff;
 }
 
-.festival-list{
+.festival-list {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
 }
-.festival-list li{
+
+.festival-list li {
     width: 23%;
     margin: 15px;
 }
+
+/* festival map */
+
+.festival_map_area {
+    position: relative;
+    width: 600px;  /* 지도 이미지 크기에 맞게 조정 */
+    margin: auto;
+}
+
+.festival_map {
+    width: 100%;
+    height: auto;
+}
+
+/* 각 지역의 위치를 조정 */
+.festival_select_area .festival_map_detail {
+    position: absolute;
+    background: #f8f8f8;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    padding: 5px 10px;
+    cursor: pointer;
+    white-space: nowrap;
+    transform: translate(-50%, -50%);  /* 중앙에 위치하도록 */
+    font-size: 0.9em;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+}
+
+.area-1 { left: 140px; top: 115px; }     /* 서울특별시 */
+.area-1::before {
+    top: -55%; left: 195%;
+    height: 100px;
+    transform: translateX(-100%) rotate(-65deg);
+}
+
+.area-2 { left: 130px; top: 175px; }     /* 인천광역시 */
+.area-2::before {
+    top: 20%; left: 180%;
+    height: 80px;
+    transform: translateY(-50%) rotate(80deg);
+}
+.area-3 { left: 120px; top: 320px; }     /* 대전광역시 */
+.area-3::before {
+    top: -10%; left: 250%;
+    height: 150px;
+    transform: translateY(-50%) rotate(77deg);
+}
+.area-4 { right: -10px; top: 315px; }    /* 대구광역시 */
+.area-4::before {
+    top: 90%; right: 240%;
+    height: 140px;
+    transform: translateY(-50%) rotate(80deg);
+}
+.area-5 { left: 100px; top: 430px; }     /* 광주광역시 */
+.area-5::before {
+    top: 20%; left: 220%;
+    height: 120px;
+    transform: translateY(-50%) rotate(80deg);
+}
+.area-6 { right: 20px; top: 420px; }     /* 부산광역시 */
+.area-6::before {
+    top: 20%; right: 170%;
+    height: 70px;
+    transform: translateY(-50%) rotate(-80deg);
+}
+.area-7 { right: 0px; top: 370px; }     /* 울산광역시 */
+.area-7::before {
+    top: 50%; right: 170%;
+    height: 70px;
+    transform: translateY(-50%) rotate(90deg);
+}
+.area-8 { left: 115px; top: 230px; }     /* 세종특별자치시 */
+.area-8::before {
+    top: 90%; left: 240%;
+    height: 140px;
+    transform: translateY(-50%) rotate(-80deg);
+}
+.area-31 { left: 170px; top: 70px; }     /* 경기도 */
+.area-31::before {
+    top: 110%; left: 162%;
+    height: 70px;
+    transform: translateY(-50%) rotate(-60deg);
+}
+.area-32 { right: 60px; top: 100px; }    /* 강원도 */
+.area-32::before {
+    top: 50%; right: 170%;
+    height: 70px;
+    transform: translateY(-50%) rotate(90deg);
+}
+.area-33 { right: 20px; top: 190px; }   /* 충청북도 */
+.area-33::before {
+    top: 90%; right: 230%;
+    height: 130px;
+    transform: translateY(-50%) rotate(80deg);
+}
+.area-34 { left: 140px; top: 275px; }    /* 충청남도 */
+.area-34::before {
+    top: 40%; left: 170%;
+    height: 70px;
+    transform: translateY(-50%) rotate(-90deg);
+}
+.area-35 { right: 30px; top: 260px; }   /* 경상북도 */
+.area-35::before {
+    top: 60%; right: 150%;
+    height: 50px;
+    transform: translateY(-50%) rotate(80deg);
+}
+.area-36 { right: 80px; top: 480px; }   /* 경상남도 */
+.area-36::before {
+    top: -60%; right: 180%;
+    height: 100px;
+    transform: translateY(-50%) rotate(-50deg);
+}
+.area-37 { left: 140px; top: 380px; }    /* 전라북도 */
+.area-37::before {
+    top: 20%; left: 170%;
+    height: 70px;
+    transform: translateY(-50%) rotate(80deg);
+}
+.area-38 { left: 100px; top: 500px; }    /* 전라남도 */
+.area-38::before {
+    top: -20%; left: 215%;
+    height: 120px;
+    transform: translateY(-50%) rotate(70deg);
+}
+.area-39 { left: 330px; top: 580px; }    /* 제주도 */
+.area-39::before {
+    top: 20%; right: 170%;
+    height: 70px;
+    transform: translateY(-50%) rotate(-80deg);
+}
+/* 서울특별시 */
+.area-1::after {
+    top: 170%; /* 막대기 끝에 점을 위치 */
+    left: 290%;
+    transform: translateX(-100%);
+}
+
+/* 인천광역시 */
+.area-2::after {
+    top: -15%;
+    left: 260%;
+    transform: translateX(-50%);
+}
+
+/* 대전광역시 */
+.area-3::after {
+    top: -80%;
+    left: 400%;
+    transform: translateX(-50%);
+}
+
+/* 대구광역시 */
+.area-4::after {
+    top: 120%;
+    right: 370%;
+    transform: translateX(-50%);
+}
+
+/* 광주광역시 */
+.area-5::after {
+    top: -27%;
+    left: 340%;
+    transform: translateX(-50%);
+}
+
+/* 부산광역시 */
+.area-6::after {
+    top: -13%;
+    right: 230%;
+    transform: translateX(-50%);
+}
+
+/* 울산광역시 */
+.area-7::after {
+    top: 40%;
+    right: 230%;
+    transform: translateX(-50%);
+}
+
+/* 세종특별자치시 */
+.area-8::after {
+    top: 120%;
+    left: 380%;
+    transform: translateX(-50%);
+}
+
+/* 경기도 */
+.area-31::after {
+    top: 165%;
+    left: 230%;
+    transform: translateX(-50%);
+}
+
+/* 강원도 */
+.area-32::after {
+    top: 40%;
+    right: 230%;
+    transform: translateX(-50%);
+}
+
+/* 충청북도 */
+.area-33::after {
+    top: 117%;
+    right: 350%;
+    transform: translateX(-50%);
+}
+
+/* 충청남도 */
+.area-34::after {
+    top: 28%;
+    left: 248%;
+    transform: translateX(-50%);
+}
+
+/* 경상북도 */
+.area-35::after {
+    top: 65%;
+    right: 190%;
+    transform: translateX(-50%);
+}
+
+/* 경상남도 */
+.area-36::after {
+    top: -190%;
+    right: 245%;
+    transform: translateX(-50%);
+}
+
+/* 전라북도 */
+.area-37::after {
+    top: -10%;
+    left: 240%;
+    transform: translateX(-50%);
+}
+
+/* 전라남도 */
+.area-38::after {
+    top: -105%;
+    left: 330%;
+    transform: translateX(-50%);
+}
+
+/* 제주도 */
+.area-39::after {
+    top: -20%;
+    right: 230%;
+    transform: translateX(-50%);
+}
+
+/* 호버 스타일 */
+.festival_map_detail:hover {
+    background-color: #92B4EC;
+    color: white;
+}
+
+/* 선택된 지역 강조 */
+.festival_select_area .selected {
+    background-color: #92B4EC;
+    border-color: #92B4EC;
+    color: white;
+    box-shadow: 3px 6px 8px rgba(0, 0, 0, 0.3);
+}
+
+/* 라벨과 지도 위치를 연결하는 선 스타일 */
+.festival_select_area .festival_map_detail::before {
+    content: '';
+    position: absolute;
+    width: 1px;
+    background-color: #706f6f;
+    /* 선의 각도와 길이를 각 지역에 맞게 조정 */
+}
+.festival_select_area .festival_map_detail::after {
+    content: '';
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: #706f6f;
+    border-radius: 50%; 
+}
+
+
+
+
 /* festival .css 종료 */
