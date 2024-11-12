@@ -8,7 +8,8 @@ public interface UserService {
 	boolean login(String userid, String userpw);
 	boolean checkId(String userid);
 	boolean leaveId(String userid);
-	String checkEmail(String userid);
+	UserDTO checkEmail(String userid);
 	UserDTO getUser(String userid);
+	UserDTO getUserid(String email);
 
 }

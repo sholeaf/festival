@@ -46,6 +46,17 @@ public class UserController {
 		}
 	}
 	
+	@GetMapping("getUserid")
+	public ResponseEntity<UserDTO> getUserid(@RequestParam String email) {
+		UserDTO user = service.getUserid(email);
+		if(user != null) {
+			return new ResponseEntity<UserDTO>(user,HttpStatus.OK);
+		}
+		else {
+			return new ResponseEntity<UserDTO>(user,HttpStatus.OK);
+		}
+	}
+	
 	@GetMapping("logout")
 	public ResponseEntity<String> logout(HttpServletRequest req) {
 		req.getSession().invalidate();

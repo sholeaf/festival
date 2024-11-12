@@ -18,8 +18,8 @@
 	<select id="getUserByUserid">
 		select * from user where userid=#{userid}
 	</select>
-	<select id="getEmailByUserid">
-		select useremail from user where userid=#{userid}
+	<select id="getUserByUseremail">
+		select * from user where useremail=#{useremail}
 	</select>
 </mapper>
 

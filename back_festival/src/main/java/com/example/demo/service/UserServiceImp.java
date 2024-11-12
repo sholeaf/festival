@@ -40,16 +40,17 @@ public class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public String checkEmail(String userid) {
-		String email = umapper.getEmailByUserid(userid);
-		if(email != null) {
-			return email;
-		}
-		return null;
+	public UserDTO checkEmail(String userid) {
+		return umapper.getUserByUserid(userid);
 	}
 
 	@Override
 	public UserDTO getUser(String userid) {
 		return umapper.getUserByUserid(userid);
+	}
+
+	@Override
+	public UserDTO getUserid(String email) {
+		return umapper.getUserByUseremail(email);
 	}
 }

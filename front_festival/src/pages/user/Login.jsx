@@ -65,37 +65,17 @@ const Login = () => {
         const formData = new FormData();
 
         let email = document.getElementById("useremail1").value;
-        
-        console.log("아이디찾기의 email : "+email);
 
-        // axios.get('/api/user/checkEmail', { params: { userid } })
-        //     .then(resp => {
-        //         if (!resp.data.useremail) {
-        //             alert("아이디에 해당하는 이메일이 존재하지 않습니다.\n아이디를 다시 확인해 주세요.");
-        //             return;
-        //         }
-        //         if (resp.data.useremail != email.value) {
-        //             alert("아이디에 해당하는 이메일과 작성하신 이메일이 일치하지 않습니다.\n이메일을 다시 작성해 주세요.");
-        //             return;
-        //         }
-        //         if (resp.data.useremail == email.value) {
-        //             console.log(resp.data);
-        //             console.log(email.value);
-        //             formData.append('email', email.value);
+        formData.append('email', email);
 
-
-        //             axios.post('/api/mail/confirm.json', formData)
-        //                 .then((resp) => {
-        //                     setEmailCode(resp.data);
-        //                     alert("인증번호 : "+resp.data);
-        //                 })
-        //                 .catch((err) => {
-        //                     alert("실패");
-        //                 })
-        //         }
-        //     })
-
-
+        axios.post('/api/mail/confirm.json', formData)
+            .then((resp) => {
+                setEmailCode(resp.data);
+                alert("인증번호 : " + resp.data);
+            })
+            .catch((err) => {
+                alert("실패");
+            })
     }
 
     const codeCheck1 = () => {
@@ -139,6 +119,11 @@ const Login = () => {
 
         let userid = user.value;
 
+        if (!userid) {
+            alert("아이디를 입력해 주세요!");
+            return;
+        }
+
         axios.get('/api/user/checkEmail', { params: { userid } })
             .then(resp => {
                 if (!resp.data.useremail) {
@@ -158,7 +143,7 @@ const Login = () => {
                     axios.post('/api/mail/confirm.json', formData)
                         .then((resp) => {
                             setEmailCode(resp.data);
-                            alert("인증번호 : "+resp.data);
+                            alert("인증번호 : " + resp.data);
                         })
                         .catch((err) => {
                             alert("실패");
