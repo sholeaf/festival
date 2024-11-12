@@ -23,8 +23,6 @@ const Join = () => {
                     }
                     else {
                         result.innerHTML = "중복된 아이디가 있습니다!";
-                        user.value = "";
-                        user.focus();
                     }
                 })
         }

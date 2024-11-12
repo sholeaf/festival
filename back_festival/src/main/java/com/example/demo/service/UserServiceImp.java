@@ -38,4 +38,18 @@ public class UserServiceImp implements UserService{
 	public boolean leaveId(String userid) {
 		return umapper.deleteUser(userid) == 1;
 	}
+
+	@Override
+	public String checkEmail(String userid) {
+		String email = umapper.getEmailByUserid(userid);
+		if(email != null) {
+			return email;
+		}
+		return null;
+	}
+
+	@Override
+	public UserDTO getUser(String userid) {
+		return umapper.getUserByUserid(userid);
+	}
 }

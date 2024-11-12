@@ -10,6 +10,7 @@ public interface UserMapper {
 	int updateUser(UserDTO user);
 	int deleteUser(String userid);
 	UserDTO getUserByUserid(String userid);
+	String getEmailByUserid(String userid);
 }
 
 

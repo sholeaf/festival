@@ -7,98 +7,278 @@ import kakaoImg from '../../assets/images/카카오.png'
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Button from "../../components/Button";
+import Modal from "../../components/Modal";
 
 
 const Login = () => {
     const navigate = useNavigate();
-    const [inputs,setInputs] = useState({userid:"",userpw:""})
-    const {userid,userpw} = inputs;
+    const [inputs, setInputs] = useState({ userid: "", userpw: "" })
+    const { userid, userpw } = inputs;
     const [loginUser, setLoginUser] = useState("");
-    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [emailCode, setEmailCode] = useState("");
+
+    const openModal = () => setIsModalOpen(true);
+    const closeModal = () => setIsModalOpen(false);
+
     const inputRef = useRef([]);
+
+
+
     const addInputRef = (el) => {
-        if(!inputRef.current.includes(el)){
+        if (!inputRef.current.includes(el)) {
             inputRef.current.push(el);
         }
     }
 
     const change = (e) => {
-        const {name,value} = e.target;
+        const { name, value } = e.target;
         setInputs({
             ...inputs,
-            [name]:value,
+            [name]: value,
         })
     }
 
     const login = () => {
-        if(!userid){
+        if (!userid) {
             alert("아이디를 입력해주세요!");
             inputRef.current[0].focus();
             return;
         }
-        const user = {userid,userpw};
+        const user = { userid, userpw };
         console.log(user)
 
-        axios.get('/api/user/login',{params:user}).then((resp)=>{
-            if(resp.data.trim() == "O"){
+        axios.get('/api/user/login', { params: user }).then((resp) => {
+            if (resp.data.trim() == "O") {
                 alert(`${userid}님 환영합니다!`);
                 navigate("/");
                 setLoginUser(userid);
             }
-            else{
-                setInputs({userid:"",userpw:""})
+            else {
+                setInputs({ userid: "", userpw: "" })
                 inputRef.current[0].focus();
             }
         })
     }
 
-    useEffect(()=>{
-        axios.get("/api/user/joinCheck").then((resp)=>{
-            const joinid = resp.data;
-            setInputs({...inputs, userid:joinid});
-        })
-    },[])
+    const getCode1 = () => {
+        const formData = new FormData();
 
-    return(
+        let email = document.getElementById("useremail1").value;
+        
+        console.log("아이디찾기의 email : "+email);
+
+        // axios.get('/api/user/checkEmail', { params: { userid } })
+        //     .then(resp => {
+        //         if (!resp.data.useremail) {
+        //             alert("아이디에 해당하는 이메일이 존재하지 않습니다.\n아이디를 다시 확인해 주세요.");
+        //             return;
+        //         }
+        //         if (resp.data.useremail != email.value) {
+        //             alert("아이디에 해당하는 이메일과 작성하신 이메일이 일치하지 않습니다.\n이메일을 다시 작성해 주세요.");
+        //             return;
+        //         }
+        //         if (resp.data.useremail == email.value) {
+        //             console.log(resp.data);
+        //             console.log(email.value);
+        //             formData.append('email', email.value);
+
+
+        //             axios.post('/api/mail/confirm.json', formData)
+        //                 .then((resp) => {
+        //                     setEmailCode(resp.data);
+        //                     alert("인증번호 : "+resp.data);
+        //                 })
+        //                 .catch((err) => {
+        //                     alert("실패");
+        //                 })
+        //         }
+        //     })
+
+
+    }
+
+    const codeCheck1 = () => {
+        const code = document.getElementById("code1");
+        if (code.value == "") {
+            alert("인증번호를 입력하신 후 확인을 클릭해 주세요.");
+            return;
+        }
+        if (code.value != emailCode) {
+            alert("인증번호가 일치하지 않습니다. 정확한 인증번호를 입력했는지 다시 한번 확인해 주세요.");
+            return;
+        }
+        if (code.value == emailCode) {
+            alert("인증이 완료되었습니다!");
+            findId();
+        }
+    }
+
+    const findId = () => {
+        const result = document.getElementById("result1");
+        const result_id = document.getElementById("result_id");
+
+
+        axios.get('/api/user/userInfo', { params: { userid } })
+            .then(resp => {
+                if (!resp.data) {
+                    result_id.innerHTML = "";
+                    return;
+                }
+                else {
+                    result.style.display = "block";
+                    result_id.innerHTML = `${resp.data.userid}`;
+                }
+            })
+    }
+    const getCode2 = () => {
+        const formData = new FormData();
+
+        const email = document.getElementById("useremail2");
+        const user = document.getElementById("userId");
+
+        let userid = user.value;
+
+        axios.get('/api/user/checkEmail', { params: { userid } })
+            .then(resp => {
+                if (!resp.data.useremail) {
+                    alert("아이디에 해당하는 이메일이 존재하지 않습니다.\n아이디를 다시 확인해 주세요.");
+                    return;
+                }
+                if (resp.data.useremail != email.value) {
+                    alert("아이디에 해당하는 이메일과 작성하신 이메일이 일치하지 않습니다.\n이메일을 다시 작성해 주세요.");
+                    return;
+                }
+                if (resp.data.useremail == email.value) {
+                    console.log(resp.data);
+                    console.log(email.value);
+                    formData.append('email', email.value);
+
+
+                    axios.post('/api/mail/confirm.json', formData)
+                        .then((resp) => {
+                            setEmailCode(resp.data);
+                            alert("인증번호 : "+resp.data);
+                        })
+                        .catch((err) => {
+                            alert("실패");
+                        })
+                }
+            })
+
+
+    }
+
+    const codeCheck2 = () => {
+        const code = document.getElementById("code2");
+        if (code.value == "") {
+            alert("인증번호를 입력하신 후 확인을 클릭해 주세요.");
+            return;
+        }
+        if (code.value != emailCode) {
+            alert("인증번호가 일치하지 않습니다. 정확한 인증번호를 입력했는지 다시 한번 확인해 주세요.");
+            return;
+        }
+        if (code.value == emailCode) {
+            alert("인증이 완료되었습니다!");
+            findPw();
+        }
+    }
+
+    const findPw = () => {
+        const result = document.getElementById("result2");
+        const result_pw = document.getElementById("result_pw");
+        const user = document.getElementById("userId");
+
+        let userid = user.value;
+
+        axios.get('/api/user/userInfo', { params: { userid } })
+            .then(resp => {
+                if (!resp.data) {
+                    result_pw.innerHTML = "";
+                    return;
+                }
+                else {
+                    result.style.display = "block";
+                    result_pw.innerHTML = `${resp.data.userpw}`;
+                }
+            })
+    }
+
+    useEffect(() => {
+        axios.get("/api/user/joinCheck").then((resp) => {
+            const joinid = resp.data;
+            setInputs({ ...inputs, userid: joinid });
+        })
+    }, [])
+
+    return (
         <div className="login_wrap" id="headernone">
             <div className="main">
-                <div className="center">
-                    <div className="logo">
-                        <p onClick={()=>{
-                            navigate("/")
-                        }}>모두의 축제</p>
+
+                <div className="logo">
+                    <p onClick={() => {
+                        navigate("/")
+                    }}>모두의 축제</p>
+                </div>
+                <div className="flex">
+                    <div className="img">
+                        <img src={loginImg} alt="" />
                     </div>
-                    <div className="float">
-                        <div className="img">
-                            <img src={loginImg} alt="" />
-                        </div>
-                        <div className="login_area">
+                    <div className="login_area">
+                        <div>
                             <div>
+                                <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요." value={inputs.userid} ref={addInputRef} onChange={change} />
+                                <br />
+                                <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력하세요." value={inputs.userpw} ref={addInputRef} onChange={change} />
                                 <div>
-                                    <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요." value={inputs.userid} ref={addInputRef} onChange={change}/>
-                                    <br/>
-                                    <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력하세요." value={inputs.userpw} ref={addInputRef} onChange={change}/>
-                                    <div>
-                                        <div className="text">
-                                            <p>아이디 찾기 / 비밀번호 찾기</p>
-                                            <p onClick={()=>{
-                                                navigate("/user/join")
-                                            }}>회원가입</p>
-                                        </div>
-                                        <div className="login btn">
-                                            <Button  value="로그인" onClick={login}></Button>
-                                        </div>
+                                    <div className="text">
+                                        <p onClick={openModal}>아이디 찾기 / 비밀번호 찾기</p>
+                                        <p onClick={() => {
+                                            navigate("/user/join")
+                                        }}>회원가입</p>
                                     </div>
-                                    <div className="sns_login">
-                                        <img src={naverImg} alt="" />
-                                        <img src={kakaoImg} alt="" />
-                                        <img src={googleImg} alt="" />
+                                    <div className="login btn">
+                                        <Button value="로그인" onClick={login}></Button>
                                     </div>
+                                </div>
+                                <div className="sns_login">
+                                    <img src={naverImg} alt="" />
+                                    <img src={kakaoImg} alt="" />
+                                    <img src={googleImg} alt="" />
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+                <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                    <div className="mflex">
+                        <div className="findId">
+                            <h2>아이디 찾기</h2>
+                            <input type="email" name="useremail" id="useremail1" placeholder="이메일" />
+                            <Button id={getCode1} value="인증번호 받기" onClick={getCode1}></Button>
+                            <input type="text" name="code" id="code1" placeholder="인증번호" />
+                            <Button id={codeCheck1} value="인증번호 확인" onClick={codeCheck1}></Button>
+                            <div id="result1">
+                                <h4>찾으시는 아이디</h4>
+                                <p id="result_id"></p>
+                            </div>
+                        </div>
+                        <div className="findPw">
+                            <h2>비밀번호 찾기</h2>
+                            <input type="text" name="userId" id="userId" placeholder="아이디" />
+                            <input type="email" name="useremail" id="useremail2" placeholder="이메일" />
+                            <Button id={getCode2} value="인증번호 받기" onClick={getCode2}></Button>
+                            <input type="text" name="code" id="code2" placeholder="인증번호" />
+                            <Button id={codeCheck2} value="인증번호 확인" onClick={codeCheck2}></Button>
+                            <div id="result2">
+                                <h4>찾으시는 비밀번호</h4>
+                                <p id="result_pw"></p>
+                            </div>
+                        </div>
+                    </div>
+                </Modal>
+
             </div>
         </div>
     )
