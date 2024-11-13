@@ -40,8 +40,15 @@ const FestivalMap = ({ setParam, param, API_URL, API_KEY, noHyphen }) => {
         setParam((prev) => ({
             ...prev,
             areaCode: areaId,
+            eventStartDate: noHyphen,
+            eventEndDate: noHyphen,
             pageNo: 1,
         }));
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
     // 축제 데이터를 API에서 가져오는 함수
