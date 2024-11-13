@@ -19,6 +19,9 @@ import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+
 
 @RestController
 @RequestMapping("/api/user/*")
@@ -110,5 +113,14 @@ public class UserController {
 			return new ResponseEntity<String>((String)temp,HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("",HttpStatus.OK);
+	}
+	
+	@PutMapping("modify")
+	public ResponseEntity<String> modify(UserDTO user) {
+		System.out.println(user);
+		if(service.modifyUser(user)) {
+			return new ResponseEntity<String>("O",HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("X",HttpStatus.OK);
 	}
 }

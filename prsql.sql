@@ -28,7 +28,7 @@ create table user_photo(
 	userid varchar(50),
     systemname varchar(300)
 );
-insert into user_photo value("apple", "test.png");
+insert into user_photo value("admin", "test.png");
 select * from user_photo;
 drop table user_photo;
 

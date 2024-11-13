@@ -12,5 +12,6 @@ public interface UserService {
 	boolean leaveId(String userid);
 	HashMap<String, Object> getUser(String userid);
 	UserDTO getUserid(String email);
+	boolean modifyUser(UserDTO user);
 
 }

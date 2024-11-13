@@ -15,8 +15,8 @@ const Login = () => {
     const [inputs, setInputs] = useState({ userid: "", userpw: "" })
     const { userid, userpw } = inputs;
     const [loginUser, setLoginUser] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false);
     const [emailCode, setEmailCode] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
 
     const openModal = () => setIsModalOpen(true);
     const closeModal = () => setIsModalOpen(false);

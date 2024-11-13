@@ -66,4 +66,9 @@ public class UserServiceImp implements UserService{
 	public UserDTO getUserid(String email) {
 		return umapper.getUserByUseremail(email);
 	}
+
+	@Override
+	public boolean modifyUser(UserDTO user) {
+		return umapper.updateUser(user) == 1;
+	}
 }

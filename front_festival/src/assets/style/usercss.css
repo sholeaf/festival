@@ -230,11 +230,14 @@
     display: flex;
     background-color: #fff;
     border-radius: 30px;
-    padding: 0px;
+    padding: 20px;
 }
 .mypage .profile .info_area .img,
 .mypage .profile .info_area .info{
-    height: 150px;
+    height: 125px;
+}
+.mypage .profile .info_area .img{
+    margin-right: 24px;
 }
 .mypage .profile .info_area img{
     width: 125px;
@@ -242,12 +245,34 @@
     border-radius: 50%;
 }
 .mypage .profile .info_area .info{
-    height: 150px;
     width: 400px;
 }
+.mypage .profile .info_area .info div{
+    margin-bottom: 13px;
+}
+
 .mypage .profile .btn_area{
     background-color: #fff;
     border-radius: 30px;
     width: 125px;
     text-align: center;
+}
+.mypage .modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mypage .modal-overlay .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 900px;
+    position: relative;
+    top: 40px;
 }

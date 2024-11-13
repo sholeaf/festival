@@ -30,8 +30,6 @@ function App() {
           <Route path="/notice/nmodify" element={<Nmodify></Nmodify>}></Route>
           <Route path="/notice/:noticenum" element={<Nget></Nget>}></Route>
           <Route path="/notice/adminpage" element={<Adminpage></Adminpage>}></Route>
-          <Route path="/mypage" element={<MyPage></MyPage>}></Route>
-          <Route path="/login" element={<Login></Login>}></Route>
         </Routes>
       </BrowserRouter>
     </>

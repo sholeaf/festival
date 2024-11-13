@@ -8,7 +8,7 @@
 	</insert>
 	<update id="updateUser">
 		update user
-		set userpw=#{userpw}, useremail=#{useremail}, zipcde=#{zipcode}, addr=#{addr},
+		set userphone=#{userphone}, useremail=#{useremail}, zipcde=#{zipcode}, addr=#{addr},
 		addrdetail=#{addrdetail}, addretc=#{addretc}
 		where userid=#{userid}
 	</update>
