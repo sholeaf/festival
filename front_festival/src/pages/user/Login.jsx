@@ -1,5 +1,5 @@
 import { useNavigate } from "react-router-dom";
-import '../../assets/style/style.css';
+import '../../assets/style/usercss.css';
 import loginImg from '../../assets/images/로그인바탕.png'
 import naverImg from '../../assets/images/네이버.png'
 import googleImg from '../../assets/images/구글.png'

@@ -1,3 +1,4 @@
+import '../../assets/style/usercss.css';
 import { useNavigate } from "react-router-dom";
 import Header from "../../layout/Header";
 import { useEffect, useState } from "react";
@@ -35,10 +36,18 @@ const MyPage = () => {
                     </div>
                 </div>
                 <div className="bookmark">
-
+                    <span>즐겨찾기 목록</span>
+                    <span>더 보기</span>
+                    <div>
+                        목록 3개
+                    </div>
                 </div>
                 <div className="community">
-
+                <span>후기 목록</span>
+                    <span>더 보기</span>
+                    <div>
+                        목록 4개
+                    </div>
                 </div>
             </div>
         </>

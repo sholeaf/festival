@@ -208,7 +208,12 @@
 
 /* 임시 테스트용 */
 .login_btn{
-    width: 125px;
+    width: 150px;
 }
 
+/* myPage */
+.mypage{
+    width: 1000px;
+    margin: 0 auto;
+}
 
