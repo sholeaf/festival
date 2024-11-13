@@ -15,8 +15,8 @@ create table user(
     addrdetail varchar(2000) not null,
     addretc varchar(300)
 );
-
-insert into user(userid,userpw,addrdetail) value("test","1234","d");
+select * from user;
+insert into user(userid, userpw, username,addrdetail) values ("admin","1234","관리자","korea");
 
 create table bookmark(
 	bmnum bigint primary key auto_increment,
@@ -25,10 +25,12 @@ create table bookmark(
 );
 
 create table user_photo(
-	uesrid varchar(50),
+	userid varchar(50),
     systemname varchar(300)
 );
-
+insert into user_photo value("apple", "test.png");
+select * from user_photo;
+drop table user_photo;
 
 ################## BOARD #####################
 create table board(
@@ -74,16 +76,39 @@ create table notice(
     noticetitle varchar(300),
     noticecontent varchar(1000),
     userid varchar(50),
-    noticeregdate datetime default now()
+    noticeregdate datetime default now(),
+    updatedate datetime default now(),
+    readcount bigint
 );
+select * from notice;
+insert into notice (noticetitle, noticecontent, userid) values ('공지사항테스트','공지에요오수정중이에요오','admin');
+delete from notice where noticenum = 5;
+drop table notice;
 
 create table notice_file(
 	noticenum bigint,
     orgname varchar(300),
     systemname varchar(300)
 );
+select * from notice_file;
+drop table notice_file;
+UPDATE notice_file
+SET
+    orgname = NULL
+WHERE noticenum = 20;
 
-
+create table notice_reply(
+	replynum bigint primary key auto_increment,
+    replycontent varchar(300),
+    userid varchar(50),
+    replyregdate datetime default now(),
+    updatedate datetime default now(),
+	noticenum bigint,
+    foreign key (noticenum) references notice (noticenum)
+	ON DELETE CASCADE
+    ON UPDATE CASCADE
+);
+drop table notice_reply;
 
 
 ######### ???? ###########

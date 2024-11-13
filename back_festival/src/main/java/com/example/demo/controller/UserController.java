@@ -1,5 +1,7 @@
 package com.example.demo.controller;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -35,19 +37,20 @@ public class UserController {
 		}
 	}
 	
-	@GetMapping(value = {"userInfo","checkEmail"})
-	public ResponseEntity<UserDTO> userInfo(@RequestParam String userid) {
-		UserDTO user = service.getUser(userid);
-		if(user != null) {
-			return new ResponseEntity<UserDTO>(user,HttpStatus.OK);
+	@GetMapping("userInfo")
+	public ResponseEntity<HashMap<String, Object>> userInfo(@RequestParam String userid) {
+		System.out.println(userid);
+		HashMap<String, Object> result = service.getUser(userid);
+		if(result != null) {
+			return new ResponseEntity<HashMap<String, Object>>(result ,HttpStatus.OK);
 		}
 		else {
-			return new ResponseEntity<UserDTO>(user,HttpStatus.OK);
+			return new ResponseEntity<HashMap<String, Object>>(result ,HttpStatus.OK);
 		}
 	}
 	
-	@GetMapping("getUserid")
-	public ResponseEntity<UserDTO> getUserid(@RequestParam String email) {
+	@GetMapping("getUser")
+	public ResponseEntity<UserDTO> getUser(@RequestParam String email) {
 		UserDTO user = service.getUserid(email);
 		if(user != null) {
 			return new ResponseEntity<UserDTO>(user,HttpStatus.OK);

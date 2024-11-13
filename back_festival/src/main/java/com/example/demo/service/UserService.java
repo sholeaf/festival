@@ -1,5 +1,7 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
+
 import com.example.demo.domain.UserDTO;
 
 public interface UserService {
@@ -8,8 +10,7 @@ public interface UserService {
 	boolean login(String userid, String userpw);
 	boolean checkId(String userid);
 	boolean leaveId(String userid);
-	UserDTO checkEmail(String userid);
-	UserDTO getUser(String userid);
+	HashMap<String, Object> getUser(String userid);
 	UserDTO getUserid(String email);
 
 }

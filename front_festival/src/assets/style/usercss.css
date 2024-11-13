@@ -217,3 +217,37 @@
     margin: 0 auto;
 }
 
+.mypage .profile{
+    display: flex;
+    justify-content: space-evenly;
+    width: 800px;
+    background-color: #ccc;
+    border-radius: 30px;
+    padding: 25px;
+    margin: 30px auto;
+}
+.mypage .profile .info_area{
+    display: flex;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 0px;
+}
+.mypage .profile .info_area .img,
+.mypage .profile .info_area .info{
+    height: 150px;
+}
+.mypage .profile .info_area img{
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+}
+.mypage .profile .info_area .info{
+    height: 150px;
+    width: 400px;
+}
+.mypage .profile .btn_area{
+    background-color: #fff;
+    border-radius: 30px;
+    width: 125px;
+    text-align: center;
+}

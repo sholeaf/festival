@@ -105,7 +105,7 @@ const Login = () => {
         const result_id = document.getElementById("result_id");
         let email = document.getElementById("useremail1").value;
 
-        axios.get('/api/user/getUserid', { params: { email } })
+        axios.get('/api/user/getUser', { params: { email } })
             .then(resp => {
                 if (!resp.data) {
                     result_id.innerHTML = "";
@@ -134,19 +134,17 @@ const Login = () => {
             return;
         }
 
-        axios.get('/api/user/checkEmail', { params: { userid } })
+        axios.get('/api/user/userInfo', { params: { userid } })
             .then(resp => {
-                if (!resp.data.useremail) {
+                if (!resp.data.user.useremail) {
                     alert("아이디에 해당하는 이메일이 존재하지 않습니다.\n아이디를 다시 확인해 주세요.");
                     return;
                 }
-                if (resp.data.useremail != email.value) {
+                if (resp.data.user.useremail != email.value) {
                     alert("아이디에 해당하는 이메일과 작성하신 이메일이 일치하지 않습니다.\n이메일을 다시 작성해 주세요.");
                     return;
                 }
-                if (resp.data.useremail == email.value) {
-                    console.log(resp.data);
-                    console.log(email.value);
+                if (resp.data.user.useremail == email.value) {
                     formData.append('email', email.value);
 
 
@@ -196,7 +194,7 @@ const Login = () => {
                 }
                 else {
                     result.style.display = "block";
-                    result_pw.innerHTML = `${resp.data.userpw}`;
+                    result_pw.innerHTML = `${resp.data.user.userpw}`;
                 }
             })
     }

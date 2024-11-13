@@ -1,9 +1,12 @@
 package com.example.demo.service;
 
+import java.util.HashMap;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.example.demo.domain.UserDTO;
+import com.example.demo.mapper.UserFileMapper;
 import com.example.demo.mapper.UserMapper;
 
 @Service
@@ -11,10 +14,16 @@ public class UserServiceImp implements UserService{
 	
 	@Autowired
 	private UserMapper umapper;
+	
+	@Autowired
+	private UserFileMapper fmapper;
 
 	@Override
 	public boolean join(UserDTO user) {
-		return umapper.insertUser(user) == 1;
+		if(fmapper.firstInset(user.getUserid())) {
+			return umapper.insertUser(user) == 1;			
+		}
+		return false;
 	}
 
 	@Override
@@ -39,14 +48,18 @@ public class UserServiceImp implements UserService{
 		return umapper.deleteUser(userid) == 1;
 	}
 
-	@Override
-	public UserDTO checkEmail(String userid) {
-		return umapper.getUserByUserid(userid);
-	}
 
 	@Override
-	public UserDTO getUser(String userid) {
-		return umapper.getUserByUserid(userid);
+	public HashMap<String, Object> getUser(String userid) {
+		HashMap<String, Object> result = new HashMap<>();
+		
+		UserDTO user = umapper.getUserByUserid(userid);
+		String file = fmapper.getFile(userid);
+		
+		result.put("user", user);
+		result.put("file", file);
+		
+		return result;
 	}
 
 	@Override
