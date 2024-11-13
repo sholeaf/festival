@@ -23,5 +23,8 @@ public class Criteria {
 		this.pagenum = pagenum;
 		this.startrow = (this.pagenum - 1) * this.amount;
 	}
+	public String[] getTypeArr() {
+		return type == null ? new String[] {} : type.split("");
+	}
 }
 

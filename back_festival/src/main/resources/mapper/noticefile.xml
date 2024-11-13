@@ -1,0 +1,20 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.NoticeFileMapper">
+	<insert id="insertFile">
+		insert into notice_file(systemname, orgname, noticenum) values (#{systemname},#{orgname},#{noticenum})
+	</insert>
+	<select id="getFileBySystemname">
+		select * from notice_file where systemname=#{systemname}
+	</select>
+	<select id="getFiles">
+		select * from notice_file where noticenum=#{noticenum}
+	</select>
+	<delete id="deleteFileBySystemname">
+		delete from notice_file where systemname = #{systemname}
+	</delete>
+	<delete id="deleteFilesByNoticenum">
+		delete from notice_file where noticenum = #{noticenum}
+	</delete>
+</mapper>
