@@ -4,6 +4,7 @@ import Header from "../../layout/Header";
 import TodayDate from "../../hooks/TodayDate";
 import FestivalCalendar from "./FestivalCalendar";
 import FestivalMap from "./FestivalMap";
+import FestivalSearch from "./FestivalSearch";
 import spring from "../../assets/images/festivalImg/spring.jpg";
 import summer from "../../assets/images/festivalImg/summer.jpg";
 import fall from "../../assets/images/festivalImg/fall.jpg";
@@ -29,15 +30,15 @@ import ulsan from "../../assets/images/festivalImg/ulsan.jpg";
 const API_URL = 'https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&';
 const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
 
-const FestivalSearch = () => {
-    return <div>축제 검색</div>;
-}
+
 
 const Festival = () => {
     const { noHyphen } = TodayDate();
     const [activeTab, setActiveTab] = useState('calendar');
     const [img, setImg] = useState();
-    const [season, setSeason] = useState()
+    const [imgIndex, setImgIndex] = useState(0);
+    const [season, setSeason] = useState();
+    const [animate, setAnimate] = useState(false); // 애니메이션 상태
     const [param, setParam] = useState({
         numOfRow: 20,
         pageNo: 1,
@@ -46,6 +47,13 @@ const Festival = () => {
         areaCode: '',
         sigunguCode: ''
     });
+
+    const images = [
+        seoul, incheon, daejeon, daegu, gwangju,
+        busan, ulsan, seajong, gyeonggi, gangwon,
+        chungbuk, chungnam, gyeongbuk, gyeongnam,
+        jeonbuk, jeonnam, jeaju
+    ];
 
     const todayRef = useRef(noHyphen);
 
@@ -119,7 +127,10 @@ const Festival = () => {
                 setImg(jeaju);
             }
         }
-    }, [season, param.areaCode, activeTab])
+        else if (activeTab === 'search') {
+            setImg(images[imgIndex]); // search탭에서는 이미지 리스트 순환
+        }
+    }, [season, param.areaCode, activeTab, imgIndex]);
 
     useEffect(() => {
         if (activeTab !== 'calendar') {
@@ -141,13 +152,39 @@ const Festival = () => {
             }));
         }
     }, [activeTab, noHyphen]);
+    
+    useEffect(() => {
+        if (activeTab !== 'search') {
+            setParam(prevParam => ({
+                ...prevParam,
+                eventStartDate: noHyphen,
+                eventEndDate: noHyphen,
+                areaCode: ''
+            }));
+        }
+    }, [activeTab, noHyphen]);
+
+    useEffect(() => {
+        let interval;
+        if (activeTab === 'search') {
+            interval = setInterval(() => {
+                setAnimate(true);
+                setTimeout(() => {
+                    setImgIndex((prevIndex) => (prevIndex + 1) % images.length);
+                    setAnimate(false);
+                }, 500); // 애니메이션 지속시간
+            }, 3000); // 이미지 변경 간격
+        }
+        return () => clearInterval(interval); // cleanup on tab change
+    }, [activeTab]);
 
     return (
         <>
             <Header />
             <div id="wrap">
-                <img className="festival_img_area" src={img} alt="Festival" />
-
+                <div className={`festival_img_area ${animate ? 'animate' : ''}`}>
+                    <img src={img} alt="festival_image" />
+                </div>
                 <div className="button-container">
                     <div
                         className="slider"
@@ -177,7 +214,7 @@ const Festival = () => {
                 <div className="content">
                     {activeTab === 'calendar' && <FestivalCalendar setParam={setParam} param={param} API_URL={API_URL} API_KEY={API_KEY} />}
                     {activeTab === 'map' && <FestivalMap setParam={setParam} param={param} API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} />}
-                    {activeTab === 'search' && <FestivalSearch />}
+                    {activeTab === 'search' && <FestivalSearch setParam={setParam} param={param} API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} />}
                 </div>
             </div>
         </>
