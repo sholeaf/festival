@@ -107,9 +107,6 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
 
     // param의 변화에 따라 fetchFestivals 실행
     useEffect(() => {
-        if(param.areaCode === ''){
-            setFestivals([]);
-        }
         fetchFestivals();
 
         console.log("param : ", param)
