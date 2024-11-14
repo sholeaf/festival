@@ -8,8 +8,8 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
-    const { param, setParam } = FestivalParam(noHyphen);
-
+    const { param, setParam } = FestivalParam("");
+    
     const [temp, setTemp] = useState({
         areaCode: '',
         eventStartDate: '',
@@ -22,12 +22,13 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
     }
 
     const searchType1 = {
-        "서울": "1", "인천": "2", "대전": "3", "대구": "4", "광주": "5", "부산": "6", "울산": "7", "세종": "8", "경기": "31", "강원": "32", "충북": "33",
-        "충남": "34", "경북": "35", "경남": "36", "전북": "37", "전남": "38",
-        "제주": "39"
+        "전체 지역": "","서울": "1", "인천": "2", "대전": "3","대구": "4", "광주": "5",
+        "부산": "6", "울산": "7", "세종": "8", "경기": "31", "강원": "32", "충북": "33",
+        "충남": "34", "경북": "35", "경남": "36", "전북": "37", "전남": "38", "제주": "39"
     }
 
     const searchType2 = {
+        "날짜 선택": "",
         "1월": "01", "2월": "02", "3월": "03", "4월": "04",
         "5월": "05", "6월": "06", "7월": "07", "8월": "08",
         "9월": "09", "10월": "10", "11월": "11", "12월": "12"
@@ -62,7 +63,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
     }
 
     const fetchFestivals = () => {
-        if (isLoading || !param.areaCode || !param.eventStartDate || !param.eventEndDate) return;  // 필수 값이 없으면 요청 안 함
+        if (isLoading || !param.eventStartDate || !param.eventEndDate) return;  // 필수 값이 없으면 요청 안 함
         setIsLoading(true);
 
         axios
@@ -120,10 +121,11 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
         <>
             <div>축제 검색</div>
             <div className="festival-search-area">
-                <Dropdown list={searchType1} name={"type1"} width={100} value={param} onChange={changeType1}></Dropdown>
-                <Dropdown list={searchType2} name={"type2"} width={100} value={param} onChange={changeType2}></Dropdown>
+                <Dropdown list={searchType1} name={"type1"} width={100} value={param.areaCode} onChange={changeType1} ></Dropdown>
+                <Dropdown list={searchType2} name={"type2"} width={100} value={param.eventStartDate ? "날짜 선택" : ""} onChange={changeType2}></Dropdown>
                 <a className="search-btn" onClick={search}>검색</a>
             </div>
+            {param.eventStartDate === "" && <p>날짜를 선택해주세요.</p>}
             {festivals.length > 0 && (
                 <div>
                     <h3>축제 목록</h3>
@@ -145,7 +147,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
             )}
 
             {/* 축제 목록이 없을 때 */}
-            {festivals.length === 0 && !isLoading && <p>해당 지역에 축제가 없습니다.</p>}
+            {festivals.length === 0 && param.eventStartDate !== "" && !isLoading && <p>해당 지역에 축제가 없습니다.</p>}
 
             {/* 로딩 상태 */}
             {isLoading && <p>Loading...</p>}
