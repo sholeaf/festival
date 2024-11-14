@@ -12,6 +12,7 @@ const MyPage = () => {
     const [loginUser, setLoginUser] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
     const [file, setFile] = useState("");
+    const [profile, setProfile] = useState("");
     const [user, setUser] = useState({
         userid: '',
         userpw: '',
@@ -41,6 +42,10 @@ const MyPage = () => {
         setIsModalOpen(true);
     };
     const openModal3 = () => {
+        setActiveModal('profileModify');  // 'userDelete' 모달을 여는 것
+        setIsModalOpen(true);
+    };
+    const openModal4 = () => {
         setActiveModal('userDelete');  // 'userDelete' 모달을 여는 것
         setIsModalOpen(true);
     };
@@ -260,6 +265,17 @@ const MyPage = () => {
         profile.click();
     }
 
+    const selectFile = (e) => {
+        const files = e.target;
+        const file = files.files[0];
+
+        console.log(file);
+        setProfile(file.name);
+    }
+
+    const returnProfile = () => {
+        setProfile("test.png");
+    }
 
     // 페이지 로드 시 관리자 여부를 확인하는 API 호출
     useEffect(() => {
@@ -301,6 +317,7 @@ const MyPage = () => {
                 .then((resp) => {
                     setUser(resp.data.user);
                     setFile(resp.data.file);
+                    setProfile(resp.data.file);
                 })
                 .catch((error) => {
 
@@ -332,9 +349,8 @@ const MyPage = () => {
                                 <div className="btn_area">
                                     <p onClick={openModal1}>개인정보 변경</p>
                                     <p onClick={openModal2}>비밀번호 변경</p>
-                                    <p onClick={openFile}>프로필 변경</p>
-                                    <p onClick={openModal3}>회원탈퇴</p>
-                                    <input type="file" name="profile" id="profile" style={{ display: 'none' }}/>
+                                    <p onClick={openModal3}>프로필 변경</p>
+                                    <p onClick={openModal4}>회원탈퇴</p>
                                 </div>
                             </div>
                             <div className="bookmark">
@@ -395,6 +411,19 @@ const MyPage = () => {
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
                                         }}></Button>
+                                    </div>
+                                )}
+                                {activeModal === 'profileModify' && (
+                                    <div id='profileModify'>
+                                        <h3>프로필 변경</h3>
+                                        <div className='img'>
+                                            <img src={`/api/user/file/thumbnail/${profile}`} alt="" id='profileImg'/>
+                                        </div>
+                                        <Button onClick={openFile} value="프로필 변경"></Button>
+                                        <Button value="기본 프로필 변경" onClick={returnProfile}></Button>
+                                        <Button value="적용"></Button>
+                                        <Button value="취소"></Button>
+                                        <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile}/>
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (
