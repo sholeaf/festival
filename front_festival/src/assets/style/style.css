@@ -15,6 +15,12 @@
     font-style: normal;
 }
 
+#wrap{
+    width:1400px;
+    margin: 0 auto;
+    position: relative;
+}
+
 * {
     box-sizing: border-box;
 }
@@ -1004,8 +1010,10 @@ a#nsearch-btn {
 }
 
 .festival-list li {
-    width: 23%;
+    width: 21%;
     margin: 15px;
+    border: 1px solid black;
+    padding :5px;
 }
 
 /* festival map */
