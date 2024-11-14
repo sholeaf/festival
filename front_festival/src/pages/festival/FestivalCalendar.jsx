@@ -3,7 +3,8 @@ import Calendar from 'react-calendar';
 import axios from "axios";
 import noimage from "../../assets/images/no-image.jpg";
 
-const FestivalCalendar = ({ setParam, param, API_URL, API_KEY }) => {
+
+const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
     const [festivals, setFestivals] = useState([]);  // 축제 데이터 상태
     const [isLoading, setIsLoading] = useState(false);  // 로딩 상태
     const [hasMore, setHasMore] = useState(true);  // 추가 데이터 여부
@@ -68,6 +69,7 @@ const FestivalCalendar = ({ setParam, param, API_URL, API_KEY }) => {
     // 페이지가 처음 로드되거나 날짜가 변경될 때마다 축제 데이터를 가져옴
     useEffect(() => {
         fetchFestivals();
+        console.log("calendarParam : ",param);
     }, [param]);
 
     // 페이지 스크롤 이벤트 리스너 추가
