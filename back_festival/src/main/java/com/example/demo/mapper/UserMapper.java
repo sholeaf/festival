@@ -11,6 +11,7 @@ public interface UserMapper {
 	int deleteUser(String userid);
 	UserDTO getUserByUserid(String userid);
 	UserDTO getUserByUseremail(String email);
+	boolean updatePw(String userid, String userpw);
 }
 
 

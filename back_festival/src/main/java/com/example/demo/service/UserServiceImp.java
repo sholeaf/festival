@@ -71,4 +71,9 @@ public class UserServiceImp implements UserService{
 	public boolean modifyUser(UserDTO user) {
 		return umapper.updateUser(user) == 1;
 	}
+
+	@Override
+	public boolean modifyPw(String userid, String userpw) {
+		return umapper.updatePw(userid, userpw);
+	}
 }

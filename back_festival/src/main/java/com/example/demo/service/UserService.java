@@ -13,5 +13,6 @@ public interface UserService {
 	HashMap<String, Object> getUser(String userid);
 	UserDTO getUserid(String email);
 	boolean modifyUser(UserDTO user);
+	boolean modifyPw(String userid, String userpw);
 
 }

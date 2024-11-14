@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -116,10 +117,25 @@ public class UserController {
 	}
 	
 	@PutMapping("modify")
-	public ResponseEntity<String> modify(UserDTO user) {
+	public ResponseEntity<String> modify(@RequestBody Map<String, UserDTO> temp) {
+		UserDTO user = temp.get("user");
 		System.out.println(user);
 		if(service.modifyUser(user)) {
 			return new ResponseEntity<String>("O",HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("X",HttpStatus.OK);
+	}
+	
+	@PutMapping("pwModify")
+	public ResponseEntity<String> pwModify(@RequestBody UserDTO user, HttpServletRequest req) {
+		String userid = user.getUserid();
+		String userpw = user.getUserpw();
+		HttpSession session = req.getSession();
+		String loginUser = (String)session.getAttribute("loginUser");
+		if(loginUser.equals(userid)) {
+			if(service.modifyPw(userid, userpw)) {
+				return new ResponseEntity<String>("O",HttpStatus.OK);
+			}
 		}
 		return new ResponseEntity<String>("X",HttpStatus.OK);
 	}

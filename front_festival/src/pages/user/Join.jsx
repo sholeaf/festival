@@ -42,7 +42,11 @@ const Join = () => {
         const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@#$%^&*\-]).{4,}$/;
 
         if(userpw.value.length <= 8){
-            pw_result.innerHTML = "비밀번호의 길이는 9자 이상으로 해주세요!";
+            pw_result.innerHTML = "비밀번호의 길이는 최소 9자 입니다!";
+            return;
+        }
+        if(userpw.value.length > 12){
+            pw_result.innerHTML = "비밀번호의 길이는 최대 12자 입니다!";
             return;
         }
         if(!reg.test(userpw.value)){

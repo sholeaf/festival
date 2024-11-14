@@ -91,7 +91,7 @@ const MyPage = () => {
         }
     }
 
-    const clickModify = () => {
+    const userModify = () => {
         const modifyForm = document.modifyForm;
 
         const phone = modifyForm.userphone;
@@ -142,6 +142,12 @@ const MyPage = () => {
             return false;
         }
 
+        if (phone.value == user.userphone && email.value == user.useremail &&
+            zipcode.value == user.zipcode && addrdetail.value == user.addrdetail) {
+            alert("변경사항이 존재하지 않습니다.");
+            return;
+        }
+
         const updateUser = {
             userid: user.userid,
             userpw: user.userpw,
@@ -154,17 +160,13 @@ const MyPage = () => {
             addrdetail: addrdetail.value,
             addretc: modifyForm.addretc.value,
         }
-        console.log(updateUser);
 
-        const formData = new FormData()
-
-        formData.append("user", updateUser);
-
-        axios.put('api/user/modify', formData)
+        axios.put('/api/user/modify', { user: updateUser })
             .then(resp => {
-                if (resp.data == "o") {
+                if (resp.data == "O") {
                     alert("개인정보 변경에 성공하였습니다.");
-                    navigate("/user/mypage");
+                    setUser(updateUser);
+                    setIsModalOpen(false);
                 }
                 else {
                     alert("개인정보 변경에 실패하였습니다.");
@@ -172,6 +174,92 @@ const MyPage = () => {
                 }
             })
     }
+
+    const pwModify = () => {
+        const pw = user.userpw;
+        const orgPw = document.getElementById("orgPw");
+        const newPw = document.getElementById("newPw");
+        const newPw_re = document.getElementById("newPw_re");
+
+        const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@#$%^&*\-]).{4,}$/;
+
+        if (orgPw.value == "") {
+            alert("현재 비밀번호를 입력해 주세요!");
+            orgPw.focus();
+            return;
+        }
+        if (orgPw.value != pw) {
+            alert("현재 비밀번호가 일치하지 않습니다.\n확인 후 다시 입력해 주세!");
+            orgPw.value = "";
+            orgPw.focus();
+            return;
+        }
+        if (newPw.value == "") {
+            alert("새 비밀번호를 입력해 주세요!");
+            newPw.focus();
+            return;
+        }
+        if (newPw.value == orgPw.value) {
+            alert("현재 비밀번호와 동일한 비밀번호는 사용할 수 없습니다!");
+            newPw.focus();
+            return;
+        }
+        if (newPw.value.length < 9) {
+            alert("비밀번호는 최소 9자 입니다.");
+            newPw.focus();
+            return;
+        }
+        if (newPw.value.length > 12) {
+            alert("비밀번호는 최대 12자 입니다.");
+            newPw.focus();
+            return;
+        }
+        if (!reg.test(newPw.value)) {
+            alert("비밀번호는 영어 대문자, 소문자, 숫자, 특수문자(~,?,!,@,#,$,%,^,&,-)를 조합해서 만들어주세요");
+            newPw.focus();
+            return;
+        }
+        if (newPw_re.value == "") {
+            alert("새 비밀번호 확인을 입력해 주세요!");
+            newPw_re.focus();
+            return;
+        }
+        if (newPw.value != newPw_re.value) {
+            alert("새 비밀번호 확인이 일치하지 않습니다.\n다시 시도해 주세요!");
+            newPw_re.value = "";
+            newPw_re.focus();
+            return;
+        }
+
+        const updatePw = {
+            userid: user.userid,
+            userpw: newPw.value
+        }
+        axios.put('/api/user/pwModify', updatePw).then(resp => {
+            if (resp.data == "O") {
+                alert("비밀번호 변경에 성공하였습니다.");
+                setUser(user => ({
+                    ...user,
+                    userpw: newPw.value
+                }));
+                setIsModalOpen(false);
+            }
+            else {
+                alert("비밀번호 변경에 실패하였습니다.");
+                setIsModalOpen(false);
+            }
+        })
+            .catch(resp => {
+                alert("비밀번호 변경에 실패하였습니다.");
+                setIsModalOpen(false);
+            })
+    }
+
+    const openFile = () => {
+        const profile = document.getElementById("profile");
+        profile.click();
+    }
+
 
     // 페이지 로드 시 관리자 여부를 확인하는 API 호출
     useEffect(() => {
@@ -205,7 +293,7 @@ const MyPage = () => {
             .catch((error) => {
                 console.error("로그인 상태 확인 오류: ", error);
             });
-    }, []);
+    }, [isModalOpen]);
 
     useEffect(() => {
         if (loginUser) {
@@ -244,8 +332,9 @@ const MyPage = () => {
                                 <div className="btn_area">
                                     <p onClick={openModal1}>개인정보 변경</p>
                                     <p onClick={openModal2}>비밀번호 변경</p>
-                                    <p>프로필 변경</p>
+                                    <p onClick={openFile}>프로필 변경</p>
                                     <p onClick={openModal3}>회원탈퇴</p>
+                                    <input type="file" name="profile" id="profile" style={{ display: 'none' }}/>
                                 </div>
                             </div>
                             <div className="bookmark">
@@ -283,12 +372,29 @@ const MyPage = () => {
                                                 <input type="hidden" name="orgZipcode" id="orgZipcode" readOnly value={user.zipcode} />
                                             </div>
                                         </form>
-                                        <Button value="변경" onClick={clickModify}></Button>
+                                        <Button value="변경" onClick={userModify}></Button>
+                                        <Button value="취소" onClick={() => {
+                                            setIsModalOpen(false)
+                                        }}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'pwModify' && (
                                     <div id='pwModify'>
-                                        비밀번호 변경
+                                        <h3>비밀번호 변경</h3>
+                                        <div onKeyDown={(e) => {
+                                            if (e.key == 'Enter') {
+                                                e.preventDefault();
+                                                pwModify();
+                                            }
+                                        }}>
+                                            <input type="password" name="orgPw" id="orgPw" placeholder='현재 비밀번호' />
+                                            <input type="password" name="newPw" id="newPw" placeholder='새 비밀번호' />
+                                            <input type="password" name="newPw_re" id="newPw_re" placeholder='새 비밀번호 확인' />
+                                        </div>
+                                        <Button value="변경" onClick={pwModify}></Button>
+                                        <Button value="취소" onClick={() => {
+                                            setIsModalOpen(false)
+                                        }}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (
