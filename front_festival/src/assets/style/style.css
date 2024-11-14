@@ -65,6 +65,73 @@ img {
     margin: 20px;
 }
 
+/* dropdown */
+.common-dropdown {
+    position: relative;
+    display: inline-block;
+    margin: 0 10px ;
+}
+
+.dropdown-button {
+    background-color: white;
+    color: black;
+    padding: 5px;
+    cursor: pointer;
+    border-radius: 4px;
+    font-size: 14px;
+	border:3px solid #92B4EC;
+}
+
+.dropdown-content {
+    position: absolute;
+    text-align: center;
+    background-color: white;
+    color:black;
+    border-radius: 4px;
+    overflow: hidden;
+    width: 100%;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+
+.dropdown-content li {
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+    padding-right: 8px;
+}
+.dropdown-content li:hover{
+    background-color:#92B4EC;
+    color:white;
+}
+.dropdown-content.show {
+    max-height: 300px; /* 원하는 높이로 조절하세요 */
+    overflow-y: auto;
+    width: 100%;
+    transition: max-height 0.3s ease-in-out;
+    border: 1px solid #ccc;
+    box-sizing: border-box;
+    margin-left: 0;
+    margin-top: 0;
+}
+/* 크롬, 사파리, 엣지용 스크롤바 스타일 */
+.dropdown-content.show::-webkit-scrollbar {
+    width: 8px; /* 스크롤바 너비 조정 */
+}
+
+.dropdown-content.show::-webkit-scrollbar-track {
+    background: #f1f1f1; /* 스크롤바 트랙 색상 */
+}
+
+.dropdown-content.show::-webkit-scrollbar-thumb {
+    background-color: #92B4EC; /* 스크롤바 손잡이 색상 */
+    border-radius: 10px;
+    border: 2px solid #f1f1f1; /* 스크롤바 손잡이 경계 */
+}
+
+
 
 /* notice area 공지페이지 시작 */
 #nwrap {
@@ -857,6 +924,7 @@ a#nsearch-btn {
 }
 
 
+
 .button-container{
     display: flex;
     position: relative;
@@ -1220,6 +1288,23 @@ a#nsearch-btn {
     border-radius: 50%; 
 }
 
+/* festival search */
+.festival-search-area{
+    display: flex;
+    float: right;
+}
+
+.search-btn{
+    border: 3px solid #92B4EC;
+    border-radius: 4px;
+    font-size: 14px;
+    width: 80px;
+    padding: 5px;
+    text-align: center;
+    background-color: #92B4EC;
+    color: white;
+    cursor: pointer;
+}
 
 
 
