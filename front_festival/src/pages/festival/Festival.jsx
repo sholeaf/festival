@@ -5,6 +5,7 @@ import TodayDate from "../../hooks/TodayDate";
 import FestivalCalendar from "./FestivalCalendar";
 import FestivalMap from "./FestivalMap";
 import FestivalSearch from "./FestivalSearch";
+import FestivalParam from "../../hooks/FestivalParam";
 import spring from "../../assets/images/festivalImg/spring.jpg";
 import summer from "../../assets/images/festivalImg/summer.jpg";
 import fall from "../../assets/images/festivalImg/fall.jpg";
@@ -26,6 +27,7 @@ import jeonnam from "../../assets/images/festivalImg/jeonnam.jpg";
 import gyeongbuk from "../../assets/images/festivalImg/gyeongbuk.jpg";
 import gyeongnam from "../../assets/images/festivalImg/gyeongnam.jpg";
 import ulsan from "../../assets/images/festivalImg/ulsan.jpg";
+import area from "../../assets/images/festivalImg/areadefault.jpg";
 
 const API_URL = 'https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&';
 const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -39,14 +41,8 @@ const Festival = () => {
     const [imgIndex, setImgIndex] = useState(0);
     const [season, setSeason] = useState();
     const [animate, setAnimate] = useState(false); // 애니메이션 상태
-    const [param, setParam] = useState({
-        numOfRow: 20,
-        pageNo: 1,
-        eventStartDate: noHyphen,
-        eventEndDate: noHyphen,
-        areaCode: '',
-        sigunguCode: ''
-    });
+    const { param, setParam } = FestivalParam(noHyphen);
+
 
     const images = [
         seoul, incheon, daejeon, daegu, gwangju,
@@ -75,7 +71,10 @@ const Festival = () => {
             }
         }
         else if (activeTab == 'map') {
-            if (param.areaCode == '1') {
+            if (param.areaCode == '') {
+                setImg(area);
+            }
+            else if (param.areaCode == '1') {
                 setImg(seoul);
             }
             else if (param.areaCode == '2') {
@@ -133,36 +132,28 @@ const Festival = () => {
     }, [season, param.areaCode, activeTab, imgIndex]);
 
     useEffect(() => {
-        if (activeTab !== 'calendar') {
+        // 탭 전환 시마다 param 초기화
+        if (activeTab === 'calendar') {
+            // calendar 탭에서는 날짜 초기화
             setParam(prevParam => ({
                 ...prevParam,
-                eventStartDate: noHyphen,
-                eventEndDate: noHyphen
+                pageNo: 1,
+                areaCode: '',
+                eventStartDate: noHyphen,  // 날짜 초기화
+                eventEndDate: noHyphen     // 날짜 초기화
+            }));
+        } else if (activeTab === 'map') {
+            // map 탭에서는 날짜를 그대로 두고 areaCode만 초기화
+            setParam(prevParam => ({
+                ...prevParam,
+                pageNo: 1,
+                areaCode: '',
+                eventStartDate: noHyphen,  // 날짜 초기화
+                eventEndDate: noHyphen     // 날짜 초기화
             }));
         }
-    }, [activeTab, noHyphen]);
+    }, [activeTab, noHyphen]); // activeTab 또는 noHyphen이 변경될 때마다 실행
 
-    useEffect(() => {
-        if (activeTab !== 'map') {
-            setParam(prevParam => ({
-                ...prevParam,
-                eventStartDate: noHyphen,
-                eventEndDate: noHyphen,
-                areaCode: ''
-            }));
-        }
-    }, [activeTab, noHyphen]);
-    
-    useEffect(() => {
-        if (activeTab !== 'search') {
-            setParam(prevParam => ({
-                ...prevParam,
-                eventStartDate: noHyphen,
-                eventEndDate: noHyphen,
-                areaCode: ''
-            }));
-        }
-    }, [activeTab, noHyphen]);
 
     useEffect(() => {
         let interval;
@@ -212,9 +203,9 @@ const Festival = () => {
                 </div>
 
                 <div className="content">
-                    {activeTab === 'calendar' && <FestivalCalendar setParam={setParam} param={param} API_URL={API_URL} API_KEY={API_KEY} />}
-                    {activeTab === 'map' && <FestivalMap setParam={setParam} param={param} API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} />}
-                    {activeTab === 'search' && <FestivalSearch setParam={setParam} param={param} API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} />}
+                    {activeTab === 'calendar' && <FestivalCalendar API_URL={API_URL} API_KEY={API_KEY} param={param} setParam={setParam} />}
+                    {activeTab === 'map' && <FestivalMap API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} param={param} setParam={setParam} />}
+                    {activeTab === 'search' && <FestivalSearch API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} />}
                 </div>
             </div>
         </>
