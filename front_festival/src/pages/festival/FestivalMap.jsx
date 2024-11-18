@@ -4,12 +4,12 @@ import festival_map from "../../assets/images/festivalImg/festival_map.png";
 import noimage from "../../assets/images/no-image.jpg";
 
 
-const FestivalMap = ({ setParam, param, API_URL, API_KEY, noHyphen }) => {
+const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam }) => {
     const [festivals, setFestivals] = useState([]);  // 축제 데이터 상태
     const [isLoading, setIsLoading] = useState(false);  // 로딩 상태
     const [hasMore, setHasMore] = useState(true);  // 추가 데이터 여부
     const [selectedArea, setSelectedArea] = useState(null);  // 선택된 지역 상태
-
+ 
     // 지역 목록은 handleAreaChange 함수 외부에서 정의해야 합니다.
     const areas = [
         { id: '1', name: '서울' },
@@ -40,8 +40,15 @@ const FestivalMap = ({ setParam, param, API_URL, API_KEY, noHyphen }) => {
         setParam((prev) => ({
             ...prev,
             areaCode: areaId,
+            eventStartDate: noHyphen,
+            eventEndDate: noHyphen,
             pageNo: 1,
         }));
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
     };
 
     // 축제 데이터를 API에서 가져오는 함수
@@ -73,6 +80,7 @@ const FestivalMap = ({ setParam, param, API_URL, API_KEY, noHyphen }) => {
     // 페이지 번호가 변경될 때마다 축제 데이터를 요청
     useEffect(() => {
         fetchFestivals();
+        console.log("map.param : ", param);
     }, [param]);  // param이 변경될 때마다 effect 실행
 
     // 스크롤이 페이지 하단에 도달했을 때 추가 데이터를 요청하는 함수
