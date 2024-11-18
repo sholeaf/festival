@@ -155,9 +155,14 @@ public class UserServiceImp implements UserService{
 	@Override
 	public int defaultProfile(String userid, String deleteFile) {
 		if(fmapper.defaultFile(userid) == 1) {
-			File file = new File(saveFolder+"user/",deleteFile);
-			if(file.exists()) {
-				file.delete();
+			if(deleteFile.equals("test.png")) {
+				return 1;
+			}
+			else {
+				File file = new File(saveFolder+"user/",deleteFile);
+				if(file.exists()) {
+					file.delete();
+				}				
 			}
 			return 1;
 		}
