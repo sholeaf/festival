@@ -328,6 +328,29 @@ const MyPage = () => {
         }
     }
 
+    const deleteUser = () => {
+        const pw = document.getElementById("userpw");
+
+        if(pw.value == ""){
+            alert("비밀번호를 입력해주세요!");
+            pw.focus();
+            return;
+        }
+        if(pw.value != user.userpw){
+            alert("비밀번호가 일치하지 않습니다!\n확인 후 다시 시도해 주세요!");
+            return;
+        }
+        if(window.confirm("정말 탈퇴하시겠습니까?")){
+            pw.value = "";
+            
+        }
+        else{
+            alert("회원 탈퇴가 취소되었습니다.");
+            pw.value = "";
+            setIsModalOpen(false);
+        }
+    }
+
     // 페이지 로드 시 관리자 여부를 확인하는 API 호출
     useEffect(() => {
         axios.get('/api/notice/checkadmin')
@@ -402,7 +425,7 @@ const MyPage = () => {
                                     <p onClick={openModal1}>개인정보 변경</p>
                                     <p onClick={openModal2}>비밀번호 변경</p>
                                     <p onClick={openModal3}>프로필 변경</p>
-                                    <p onClick={openModal4}>회원탈퇴</p>
+                                    <p onClick={openModal4}>회원 탈퇴</p>
                                 </div>
                             </div>
                             <div className="bookmark">
@@ -482,7 +505,15 @@ const MyPage = () => {
                                 )}
                                 {activeModal === 'userDelete' && (
                                     <div id='userDelete'>
-                                        회원탈퇴
+                                        <h3>회원 탈퇴</h3>
+                                        <div>
+                                            <p>비밀번호 확인</p>
+                                            <input type="password" name="userpw" id="userpw" placeholder='비밀번호'/>
+                                        </div>
+                                        <Button value="탈퇴" onClick={deleteUser}></Button>
+                                        <Button value="취소" onClick={() => {
+                                            setIsModalOpen(false)
+                                        }}></Button>
                                     </div>
                                 )}
                             </Modal>

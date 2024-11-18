@@ -13,6 +13,7 @@ import Adminpage from './pages/notice/Adminpage';
 import MyPage from './pages/user/MyPage';
 import Login from './pages/user/Login';
 import Join from './pages/user/Join';
+import Note from './pages/notes/Note';
 
 function App() {
   return (

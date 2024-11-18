@@ -155,18 +155,6 @@
 /* joinpage end */
 
 /* modal */
-.login_wrap .main .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
 .login_wrap .main .modal-content {
     background: white;
     padding: 20px;
@@ -256,25 +244,6 @@
     border-radius: 30px;
     width: 125px;
     text-align: center;
-}
-.mypage .modal-overlay {
-    position: fixed;
-    top: 0;
-    left: 0;
-    right: 0;
-    bottom: 0;
-    background: rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.mypage .modal-overlay .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 900px;
-    position: relative;
-    top: 40px;
 }
 
 /* 모달 프로필 변경 */

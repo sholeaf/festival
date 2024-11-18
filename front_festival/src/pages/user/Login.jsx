@@ -256,28 +256,30 @@ const Login = () => {
                     </div>
                 </div>
                 <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                    <div className="mflex">
-                        <div className="findId">
-                            <h2>아이디 찾기</h2>
-                            <input type="email" name="useremail" id="useremail1" placeholder="이메일" />
-                            <Button id={getCode1} value="인증번호 받기" onClick={getCode1}></Button>
-                            <input type="text" name="code" id="code1" placeholder="인증번호" />
-                            <Button id={codeCheck1} value="인증번호 확인" onClick={codeCheck1}></Button>
-                            <div id="result1">
-                                <h4>찾으시는 아이디</h4>
-                                <p id="result_id"></p>
+                    <div className="modal-content">
+                        <div className="mflex">
+                            <div className="findId">
+                                <h2>아이디 찾기</h2>
+                                <input type="email" name="useremail" id="useremail1" placeholder="이메일" />
+                                <Button id={getCode1} value="인증번호 받기" onClick={getCode1}></Button>
+                                <input type="text" name="code" id="code1" placeholder="인증번호" />
+                                <Button id={codeCheck1} value="인증번호 확인" onClick={codeCheck1}></Button>
+                                <div id="result1">
+                                    <h4>찾으시는 아이디</h4>
+                                    <p id="result_id"></p>
+                                </div>
                             </div>
-                        </div>
-                        <div className="findPw">
-                            <h2>비밀번호 찾기</h2>
-                            <input type="text" name="userId" id="userId" placeholder="아이디" />
-                            <input type="email" name="useremail" id="useremail2" placeholder="이메일" />
-                            <Button id={getCode2} value="인증번호 받기" onClick={getCode2}></Button>
-                            <input type="text" name="code" id="code2" placeholder="인증번호" />
-                            <Button id={codeCheck2} value="인증번호 확인" onClick={codeCheck2}></Button>
-                            <div id="result2">
-                                <h4>찾으시는 비밀번호</h4>
-                                <p id="result_pw"></p>
+                            <div className="findPw">
+                                <h2>비밀번호 찾기</h2>
+                                <input type="text" name="userId" id="userId" placeholder="아이디" />
+                                <input type="email" name="useremail" id="useremail2" placeholder="이메일" />
+                                <Button id={getCode2} value="인증번호 받기" onClick={getCode2}></Button>
+                                <input type="text" name="code" id="code2" placeholder="인증번호" />
+                                <Button id={codeCheck2} value="인증번호 확인" onClick={codeCheck2}></Button>
+                                <div id="result2">
+                                    <h4>찾으시는 비밀번호</h4>
+                                    <p id="result_pw"></p>
+                                </div>
                             </div>
                         </div>
                     </div>
