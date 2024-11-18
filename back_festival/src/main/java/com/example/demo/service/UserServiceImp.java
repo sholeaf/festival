@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.UserDTO;
+import com.example.demo.mapper.BoardMapper;
 import com.example.demo.mapper.UserFileMapper;
 import com.example.demo.mapper.UserMapper;
 
@@ -30,6 +31,9 @@ public class UserServiceImp implements UserService{
 	
 	@Autowired
 	private UserFileMapper fmapper;
+	
+	@Autowired
+	private BoardMapper bmapper;
 
 	@Override
 	public boolean join(UserDTO user) {
@@ -182,5 +186,10 @@ public class UserServiceImp implements UserService{
 			
 		}
 		return -1;
+	}
+
+	@Override
+	public List<BoardDTO> getList(String userid) {
+		return null;
 	}
 }

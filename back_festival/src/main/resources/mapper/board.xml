@@ -48,6 +48,9 @@
 		<include refid="cri"></include>
 		boardnum > 0
 	</select>
+	<select id="getListByUserid">
+		select * from board where userid = #{userid}
+	</select>
 	<update id="updateBoard">
 		update board
 		set boardtitle = #{boardtitle}, boardcontent = #{boardcontent}, tag = #{tag}

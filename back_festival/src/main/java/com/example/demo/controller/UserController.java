@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -176,5 +177,10 @@ public class UserController {
 			return new ResponseEntity<String>("O",HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("X",HttpStatus.OK);
+	}
+	
+	@GetMapping("{userid}")
+	public void getList(@PathVariable("userid") String userid) {
+		List<BoardDTO> list = service.getList(userid);
 	}
 }

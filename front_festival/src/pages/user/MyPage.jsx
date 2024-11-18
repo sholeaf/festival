@@ -298,9 +298,9 @@ const MyPage = () => {
     const profileModify = () => {
         const formData = new FormData();
 
-        console.log("file : "+file)
-        console.log("updateFile : "+updateFile)
-        console.log("deleteFile : "+deleteFile)
+        console.log("file : " + file)
+        console.log("updateFile : " + updateFile)
+        console.log("deleteFile : " + deleteFile)
 
 
         if (deleteFile == updateFile) {
@@ -319,8 +319,8 @@ const MyPage = () => {
             formData.append("userid", user.userid);
 
             axios.put('/api/user/profileModify', formData)
-                .then(resp=>{
-                    if(resp.data == "O"){
+                .then(resp => {
+                    if (resp.data == "O") {
                         alert("프로필이 변경되었습니다.");
                         setIsModalOpen(false);
                     }
@@ -332,25 +332,25 @@ const MyPage = () => {
         const pw = document.getElementById("userpw");
         const userid = user.userid;
 
-        if(pw.value == ""){
+        if (pw.value == "") {
             alert("비밀번호를 입력해주세요!");
             pw.focus();
             return;
         }
-        if(pw.value != user.userpw){
+        if (pw.value != user.userpw) {
             alert("비밀번호가 일치하지 않습니다!\n확인 후 다시 시도해 주세요!");
             return;
         }
-        if(window.confirm("정말 탈퇴하시겠습니까?")){
+        if (window.confirm("정말 탈퇴하시겠습니까?")) {
             pw.value = "";
-            axios.delete('/api/user/delete', { params : {userid} } ).then(resp=>{
-                if(resp.data == "O"){
+            axios.delete('/api/user/delete', { params: { userid } }).then(resp => {
+                if (resp.data == "O") {
                     alert("회원 탈퇴가 완료되었습니다.\n그동안 이용해 주셔서 감사합니다. 안녕히 가십시오.");
                     navigate("/");
                 }
             })
         }
-        else{
+        else {
             alert("회원 탈퇴가 취소되었습니다.");
             pw.value = "";
             setIsModalOpen(false);
@@ -375,7 +375,7 @@ const MyPage = () => {
         }
     }, [isAdmin, navigate]);
 
-
+    // 유저 로그인 확인
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
             .then((resp) => {
@@ -391,6 +391,7 @@ const MyPage = () => {
             });
     }, []);
 
+    // 유저 정보 가져오기
     useEffect(() => {
         if (loginUser) {
             axios.get(`/api/user/userInfo`, { params: { userid: loginUser } })
@@ -403,7 +404,7 @@ const MyPage = () => {
                 .catch((error) => {
 
                 });
-
+            
         }
     }, [loginUser, isModalOpen]);
 
@@ -514,7 +515,7 @@ const MyPage = () => {
                                         <h3>회원 탈퇴</h3>
                                         <div>
                                             <p>비밀번호 확인</p>
-                                            <input type="password" name="userpw" id="userpw" placeholder='비밀번호'/>
+                                            <input type="password" name="userpw" id="userpw" placeholder='비밀번호' />
                                         </div>
                                         <Button value="탈퇴" onClick={deleteUser}></Button>
                                         <Button value="취소" onClick={() => {

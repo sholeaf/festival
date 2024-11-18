@@ -41,7 +41,9 @@ create table board(
     boardregdate datetime default now(),
     boardreadcnt bigint,
 	reportcnt bigint,
-    tag varchar(300)
+    tag varchar(300),
+    titleImage varchar(300),
+    preview varchar(300)
 );
 select * from board;
 insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('1','신고테스트','테스트중입니다','apple','1',now(),'1');
