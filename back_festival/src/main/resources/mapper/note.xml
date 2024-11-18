@@ -46,4 +46,8 @@
 	<delete id="deleteNote">
 		delete from note where notenum = #{notenum}
 	</delete>
+	<delete id="deleteById">
+    delete from note
+    where notenum = #{notenum}
+</delete>
 </mapper>
