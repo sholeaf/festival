@@ -33,6 +33,8 @@ const Notice = () => {
     });
 
     const [inputs, setInputs] = useState("");
+    // 관리자 여부 설정
+    const [isAdmin, setIsAdmin] = useState(false);
 
     const inputkeyword = (e) => {
         setInputs(e.target.value);
@@ -48,6 +50,12 @@ const Notice = () => {
         };
         setCri(changedCri);
     };
+    const searchenter = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            clickSearch(e);
+        }
+    }
 
     useEffect(() => {
         const temp = {
@@ -73,11 +81,24 @@ const Notice = () => {
                 }
             });
     }, [cri]);
-    useEffect(()=>{
-        if(location.state){
+    useEffect(() => {
+        if (location.state) {
             setCri(location.state);
         }
-    },[location.state])
+    }, [location.state])
+    useEffect(() => {
+        // 페이지 로드 시 관리자 여부를 확인
+        axios.get('/api/notice/checkadmin')
+            .then(response => {
+                console.log("응답 데이터:", response.data.admin)
+                setIsAdmin(response.data.admin);  // 서버에서 받은 isAdmin 값으로 상태 업데이트
+                console.log("isAdmin 상태:", response.data.admin);
+            })
+            .catch(error => {
+                console.error('관리자 여부 확인 실패:', error);
+                setIsAdmin(false);  // 에러 발생 시 기본값으로 관리자가 아니라고 설정
+            });
+    }, []);
     // 데이터가 없을 때 로딩 텍스트 표시
     const [chars, setChars] = useState([]);
     useEffect(() => {
@@ -111,21 +132,29 @@ const Notice = () => {
 
     // 실제 데이터가 있을 경우 리스트 처리
     const list = data?.notice;
+    console.log(list);
     const noticeList = [];
     if (list && list.length > 0) {
         for (const notice of list) {
+            console.log("notice데이터new확인:", notice);
             noticeList.push(
                 <div className="row" key={notice.noticenum} onClick={() => {
                     navigate(`/notice/${notice.noticenum}`, { state: cri });
                 }}>
                     <div>{notice.noticenum}</div>
-                    <div>{notice.isNew ? <sup className="noticenew">New</sup> : ""}
+                    <div>{notice.new ? <sup className="noticenew">New</sup> : ""}
                         <a className="nget">
-                            {notice.noticetitle}<span id="nreply_cnt">[{notice.nreplyCnt}]</span>
+                            {notice.noticetitle}
+                            {notice.nreplyCnt !== 0 && <span id="nreply_cnt">[{notice.nreplyCnt}]</span>}
                         </a>
                     </div>
                     <div>{notice.userid}</div>
-                    <div>{notice.noticeregdate}{notice.noticeregdate !== notice.updatenoticedate ? "(수정)" : ""}</div>
+                    <div>
+                        {notice.noticeregdate}
+                        {notice.noticeregdate !== notice.updatedate && (
+                            <span style={{ color: 'red' }}>(수정)</span>
+                        )}
+                    </div>
                     <div>{notice.readcount}</div>
                 </div>
             );
@@ -147,7 +176,6 @@ const Notice = () => {
     };
 
     // 관리자인지 확인 (DB에서 userid가 "admin"인지 확인)
-    const isAdmin = data && data.user && data.user.userid === "admin";  // 수정된 부분
 
     return (
         <>
@@ -188,7 +216,7 @@ const Notice = () => {
                     <form name="searchForm" action="/notice/list" className="row">
                         <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}>
                         </Dropdown>
-                        <input type="search" id="nkeyword" name="keyword" onChange={inputkeyword} value={inputs} />
+                        <input type="search" id="nkeyword" name="keyword" onChange={inputkeyword} value={inputs} onKeyDown={searchenter} />
                         <a id="nsearch-btn" className="btn" onClick={clickSearch}>검색</a>
                         <input type="hidden" name="pagenum" />
                         <input type="hidden" name="amount" />
