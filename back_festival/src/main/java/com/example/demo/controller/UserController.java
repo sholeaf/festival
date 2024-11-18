@@ -6,6 +6,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -168,5 +169,13 @@ public class UserController {
 	        return new ResponseEntity<String>("X",HttpStatus.OK);
 	    }
 
+	}
+	
+	@DeleteMapping("delete")
+	public ResponseEntity<String> deleteUser(@RequestParam String userid) {
+		if(service.deleteUser(userid) == 1) {
+			return new ResponseEntity<String>("O",HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("X",HttpStatus.OK);
 	}
 }

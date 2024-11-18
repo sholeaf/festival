@@ -163,4 +163,19 @@ public class UserServiceImp implements UserService{
 		}
 		return -1;
 	}
+	
+	@Override
+	public int deleteUser(String userid) {
+		String file = fmapper.getFile(userid);
+		if(file.equals("test.png")) {
+			return umapper.deleteUser(userid);			
+		}
+		else {
+			if(fmapper.deleteFileByUserid(userid) == 1) {
+				return umapper.deleteUser(userid);
+			}
+			
+		}
+		return -1;
+	}
 }

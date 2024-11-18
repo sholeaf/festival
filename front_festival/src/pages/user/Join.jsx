@@ -75,7 +75,7 @@ const Join = () => {
 
         formData.append('email', email);
 
-
+        console.log(email)
         axios.post('/api/mail/confirm.json', formData)
             .then((resp) => {
                 alert("인증번호 : "+resp.data);

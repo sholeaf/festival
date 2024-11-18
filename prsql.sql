@@ -17,11 +17,6 @@ create table user(
 );
 select * from user;
 insert into user(userid, userpw, username,addrdetail) values ("admin","1234","관리자","korea");
-update user
-set userphone="01012345678", useremail="apple@apple.com", zipcode="", addr="",
-addrdetail="101", addretc="" 
-where userid="apple";
-
 
 create table bookmark(
 	bmnum bigint primary key auto_increment,
@@ -33,8 +28,7 @@ create table user_photo(
 	userid varchar(50),
     systemname varchar(300)
 );
-insert into user_photo value("apple", "test.png");
-DELETE FROM user_photo WHERE userid = 'apple';
+insert into user_photo value("admin", "test.png");
 select * from user_photo;
 drop table user_photo;
 
@@ -49,7 +43,10 @@ create table board(
 	reportcnt bigint,
     tag varchar(300)
 );
-
+select * from board;
+insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('1','신고테스트','테스트중입니다','apple','1',now(),'1');
+insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('2','신고테스트','테스트중입니다','apple','1',now(),'6');
+drop table board;
 create table board_photo(
 	boardnum bigint,
     systemname varchar(300)
@@ -124,6 +121,8 @@ create table note(
     receiveuser varchar(50),
     title varchar(300),
     content varchar(1000),
-    regdate datetime default now(),
-    readcnt bigint
+    regdate datetime default now()
 );
+select * from note;
+drop table note;
+insert into note (senduser, receiveuser, title, content, regdate) values ('apple','admin','쪽지테스트','제발~',now());

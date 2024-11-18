@@ -18,5 +18,6 @@ public interface UserService {
 	boolean modifyPw(String userid, String userpw);
 	int profileModify(String userid, MultipartFile file, String deleteFile);
 	int defaultProfile(String userid, String deleteFile);
+	int deleteUser(String userid);
 
 }

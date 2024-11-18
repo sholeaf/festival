@@ -330,6 +330,7 @@ const MyPage = () => {
 
     const deleteUser = () => {
         const pw = document.getElementById("userpw");
+        const userid = user.userid;
 
         if(pw.value == ""){
             alert("비밀번호를 입력해주세요!");
@@ -342,7 +343,12 @@ const MyPage = () => {
         }
         if(window.confirm("정말 탈퇴하시겠습니까?")){
             pw.value = "";
-            
+            axios.delete('/api/user/delete', { params : {userid} } ).then(resp=>{
+                if(resp.data == "O"){
+                    alert("회원 탈퇴가 완료되었습니다.\n그동안 이용해 주셔서 감사합니다. 안녕히 가십시오.");
+                    navigate("/");
+                }
+            })
         }
         else{
             alert("회원 탈퇴가 취소되었습니다.");

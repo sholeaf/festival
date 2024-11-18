@@ -10,6 +10,7 @@ public interface UserFileMapper {
 	int defaultFile(String userid);
 	String getFile(String userid);
 	void deleteFileBySystemname(String systemname);
+	int deleteFileByUserid(String userid);
 
 
 }

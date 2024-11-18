@@ -18,6 +18,9 @@
 		set systemname = "test.png"
 		where userid = #{userid}
 	</update>
+	<delete id="deleteFileByUserid">
+		delete from user_photo where userid=#{userid}
+	</delete>
 	<delete id="deleteFileBySystemname">
 		delete from user_photo where systemname=#{systemname}
 	</delete>
