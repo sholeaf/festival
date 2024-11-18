@@ -1018,11 +1018,11 @@ a#nsearch-btn {
 }
 
 .rplist.rptable .row div:nth-child(2) {
-    width: 45%;
+    width: 35%;
 }
 
 .rplist.rptable .row div:nth-child(3) {
-    width: 15%;
+    width: 10%;
 }
 
 .rplist.rptable .row div:nth-child(4) {
@@ -1031,6 +1031,9 @@ a#nsearch-btn {
 
 .rplist.rptable .row div:nth-child(5) {
     width: 10%;
+}
+.rplist.rptable .row div:nth-child(6) {
+    width: 20%;
 }
 
 
