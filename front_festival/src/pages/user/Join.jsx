@@ -1,3 +1,4 @@
+import '../../assets/style/usercss.css';
 import { useNavigate } from "react-router-dom";
 import DaumPostCode from "../../components/DaumPostCode";
 import axios from 'axios';
@@ -23,8 +24,6 @@ const Join = () => {
                     }
                     else {
                         result.innerHTML = "중복된 아이디가 있습니다!";
-                        user.value = "";
-                        user.focus();
                     }
                 })
         }
@@ -40,14 +39,18 @@ const Join = () => {
         const userpw = document.joinForm.userpw;
         const userpw_re = document.joinForm.userpw_re;
         const pw_result = document.getElementById(`pw_result`);
-        const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@-]).{4,}$/;
+        const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@#$%^&*\-]).{4,}$/;
 
         if(userpw.value.length <= 8){
-            pw_result.innerHTML = "비밀번호의 길이는 9자 이상으로 해주세요!";
+            pw_result.innerHTML = "비밀번호의 길이는 최소 9자 입니다!";
+            return;
+        }
+        if(userpw.value.length > 12){
+            pw_result.innerHTML = "비밀번호의 길이는 최대 12자 입니다!";
             return;
         }
         if(!reg.test(userpw.value)){
-            pw_result.innerHTML = "비밀번호는 영어 대문자, 소문자, 숫자, 특수문자를 조합해서 만들어주세요";
+            pw_result.innerHTML = "비밀번호는 영어 대문자, 소문자, 숫자, 특수문자(~,?,!,@,#,$,%,^,&,-)를 조합해서 만들어주세요";
             return;
         }
         if(userpw.value.length != userpw_re.value.length){
@@ -72,7 +75,7 @@ const Join = () => {
 
         formData.append('email', email);
 
-
+        console.log(email)
         axios.post('/api/mail/confirm.json', formData)
             .then((resp) => {
                 alert("인증번호 : "+resp.data);

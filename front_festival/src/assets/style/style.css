@@ -1152,7 +1152,6 @@ a#nsearch-btn {
     margin : 10px 0;
     object-fit: contain; /* 비율을 유지하며 요소 내부에 맞게 조정 */
     object-position: center; /* 이미지 중앙 배치 */
-    
 }
 
 
@@ -1540,6 +1539,20 @@ a#nsearch-btn {
     cursor: pointer;
 }
 
+/* festival detail */
+.slick-dots {
+    bottom: -30px !important;
+}
 
+.detail-img img{
+    width: 100%;
+    height: 280px;
+    margin : 10px 0;
+    object-fit: contain; /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center;
+}
 
+.festival-info{
+    margin-top: 70px;
+}
 /* festival .css 종료 */

@@ -1,5 +1,18 @@
+// const Modal = ({ isOpen, closeModal, children }) => {
+//     if (!isOpen) return null;
+
+//     return (
+//         <div className="modal-overlay">
+//             <div className="modal-content">
+//                 <button className="close-btn" onClick={closeModal}>X</button>
+//                 {children}
+//             </div>
+//         </div>
+//     );
+// };
+
+// export default Modal;
 const Modal = ({isOpen, children, closeModal}) => {
-    console.log("children",children);
     return (
         <div style={{display:isOpen ? "block":"none"}}>
            <div style={{

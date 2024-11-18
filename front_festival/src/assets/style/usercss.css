@@ -14,14 +14,16 @@
 }
 
 /* 헤더 */
-.header_area{
+.header_area {
     padding: 10px 5px;
 }
+
 .navigate {
     display: flex;
     justify-content: space-evenly;
 }
-.navigate .logo a{
+
+.navigate .logo a {
     font-family: 'EBSJSKMedium';
     font-weight: bold;
     font-size: 24px;
@@ -29,30 +31,29 @@
 
 .navigate a {
     font-family: 'GowunDodum-Regular';
-    margin : 20px;
+    margin: 20px;
     font-size: 20px;
     user-select: none;
     cursor: pointer;
 }
 
 /* 로그인 페이지 */
-.login_wrap + header {
+.login_wrap+header {
     display: none;
 }
-.login_wrap{
+
+.login_wrap {
     width: 100%;
     user-select: none;
 }
-.login_wrap .main{
-    max-width: 1400px;
-    margin: 0 auto;
-}
-.login_wrap .main .center{
+
+.login_wrap .main {
     max-width: 1000px;
     margin: 55px auto;
     padding: 50px;
 }
-.login_wrap .main .center .logo p{
+
+.login_wrap .main .logo p {
     font-family: 'EBSJSKMedium';
     cursor: pointer;
     text-align: center;
@@ -60,30 +61,33 @@
     width: 250px;
     margin: 0 auto;
 }
-.login_wrap .main .center .float{
+
+.login_wrap .main .flex {
+    display: flex;
+    justify-content: space-around;
     margin-top: 50px;
 }
-.login_wrap .main .center .float .img{
-    float: left;
-}
-.login_wrap .main .center .float .img img{
+
+.login_wrap .main .flex .img img {
     width: 400px;
     height: 600px;
     border-radius: 30px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
 }
-.login_wrap .main .center .float .login_area{
-    float: right;
-    width: 400px;
+
+.login_wrap .main .flex .login_area {
+    min-width: 400px;
     height: 600px;
     border-radius: 30px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
     padding: 25px;
 }
-.login_area .text{
+
+.login_area .text {
     cursor: pointer;
 }
-.login_area .sns_login img{
+
+.login_area .sns_login img {
     width: 75px;
     height: 75px;
     cursor: pointer;
@@ -91,16 +95,18 @@
 }
 
 /* Join page */
-.joinpage{
+.joinpage {
     width: 100%;
-    background: no-repeat url(../images/회원가입바탕.png) ;
+    background: no-repeat url(../images/회원가입바탕.png);
 
 }
-.wrap{
+
+.wrap {
     width: 1000px;
     margin: 0 auto;
 }
-.joinpage .wrap .logo p{
+
+.joinpage .wrap .logo p {
     font-family: 'EBSJSKMedium';
     cursor: pointer;
     text-align: center;
@@ -109,31 +115,141 @@
     background-color: #fff;
     border-radius: 15px;
 }
+
 .joinpage .wrap form {
     width: 500px;
 }
-.joinpage .wrap form input{
+
+.joinpage .wrap form input {
     width: 500px;
 }
-.joinpage .wrap form .flexBox{
+
+.joinpage .wrap form .flexBox {
     display: flex;
     margin-top: 3px;
 }
-.joinpage .wrap form .flexBox .radio_item{
+
+.joinpage .wrap form .flexBox .radio_item {
     width: 250px;
 }
-.joinpage .wrap form .flexBox .radio_item input{
+
+.joinpage .wrap form .flexBox .radio_item input {
     display: none;
 }
-.joinpage .wrap form .flexBox .radio_item label{
+
+.joinpage .wrap form .flexBox .radio_item label {
     display: inline-block;
     width: 250px;
     background-color: #fff;
 }
-.flexBox .radio_item input[type="radio"]:checked + label {
+
+.flexBox .radio_item input[type="radio"]:checked+label {
     background-color: lightblue;
-  }
-#id_result, #pw_result{
+}
+
+#id_result,
+#pw_result {
     background-color: #fff;
 }
+
 /* joinpage end */
+
+/* modal */
+.login_wrap .main .modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 900px;
+    position: relative;
+    top: 40px;
+}
+
+.login_wrap .main .modal-content .mflex{
+    display: flex;
+    justify-content: space-around;
+    margin-top: 15px;
+}
+.login_wrap .main .modal-content .mflex .findId, 
+.login_wrap .main .modal-content .mflex .findPw{
+    width: 400px;
+    height: 600px;
+    padding: 25px;
+    border: 1px solid #ccc;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+    border-radius: 15px;
+}
+.login_wrap .main .modal-content .mflex .findId #result1, 
+.login_wrap .main .modal-content .mflex .findPw #result2{
+    display: none;
+}
+
+.login_wrap .main .close-btn {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    font-size: 20px;
+    cursor: pointer;
+}
+/* modal end */
+
+/* 임시 테스트용 */
+.login_btn{
+    width: 150px;
+}
+
+/* myPage */
+.mypage{
+    width: 1000px;
+    margin: 0 auto;
+}
+
+.mypage .profile{
+    display: flex;
+    justify-content: space-evenly;
+    width: 800px;
+    background-color: #ccc;
+    border-radius: 30px;
+    padding: 25px;
+    margin: 30px auto;
+}
+.mypage .profile .info_area{
+    display: flex;
+    background-color: #fff;
+    border-radius: 30px;
+    padding: 20px;
+}
+.mypage .profile .info_area .img,
+.mypage .profile .info_area .info{
+    height: 125px;
+}
+.mypage .profile .info_area .img{
+    margin-right: 24px;
+}
+.mypage .profile .info_area img{
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+}
+.mypage .profile .info_area .info{
+    width: 400px;
+}
+.mypage .profile .info_area .info div{
+    margin-bottom: 13px;
+}
+
+.mypage .profile .btn_area{
+    background-color: #fff;
+    border-radius: 30px;
+    width: 125px;
+    text-align: center;
+}
+
+/* 모달 프로필 변경 */
+#profileModify .img img{
+    width: 400px;
+    height: 400px;
+}
+
+
