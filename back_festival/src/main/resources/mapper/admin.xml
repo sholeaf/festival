@@ -1,0 +1,51 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.AdminPageMapper">
+	<sql id="cri">
+		<if test="keyword != '' and keyword != null and type != 'a'.toString()">
+			<trim prefixOverrides="or" prefix="(" suffix=") and">
+				<foreach collection="typeArr" item="t">
+					or
+					<choose>
+						<when test="t == 'T'.toString()">
+							noticetitle like ('%${keyword}%')
+						</when>
+						<when test="t == 'C'.toString()">
+							noticecontent like ('%${keyword}%')
+						</when>
+						<when test="t == 'W'.toString()">
+							userid like ('%${keyword}%')
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<select id="findReportedBoards">
+		select * from board where reportcnt >= 5
+	</select>
+	<select id="findByReportcntGreaterThanEqual">
+		select * from board where reportcnt >= #{reportCount}
+	</select>
+	<select id="getList">
+		select * from board
+		where
+		<include refid="cri"></include>
+		boardnum > 0 order by boardnum desc limit #{startrow}, #{amount}
+	</select>
+	<select id="getTotal">
+		select count(*) from board
+		where
+		<include refid="cri"></include>
+		boardnum > 0
+	</select>
+	<update id="updateReportCount">
+    UPDATE board
+    SET reportcnt = #{reportcnt}
+    WHERE boardnum = #{boardnum}
+    <selectKey resultType="int" keyProperty="affectedRows" order="AFTER">
+        select count(*) from board where boardnum = #{boardnum}
+    </selectKey>
+</update>
+</mapper>
