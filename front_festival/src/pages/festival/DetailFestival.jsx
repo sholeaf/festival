@@ -1,6 +1,6 @@
 import axios from "axios";
 import Slider from 'react-slick';
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Header from "../../layout/Header";
 import "slick-carousel/slick/slick.css";
@@ -18,12 +18,13 @@ const DetailFestival = () => {
     const settings = {
         dots: true,        // 아래에 페이지네이션 표시
         infinite: true,    // 무한 슬라이드
-        speed: 500,        // 전환 속도
+        speed: 1100,        // 전환 속도
         slidesToShow: 1,   // 한 번에 보이는 이미지 수
         slidesToScroll: 1, // 한 번에 스크롤되는 이미지 수
         autoplay: true,    // 자동 재생
-        autoplaySpeed: 3000, // 자동 재생 속도 (3초)
+        autoplaySpeed: 5000, // 자동 재생 속도 (3초)
     };
+
 
     useEffect(() => {
         axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${contentid}`)
@@ -50,38 +51,66 @@ const DetailFestival = () => {
 
     }, [contentid]);
 
+    useEffect(() => {
+        if (data.mapx && data.mapy) {
+            const script = document.createElement('script');
+            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=db24bdb6dad4a16a8feeb6f6ef35d0e7&libraries=services,clusterer`;
+            script.onload = () => {
+                const container = document.getElementById("map");
+                const options = {
+                    center: new window.kakao.maps.LatLng(data.mapy, data.mapx),
+                    level: 3, // 지도 확대 레벨
+                };
+
+                const map = new window.kakao.maps.Map(container, options);
+
+                const marker = new window.kakao.maps.Marker({
+                    position: new window.kakao.maps.LatLng(data.mapy, data.mapx)
+                });
+                marker.setMap(map);
+            };
+            document.body.appendChild(script);
+        }
+    }, [data]);
+
     if (!data || data.length === 0) {
         return <>로딩중...</>;
     }
 
     return (
-        <div id="wrap">
+        <>
             <Header />
-            <div className="festival-detail-area">
-                <h2>{data.title}</h2>
+            <img className="festival-firstImg" src={data.firstimage}></img>
+            <div id="wrap">
+                <div className="festival-detail-area">
+                    <h2>{data.title}</h2>
+                    {images.length == 1 ? <div className="detail-img"><img src={images[0].originimgurl}></img></div> :
+                        <Slider {...settings}>
+                            {images.map((image, index) => (
+                                <div className="detail-img" key={index}>
+                                    <img src={image.originimgurl} alt={`Slide ${index + 1}`}></img>
+                                </div>
+                            ))}
+                        </Slider>
+                    }
 
-                <Slider {...settings}>
-                    {images.map((image, index) => (
-                        <div className="detail-img" key={index}>
-                            <img src={image.originimgurl} alt={`Slide ${index + 1}`}></img>
-                        </div>
-                    ))}
-                </Slider>
-                <div className="festival-info">
-                    <div>{data.telname} : {data.tel}</div>
-                    <div>주소 : {data.addr1} {data.addr2}</div>
-                    <div>({data.zipcode})</div>
-                    <div>경도 : {data.mapx} 위도 : {data.mapy}</div>
-                    <div>설명 : <span dangerouslySetInnerHTML={{ __html: data.overview }} /></div>
-                    <div>홈페이지 : <span dangerouslySetInnerHTML={{ __html: data.homepage }} /></div>
+                    <div className="festival-info">
+                        <div>설명 : <span dangerouslySetInnerHTML={{ __html: data.overview }} /></div>
+
+                        <div id="map" style={{ width: "100%", height: "400px", marginTop: "20px" }}></div>
+                        <div>주소 : {data.addr1} {data.addr2}</div>
+                        <div>({data.zipcode})</div>
+                        <div>{data.telname} : {data.tel}</div>
+                        <div>홈페이지 : <span dangerouslySetInnerHTML={{ __html: data.homepage }} /></div>
+                    </div>
+                </div>
+                <div>
+                    <div onClick={() => {
+                        navigate("/festival");
+                    }}>목록</div>
                 </div>
             </div>
-            <div>
-                <div onClick={() => {
-                    navigate("/festival");
-                }}>목록</div>
-            </div>
-        </div>
+        </>
     );
 }
 
