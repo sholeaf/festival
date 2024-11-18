@@ -53,8 +53,6 @@ public class NoticeServiceImpl implements NoticeService{
             if (elapsedHours < 2) {
                 notice.setNew(true);
             }
-            long nreplyCnt = nrmapper.getTotal(notice.getNoticenum());
-            notice.setNreplyCnt(nreplyCnt);
         }
         result.put("notice", list);
         result.put("pageMaker", new PageDTO(total, cri));

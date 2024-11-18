@@ -1,0 +1,53 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.NoteMapper">
+	<sql id="cri">
+		<if test="keyword != '' and keyword != null and type != 'a'.toString()">
+			<trim prefixOverrides="or" prefix="(" suffix=") and">
+				<foreach collection="typeArr" item="t">
+					or
+					<choose>
+						<when test="t == 'T'.toString()">
+							noticetitle like ('%${keyword}%')
+						</when>
+						<when test="t == 'C'.toString()">
+							noticecontent like ('%${keyword}%')
+						</when>
+						<when test="t == 'W'.toString()">
+							userid like ('%${keyword}%')
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+	<insert id="insertNote">
+		insert into note(receiveuser, senduser, title, content) values (#{receiveuser},#{senduser},#{title},#{content})
+	</insert>
+	<select id="getList">
+		select * from note
+		where
+		<include refid="cri"></include>
+		notenum > 0 order by notenum desc limit #{startrow}, #{amount}
+	</select>
+	<select id="getTotal">
+		select count(*) from note
+		where
+		<include refid="cri"></include>
+		notenum > 0
+	</select>
+	<select id="getLastNum">
+		select max(notenum) from note where receiveuser=#{receiveuser}
+	</select>
+	<select id="getnoteByNotenum">
+		select * from note where notenum = #{notenum}
+	</select>
+	<delete id="deleteNote">
+		delete from note where notenum = #{notenum}
+	</delete>
+	<delete id="deleteById">
+    delete from note
+    where notenum = #{notenum}
+</delete>
+</mapper>

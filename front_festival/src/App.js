@@ -13,6 +13,7 @@ import Adminpage from './pages/notice/Adminpage';
 import MyPage from './pages/user/MyPage';
 import Login from './pages/user/Login';
 import Join from './pages/user/Join';
+import Note from './pages/notes/Note';
 
 function App() {
   return (
@@ -30,8 +31,6 @@ function App() {
           <Route path="/notice/nmodify" element={<Nmodify></Nmodify>}></Route>
           <Route path="/notice/:noticenum" element={<Nget></Nget>}></Route>
           <Route path="/notice/adminpage" element={<Adminpage></Adminpage>}></Route>
-          <Route path="/mypage" element={<MyPage></MyPage>}></Route>
-          <Route path="/login" element={<Login></Login>}></Route>
         </Routes>
       </BrowserRouter>
     </>

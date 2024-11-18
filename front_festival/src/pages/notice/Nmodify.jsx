@@ -253,9 +253,36 @@ const modify = () => {
             console.log(index.current, NUM.current, temp)
         })
     },[noticenum])
-    if(!notice){
-        return <>로딩중...</>
+    const [chars, setChars] = useState([]);
+    useEffect(() => {
+        if (!notice) {
+            const text = "로딩중...";
+            const splitText = text.split("").map((char, index) => ({
+                char,
+                delay: index * 0.5 // 각 글자에 0.5초씩 딜레이
+            }));
+            setChars(splitText);
+        }
+    }, [notice]);
+
+    // 데이터가 없을 때 로딩 텍스트 표시
+    if (!notice) {
+        return (
+            <div className="loading-text">
+                {chars.map((item, index) => (
+                    <span
+                        key={index}
+                        style={{
+                            animationDelay: `${item.delay}s`, // 각 글자에 대한 딜레이
+                        }}
+                    >
+                        {item.char}
+                    </span>
+                ))}
+            </div>
+        );
     }
+
     else{
         return (
           <>

@@ -16,6 +16,10 @@ create table user(
     addretc varchar(300)
 );
 
+select * from user;
+DESCRIBE user;
+ALTER TABLE user MODIFY COLUMN usergender CHAR(10);
+
 create table bookmark(
 	bmnum bigint primary key auto_increment,
 	userid varchar(50),
@@ -23,10 +27,13 @@ create table bookmark(
 );
 
 create table user_photo(
-	uesrid varchar(50),
+	userid varchar(50),
     systemname varchar(300)
 );
 
+insert into user_photo values( "apple", "기본프로필.png" );
+select * from user_photo;
+drop table user_photo;
 
 ################## BOARD #####################
 create table board(

@@ -11,7 +11,7 @@ public class NoticeDTO {
 	private String noticeregdate;
 	private boolean isNew;
 	private long nreplyCnt;
-	private String updatenoticedate;
+	private String updatedate;
 	private int noticereadcount;
 	private int readcount;
 }
