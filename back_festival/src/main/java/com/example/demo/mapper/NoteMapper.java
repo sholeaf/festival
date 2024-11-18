@@ -18,5 +18,6 @@ public interface NoteMapper {
 	long deleteNote(long notenum);
 	List<NoteDTO> getList(Criteria cri);
 	long getTotal(Criteria cri);
+	void deleteById(Long notenum);
 
 }
