@@ -13,7 +13,15 @@
     font-style: normal;
 }
 
+header{
+    width: 100%;
+    position: fixed;
+    z-index: 100000;
+    background-color: white;
+    top :0;
+}
 /* 헤더 */
+
 .header_area {
     padding: 10px 5px;
 }
