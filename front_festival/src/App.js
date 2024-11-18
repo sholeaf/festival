@@ -13,6 +13,7 @@ import Adminpage from './pages/notice/Adminpage';
 import MyPage from './pages/user/MyPage';
 import Login from './pages/user/Login';
 import Join from './pages/user/Join';
+import DetailFestival from './pages/festival/DetailFestival';
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main></Main>}></Route>
           <Route path="/festival" element={<Festival></Festival>}></Route>
+          <Route path="/festival/:contentid" element={<DetailFestival></DetailFestival>}></Route>
           <Route path="/community" element={<Community></Community>}></Route>
           <Route path="/user/mypage" element={<MyPage></MyPage>}></Route>
           <Route path="/user/login" element={<Login></Login>}></Route>
