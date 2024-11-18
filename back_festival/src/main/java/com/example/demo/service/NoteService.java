@@ -1,6 +1,7 @@
 package com.example.demo.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -14,5 +15,6 @@ public interface NoteService {
 	boolean remove(long notenum);
 	HashMap<String, Object> getList(Criteria cri);
 	long receive(@RequestBody NoteDTO note);
+	void deleteMultipleNotes(List<Long> notenums);
 
 }
