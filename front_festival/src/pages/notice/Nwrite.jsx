@@ -25,7 +25,7 @@ const Nwrite = () => {
             removeFile(id);
         } else {
             let ext = file.name.split(".").pop();
-            let isThumbnail = ext == 'jpeg' || ext == 'png' || ext == 'gif' || ext == 'webp' || ext == 'jpg';
+            let isThumbnail = ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp';
             const reader = new FileReader();
             reader.onload = (e) => {
                 const newFiles = files.map(item => {

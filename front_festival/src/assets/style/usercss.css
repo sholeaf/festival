@@ -205,6 +205,10 @@
     margin: 0 auto;
 }
 
+.mypage * {
+    user-select: none;
+}
+
 .mypage .profile{
     display: flex;
     justify-content: space-evenly;

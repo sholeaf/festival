@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/Button";
 import Header from "../../layout/Header";
+import Modal from "../../components/Modal";
 
 const Nget = () => {
     const { noticenum } = useParams();
@@ -12,7 +13,19 @@ const Nget = () => {
     const [data, setData] = useState({ notice: null, files: null });
     const { notice, files } = data;
     const [loginUser, setLoginUser] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [modalImage, setModalImage] = useState(""); // 원본 이미지 URL 저장
 
+    const handleThumbnailClick = (imageUrl) => {
+        setModalImage(imageUrl); // 클릭한 썸네일 이미지 URL 저장
+        setIsModalOpen(true); // 모달 열기
+        console.log("클릭한 이미지 URL:", imageUrl);
+    };
+    
+
+    const closeModal = () => {
+        setIsModalOpen(false); // 모달 닫기
+    };
     const remove = () => {
         axios.delete(`/api/notice/${notice.noticenum}`)
             .then((resp) => {
@@ -277,7 +290,6 @@ const Nget = () => {
         <div className={`row r${i}`} key={`r${i}`}>
           <div>첨부파일{i + 1}</div>
           <div className={`file${i}_cont row`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-            {/* 파일명 클릭 시 다운로드 */}
             <div className="cols-10">
             {/* 파일명 클릭 시 다운로드 */}
             <a
@@ -295,11 +307,19 @@ const Nget = () => {
                 src={`/api/notice/file/thumbnail/${file.systemname}`}
                 alt={`thumbnail${i}`}
                 className="nthumbnail"
+                onClick={() => handleThumbnailClick(`/api/notice/file/thumbnail/${file.systemname}`)}
               />
             ) : (
               ""
             )}
           </div>
+          {isModalOpen && (
+                <Modal isOpen={isModalOpen} closeModal={closeModal} >
+                    <div onClick={(e) => e.stopPropagation()}>
+                    <img src={modalImage} alt="Full size" style={{ width: '100%', height: 'auto' }} />
+                    </div>
+                </Modal>
+            )}
             <div className="ndownload-btn" style={{ flex: '0 0 auto' }}>
               <a
                 href={`/api/notice/file/download/${file.systemname}`}

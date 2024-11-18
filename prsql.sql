@@ -45,9 +45,9 @@ create table board(
     titleImage varchar(300),
     preview varchar(300)
 );
-select * from board;
-insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('1','신고테스트','테스트중입니다','apple','1',now(),'1');
-insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('2','신고테스트','테스트중입니다','apple','1',now(),'6');
+select * from board where userid = "apple";
+insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('신고테스트','테스트중입니다','apple','1',now(),'1');
+insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('신고테스트','테스트중입니다','apple','1',now(),'6');
 drop table board;
 create table board_photo(
 	boardnum bigint,

@@ -190,6 +190,12 @@ public class UserServiceImp implements UserService{
 
 	@Override
 	public List<BoardDTO> getList(String userid) {
+		System.out.println("Imp userid : "+userid);
+		List<BoardDTO> list = bmapper.getListByUserid(userid);
+		System.out.println("list : "+list);
+		if(list != null && list.size() != 0) {
+			return list;
+		}
 		return null;
 	}
 }

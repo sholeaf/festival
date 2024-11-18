@@ -179,8 +179,11 @@ public class UserController {
 		return new ResponseEntity<String>("X",HttpStatus.OK);
 	}
 	
-	@GetMapping("{userid}")
-	public void getList(@PathVariable("userid") String userid) {
+	@GetMapping("list")
+	public ResponseEntity<List<BoardDTO>> getList(@RequestParam String userid) {
+		System.out.println("컨트롤러 : "+userid);
 		List<BoardDTO> list = service.getList(userid);
+		System.out.println("컨트롤러 list : "+list);
+		return new ResponseEntity<List<BoardDTO>>(list,HttpStatus.OK);
 	}
 }

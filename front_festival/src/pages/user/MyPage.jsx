@@ -10,6 +10,7 @@ import Button from '../../components/Button';
 const MyPage = () => {
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
+    const [list, setList] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [file, setFile] = useState("");
     const [deleteFile, setDeleteFile] = useState("");
@@ -31,6 +32,9 @@ const MyPage = () => {
     const [activeModal, setActiveModal] = useState('');
 
     const [emailCode, setEmailCode] = useState("");
+
+    const [isAllBoard, setIsAllBoard] = useState(false);
+
     let codeFlag = false;
 
 
@@ -357,6 +361,34 @@ const MyPage = () => {
         }
     }
 
+    const showAll = () => {
+        document.getElementById("showOpen").style.display = 'none';
+        setIsAllBoard(true);
+    };
+    const showClose = () => {
+        document.getElementById("showOpen").style.display = 'inline';
+        setIsAllBoard(false);
+    };
+    
+    const elList = [];
+    if(list.length > 4){
+        elList.push(
+            <span onClick={showAll} id='showOpen'>더 보기</span>
+        )
+    }
+    if(isAllBoard){
+        elList.push(
+            <span onClick={showClose} id='showClose'>돌아가기</span>
+        )
+    }
+    if(list && list.length > 0){
+        list.slice(0, isAllBoard ? list.length : 4).map((board)=>{
+            elList.push(
+                <div key={board.boardnum}>{board.boardtitle}</div>
+            )
+        })
+    }
+
     // 페이지 로드 시 관리자 여부를 확인하는 API 호출
     useEffect(() => {
         axios.get('/api/notice/checkadmin')
@@ -404,9 +436,23 @@ const MyPage = () => {
                 .catch((error) => {
 
                 });
-            
         }
     }, [loginUser, isModalOpen]);
+
+    useEffect(() => {
+        if (user) {
+            axios.get(`/api/user/list`, { params: { userid: user.userid } })
+                .then((resp) => {
+                    if (resp) {
+                        setList(resp.data);
+                    }
+                    else {
+                        alert("가져오기 실패")
+                        return;
+                    }
+                })
+        }
+    }, [user])
 
     return (
         <>
@@ -444,10 +490,7 @@ const MyPage = () => {
                             </div>
                             <div className="community">
                                 <span>후기 목록</span>
-                                <span>더 보기</span>
-                                <div>
-                                    목록 4개
-                                </div>
+                                {elList}
                             </div>
                             <Modal isOpen={isModalOpen} closeModal={closeModal}>
                                 {activeModal === 'userModify' && (

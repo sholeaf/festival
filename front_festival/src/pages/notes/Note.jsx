@@ -255,8 +255,8 @@ const handleDeleteSelected = () => {
 
             {/* Modal 창 */}
             {isModalOpen && modalData && (
-                <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                    <div id="wrap" className="noteget">
+                <Modal isOpen={isModalOpen} closeModal={closeModal}  >
+                    <div id="wrap" className="noteget" style={{width:"500px"}}>
                         <form id="notegetForm" name="notegetForm">
                             <div className="ntable notegettable">
                                 <div className="row notegetrow">

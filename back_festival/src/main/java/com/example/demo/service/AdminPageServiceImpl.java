@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -69,5 +70,18 @@ public class AdminPageServiceImpl implements AdminPageService {
 	    System.out.println("Successfully updated report count to " + reportcnt);
 		apmapper.updateReportCount(boardnum, reportcnt);
 		
+	}
+
+	@Override
+	public int deleteList(long boardnum) {
+		Optional<BoardDTO> board = apmapper.findById(boardnum);
+	    
+	    // 게시글이 존재하면 삭제
+	    if (board.isPresent()) {
+	        apmapper.deleteList(board.get());  // 실제 삭제
+	        return 1;  // 삭제 성공
+	    } else {
+	        return -1;
+	    }
 	}
 }

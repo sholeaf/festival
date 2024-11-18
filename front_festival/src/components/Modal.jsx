@@ -1,20 +1,6 @@
-// const Modal = ({ isOpen, closeModal, children }) => {
-//     if (!isOpen) return null;
-
-//     return (
-//         <div className="modal-overlay">
-//             <div className="modal-content">
-//                 <button className="close-btn" onClick={closeModal}>X</button>
-//                 {children}
-//             </div>
-//         </div>
-//     );
-// };
-
-// export default Modal;
 const Modal = ({isOpen, children, closeModal}) => {
     return (
-        <div style={{display:isOpen ? "block":"none"}}>
+        <div style={{display:isOpen ? "block":"none"}} onClick={closeModal}>
            <div style={{
             position:"fixed",
             top:0,
@@ -36,7 +22,7 @@ const Modal = ({isOpen, children, closeModal}) => {
             zIndex:11,
             borderRadius:"30px",
             textAlign:"center"
-           }}>
+           }}  onClick={(e) => e.stopPropagation()}>
             <div>{children}</div>
            </div>
         </div>

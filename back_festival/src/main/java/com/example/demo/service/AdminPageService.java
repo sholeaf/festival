@@ -11,4 +11,5 @@ public interface AdminPageService {
 	List<BoardDTO> getReportedBoards();
 	HashMap<String, Object> getList(Criteria cri);
 	void updateReportCount(Long boardnum, int reportcnt);
+	int deleteList(long boardnum);
 }

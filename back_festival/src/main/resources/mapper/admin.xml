@@ -48,4 +48,10 @@
         select count(*) from board where boardnum = #{boardnum}
     </selectKey>
 </update>
+<select id="findById">
+	select * from board where boardnum =#{boardnum}
+</select>
+<delete id="deleteList">
+delete from board where boardnum = #{boardnum}
+</delete>
 </mapper>
