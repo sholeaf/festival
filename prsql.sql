@@ -17,6 +17,11 @@ create table user(
 );
 select * from user;
 insert into user(userid, userpw, username,addrdetail) values ("admin","1234","관리자","korea");
+update user
+set userphone="01012345678", useremail="apple@apple.com", zipcode="", addr="",
+addrdetail="101", addretc="" 
+where userid="apple";
+
 
 create table bookmark(
 	bmnum bigint primary key auto_increment,
@@ -28,7 +33,8 @@ create table user_photo(
 	userid varchar(50),
     systemname varchar(300)
 );
-insert into user_photo value("admin", "test.png");
+insert into user_photo value("apple", "test.png");
+DELETE FROM user_photo WHERE userid = 'apple';
 select * from user_photo;
 drop table user_photo;
 

@@ -2,12 +2,25 @@
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.UserFileMapper">
-	<insert id="insertUser">
-		insert into user_photo values(#{userid}, "기본프로필.png")
+	<insert id="firstInsert">
+		insert into user_photo values(#{userid}, "test.png")
 	</insert>
 	<select id="getFile">
 		select systemname from user_photo where userid=#{userid}
 	</select>
+	<update id="updateFile">
+		update user_photo
+		set systemname = #{systemname}
+		where userid = #{userid}
+	</update>
+	<update id="defaultFile">
+		update user_photo
+		set systemname = "test.png"
+		where userid = #{userid}
+	</update>
+	<delete id="deleteFileBySystemname">
+		delete from user_photo where systemname=#{systemname}
+	</delete>
 </mapper>
 
 

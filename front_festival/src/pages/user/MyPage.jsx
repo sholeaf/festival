@@ -12,7 +12,8 @@ const MyPage = () => {
     const [loginUser, setLoginUser] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
     const [file, setFile] = useState("");
-    const [profile, setProfile] = useState("");
+    const [deleteFile, setDeleteFile] = useState("");
+    const [updateFile, setUpdateFile] = useState();
     const [user, setUser] = useState({
         userid: '',
         userpw: '',
@@ -266,15 +267,65 @@ const MyPage = () => {
     }
 
     const selectFile = (e) => {
-        const files = e.target;
-        const file = files.files[0];
+        const files = e.target.files;
+        const img = document.getElementById("profileImg");
+        const file = files[0];
+        const reader = new FileReader();
 
-        console.log(file);
-        setProfile(file.name);
+        if (files.length === 0) {
+            return;
+        }
+
+
+        reader.onload = (e) => {
+            const newProfile = e.target.result;
+            img.src = newProfile;
+            setUpdateFile(file);
+        }
+        reader.readAsDataURL(file);
+
+
     }
 
     const returnProfile = () => {
-        setProfile("test.png");
+        const img = document.getElementById("profileImg");
+        const defaultProfile = `/api/user/file/thumbnail/test.png`;
+        img.src = defaultProfile;
+        setFile("test.png");
+        setUpdateFile("");
+    }
+
+    const profileModify = () => {
+        const formData = new FormData();
+
+        console.log("file : "+file)
+        console.log("updateFile : "+updateFile)
+        console.log("deleteFile : "+deleteFile)
+
+
+        if (deleteFile == updateFile) {
+            alert("변경사항이 없습니다.");
+            return;
+        }
+        if (window.confirm("프로필을 수정 하시겠습니까?")) {
+            if (updateFile && updateFile != "") {
+                formData.append("file", updateFile);
+            }
+            else {
+                const emptyFile = new File([], "emptyFile.txt", { type: "text/plain" });
+                formData.append("file", emptyFile);  // 빈 파일을 추가
+            }
+            formData.append("deleteFile", deleteFile);
+            formData.append("userid", user.userid);
+
+            axios.put('/api/user/profileModify', formData)
+                .then(resp=>{
+                    if(resp.data == "O"){
+                        alert("프로필이 변경되었습니다.");
+                        setIsModalOpen(false);
+                    }
+                })
+        }
     }
 
     // 페이지 로드 시 관리자 여부를 확인하는 API 호출
@@ -309,7 +360,7 @@ const MyPage = () => {
             .catch((error) => {
                 console.error("로그인 상태 확인 오류: ", error);
             });
-    }, [isModalOpen]);
+    }, []);
 
     useEffect(() => {
         if (loginUser) {
@@ -317,14 +368,15 @@ const MyPage = () => {
                 .then((resp) => {
                     setUser(resp.data.user);
                     setFile(resp.data.file);
-                    setProfile(resp.data.file);
+                    setDeleteFile(resp.data.file);
+                    setUpdateFile(resp.data.file);
                 })
                 .catch((error) => {
 
                 });
 
         }
-    }, [loginUser]);
+    }, [loginUser, isModalOpen]);
 
     return (
         <>
@@ -417,13 +469,15 @@ const MyPage = () => {
                                     <div id='profileModify'>
                                         <h3>프로필 변경</h3>
                                         <div className='img'>
-                                            <img src={`/api/user/file/thumbnail/${profile}`} alt="" id='profileImg'/>
+                                            <img src={`/api/user/file/thumbnail/${deleteFile}`} alt="" id='profileImg' />
                                         </div>
                                         <Button onClick={openFile} value="프로필 변경"></Button>
                                         <Button value="기본 프로필 변경" onClick={returnProfile}></Button>
-                                        <Button value="적용"></Button>
-                                        <Button value="취소"></Button>
-                                        <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile}/>
+                                        <Button value="적용" onClick={profileModify}></Button>
+                                        <Button value="취소" onClick={() => {
+                                            setIsModalOpen(false)
+                                        }}></Button>
+                                        <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (

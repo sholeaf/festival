@@ -12,7 +12,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.UserDTO;
 import com.example.demo.service.UserService;
 
@@ -140,5 +142,31 @@ public class UserController {
 		return new ResponseEntity<String>("X",HttpStatus.OK);
 	}
 	
-	
+	@PutMapping("profileModify")
+	public ResponseEntity<String> profileModify(@RequestParam String userid, @RequestParam(required = false) MultipartFile file, @RequestParam String deleteFile) {
+		if (file != null && !file.isEmpty()) {
+	        // 파일이 전달된 경우 처리
+	        System.out.println("File received: " + file.getOriginalFilename());
+	        System.out.println("deleteFile : "+deleteFile);
+	        System.out.println("user : " + userid);
+	        // 파일 저장 또는 다른 로직 처리
+	        if(service.profileModify(userid, file, deleteFile) == 1) {
+	        	return new ResponseEntity<String>("O",HttpStatus.OK);
+	        }
+	        else {
+	        	return new ResponseEntity<String>("X",HttpStatus.OK);
+	        }
+	    } else {
+	        // 파일이 없을 경우 처리
+	        System.out.println("No file uploaded.");
+	        System.out.println("deleteFile : "+deleteFile);
+	        System.out.println("user : " + userid);
+	        // 기본 프로필 유지 또는 파일 없이 다른 업데이트 처리
+	        if(service.defaultProfile(userid, deleteFile) == 1) {
+	        	return new ResponseEntity<String>("O",HttpStatus.OK);
+	        }
+	        return new ResponseEntity<String>("X",HttpStatus.OK);
+	    }
+
+	}
 }

@@ -13,18 +13,19 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.service.NoticeFileService;
+import com.example.demo.service.UserFileService;
 
 @RestController
 @RequestMapping("/api/user/file/*")
 public class UserFileController {
 	
 	@Autowired
-	private NoticeFileService nfservice;
+	private UserFileService service;
 	
 	@GetMapping("thumbnail/{systemname}")
 	public ResponseEntity<Resource> thumbnail(@PathVariable("systemname") String systemname) throws Exception {
 		System.out.println("getTumbnailResource 호출됨: " + systemname);
-		HashMap<String, Object> datas = nfservice.getTumbnailResource(systemname);
+		HashMap<String, Object> datas = service.getTumbnailResource(systemname);
 		System.out.println("썸네일"+datas);
 		String contentType = (String)datas.get("contentsType");
 		Resource resource = (Resource)datas.get("resource");

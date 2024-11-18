@@ -2,6 +2,8 @@ package com.example.demo.service;
 
 import java.util.HashMap;
 
+import org.springframework.web.multipart.MultipartFile;
+
 import com.example.demo.domain.UserDTO;
 
 public interface UserService {
@@ -14,5 +16,7 @@ public interface UserService {
 	UserDTO getUserid(String email);
 	boolean modifyUser(UserDTO user);
 	boolean modifyPw(String userid, String userpw);
+	int profileModify(String userid, MultipartFile file, String deleteFile);
+	int defaultProfile(String userid, String deleteFile);
 
 }
