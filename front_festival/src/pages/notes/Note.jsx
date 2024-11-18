@@ -31,6 +31,7 @@ const Note = ({ loginUser }) => {
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal 열림 상태
     const [modalData, setModalData] = useState(null); // Modal에 표시할 데이터
 
+    
     // 삭제 요청 함수
     const removenote = (notenum) => {
         axios.delete(`/api/note/${notenum}`)
@@ -52,8 +53,42 @@ const Note = ({ loginUser }) => {
             });
     };
 
-    const [checkedItems, setCheckedItems] = useState([]);
+    // noteList 생성 부분에서 체크박스에 대한 상태 관리
+const [checkedItems, setCheckedItems] = useState([]);  // 선택된 항목들을 저장
 
+const handleCheckboxChange = (notenum) => {
+    setCheckedItems((prevCheckedItems) => {
+        if (prevCheckedItems.includes(notenum)) {
+            return prevCheckedItems.filter(item => item !== notenum); // 이미 선택된 항목은 제거
+        } else {
+            return [...prevCheckedItems, notenum]; // 선택되지 않은 항목은 추가
+        }
+    });
+};
+
+const handleDeleteSelected = () => {
+    if (checkedItems.length === 0) {
+        alert("삭제할 항목을 선택해주세요.");
+        return;
+    }
+
+    // 선택된 쪽지들 삭제 요청
+    axios.delete('/api/note/delete-multiple', { data: { notenums: checkedItems } })
+        .then((response) => {
+            alert("선택된 쪽지가 삭제되었습니다.");
+            // 삭제 후 리스트 갱신
+            setCheckedItems([]); // 체크된 항목 초기화
+            
+            setCri((prevCri) => ({
+                ...prevCri,  // 기존 cri 값을 유지하면서 새로 요청을 트리거
+                pagenum: 1  
+            }));
+        })
+        .catch((error) => {
+            console.error("삭제 중 오류 발생:", error);
+            alert("삭제에 실패했습니다. 다시 시도해주세요.");
+        });
+};
     const [chars, setChars] = useState([]);
     useEffect(() => {
         if (!note) {
@@ -180,7 +215,14 @@ const Note = ({ loginUser }) => {
             </div>
             <div>{note.senduser}</div>
             <div>{note.regdate}</div>
-            <div><input type="checkbox" id="notecheck" /></div>
+            <div>
+            <input
+                type="checkbox"
+                id={`notecheck-${note.notenum}`}
+                checked={checkedItems.includes(note.notenum)}
+                onChange={() => handleCheckboxChange(note.notenum)}  // 체크박스 클릭 시 처리
+            />
+        </div>
         </div>
     )) : (
         <div className="row no-list" key={-1}>
@@ -204,7 +246,9 @@ const Note = ({ loginUser }) => {
                     <div className="tbody notetbody">
                         {noteList}
                     </div>
-                    <button>선택삭제</button>
+                    <div className="noteselectbtn">
+                    <button onClick={handleDeleteSelected}>선택삭제</button>
+                    </div>
                     <Pagination pageMaker={pageMaker} />
                 </div>
             </div>

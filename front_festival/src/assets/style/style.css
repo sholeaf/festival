@@ -1079,6 +1079,13 @@ a#nsearch-btn {
     position: relative;
     right: 20px;
 }
+.noteselectbtn {
+    display: flex;
+    justify-content: flex-end;
+    position: relative;
+    padding: 5px;
+}
+
 /* noteget area 모달쪽지보내기 */
 .noteget{
     width: 500px;

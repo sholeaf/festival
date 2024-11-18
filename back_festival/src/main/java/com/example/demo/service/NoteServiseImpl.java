@@ -70,6 +70,14 @@ public class NoteServiseImpl implements NoteService {
 	        return -1;
 	    }
 	}
+
+	@Override
+	public void deleteMultipleNotes(List<Long> notenums) {
+		for (Long notenum : notenums) {
+            ntmapper.deleteById(notenum);
+        }
+		
+	}
 	
 	
 }

@@ -1,6 +1,8 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -110,4 +112,19 @@ public class NoteController {
 				new ResponseEntity<>(-1l,HttpStatus.INTERNAL_SERVER_ERROR);
 		
 	}
+	@DeleteMapping("/delete-multiple")
+    public ResponseEntity<String> deleteMultipleNotes(@RequestBody Map<String, List<Long>> request) {
+        List<Long> notenums = request.get("notenums");
+
+        if (notenums == null || notenums.isEmpty()) {
+            return ResponseEntity.badRequest().body("삭제할 쪽지가 없습니다.");
+        }
+
+        try {
+            ntservice.deleteMultipleNotes(notenums);
+            return ResponseEntity.ok("선택된 쪽지가 삭제되었습니다.");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("삭제 중 오류가 발생했습니다.");
+        }
+    }
 }
