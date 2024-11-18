@@ -156,13 +156,13 @@ img {
     font-size: 80px;
 }
 
-.nlist {
+.nlist, .rplist {
     font-family: 'GowunDodum-Regular';
     text-align: center;
 }
 
 .pagination {
-    width: 840px;
+    max-width: 840px;
 }
 
 .nlist.ntable>.ntbody>.row:nth-child(2n+1) {
@@ -187,7 +187,7 @@ img {
 }
 
 .nlist.ntable .row div:nth-child(2) {
-    width: 50%;
+    width: 45%;
 }
 
 .nlist.ntable .row div:nth-child(3) {
@@ -195,55 +195,60 @@ img {
 }
 
 .nlist.ntable .row div:nth-child(4) {
-    width: 17%;
+    width: 22%;
 }
 
 .nlist.ntable .row div:nth-child(5) {
     width: 10%;
 }
 
-.nlist.ntable .row.no-list div {
-    width: 100%;
+.no-list div {
+    width: 100% !important;
+    padding: 10px !important;
+    text-align: center;
+}
+.no-report div, no-post {
+    width: 100% !important;
     padding: 10px !important;
 }
 
-#nwrap .cols-1 {
+.cols-1 {
     width: 10%;
 }
 
-#nwrap .cols-2 {
+.cols-2 {
     width: 20%;
 }
 
-#nwrap .cols-3 {
+.cols-3 {
     width: 30%;
 }
 
-#nwrap .cols-4 {
+.cols-4 {
     width: 40%;
 }
 
-#nwrap .cols-5 {
+.cols-5 {
     width: 50%;
 }
 
-#nwrap .cols-6 {
+.cols-6 {
     width: 60%;
 }
 
-#nwrap .cols-7 {
+.cols-7 {
     width: 70%;
 }
 
-#nwrap .cols-8 {
+.cols-8 {
     width: 80%;
 }
 
-#nwrap .cols-9 {
+.cols-9 {
     width: 90%;
 }
 
-#nwrap .cols-10 {
+.cols-10 {
     width: 100%;
 }
 
@@ -296,14 +301,14 @@ img {
 }
 
 .w1000 {
-    width: 1000px !important;
+    max-width: 1000px !important;
 }
 
 .w100p {
     width: 100% !important;
 }
 
-.nlist .row {
+.nlist .row{
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -330,7 +335,7 @@ img {
     float: right;
     bottom: 50px;
     right: 100px;
-    /* display: none; */
+    display: none;
 
 }
 .nbtn_table.show{
@@ -354,6 +359,17 @@ img {
 }
 
 /* 각 글자에 애니메이션 적용 */
+.loading-text{
+    position: fixed;      /* 화면에 고정 */
+    top: 0;
+    left: 0;
+    width: 100%;          /* 전체 화면 크기 */
+    height: 100%;
+    display: flex;
+    justify-content: center;  /* 가로 중앙 정렬 */
+    align-items: center;      /* 세로 중앙 정렬 */
+    z-index: 9999;
+}
 .loading-text span {
     display: inline-block;
     /* 안의 글자 나눠주기 */
@@ -451,7 +467,41 @@ img {
     height: 40px;
     cursor: pointer;
 }
-
+.nsearch_area .common-dropdown{
+    position: relative;
+    display: inline-block;
+    width: 200px;
+}
+.nsearch_area .dropdown-button{
+    background-color: #fff;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 18px;
+    font-size: 14px;
+}
+.nsearch_area .dropdown-content {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    text-align: center;
+    overflow: hidden;
+    max-height: 0;
+    transition: max-height 0.3s ease-in-out;
+    margin-left: 1px;
+    margin-top: 1px;
+}
+.nsearch_area .dropdown-content li{
+    height: 30px;
+    line-height: 30px;
+    cursor: pointer;
+}
+.nsearch_area .dropdown-content li:hover {
+    background-color: rgb(193, 239, 253);
+}
+.nsearch_area .dropdown-content.show {
+    max-height: 500px;
+    transition: max-height 0.3s ease-in-out;
+}
 /* Notice list css */
 
 .notice-cnt {
@@ -603,7 +653,9 @@ a.nwrite {
 .nget input[type="text"],
 .nget textarea,
 .nmodify input[type="text"],
-.nmodify textarea {
+.nmodify textarea,
+.noteget input[type="text"],
+.noteget textarea {
     width: 98%;
     border: none;
     padding: 5px;
@@ -889,11 +941,12 @@ input.nrmodify.btn, input.nrfinish.btn.hdd, input.nrremove.btn  {
 }
 
 /* Search are css 공지 검색 */
-.nsearch_area {
+.nsearch_area  {
     display: inline-block;
+    margin-bottom: 130px;
 }
 
-input#nkeyword {
+input#nkeyword, input#akeyword {
     width: 320px;
     height: 41px;
     margin-left: 5px;
@@ -906,7 +959,173 @@ a#nsearch-btn {
 }
 
 /* notice area end 공지페이지 종료 */
-/* notice area end 공지페이지 종료 */
+/* adminpage area start 관리자페이지 시작 */
+#rpwrap {
+    max-width: 1000px;
+    margin: 0 20px;
+    padding: 0;
+    position: relative;
+}
+.rptable > a{
+    cursor: pointer;
+}
+/* Title */
+.reporttitle, .notetitle {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'EBSJSKMedium';
+    font-size: 18px;
+}
+.rplist .row{
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.rptable>.row {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.rptable>.row>*:nth-child(n+2) {
+    border: none;
+}
+
+.rptable>.row:nth-child(n+2)>* {
+    border: none;
+}
+.rptable>.rptbody>.row:nth-child(2n+1) {
+    background-color: #fff;
+}
+
+.rptable>.rptbody>.row:hover {
+    background-color: #fff;
+}
+
+.rptable>.rptbody>.row:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
+.rptable>.rptbody>.row>div {
+    padding: 5px;
+}
+
+/* 리스트 배치 */
+.rplist.rptable .row div:nth-child(1) {
+    width: 8%;
+}
+
+.rplist.rptable .row div:nth-child(2) {
+    width: 45%;
+}
+
+.rplist.rptable .row div:nth-child(3) {
+    width: 15%;
+}
+
+.rplist.rptable .row div:nth-child(4) {
+    width: 22%;
+}
+
+.rplist.rptable .row div:nth-child(5) {
+    width: 10%;
+}
+
+
+/* adminpage area end 관리자페이지 종료 */
+/* note area start 쪽지 시작 */
+.notewrap{
+    position: relative;
+    max-width: 1000px;
+}
+.notewrap div {
+	margin: 0 auto;
+    border: 1px solid #000;
+}
+.notetitle{
+    text-align: center;
+}
+.notelist{   
+    vertical-align: middle; 
+}
+.noterow{
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+}
+.noterow div:nth-child(1){
+    width: 40%;
+}
+.noterow div:nth-child(2){
+    width: 20%;
+}
+.noterow div:nth-child(3){
+    width: 30%;
+}
+.noterow div:nth-child(4){
+    width: 10%;
+}
+
+.ntcheck {
+    text-align: right;
+    vertical-align: middle;
+}
+.ntcheck a{
+    position: relative;
+    right: 20px;
+}
+/* noteget area 모달쪽지보내기 */
+.noteget{
+    width: 500px;
+    height: 400px;
+    position: relative;
+}
+.notegetbtn_area{
+    display: inline;
+    vertical-align: middle;
+}
+.notegetrow div:nth-child(1){
+    width: 120px;
+    padding: 5px;
+}
+.notegetrow div:nth-child(n+1){
+    width: 120px;
+    padding: 5px;
+}
+.notegetrow div:nth-child(2){
+    width: 300px;
+    padding: 5px;
+    text-align: left;
+}
+
+.notegetrow input {
+    width: 230px !important;
+    border: 1px solid #000 !important;
+}
+.notegetrow textarea {
+    width: 340px;
+    height: 220px !important;
+    border: 1px solid #000;
+    resize: none;
+}
+.sendms{
+    width: 100px !important;
+    right: 40px;
+    position: fixed;
+}
+.msbtn{
+    margin-left: 20px;
+}
+.noteget{
+    margin-top: 20px;
+}
+
+/* note are end  쪽지 종료*/
 
 
 /* festival .css */
