@@ -1,6 +1,7 @@
 package com.example.demo.mapper;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
@@ -15,4 +16,6 @@ public interface AdminPageMapper {
 	List<BoardDTO> getList(Criteria cri);
 	long getTotal(Criteria cri);
 	void updateReportCount(@Param("boardnum") Long boardnum, @Param("reportcnt") int reportcnt);
+	Optional<BoardDTO> findById(long boardnum);
+	void deleteList(BoardDTO boardDTO);
 }

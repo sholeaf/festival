@@ -1,7 +1,7 @@
 const Modal = ({isOpen, children, closeModal}) => {
     console.log("children",children);
     return (
-        <div style={{display:isOpen ? "block":"none"}}>
+        <div style={{display:isOpen ? "block":"none"}} onClick={closeModal}>
            <div style={{
             position:"fixed",
             top:0,
@@ -23,7 +23,7 @@ const Modal = ({isOpen, children, closeModal}) => {
             zIndex:11,
             borderRadius:"30px",
             textAlign:"center"
-           }}>
+           }}  onClick={(e) => e.stopPropagation()}>
             <div>{children}</div>
            </div>
         </div>
