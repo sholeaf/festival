@@ -1,6 +1,6 @@
 import { useDaumPostcodePopup } from 'react-daum-postcode';
 
-const DaumPostCode = () => {
+const DaumPostCode = ({defaultValue}) => {
     const open = useDaumPostcodePopup("https://t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js");
 
     const handleComplete = (data) => {
@@ -26,6 +26,7 @@ const DaumPostCode = () => {
         }
         document.getElementById("zipcode").value = data.zonecode;
         document.getElementById("addr").value = data.address;
+        document.getElementById("addrdetail").value = "";
         document.getElementById("addrdetail").focus();
         document.getElementById("addretc").value = extraAddress !== '' ? `(${extraAddress})` : '';
     };
@@ -44,6 +45,7 @@ const DaumPostCode = () => {
             placeholder="우편번호"
             readOnly
             onClick={handleClick} // 클릭 시 handleClick 실행
+            defaultValue={defaultValue}
           />
         </>
       );

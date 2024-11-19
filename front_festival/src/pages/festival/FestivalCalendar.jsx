@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import Calendar from 'react-calendar';
 import axios from "axios";
 import noimage from "../../assets/images/no-image.jpg";
+import { useNavigate } from "react-router-dom";
 
 
-const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
-    const [festivals, setFestivals] = useState([]);  // 축제 데이터 상태
-    const [isLoading, setIsLoading] = useState(false);  // 로딩 상태
-    const [hasMore, setHasMore] = useState(true);  // 추가 데이터 여부
+const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
+    const [festivals, setFestivals] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);  
+    const [hasMore, setHasMore] = useState(true);
+    const navigate = useNavigate();
 
     // 날짜 선택 시 처리 함수
     const handleDateChange = (date) => {
@@ -29,7 +31,7 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
         setFestivals([]);
         setHasMore(true); // 더 이상 데이터가 없다는 상태를 리셋
     };
-
+    console.log("calendar active tab : ",activeTab);
     // API 요청 함수
     const fetchFestivals = () => {
         if (isLoading) return;  // 로딩 중이면 API 요청을 방지
@@ -42,6 +44,7 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
                     ...prevFestivals,
                     ...festivalsData, // 기존 데이터에 새로운 데이터를 추가
                 ]);
+                
                 setIsLoading(false);
 
                 // 추가로 더 데이터를 요청할 수 있는지 체크
@@ -65,7 +68,6 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
             }));
         }
     };
-
     // 페이지가 처음 로드되거나 날짜가 변경될 때마다 축제 데이터를 가져옴
     useEffect(() => {
         fetchFestivals();
@@ -91,7 +93,10 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
                     <h3>축제 목록</h3>
                     <ul className="festival-list">
                         {festivals.map((festival) => (
-                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}>
+                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}
+                            onClick={()=>{
+                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY,activeTab}})
+                            }}>
                                 <h4>{festival.title}</h4>
                                 <p>{festival.addr1}</p>
                                 {festival.firstimage ? (

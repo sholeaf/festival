@@ -15,9 +15,9 @@
     font-style: normal;
 }
 
-#wrap{
-    width:1400px;
-    margin: 0 auto;
+#wrap {
+    width: 1400px;
+    margin: 70px auto 0;
     position: relative;
 }
 
@@ -45,9 +45,24 @@ td {
     vertical-align: middle;
 }
 
+h1,
+h2,
+h3,
+h4,
+h5 {
+    font-family: 'EBSJSKMedium';
+}
+
 a {
     text-decoration: none;
     background-color: transparent;
+    font-family: 'EBSJSKMedium';
+}
+
+p,
+span,
+div {
+    font-family: 'GowunDodum-Regular';
 }
 
 img {
@@ -75,7 +90,7 @@ img {
 .common-dropdown {
     position: relative;
     display: inline-block;
-    margin: 0 10px ;
+    margin: 0 10px;
 }
 
 .dropdown-button {
@@ -85,14 +100,14 @@ img {
     cursor: pointer;
     border-radius: 4px;
     font-size: 14px;
-	border:3px solid #92B4EC;
+    border: 3px solid #92B4EC;
 }
 
 .dropdown-content {
     position: absolute;
     text-align: center;
     background-color: white;
-    color:black;
+    color: black;
     border-radius: 4px;
     overflow: hidden;
     width: 100%;
@@ -108,12 +123,15 @@ img {
     cursor: pointer;
     padding-right: 8px;
 }
-.dropdown-content li:hover{
-    background-color:#92B4EC;
-    color:white;
+
+.dropdown-content li:hover {
+    background-color: #92B4EC;
+    color: white;
 }
+
 .dropdown-content.show {
-    max-height: 300px; /* 원하는 높이로 조절하세요 */
+    max-height: 300px;
+    /* 원하는 높이로 조절하세요 */
     overflow-y: auto;
     width: 100%;
     transition: max-height 0.3s ease-in-out;
@@ -122,19 +140,24 @@ img {
     margin-left: 0;
     margin-top: 0;
 }
+
 /* 크롬, 사파리, 엣지용 스크롤바 스타일 */
 .dropdown-content.show::-webkit-scrollbar {
-    width: 8px; /* 스크롤바 너비 조정 */
+    width: 8px;
+    /* 스크롤바 너비 조정 */
 }
 
 .dropdown-content.show::-webkit-scrollbar-track {
-    background: #f1f1f1; /* 스크롤바 트랙 색상 */
+    background: #f1f1f1;
+    /* 스크롤바 트랙 색상 */
 }
 
 .dropdown-content.show::-webkit-scrollbar-thumb {
-    background-color: #92B4EC; /* 스크롤바 손잡이 색상 */
+    background-color: #92B4EC;
+    /* 스크롤바 손잡이 색상 */
     border-radius: 10px;
-    border: 2px solid #f1f1f1; /* 스크롤바 손잡이 경계 */
+    border: 2px solid #f1f1f1;
+    /* 스크롤바 손잡이 경계 */
 }
 
 
@@ -156,7 +179,9 @@ img {
     font-size: 80px;
 }
 
+
 .nlist, .rplist, .replyrplist {
+
     font-family: 'GowunDodum-Regular';
     text-align: center;
 }
@@ -207,7 +232,9 @@ img {
     padding: 10px !important;
     text-align: center;
 }
-.no-report div, no-post {
+
+.no-report div,
+no-post {
     width: 100% !important;
     padding: 10px !important;
 }
@@ -308,7 +335,7 @@ img {
     width: 100% !important;
 }
 
-.nlist .row{
+.nlist .row {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -338,7 +365,8 @@ img {
     display: none;
 
 }
-.nbtn_table.show{
+
+.nbtn_table.show {
     display: block;
 }
 
@@ -359,17 +387,22 @@ img {
 }
 
 /* 각 글자에 애니메이션 적용 */
-.loading-text{
-    position: fixed;      /* 화면에 고정 */
+.loading-text {
+    position: fixed;
+    /* 화면에 고정 */
     top: 0;
     left: 0;
-    width: 100%;          /* 전체 화면 크기 */
+    width: 100%;
+    /* 전체 화면 크기 */
     height: 100%;
     display: flex;
-    justify-content: center;  /* 가로 중앙 정렬 */
-    align-items: center;      /* 세로 중앙 정렬 */
+    justify-content: center;
+    /* 가로 중앙 정렬 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
     z-index: 9999;
 }
+
 .loading-text span {
     display: inline-block;
     /* 안의 글자 나눠주기 */
@@ -471,18 +504,21 @@ img {
     height: 40px;
     cursor: pointer;
 }
-.nsearch_area .common-dropdown{
+
+.nsearch_area .common-dropdown {
     position: relative;
     display: inline-block;
     width: 200px;
 }
-.nsearch_area .dropdown-button{
+
+.nsearch_area .dropdown-button {
     background-color: #fff;
     padding: 10px;
     cursor: pointer;
     border-radius: 18px;
     font-size: 14px;
 }
+
 .nsearch_area .dropdown-content {
     position: absolute;
     top: 100%;
@@ -494,18 +530,22 @@ img {
     margin-left: 1px;
     margin-top: 1px;
 }
-.nsearch_area .dropdown-content li{
+
+.nsearch_area .dropdown-content li {
     height: 30px;
     line-height: 30px;
     cursor: pointer;
 }
+
 .nsearch_area .dropdown-content li:hover {
     background-color: rgb(193, 239, 253);
 }
+
 .nsearch_area .dropdown-content.show {
     max-height: 500px;
     transition: max-height 0.3s ease-in-out;
 }
+
 /* Notice list css */
 
 .notice-cnt {
@@ -636,11 +676,12 @@ a.nwrite {
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
 }
+
 #noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
-    
+
 }
 
 #noticeForm>.ntable>.row>div:nth-child(2) {
@@ -704,7 +745,8 @@ img.nthumbnail:hover {
 }
 
 .nwrite .nbtn_area,
-.nmodify .nbtn_area, .nget .nbtn_area{
+.nmodify .nbtn_area,
+.nget .nbtn_area {
     display: flex;
     justify-content: center;
 }
@@ -742,6 +784,7 @@ img.nthumbnail:hover {
 #nwrap .download:hover {
     transform: scale(1.2);
 }
+
 .ndownload-btn {
     width: 120px;
     font-size: 12px;
@@ -754,14 +797,18 @@ img.nthumbnail:hover {
     outline: none;
     width: 500px;
 }
-.nbtn_area input.btn{
+
+.nbtn_area input.btn {
     margin: 3px;
     float: right;
     right: 40px;
     position: relative;
-    top:10px;
+    top: 10px;
 }
-input.nrmodify.btn, input.nrfinish.btn.hdd, input.nrremove.btn  {
+
+input.nrmodify.btn,
+input.nrfinish.btn.hdd,
+input.nrremove.btn {
     width: 80px;
 }
 
@@ -791,12 +838,13 @@ input.nrmodify.btn, input.nrfinish.btn.hdd, input.nrremove.btn  {
     margin-left: 880px;
 }
 
-.nreply_line .nreplyForm > div {
+.nreply_line .nreplyForm>div {
     text-align: center;
     vertical-align: middle;
     color: #f77a7a;
     height: 150px;
 }
+
 .nreplyForm.row {
     height: 200px;
 }
@@ -878,31 +926,42 @@ input.nrmodify.btn, input.nrfinish.btn.hdd, input.nrremove.btn  {
     display: block;
     text-align: center;
     border-right: 1px solid #ccc;
-    padding:0 20px;
+    padding: 0 20px;
 }
 
 .nreplies li {
-    display: flex; /* Flexbox를 사용하여 자식 요소들을 가로로 배치 */
-    justify-content: center; /* 요소들 사이에 균등한 공간 배분 */
-    align-items: center; /* 세로 정렬을 중앙으로 맞춤 */
+    display: flex;
+    /* Flexbox를 사용하여 자식 요소들을 가로로 배치 */
+    justify-content: center;
+    /* 요소들 사이에 균등한 공간 배분 */
+    align-items: center;
+    /* 세로 정렬을 중앙으로 맞춤 */
     padding: 10px 0;
 }
 
 .nbtn-group {
-    display: flex; /* 버튼들을 한 줄로 배치 */
+    display: flex;
+    /* 버튼들을 한 줄로 배치 */
     flex-direction: column;
-    gap: 2px; /* 버튼 간의 간격을 조정 */
+    gap: 2px;
+    /* 버튼 간의 간격을 조정 */
     align-items: center;
     float: right;
 }
+
 .nreplies li div {
-    display: flex; /* 내부 요소들을 가로로 배치 */
-    align-items: center; /* 세로 중앙 정렬 */
-    gap: 4px; /* 아이템 간의 간격 */
+    display: flex;
+    /* 내부 요소들을 가로로 배치 */
+    align-items: center;
+    /* 세로 중앙 정렬 */
+    gap: 4px;
+    /* 아이템 간의 간격 */
 }
-.nreplies li div:nth-child(1) [class*='nreply']{
+
+.nreplies li div:nth-child(1) [class*='nreply'] {
     padding-left: 10px;
 }
+
 .nreplies li div:nth-child(2),
 .nreplies li div:nth-child(3) {
     text-align: center;
@@ -945,12 +1004,13 @@ input.nrmodify.btn, input.nrfinish.btn.hdd, input.nrremove.btn  {
 }
 
 /* Search are css 공지 검색 */
-.nsearch_area  {
+.nsearch_area {
     display: inline-block;
     margin-bottom: 130px;
 }
 
-input#nkeyword, input#akeyword {
+input#nkeyword,
+input#akeyword {
     width: 320px;
     height: 41px;
     margin-left: 5px;
@@ -970,18 +1030,22 @@ a#nsearch-btn {
     padding: 0;
     position: relative;
 }
-.rptable > a{
+
+.rptable>a {
     cursor: pointer;
 }
+
 /* Title */
-.reporttitle, .notetitle {
+.reporttitle,
+.notetitle {
     display: flex;
     justify-content: center;
     align-items: center;
     font-family: 'EBSJSKMedium';
     font-size: 18px;
 }
-.rplist .row{
+
+.rplist .row {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -1000,6 +1064,7 @@ a#nsearch-btn {
 .rptable>.row:nth-child(n+2)>* {
     border: none;
 }
+
 .rptable>.rptbody>.row:nth-child(2n+1) {
     background-color: #fff;
 }
@@ -1036,6 +1101,7 @@ a#nsearch-btn {
 .rplist.rptable .row div:nth-child(5) {
     width: 10%;
 }
+
 .rplist.rptable .row div:nth-child(6) {
     width: 20%;
 }
@@ -1110,21 +1176,25 @@ a#nsearch-btn {
 
 /* adminpage area end 관리자페이지 종료 */
 /* note area start 쪽지 시작 */
-.notewrap{
+.notewrap {
     position: relative;
     max-width: 1000px;
 }
+
 .notewrap div {
-	margin: 0 auto;
+    margin: 0 auto;
     border: 1px solid #000;
 }
-.notetitle{
+
+.notetitle {
     text-align: center;
 }
-.notelist{   
-    vertical-align: middle; 
+
+.notelist {
+    vertical-align: middle;
 }
-.noterow{
+
+.noterow {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -1132,16 +1202,20 @@ a#nsearch-btn {
     line-height: 30px;
     text-align: center;
 }
-.noterow div:nth-child(1){
+
+.noterow div:nth-child(1) {
     width: 40%;
 }
-.noterow div:nth-child(2){
+
+.noterow div:nth-child(2) {
     width: 20%;
 }
-.noterow div:nth-child(3){
+
+.noterow div:nth-child(3) {
     width: 30%;
 }
-.noterow div:nth-child(4){
+
+.noterow div:nth-child(4) {
     width: 10%;
 }
 
@@ -1149,10 +1223,12 @@ a#nsearch-btn {
     text-align: right;
     vertical-align: middle;
 }
-.ntcheck a{
+
+.ntcheck a {
     position: relative;
     right: 20px;
 }
+
 .noteselectbtn {
     display: flex;
     justify-content: flex-end;
@@ -1161,24 +1237,28 @@ a#nsearch-btn {
 }
 
 /* noteget area 모달쪽지보내기 */
-.noteget{
+.noteget {
     width: 500px;
     height: 400px;
     position: relative;
 }
-.notegetbtn_area{
+
+.notegetbtn_area {
     display: inline;
     vertical-align: middle;
 }
-.notegetrow div:nth-child(1){
+
+.notegetrow div:nth-child(1) {
     width: 120px;
     padding: 5px;
 }
-.notegetrow div:nth-child(n+1){
+
+.notegetrow div:nth-child(n+1) {
     width: 120px;
     padding: 5px;
 }
-.notegetrow div:nth-child(2){
+
+.notegetrow div:nth-child(2) {
     width: 300px;
     padding: 5px;
     text-align: left;
@@ -1188,21 +1268,25 @@ a#nsearch-btn {
     width: 230px !important;
     border: 1px solid #000 !important;
 }
+
 .notegetrow textarea {
     width: 340px;
     height: 220px !important;
     border: 1px solid #000;
     resize: none;
 }
-.sendms{
+
+.sendms {
     width: 100px !important;
     right: 40px;
     position: fixed;
 }
-.msbtn{
+
+.msbtn {
     margin-left: 20px;
 }
-.noteget{
+
+.noteget {
     margin-top: 20px;
 }
 
@@ -1211,27 +1295,30 @@ a#nsearch-btn {
 
 /* festival .css */
 
-.festival_img_area{
+.festival_img_area {
     position: relative;
     overflow: hidden;
     margin: 20px auto 0;
     border-radius: 15px;
     width: 700px;
     height: 300px;
-    background-color: rgba(146, 180, 236, 0.2); /* 투명도 50% */
+    background-color: rgba(146, 180, 236, 0.2);
+    /* 투명도 50% */
 }
+
 .festival_img_area img {
     width: 100%;
     height: 280px;
-    margin : 10px 0;
-    object-fit: contain; /* 비율을 유지하며 요소 내부에 맞게 조정 */
-    object-position: center; /* 이미지 중앙 배치 */
-    
+    margin: 10px 0;
+    object-fit: contain;
+    /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center;
+    /* 이미지 중앙 배치 */
 }
 
 
 
-.button-container{
+.button-container {
     display: flex;
     position: relative;
     width: 700px;
@@ -1241,23 +1328,30 @@ a#nsearch-btn {
     margin: 30px auto;
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
 }
+
 .button-container .slider {
     position: absolute;
     top: 2px;
     left: -30px;
-    width: 130px; /* 버튼 너비와 동일하게 설정 */
+    width: 130px;
+    /* 버튼 너비와 동일하게 설정 */
     height: 90%;
     background-color: #92B4EC;
     border-radius: 45px;
-    transition: transform 0.3s ease; /* 슬라이더 이동 애니메이션 */
-    z-index: -1; /* 버튼 뒤에 위치하도록 설정 */
+    transition: transform 0.3s ease;
+    /* 슬라이더 이동 애니메이션 */
+    z-index: -1;
+    /* 버튼 뒤에 위치하도록 설정 */
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
 }
+
 .button-container div {
     margin: auto 80px;
 }
+
 .button-container .tab {
-    width: 100px; /* 각 버튼 너비 */
+    width: 100px;
+    /* 각 버튼 너비 */
     text-align: center;
     cursor: pointer;
     color: black;
@@ -1266,14 +1360,16 @@ a#nsearch-btn {
 }
 
 .button-container .tab.selected {
-    color: white; /* 선택된 탭 텍스트 색상 */
+    color: white;
+    /* 선택된 탭 텍스트 색상 */
 }
 
 /* 달력 디자인 */
 
-.react-calendar__tile{
+.react-calendar__tile {
     border-radius: 45px;
 }
+
 .react-calendar {
     width: 350px;
     max-width: 100%;
@@ -1313,14 +1409,15 @@ a#nsearch-btn {
     width: 21%;
     margin: 15px;
     border: 1px solid black;
-    padding :5px;
+    padding: 5px;
 }
 
 /* festival map */
 
 .festival_map_area {
     position: relative;
-    width: 600px;  /* 지도 이미지 크기에 맞게 조정 */
+    width: 600px;
+    /* 지도 이미지 크기에 맞게 조정 */
     margin: auto;
 }
 
@@ -1338,146 +1435,267 @@ a#nsearch-btn {
     padding: 5px 10px;
     cursor: pointer;
     white-space: nowrap;
-    transform: translate(-50%, -50%);  /* 중앙에 위치하도록 */
+    transform: translate(-50%, -50%);
+    /* 중앙에 위치하도록 */
     font-size: 0.9em;
-    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2); /* 그림자 추가 */
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+    /* 그림자 추가 */
 }
 
-.area-1 { left: 140px; top: 115px; }     /* 서울특별시 */
+.area-1 {
+    left: 140px;
+    top: 115px;
+}
+
+/* 서울특별시 */
 .area-1::before {
-    top: -55%; left: 195%;
+    top: -55%;
+    left: 198%;
     height: 100px;
     transform: translateX(-100%) rotate(-65deg);
 }
 
-.area-2 { left: 130px; top: 175px; }     /* 인천광역시 */
+.area-2 {
+    left: 130px;
+    top: 175px;
+}
+
+/* 인천광역시 */
 .area-2::before {
-    top: 20%; left: 180%;
+    top: 20%;
+    left: 185%;
     height: 80px;
     transform: translateY(-50%) rotate(80deg);
 }
-.area-3 { left: 120px; top: 320px; }     /* 대전광역시 */
+
+.area-3 {
+    left: 120px;
+    top: 320px;
+}
+
+/* 대전광역시 */
 .area-3::before {
-    top: -10%; left: 250%;
+    top: -10%;
+    left: 260%;
     height: 150px;
     transform: translateY(-50%) rotate(77deg);
 }
-.area-4 { right: -10px; top: 315px; }    /* 대구광역시 */
+
+.area-4 {
+    right: -10px;
+    top: 315px;
+}
+
+/* 대구광역시 */
 .area-4::before {
-    top: 90%; right: 240%;
+    top: 90%;
+    right: 248%;
     height: 140px;
     transform: translateY(-50%) rotate(80deg);
 }
-.area-5 { left: 100px; top: 430px; }     /* 광주광역시 */
+
+.area-5 {
+    left: 100px;
+    top: 430px;
+}
+
+/* 광주광역시 */
 .area-5::before {
-    top: 20%; left: 220%;
+    top: 20%;
+    left: 223%;
     height: 120px;
     transform: translateY(-50%) rotate(80deg);
 }
-.area-6 { right: 20px; top: 420px; }     /* 부산광역시 */
+
+.area-6 {
+    right: 20px;
+    top: 420px;
+}
+
+/* 부산광역시 */
 .area-6::before {
-    top: 20%; right: 170%;
+    top: 20%;
+    right: 173%;
     height: 70px;
     transform: translateY(-50%) rotate(-80deg);
 }
-.area-7 { right: 0px; top: 370px; }     /* 울산광역시 */
+
+.area-7 {
+    right: 0px;
+    top: 370px;
+}
+
+/* 울산광역시 */
 .area-7::before {
-    top: 50%; right: 170%;
+    top: 50%;
+    right: 174%;
     height: 70px;
     transform: translateY(-50%) rotate(90deg);
 }
-.area-8 { left: 115px; top: 230px; }     /* 세종특별자치시 */
+
+.area-8 {
+    left: 115px;
+    top: 230px;
+}
+
+/* 세종특별자치시 */
 .area-8::before {
-    top: 90%; left: 240%;
+    top: 90%;
+    left: 245%;
     height: 140px;
     transform: translateY(-50%) rotate(-80deg);
 }
-.area-31 { left: 170px; top: 70px; }     /* 경기도 */
+
+.area-31 {
+    left: 170px;
+    top: 70px;
+}
+
+/* 경기도 */
 .area-31::before {
-    top: 110%; left: 162%;
+    top: 110%;
+    left: 166%;
     height: 70px;
     transform: translateY(-50%) rotate(-60deg);
 }
-.area-32 { right: 60px; top: 100px; }    /* 강원도 */
+
+.area-32 {
+    right: 60px;
+    top: 100px;
+}
+
+/* 강원도 */
 .area-32::before {
-    top: 50%; right: 170%;
+    top: 50%;
+    right: 175%;
     height: 70px;
     transform: translateY(-50%) rotate(90deg);
 }
-.area-33 { right: 20px; top: 190px; }   /* 충청북도 */
+
+.area-33 {
+    right: 20px;
+    top: 190px;
+}
+
+/* 충청북도 */
 .area-33::before {
-    top: 90%; right: 230%;
+    top: 90%;
+    right: 234%;
     height: 130px;
     transform: translateY(-50%) rotate(80deg);
 }
-.area-34 { left: 140px; top: 275px; }    /* 충청남도 */
+
+.area-34 {
+    left: 140px;
+    top: 275px;
+}
+
+/* 충청남도 */
 .area-34::before {
-    top: 40%; left: 170%;
+    top: 40%;
+    left: 173%;
     height: 70px;
     transform: translateY(-50%) rotate(-90deg);
 }
-.area-35 { right: 30px; top: 260px; }   /* 경상북도 */
+
+.area-35 {
+    right: 30px;
+    top: 260px;
+}
+
+/* 경상북도 */
 .area-35::before {
-    top: 60%; right: 150%;
+    top: 60%;
+    right: 153%;
     height: 50px;
     transform: translateY(-50%) rotate(80deg);
 }
-.area-36 { right: 80px; top: 480px; }   /* 경상남도 */
+
+.area-36 {
+    right: 80px;
+    top: 480px;
+}
+
+/* 경상남도 */
 .area-36::before {
-    top: -60%; right: 180%;
+    top: -60%;
+    right: 183%;
     height: 100px;
     transform: translateY(-50%) rotate(-50deg);
 }
-.area-37 { left: 140px; top: 380px; }    /* 전라북도 */
+
+.area-37 {
+    left: 140px;
+    top: 380px;
+}
+
+/* 전라북도 */
 .area-37::before {
-    top: 20%; left: 170%;
+    top: 20%;
+    left: 175%;
     height: 70px;
     transform: translateY(-50%) rotate(80deg);
 }
-.area-38 { left: 100px; top: 500px; }    /* 전라남도 */
+
+.area-38 {
+    left: 100px;
+    top: 500px;
+}
+
+/* 전라남도 */
 .area-38::before {
-    top: -20%; left: 215%;
+    top: -20%;
+    left: 220%;
     height: 120px;
     transform: translateY(-50%) rotate(70deg);
 }
-.area-39 { left: 330px; top: 580px; }    /* 제주도 */
+
+.area-39 {
+    left: 330px;
+    top: 580px;
+}
+
+/* 제주도 */
 .area-39::before {
-    top: 20%; right: 170%;
+    top: 20%;
+    right: 170%;
     height: 70px;
     transform: translateY(-50%) rotate(-80deg);
 }
+
 /* 서울특별시 */
 .area-1::after {
-    top: 170%; /* 막대기 끝에 점을 위치 */
-    left: 290%;
+    top: 170%;
+    /* 막대기 끝에 점을 위치 */
+    left: 310%;
     transform: translateX(-100%);
 }
 
 /* 인천광역시 */
 .area-2::after {
     top: -15%;
-    left: 260%;
+    left: 280%;
     transform: translateX(-50%);
 }
 
 /* 대전광역시 */
 .area-3::after {
     top: -80%;
-    left: 400%;
+    left: 430%;
     transform: translateX(-50%);
 }
 
 /* 대구광역시 */
 .area-4::after {
     top: 120%;
-    right: 370%;
+    right: 390%;
     transform: translateX(-50%);
 }
 
 /* 광주광역시 */
 .area-5::after {
     top: -27%;
-    left: 340%;
+    left: 360%;
     transform: translateX(-50%);
 }
 
@@ -1491,35 +1709,35 @@ a#nsearch-btn {
 /* 울산광역시 */
 .area-7::after {
     top: 40%;
-    right: 230%;
+    right: 240%;
     transform: translateX(-50%);
 }
 
 /* 세종특별자치시 */
 .area-8::after {
     top: 120%;
-    left: 380%;
+    left: 395%;
     transform: translateX(-50%);
 }
 
 /* 경기도 */
 .area-31::after {
-    top: 165%;
-    left: 230%;
+    top: 161%;
+    left: 241%;
     transform: translateX(-50%);
 }
 
 /* 강원도 */
 .area-32::after {
     top: 40%;
-    right: 230%;
+    right: 245%;
     transform: translateX(-50%);
 }
 
 /* 충청북도 */
 .area-33::after {
     top: 117%;
-    right: 350%;
+    right: 363%;
     transform: translateX(-50%);
 }
 
@@ -1539,29 +1757,29 @@ a#nsearch-btn {
 
 /* 경상남도 */
 .area-36::after {
-    top: -190%;
-    right: 245%;
+    top: -188%;
+    right: 258%;
     transform: translateX(-50%);
 }
 
 /* 전라북도 */
 .area-37::after {
     top: -10%;
-    left: 240%;
+    left: 250%;
     transform: translateX(-50%);
 }
 
 /* 전라남도 */
 .area-38::after {
     top: -105%;
-    left: 330%;
+    left: 350%;
     transform: translateX(-50%);
 }
 
 /* 제주도 */
 .area-39::after {
     top: -20%;
-    right: 230%;
+    right: 234%;
     transform: translateX(-50%);
 }
 
@@ -1587,22 +1805,23 @@ a#nsearch-btn {
     background-color: #706f6f;
     /* 선의 각도와 길이를 각 지역에 맞게 조정 */
 }
+
 .festival_select_area .festival_map_detail::after {
     content: '';
     position: absolute;
     width: 8px;
     height: 8px;
     background-color: #706f6f;
-    border-radius: 50%; 
+    border-radius: 50%;
 }
 
 /* festival search */
-.festival-search-area{
+.festival-search-area {
     display: flex;
     float: right;
 }
 
-.search-btn{
+.search-btn {
     border: 3px solid #92B4EC;
     border-radius: 4px;
     font-size: 14px;
@@ -1612,8 +1831,215 @@ a#nsearch-btn {
     background-color: #92B4EC;
     color: white;
     cursor: pointer;
+    font-weight: bold;
 }
 
+/* festival detail */
+.festival-detail-area h1 {
+    margin: 30px;
+}
+
+.festival-firstImg {
+    width: 100%;
+    height: 500px;
+    object-fit: contain;
+    /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center;
+    background-color: rgba(146, 180, 236, 0.2);
+}
+
+.slick-dots {
+    bottom: -30px !important;
+}
+
+
+.slick-next,
+.slick-prev {
+    top: 150px !important;
+    z-index: 1000;
+}
+
+.slick-next {
+    right: 250px !important;
+}
+
+.slick-prev {
+    left: 250px !important;
+}
+
+.slick-next:before {
+    color: #92B4EC !important;
+    font-size: 50px !important;
+}
+
+.slick-prev:before {
+    color: #92B4EC !important;
+    font-size: 50px !important;
+}
+
+.festival-introduction {
+    width: 800px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    font-size: 20px;
+    line-height: 34px;
+    letter-spacing: 2px;
+    margin: 150px auto;
+    opacity: 0;
+}
+
+.detail-img img {
+    width: 100%;
+    height: 280px;
+    margin: 10px 0;
+    object-fit: contain;
+    /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center;
+}
+
+.festival-info {
+    margin: 70px 0px;
+}
+
+.festival-info h2 {
+    margin: 60px;
+}
+
+
+
+
+.festival-location #map {
+    width: 400px !important;
+    border: 1px solid #92B4EC;
+    border-radius: 15px;
+    box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
+}
+
+.festival-location {
+    display: flex;
+    background-color: rgba(146, 180, 236, 0.2);
+    border-radius: 15px;
+    justify-content: center;
+    margin: 0 176px;
+    opacity: 0;
+}
+
+.festival-location div {
+    margin-left: 50px;
+}
+
+.map-img-area {
+    background-color: rgba(146, 180, 236, 0.2);
+}
+
+.map-img-area img {
+    width: 400px;
+}
+
+
+.festival-info .festival-addr {
+    margin-top: 20px;
+}
+
+.festival-intro1,
+.festival-intro2,
+.festival-intro3 {
+    height: 600px;
+}
+
+.festival-intro3 {
+    margin-top: 350px;
+}
+
+.festival-intro2 table {
+    margin: 0 auto;
+    opacity: 0;
+}
+
+.festival-intro2 th,
+td {
+    height: 120px;
+    border-bottom: 1px solid white;
+    line-height: 35px;
+}
+
+.festival-intro2 tr:first-child th {
+    border-top-left-radius: 15px;
+}
+
+.festival-intro2tr:first-child td {
+    border-top-right-radius: 15px;
+}
+
+.festival-intro2 tr:last-child th {
+    border-bottom-left-radius: 15px;
+}
+
+.festival-intro2 tr:last-child td {
+    border-bottom-right-radius: 15px;
+}
+
+.festival-intro2 th {
+    width: 150px;
+    background-color: rgba(146, 180, 236, 0.2);
+}
+
+.festival-intro2 td {
+    width: 900px;
+    background-color: rgba(214, 224, 238, 0.2);
+    text-align: center;
+    font-weight: bold;
+}
+
+.btn-area {
+    width: 70px;
+    height: 40px;
+    background-color: #92B4EC;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    line-height: 38px;
+    border-radius: 8px;
+    margin: 10px auto;
+    cursor: pointer;
+}
+
+/* fade-in 애니메이션 */
+.fade-in {
+    opacity: 0;
+    transform: translateY(50px);
+    /* 시작 위치: 화면 아래에서 */
+    animation: fadeInUp 1.5s ease-out forwards;
+    /* ease-out으로 애니메이션 속도를 부드럽게 */
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(50px);
+        /* 애니메이션 시작 시 아래로 위치 */
+    }
+
+    40% {
+        opacity: 0.3;
+        transform: translateY(30px);
+        /* 중간 위치 */
+    }
+
+    70% {
+        opacity: 0.7;
+        transform: translateY(15px);
+        /* 조금 더 올라가면서 불투명도 증가 */
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+        /* 최종 위치: 원래 위치로 */
+    }
+}
 
 
 /* festival .css 종료 */

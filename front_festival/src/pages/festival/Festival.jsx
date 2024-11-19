@@ -28,6 +28,7 @@ import gyeongbuk from "../../assets/images/festivalImg/gyeongbuk.jpg";
 import gyeongnam from "../../assets/images/festivalImg/gyeongnam.jpg";
 import ulsan from "../../assets/images/festivalImg/ulsan.jpg";
 import area from "../../assets/images/festivalImg/areadefault.jpg";
+import { useLocation } from "react-router-dom";
 
 const API_URL = 'https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&';
 const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -35,14 +36,20 @@ const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4Pos
 
 
 const Festival = () => {
+    const location = useLocation();
     const { noHyphen } = TodayDate();
-    const [activeTab, setActiveTab] = useState('calendar');
     const [img, setImg] = useState();
     const [imgIndex, setImgIndex] = useState(0);
     const [season, setSeason] = useState();
     const [animate, setAnimate] = useState(false); // 애니메이션 상태
     const { param, setParam } = FestivalParam(noHyphen);
 
+    const [activeTab, setActiveTab] = useState(location.state || 'calendar');
+
+    console.log(location.state);
+
+
+    // 탭 선택 상태 관리
 
     const images = [
         seoul, incheon, daejeon, daegu, gwangju,
@@ -203,9 +210,9 @@ const Festival = () => {
                 </div>
 
                 <div className="content">
-                    {activeTab === 'calendar' && <FestivalCalendar API_URL={API_URL} API_KEY={API_KEY} param={param} setParam={setParam} />}
-                    {activeTab === 'map' && <FestivalMap API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} param={param} setParam={setParam} />}
-                    {activeTab === 'search' && <FestivalSearch API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} />}
+                    {activeTab === 'calendar' && <FestivalCalendar API_URL={API_URL} API_KEY={API_KEY} param={param} setParam={setParam} activeTab='calendar' />}
+                    {activeTab === 'map' && <FestivalMap API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} param={param} setParam={setParam} activeTab='map' />}
+                    {activeTab === 'search' && <FestivalSearch API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} activeTab='search' />}
                 </div>
             </div>
         </>

@@ -3,13 +3,15 @@ import axios from "axios";
 import Dropdown from "../../components/Dropdown";
 import FestivalParam from "../../hooks/FestivalParam";
 import noimage from "../../assets/images/no-image.jpg";
+import { useNavigate } from "react-router-dom";
 
-const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
+const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const { param, setParam } = FestivalParam("");
-    
+    const navigate = useNavigate();
+
     const [temp, setTemp] = useState({
         areaCode: '',
         eventStartDate: '',
@@ -22,7 +24,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
     }
 
     const searchType1 = {
-        "전체 지역": "","서울": "1", "인천": "2", "대전": "3","대구": "4", "광주": "5",
+        "전체 지역": "", "서울": "1", "인천": "2", "대전": "3", "대구": "4", "광주": "5",
         "부산": "6", "울산": "7", "세종": "8", "경기": "31", "강원": "32", "충북": "33",
         "충남": "34", "경북": "35", "경남": "36", "전북": "37", "전남": "38", "제주": "39"
     }
@@ -41,6 +43,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
     const changeType2 = (value) => {
         const month = parseInt(value, 10);
         const lastDate = getLastDateOfMonth(parseInt(year, 10), month);
+        //if
         const eventStartDate = year + value + "01";
         const eventEndDate = year + value + lastDate + "";
 
@@ -49,6 +52,10 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
 
     const search = (e) => {
         e.preventDefault();
+        if (temp.eventStartDate.length < 8) {
+            alert("날짜를 선택해야 검색이 가능합니다!");
+            return;
+        }
         setParam({
             ...param, pageNo: 1,
             areaCode: temp.areaCode,
@@ -56,14 +63,16 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
             eventEndDate: temp.eventEndDate
         });
 
+        // setTemp({...temp, eventStartDate: "", eventEndDate: ""});
         setFestivals([]);  // 기존 축제 목록 초기화
         setHasMore(true);  // 더 많은 데이터가 있을 수 있으므로 초기화
-
         // 검색이 눌릴 때 param값을 갱신
     }
 
     const fetchFestivals = () => {
-        if (isLoading || !param.eventStartDate || !param.eventEndDate) return;  // 필수 값이 없으면 요청 안 함
+        if (isLoading || param.eventStartDate === "")
+            return;  // 필수 값이 없으면 요청 안 함
+        
         setIsLoading(true);
 
         axios
@@ -74,8 +83,8 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
                     ...prevFestivals,
                     ...festivalsData, // 기존 데이터에 새로운 데이터를 추가
                 ]);
+                
                 setIsLoading(false);
-
                 // 추가로 더 데이터를 요청할 수 있는지 체크
                 if (festivalsData.length < param.numOfRow) {
                     setHasMore(false);  // 더 이상 데이터가 없으면
@@ -97,6 +106,11 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
         }
     };
 
+    // useEffect(()=>{
+    //    temp 값 변경되게 해보기 
+    //      64번 쨰 줄 참고
+    // });
+
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
 
@@ -108,7 +122,6 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
     // param의 변화에 따라 fetchFestivals 실행
     useEffect(() => {
         fetchFestivals();
-
         console.log("param : ", param)
     }, [param]);  // param이 변경될 때마다 실행
 
@@ -120,7 +133,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
             <div className="festival-search-area">
                 <Dropdown list={searchType1} name={"type1"} width={100} value={param.areaCode} onChange={changeType1} ></Dropdown>
                 <Dropdown list={searchType2} name={"type2"} width={100} value={param.eventStartDate ? "날짜 선택" : ""} onChange={changeType2}></Dropdown>
-                <a className="search-btn" onClick={search}>검색</a>
+                <div className="search-btn" onClick={search}>검 색</div>
             </div>
             {param.eventStartDate === "" && <p>날짜를 선택해주세요.</p>}
             {festivals.length > 0 && (
@@ -128,7 +141,10 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
                     <h3>축제 목록</h3>
                     <ul className="festival-list">
                         {festivals.map((festival) => (
-                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}>
+                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}
+                            onClick={()=>{
+                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY, activeTab}})
+                            }}>
                                 <h4>{festival.title}</h4>
                                 <p>{festival.addr1}</p>
                                 {festival.firstimage ? (

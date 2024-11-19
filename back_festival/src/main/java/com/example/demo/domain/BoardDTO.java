@@ -12,5 +12,7 @@ public class BoardDTO {
 	private long boardreadcnt;
 	private long reportcnt;
 	private String tag;
+	private String titleImage;
+	private String preview;
 	
 }

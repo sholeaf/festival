@@ -13,7 +13,9 @@ import Adminpage from './pages/notice/Adminpage';
 import MyPage from './pages/user/MyPage';
 import Login from './pages/user/Login';
 import Join from './pages/user/Join';
+import DetailFestival from './pages/festival/DetailFestival';
 import Note from './pages/notes/Note';
+
 
 function App() {
   return (
@@ -22,6 +24,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main></Main>}></Route>
           <Route path="/festival" element={<Festival></Festival>}></Route>
+          <Route path="/festival/:contentid" element={<DetailFestival></DetailFestival>}></Route>
           <Route path="/community" element={<Community></Community>}></Route>
           <Route path="/user/mypage" element={<MyPage></MyPage>}></Route>
           <Route path="/user/login" element={<Login></Login>}></Route>
@@ -31,10 +34,6 @@ function App() {
           <Route path="/notice/nmodify" element={<Nmodify></Nmodify>}></Route>
           <Route path="/notice/:noticenum" element={<Nget></Nget>}></Route>
           <Route path="/notice/adminpage" element={<Adminpage></Adminpage>}></Route>
-          <Route path="/mypage" element={<MyPage></MyPage>}></Route>
-          <Route path="/login" element={<Login></Login>}></Route>
-          <Route path="/notes/note" element={<Note></Note>}></Route>
-          
         </Routes>
       </BrowserRouter>
     </>

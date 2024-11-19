@@ -1,0 +1,59 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BoardMapper">
+	<sql id="cri">
+		<if test="keyword != '' and keyword != null and type != 'a'.toString()">
+			<trim prefixOverrides="or" prefix="(" suffix=") and">
+				<foreach collection="typeArr" item="t">
+					or
+					<choose>
+						<when test="t == 'T'.toString()">
+							boardtitle like ('%${keyword}%')
+						</when>
+						<when test="t == 'C'.toString()">
+							boardcontent like ('%${keyword}%')
+						</when>
+						<when test="t == 'W'.toString()">
+							userid like ('%${keyword}%')
+						</when>
+						<when test="t == 'G'.toString()">
+							tag like ('%${keyword}%')
+						</when>
+					</choose>
+				</foreach>
+			</trim>
+		</if>
+	</sql>
+
+	<insert id="insertBoard">
+		insert into board(boardtitle, boardcontent, userid, tag, titleImage, preview) values(#{boardtitle}, 
+		#{boardcontent}, "apple", #{tag}, #{titleImage}, #{preview})
+	</insert>
+	<select id="getLastNum">
+		select max(boardnum) from board where userid=#{userid}
+	</select>
+	<select id="getBoardbyBoardnum">
+		select * from board where boardnum = #{boardnum}
+	</select>
+	<select id="getList">
+		select * from board
+		where
+		<include refid="cri"></include>
+		boardnum > 0 order by boardnum desc limit #{startrow}, #{amount}
+	</select>
+	<select id="getTotal">
+		select count(*) from board
+		where
+		<include refid="cri"></include>
+		boardnum > 0
+	</select>
+	<update id="updateBoard">
+		update board
+		set boardtitle = #{boardtitle}, boardcontent = #{boardcontent}, tag = #{tag}
+		where boardnum = #{boardnum}
+	</update>
+	<delete id="deleteBoard">
+		delete from board where boardnum=#{boardnum}
+	</delete>
+</mapper>
