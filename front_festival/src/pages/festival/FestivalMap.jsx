@@ -5,7 +5,7 @@ import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
 
 
-const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam }) => {
+const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam, activeTab}) => {
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);  
     const [hasMore, setHasMore] = useState(true); 
@@ -133,7 +133,7 @@ const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam }) => {
                         {festivals.map((festival) => (
                             <li className={`festiva-${festival.contentid}`} key={festival.contentid}
                             onClick={()=>{
-                                navigate(`/festival/${festival.contentid}`,{state:API_KEY})
+                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY, activeTab}})
                             }}>
                                 <h4>{festival.title}</h4>
                                 <p>{festival.addr1}</p>
