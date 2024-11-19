@@ -132,17 +132,16 @@ const DetailFestival = () => {
                     <h1>{data.title}</h1>
 
                     <div className="detail-img">
-                        {images.length === 0 ? (
-                            <img src={noimage} alt="No Image" />
-                        ) : (
-                            <Slider {...settings}>
-                                {images.map((image, index) => (
-                                    <div key={index}>
-                                        <img src={image.originimgurl} alt={`Slide ${index + 1}`} />
-                                    </div>
-                                ))}
-                            </Slider>
-                        )}
+                        {images.length == 0 ? <img className="detail-img" src={noimage}></img> :
+                            images.length <= 1 ? <div className="detail-img"><img src={images[0].originimgurl}></img></div> :
+                                <Slider {...settings}>
+                                    {images.map((image, index) => (
+                                        <div className="detail-img" key={index}>
+                                            <img src={image.originimgurl} alt={`Slide ${index + 1}`}></img>
+                                        </div>
+                                    ))}
+                                </Slider>
+                        }
                     </div>
 
                     <div className="festival-info">
