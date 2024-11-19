@@ -263,6 +263,11 @@ header{
     width: 125px;
     text-align: center;
 }
+.mypage .profile .btn_area p:hover{
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+}
 
 /* 모달 프로필 변경 */
 #profileModify .img img{
