@@ -45,7 +45,11 @@ create table board(
     titleImage varchar(300),
     preview varchar(300)
 );
+<<<<<<< HEAD:prsql.sql
+select * from board where userid = "apple";
+=======
 select * from board;
+>>>>>>> 653bef71743de961a23213a598e0247aaaff8370:sql.sql
 insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('신고테스트','테스트중입니다','apple','1',now(),'1');
 insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('신고테스트','테스트중입니다','apple','1',now(),'6');
 drop table board;

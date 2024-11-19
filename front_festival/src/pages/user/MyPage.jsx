@@ -56,6 +56,7 @@ const MyPage = () => {
     };
 
     const closeModal = () => {
+
         setIsModalOpen(false);  // 모달을 닫는 함수
     };
 
@@ -274,6 +275,15 @@ const MyPage = () => {
         const files = e.target.files;
         const img = document.getElementById("profileImg");
         const file = files[0];
+        if(file != null){
+            let ext = file.name.split(".").pop();
+            if(!(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp')){
+                alert("이미지 파일만 선택할 수 있습니다.");
+                img.src = `{/api/user/file/thumbnail/${deleteFile}}`;
+                setIsModalOpen(false);
+            }
+        }
+
         const reader = new FileReader();
 
         if (files.length === 0) {
@@ -363,28 +373,25 @@ const MyPage = () => {
 
     const showAll = () => {
         document.getElementById("showOpen").style.display = 'none';
+        document.getElementById("showClose").style.display = 'inline-block';
+        document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
     };
     const showClose = () => {
-        document.getElementById("showOpen").style.display = 'inline';
+        document.getElementById("showOpen").style.display = 'inline-block';
+        document.getElementById("showClose").style.display = 'none';
+        document.getElementsByClassName("bookmark")[0].style.display = 'block';
         setIsAllBoard(false);
     };
     
     const elList = [];
-    if(list.length > 4){
-        elList.push(
-            <span onClick={showAll} id='showOpen'>더 보기</span>
-        )
-    }
-    if(isAllBoard){
-        elList.push(
-            <span onClick={showClose} id='showClose'>돌아가기</span>
-        )
-    }
     if(list && list.length > 0){
-        list.slice(0, isAllBoard ? list.length : 4).map((board)=>{
+        list.slice(0, isAllBoard ? list.length : 3).map((board)=>{
             elList.push(
-                <div key={board.boardnum}>{board.boardtitle}</div>
+                <div key={board.boardnum} className='board'>
+                    <img src={board.titleImage} alt="" />
+                    <span>{board.boardtitle}</span>
+                </div>
             )
         })
     }
@@ -464,7 +471,7 @@ const MyPage = () => {
                             <div className="profile">
                                 <div className="info_area">
                                     <div className='img'>
-                                        <img src={`/api/user/file/thumbnail/${file}`} alt="" />
+                                        <img src={`/api/user/file/thumbnail/${deleteFile}`} alt="" />
                                     </div>
                                     <div className='info'>
                                         <div>이름 : {user.username}</div>
@@ -489,8 +496,16 @@ const MyPage = () => {
                                 </div>
                             </div>
                             <div className="community">
-                                <span>후기 목록</span>
-                                {elList}
+                                <p>후기 목록</p>
+                                {
+                                    list.length > 3 ? (<span onClick={showAll} id='showOpen'>더 보기...</span>)
+                                    :
+                                    (<></>)
+                                }
+                                <span onClick={showClose} id='showClose'>돌아가기</span>
+                                <div className='list'>
+                                    {elList}
+                                </div>
                             </div>
                             <Modal isOpen={isModalOpen} closeModal={closeModal}>
                                 {activeModal === 'userModify' && (

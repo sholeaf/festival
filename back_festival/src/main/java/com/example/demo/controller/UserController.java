@@ -172,8 +172,10 @@ public class UserController {
 	}
 	
 	@DeleteMapping("delete")
-	public ResponseEntity<String> deleteUser(@RequestParam String userid) {
+	public ResponseEntity<String> deleteUser(@RequestParam String userid, HttpServletRequest req) {
 		if(service.deleteUser(userid) == 1) {
+			HttpSession session = req.getSession();
+			session.removeAttribute("loginUser");
 			return new ResponseEntity<String>("O",HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("X",HttpStatus.OK);

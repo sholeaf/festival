@@ -2,12 +2,14 @@ import { useEffect, useState } from "react";
 import Calendar from 'react-calendar';
 import axios from "axios";
 import noimage from "../../assets/images/no-image.jpg";
+import { useNavigate } from "react-router-dom";
 
 
 const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
-    const [festivals, setFestivals] = useState([]);  // 축제 데이터 상태
-    const [isLoading, setIsLoading] = useState(false);  // 로딩 상태
-    const [hasMore, setHasMore] = useState(true);  // 추가 데이터 여부
+    const [festivals, setFestivals] = useState([]);
+    const [isLoading, setIsLoading] = useState(false);  
+    const [hasMore, setHasMore] = useState(true);
+    const navigate = useNavigate();
 
     // 날짜 선택 시 처리 함수
     const handleDateChange = (date) => {
@@ -42,6 +44,7 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
                     ...prevFestivals,
                     ...festivalsData, // 기존 데이터에 새로운 데이터를 추가
                 ]);
+                
                 setIsLoading(false);
 
                 // 추가로 더 데이터를 요청할 수 있는지 체크
@@ -91,7 +94,10 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
                     <h3>축제 목록</h3>
                     <ul className="festival-list">
                         {festivals.map((festival) => (
-                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}>
+                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}
+                            onClick={()=>{
+                                navigate(`/festival/${festival.contentid}`,{state:API_KEY})
+                            }}>
                                 <h4>{festival.title}</h4>
                                 <p>{festival.addr1}</p>
                                 {festival.firstimage ? (
