@@ -54,4 +54,23 @@
 <delete id="deleteList">
 delete from board where boardnum = #{boardnum}
 </delete>
+<delete id="deleteReportList">
+delete from board_report where boardnum = #{boardnum} limit 50;
+</delete>
+<select id="getReportList">
+select count(*) from board_report where boardnum = #{boardnum};
+</select>
+<select id="getReplyList">
+select r.*
+    from reply r
+    join reply_report rr on r.replynum = rr.replynum
+    <where>
+        <include refid="cri" />
+        and r.replynum > 0
+    </where>
+    group by r.replynum
+    having count(rr.replynum) >= 5
+    order by r.replynum desc
+    limit #{startrow}, #{amount}
+</select>
 </mapper>

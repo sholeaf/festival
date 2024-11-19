@@ -5,6 +5,7 @@ import java.util.List;
 
 import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.Criteria;
+import com.example.demo.domain.ReplyDTO;
 
 public interface AdminPageService {
 	List<BoardDTO> findByReportcntGreaterThanEqual(int reportCount);
@@ -12,4 +13,8 @@ public interface AdminPageService {
 	HashMap<String, Object> getList(Criteria cri);
 	void updateReportCount(Long boardnum, int reportcnt);
 	int deleteList(long boardnum);
+	int replyreset(long replynum);
+	int deletereply(long boardnum);
+	HashMap<String, Object> getReplyReportList(Criteria cri);
+	
 }

@@ -14,6 +14,8 @@ const Adminpage = (props) => {
     const { boardnum } = props;
     const [ loginUser, setLoginUser] = useState("");
     const [boardList, setBoardList] = useState([]);
+    const [replyReportList, setReplyReportList] =useState([]);
+    //로그인체크
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
             .then((resp) => {
@@ -41,6 +43,7 @@ const Adminpage = (props) => {
         next: false,
         cri: null
     });
+
 
     // 모달창 영역
     
@@ -101,7 +104,8 @@ const Adminpage = (props) => {
         // API 호출
         axios.get(`/api/adminpage/${cri.pagenum}`, { params: temp })
             .then((resp) => {
-                setData(resp.data);           // 데이터 세팅
+                setData(resp.data);
+                console.log("신고게시판호출",resp.data)           // 데이터 세팅
                 setPageMaker(resp.data.pageMaker); // 페이지네이션 설정
                 setInputs(resp.data.pageMaker.cri.keyword);
             })
@@ -117,6 +121,30 @@ const Adminpage = (props) => {
         }
     }, [location.state]);
 
+    //댓글신고목록 불러오기
+   
+    useEffect(() => {
+        const temp = {
+            pagenum: cri.pagenum,
+            amount: cri.amount,
+            type: cri.type,
+            keyword: cri.keyword,
+            startrow: cri.startrow
+        };
+        axios.get(`/api/adminpage/replyreportlist/${cri.pagenum}`, {params: temp})  // 게시글의 댓글 신고 목록 가져오기
+            .then((resp) => {
+                console.log("댓글신고목록 api 요청",resp.data)
+                setReplyReportList(resp.data);  // 댓글 신고 목록을 상태로 저장
+            })
+            .catch((error) => {
+                console.log("댓글 신고 목록 오류", error);
+            });
+    }, [cri]);
+    useEffect(() => {
+        if (location.state) {
+            setCri(location.state);
+        }
+    }, [location.state]);
     // 로딩 화면 텍스트 애니메이션
     const [chars, setChars] = useState([]);
     useEffect(() => {
@@ -202,7 +230,68 @@ const Adminpage = (props) => {
             );
         }
     }
-
+    const replyReset = (replynum)=>{
+        if(window.confirm('신고를 해제하시겠습니까?')){
+            axios.post(`/api/adminpage/replyreset`,{replynum})
+            .then(resp=>{
+                setReplyReportList(prevData => ({
+                    ...prevData,
+                    reply: prevData.reply.filter(reply => reply.replynum !== replynum)
+                }));
+            })
+            .catch(error =>{
+                console.log("신고해제 실패", error)
+            })
+        }
+    }
+    const deletereply =(replynum)=>{
+        if (window.confirm('정말로 삭제하시겠습니까?')) {
+            axios.delete(`/api/adminpage/${replynum}`)
+                .then((resp) => {
+                    console.log(resp.data); // 삭제 성공 메시지
+                    // 삭제 후 클라이언트에서 해당 게시글만 제거
+                    setReplyReportList(prevData => ({
+                        ...prevData,
+                        reply: prevData.reply.filter(reply => reply.replynum !== replynum)
+                    }));
+                    alert('게시글이 삭제되었습니다.');
+                    navigate('/notice/adminpage', { state: { pagenum: 1 } });
+                })
+                .catch((error) => {
+                    console.error('게시글 삭제 실패:', error);
+                    alert('게시글 삭제에 실패했습니다.');
+                });
+        }
+    }
+    //댓글신고목록
+    const replyList = replyReportList.board;
+    console.log("댓글신고목록리스트노출:",replyList);
+    const reply_reportList = [];
+// replyReportList가 있으면 순차적으로 데이터를 추가
+    console.log("댓글신고리스트에 들어가야 될 데이터:",reply_reportList)
+if (replyList && replyList.length > 0) {
+    for (const reply of replyList) {
+        reply_reportList.push(
+            <div className="row" key={reply.replynum}>
+                <div>{reply.boardnum}</div>
+                <div>{reply.replynum}</div>
+                <div className="replylimited-text">{reply.replycontent}</div>
+                <div>{reply.userid}</div>
+                <div>
+                    <button onClick={() => replyReset(reply.replynum)}>신고해제</button>
+                    <button onClick={() => deletereply(reply.replynum)}>게시글삭제</button>
+                </div>
+            </div>
+        );
+    }
+}
+if (reply_reportList.length === 0) {
+    reply_reportList.push(
+        <div className="row no-report" key={-1}>
+            <div>신고된 댓글이 없습니다.</div>
+        </div>
+    );
+}
     // 검색 타입
     const searchType = {
         "전체": "a", "제목": "T", "내용": "C", "작성자": "W", "제목 또는 작성자": "TW", "제목 또는 내용": "TC", "제목 또는 작성자 또는 내용": "TCW"
@@ -265,6 +354,24 @@ const Adminpage = (props) => {
                     </div>
                     <div className="rptbody">
                         {elList}
+                    </div>
+                <Pagination pageMaker={pageMaker}></Pagination>
+                </div>
+            </div>
+            <div className="nwrap replyrplist" id="rpwrap">
+                <div className="reporttitle">댓글신고리스트</div>
+                <div className="replyrplist replyrptable">
+                    <div className="replyrpthead tac">
+                        <div className="row">
+                            <div>게시글번호</div>
+                            <div>댓글번호</div>
+                            <div>댓글내용</div>
+                            <div>작성자</div>
+                            <div>처리</div>
+                        </div>
+                    </div>
+                    <div className="replyrptbody">
+                        {reply_reportList}
                     </div>
                 <Pagination pageMaker={pageMaker}></Pagination>
                 </div>

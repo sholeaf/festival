@@ -32,12 +32,18 @@ public class NoteServiseImpl implements NoteService {
 
 	@Override
 	public long regist(@RequestBody NoteDTO note) throws Exception {
-		if(ntmapper.insertNote(note) != 1) {
-			return -1;
-		}
-		long notenum = ntmapper.getLastNum(note.getSenduser());
-		
-		return notenum;
+		try {
+	        int regist = ntmapper.insertNote(note); 
+	        System.out.println("답장눌렀을때결과"+regist);
+	        if (regist > 0) {
+	            return note.getNotenum();
+	        } else {
+	            return -1; 
+	        }
+	    } catch (Exception e) {
+	        e.printStackTrace();
+	        return -1;
+	    }
 	}
 
 	@Override

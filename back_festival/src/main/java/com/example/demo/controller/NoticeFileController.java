@@ -28,6 +28,7 @@ public class NoticeFileController {
 	public ResponseEntity<Resource> thumbnail(@PathVariable("systemname") String systemname) throws Exception {
 		System.out.println("getTumbnailResource 호출됨: " + systemname);
 		HashMap<String, Object> datas = nfservice.getTumbnailResource(systemname);
+		System.out.println("데이타즈:"+datas);
 		System.out.println("썸네일"+datas);
 		String contentType = (String)datas.get("contentsType");
 		Resource resource = (Resource)datas.get("resource");
