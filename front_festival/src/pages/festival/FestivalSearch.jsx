@@ -5,7 +5,7 @@ import FestivalParam from "../../hooks/FestivalParam";
 import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
 
-const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
+const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -52,7 +52,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
 
     const search = (e) => {
         e.preventDefault();
-        if (temp.eventStartDate === "") {
+        if (temp.eventStartDate.length < 8) {
             alert("날짜를 선택해야 검색이 가능합니다!");
             return;
         }
@@ -63,7 +63,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
             eventEndDate: temp.eventEndDate
         });
 
-        setTemp({...temp, eventStartDate: "", eventEndDate: ""});
+        // setTemp({...temp, eventStartDate: "", eventEndDate: ""});
         setFestivals([]);  // 기존 축제 목록 초기화
         setHasMore(true);  // 더 많은 데이터가 있을 수 있으므로 초기화
         // 검색이 눌릴 때 param값을 갱신
@@ -122,7 +122,6 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
     // param의 변화에 따라 fetchFestivals 실행
     useEffect(() => {
         fetchFestivals();
-
         console.log("param : ", param)
     }, [param]);  // param이 변경될 때마다 실행
 
@@ -134,7 +133,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
             <div className="festival-search-area">
                 <Dropdown list={searchType1} name={"type1"} width={100} value={param.areaCode} onChange={changeType1} ></Dropdown>
                 <Dropdown list={searchType2} name={"type2"} width={100} value={param.eventStartDate ? "날짜 선택" : ""} onChange={changeType2}></Dropdown>
-                <a className="search-btn" onClick={search}>검색</a>
+                <div className="search-btn" onClick={search}>검 색</div>
             </div>
             {param.eventStartDate === "" && <p>날짜를 선택해주세요.</p>}
             {festivals.length > 0 && (
@@ -144,7 +143,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen }) => {
                         {festivals.map((festival) => (
                             <li className={`festiva-${festival.contentid}`} key={festival.contentid}
                             onClick={()=>{
-                                navigate(`/festival/${festival.contentid}`,{state:API_KEY})
+                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY, activeTab}})
                             }}>
                                 <h4>{festival.title}</h4>
                                 <p>{festival.addr1}</p>

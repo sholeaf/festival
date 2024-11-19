@@ -5,7 +5,7 @@ import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
 
 
-const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
+const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);  
     const [hasMore, setHasMore] = useState(true);
@@ -31,7 +31,7 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
         setFestivals([]);
         setHasMore(true); // 더 이상 데이터가 없다는 상태를 리셋
     };
-
+    console.log("calendar active tab : ",activeTab);
     // API 요청 함수
     const fetchFestivals = () => {
         if (isLoading) return;  // 로딩 중이면 API 요청을 방지
@@ -68,7 +68,6 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
             }));
         }
     };
-
     // 페이지가 처음 로드되거나 날짜가 변경될 때마다 축제 데이터를 가져옴
     useEffect(() => {
         fetchFestivals();
@@ -96,7 +95,7 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam }) => {
                         {festivals.map((festival) => (
                             <li className={`festiva-${festival.contentid}`} key={festival.contentid}
                             onClick={()=>{
-                                navigate(`/festival/${festival.contentid}`,{state:API_KEY})
+                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY,activeTab}})
                             }}>
                                 <h4>{festival.title}</h4>
                                 <p>{festival.addr1}</p>
