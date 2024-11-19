@@ -1378,7 +1378,7 @@ a#nsearch-btn {
 /* 서울특별시 */
 .area-1::before {
     top: -55%;
-    left: 195%;
+    left: 198%;
     height: 100px;
     transform: translateX(-100%) rotate(-65deg);
 }
@@ -1391,7 +1391,7 @@ a#nsearch-btn {
 /* 인천광역시 */
 .area-2::before {
     top: 20%;
-    left: 180%;
+    left: 185%;
     height: 80px;
     transform: translateY(-50%) rotate(80deg);
 }
@@ -1404,7 +1404,7 @@ a#nsearch-btn {
 /* 대전광역시 */
 .area-3::before {
     top: -10%;
-    left: 250%;
+    left: 260%;
     height: 150px;
     transform: translateY(-50%) rotate(77deg);
 }
@@ -1417,7 +1417,7 @@ a#nsearch-btn {
 /* 대구광역시 */
 .area-4::before {
     top: 90%;
-    right: 240%;
+    right: 248%;
     height: 140px;
     transform: translateY(-50%) rotate(80deg);
 }
@@ -1430,7 +1430,7 @@ a#nsearch-btn {
 /* 광주광역시 */
 .area-5::before {
     top: 20%;
-    left: 220%;
+    left: 223%;
     height: 120px;
     transform: translateY(-50%) rotate(80deg);
 }
@@ -1443,7 +1443,7 @@ a#nsearch-btn {
 /* 부산광역시 */
 .area-6::before {
     top: 20%;
-    right: 170%;
+    right: 173%;
     height: 70px;
     transform: translateY(-50%) rotate(-80deg);
 }
@@ -1456,7 +1456,7 @@ a#nsearch-btn {
 /* 울산광역시 */
 .area-7::before {
     top: 50%;
-    right: 170%;
+    right: 174%;
     height: 70px;
     transform: translateY(-50%) rotate(90deg);
 }
@@ -1469,7 +1469,7 @@ a#nsearch-btn {
 /* 세종특별자치시 */
 .area-8::before {
     top: 90%;
-    left: 240%;
+    left: 245%;
     height: 140px;
     transform: translateY(-50%) rotate(-80deg);
 }
@@ -1482,7 +1482,7 @@ a#nsearch-btn {
 /* 경기도 */
 .area-31::before {
     top: 110%;
-    left: 162%;
+    left: 166%;
     height: 70px;
     transform: translateY(-50%) rotate(-60deg);
 }
@@ -1495,7 +1495,7 @@ a#nsearch-btn {
 /* 강원도 */
 .area-32::before {
     top: 50%;
-    right: 170%;
+    right: 175%;
     height: 70px;
     transform: translateY(-50%) rotate(90deg);
 }
@@ -1508,7 +1508,7 @@ a#nsearch-btn {
 /* 충청북도 */
 .area-33::before {
     top: 90%;
-    right: 230%;
+    right: 234%;
     height: 130px;
     transform: translateY(-50%) rotate(80deg);
 }
@@ -1521,7 +1521,7 @@ a#nsearch-btn {
 /* 충청남도 */
 .area-34::before {
     top: 40%;
-    left: 170%;
+    left: 173%;
     height: 70px;
     transform: translateY(-50%) rotate(-90deg);
 }
@@ -1534,7 +1534,7 @@ a#nsearch-btn {
 /* 경상북도 */
 .area-35::before {
     top: 60%;
-    right: 150%;
+    right: 153%;
     height: 50px;
     transform: translateY(-50%) rotate(80deg);
 }
@@ -1547,7 +1547,7 @@ a#nsearch-btn {
 /* 경상남도 */
 .area-36::before {
     top: -60%;
-    right: 180%;
+    right: 183%;
     height: 100px;
     transform: translateY(-50%) rotate(-50deg);
 }
@@ -1560,7 +1560,7 @@ a#nsearch-btn {
 /* 전라북도 */
 .area-37::before {
     top: 20%;
-    left: 170%;
+    left: 175%;
     height: 70px;
     transform: translateY(-50%) rotate(80deg);
 }
@@ -1573,7 +1573,7 @@ a#nsearch-btn {
 /* 전라남도 */
 .area-38::before {
     top: -20%;
-    left: 215%;
+    left: 220%;
     height: 120px;
     transform: translateY(-50%) rotate(70deg);
 }
@@ -1595,35 +1595,35 @@ a#nsearch-btn {
 .area-1::after {
     top: 170%;
     /* 막대기 끝에 점을 위치 */
-    left: 290%;
+    left: 310%;
     transform: translateX(-100%);
 }
 
 /* 인천광역시 */
 .area-2::after {
     top: -15%;
-    left: 260%;
+    left: 280%;
     transform: translateX(-50%);
 }
 
 /* 대전광역시 */
 .area-3::after {
     top: -80%;
-    left: 400%;
+    left: 430%;
     transform: translateX(-50%);
 }
 
 /* 대구광역시 */
 .area-4::after {
     top: 120%;
-    right: 370%;
+    right: 390%;
     transform: translateX(-50%);
 }
 
 /* 광주광역시 */
 .area-5::after {
     top: -27%;
-    left: 340%;
+    left: 360%;
     transform: translateX(-50%);
 }
 
@@ -1637,35 +1637,35 @@ a#nsearch-btn {
 /* 울산광역시 */
 .area-7::after {
     top: 40%;
-    right: 230%;
+    right: 240%;
     transform: translateX(-50%);
 }
 
 /* 세종특별자치시 */
 .area-8::after {
     top: 120%;
-    left: 380%;
+    left: 395%;
     transform: translateX(-50%);
 }
 
 /* 경기도 */
 .area-31::after {
-    top: 165%;
-    left: 230%;
+    top: 161%;
+    left: 241%;
     transform: translateX(-50%);
 }
 
 /* 강원도 */
 .area-32::after {
     top: 40%;
-    right: 230%;
+    right: 245%;
     transform: translateX(-50%);
 }
 
 /* 충청북도 */
 .area-33::after {
     top: 117%;
-    right: 350%;
+    right: 363%;
     transform: translateX(-50%);
 }
 
@@ -1685,29 +1685,29 @@ a#nsearch-btn {
 
 /* 경상남도 */
 .area-36::after {
-    top: -190%;
-    right: 245%;
+    top: -188%;
+    right: 258%;
     transform: translateX(-50%);
 }
 
 /* 전라북도 */
 .area-37::after {
     top: -10%;
-    left: 240%;
+    left: 250%;
     transform: translateX(-50%);
 }
 
 /* 전라남도 */
 .area-38::after {
     top: -105%;
-    left: 330%;
+    left: 350%;
     transform: translateX(-50%);
 }
 
 /* 제주도 */
 .area-39::after {
     top: -20%;
-    right: 230%;
+    right: 234%;
     transform: translateX(-50%);
 }
 
