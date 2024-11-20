@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.Criteria;
 import com.example.demo.domain.PageDTO;
+import com.example.demo.domain.ReplyDTO;
 import com.example.demo.mapper.BoardMapper;
 import com.example.demo.mapper.ReplyMapper;
 
@@ -48,7 +49,7 @@ public class BoardServiceImpl implements BoardService {
 			file.delete();
 		}
 	}
-
+	
 	@Override
 	public HashMap<String, Object> getList(Criteria cri) {
 		HashMap<String, Object> result = new HashMap<>();

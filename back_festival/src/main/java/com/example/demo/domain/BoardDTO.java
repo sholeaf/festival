@@ -10,9 +10,6 @@ public class BoardDTO {
 	private String userid;
 	private String boardregdate;
 	private long boardreadcnt;
-	private long reportcnt;
 	private String tag;
 	private String titleImage;
-	private String preview;
-	
 }
