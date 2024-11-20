@@ -84,8 +84,7 @@ public class AdminPageServiceImpl implements AdminPageService {
 
 	@Override
 	public int deleteList(long boardnum) {
-		Optional<BoardDTO> board = apmapper.findById(boardnum);
-	    
+		Optional<BoardDTO> board = apmapper.findById(boardnum);    
 	    // 게시글이 존재하면 삭제
 	    if (board.isPresent()) {
 	        apmapper.deleteList(board.get());  // 실제 삭제
@@ -97,15 +96,21 @@ public class AdminPageServiceImpl implements AdminPageService {
 
 	@Override
 	public int replyreset(long replynum) {
-		// TODO Auto-generated method stub
+		
 		return 0;
 	}
 
 	
 	@Override
-	public int deletereply(long boardnum) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deletereply(long replynum) {
+		Optional<ReplyDTO> reply = apmapper.findReplyById(replynum);    
+	    // 게시글이 존재하면 삭제
+	    if (reply.isPresent()) {
+	        apmapper.deleteReplyList(reply.get());  // 실제 삭제
+	        return 1;  // 삭제 성공
+	    } else {
+	        return -1;
+	    }
 	}
 
 	@Override

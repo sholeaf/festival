@@ -23,4 +23,6 @@ public interface AdminPageMapper {
 	void deleteReportList(Long boardnum);
 	int getReportList(Long boardnum);
 	List<ReplyDTO> getReplyList(Criteria cri);
+	void deleteReplyList(ReplyDTO replyDTO);
+	Optional<ReplyDTO> findReplyById(long replynum);
 }

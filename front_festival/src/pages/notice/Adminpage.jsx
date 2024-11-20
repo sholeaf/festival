@@ -265,10 +265,7 @@ const Adminpage = (props) => {
     }
     //댓글신고목록
     const replyList = replyReportList.board;
-    console.log("댓글신고목록리스트노출:",replyList);
     const reply_reportList = [];
-// replyReportList가 있으면 순차적으로 데이터를 추가
-    console.log("댓글신고리스트에 들어가야 될 데이터:",reply_reportList)
 if (replyList && replyList.length > 0) {
     for (const reply of replyList) {
         reply_reportList.push(
@@ -279,7 +276,7 @@ if (replyList && replyList.length > 0) {
                 <div>{reply.userid}</div>
                 <div>
                     <button onClick={() => replyReset(reply.replynum)}>신고해제</button>
-                    <button onClick={() => deletereply(reply.replynum)}>게시글삭제</button>
+                    <button onClick={() => deletereply(reply.replynum)}>댓글삭제</button>
                 </div>
             </div>
         );

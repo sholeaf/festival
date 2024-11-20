@@ -112,6 +112,7 @@ public class AdminPageController {
             return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);  // 실패 시 에러 응답
         }
     }
+    //신고된 댓글 삭제 (reply_report 데이터 삭제)
     @DeleteMapping("/{replynum}")
     public ResponseEntity<Long> deletereply(@PathVariable long replynum){
     	if(apservice.deletereply(replynum) != -1) {

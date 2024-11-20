@@ -73,4 +73,10 @@ select r.*
     order by r.replynum desc
     limit #{startrow}, #{amount}
 </select>
+<select id="findById">
+	select * from reply where replynum =#{replynum}
+</select>
+<delete id="deleteReplyList">
+	delete from reply where replynum = #{replynum}
+</delete>
 </mapper>
