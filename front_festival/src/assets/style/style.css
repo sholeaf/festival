@@ -179,8 +179,9 @@ img {
     font-size: 80px;
 }
 
-.nlist,
-.rplist {
+
+.nlist, .rplist, .replyrplist {
+
     font-family: 'GowunDodum-Regular';
     text-align: center;
 }
@@ -454,6 +455,10 @@ no-post {
 
 .loading-text span:nth-child(3) {
     animation: nblink 1.5s infinite, ncolorChange 2s infinite alternate, nscaleText 1.5s infinite alternate;
+}
+.no-files {
+    padding: 50px;
+    text-align: center;
 }
 
 
@@ -1100,7 +1105,74 @@ a#nsearch-btn {
 .rplist.rptable .row div:nth-child(6) {
     width: 20%;
 }
+/* 댓글신고리스트 */
+.replyrptable > a{
+    cursor: pointer;
+}
+.replyrplist .row{
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+}
 
+.replyrptable>.row {
+    display: flex;
+    vertical-align: middle;
+    align-items: center;
+}
+
+.replyrptable>.row>*:nth-child(n+2) {
+    border: none;
+}
+
+.replyrptable>.row:nth-child(n+2)>* {
+    border: none;
+}
+.replyrptable>.rptbody>.row:nth-child(2n+1) {
+    background-color: #fff;
+}
+
+.replyrptable>.rptbody>.row:hover {
+    background-color: #fff;
+}
+
+.replyrptable>.rptbody>.row:last-child {
+    border-bottom: 1px solid #ccc;
+}
+
+.replyrptable>.rptbody>.row>div {
+    padding: 5px;
+}
+
+/* 리스트 배치 */
+.replyrplist.replyrptable .row div:nth-child(1) {
+    width: 13%;
+}
+
+.replyrplist.replyrptable .row div:nth-child(2) {
+    width: 12%;
+}
+
+.replyrplist.replyrptable .row div:nth-child(3) {
+    width: 40%;
+}
+
+.replyrplist.replyrptable .row div:nth-child(4) {
+    width: 15%;
+}
+
+.replyrplist.replyrptable .row div:nth-child(5) {
+    width: 20%;
+}
+.replyrptable>.replyrptbody>.row>div {
+    padding: 5px;
+}
+.replylimited-text {
+    white-space: nowrap;       /* 텍스트가 한 줄로 유지되도록 설정 */
+    overflow: hidden;          /* 텍스트가 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis;   /* 넘친 텍스트는 '...'으로 표시 */
+    width: 80%;              /* 글자수 제한을 위한 너비 설정 */
+}
 
 /* adminpage area end 관리자페이지 종료 */
 /* note area start 쪽지 시작 */
