@@ -27,8 +27,8 @@
 	</sql>
 
 	<insert id="insertBoard">
-		insert into board(boardtitle, boardcontent, userid, tag, titleImage, preview) values(#{boardtitle}, 
-		#{boardcontent}, "apple", #{tag}, #{titleImage}, #{preview})
+		insert into board(boardtitle, boardcontent, userid, tag, titleImage) values(#{boardtitle}, 
+		#{boardcontent}, "apple", #{tag}, #{titleImage})
 	</insert>
 	<select id="getLastNum">
 		select max(boardnum) from board where userid=#{userid}
@@ -36,17 +36,30 @@
 	<select id="getBoardbyBoardnum">
 		select * from board where boardnum = #{boardnum}
 	</select>
+	
 	<select id="getList">
-		select * from board
-		where
+		SELECT * 
+		FROM board b
+		WHERE 
 		<include refid="cri"></include>
-		boardnum > 0 order by boardnum desc limit #{startrow}, #{amount}
+		NOT EXISTS (
+		   SELECT 1 
+		   FROM board_report c
+		   WHERE b.boardnum = c.boardnum
+		   GROUP BY c.boardnum
+		   HAVING COUNT(*) > 4
+		) AND boardnum > 0 order by boardnum desc limit #{startrow}, #{amount}
 	</select>
 	<select id="getTotal">
-		select count(*) from board
+		select count(*) from board b
 		where
-		<include refid="cri"></include>
-		boardnum > 0
+		NOT EXISTS (
+		   SELECT 1 
+		   FROM board_report c
+		   WHERE b.boardnum = c.boardnum
+		   GROUP BY c.boardnum
+		   HAVING COUNT(*) > 4
+		) AND boardnum > 0
 	</select>
 	<select id="getListByUserid">
 		select * from board where userid = #{userid}

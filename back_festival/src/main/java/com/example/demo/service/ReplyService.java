@@ -5,6 +5,8 @@ import com.example.demo.domain.ReplyDTO;
 import com.example.demo.domain.ReplyPageDTO;
 
 public interface ReplyService {
-	public ReplyDTO regist(ReplyDTO reply);
-	public ReplyPageDTO getList(Criteria cri, long boardnum);
+	ReplyDTO regist(ReplyDTO reply);
+	ReplyPageDTO getList(Criteria cri, long boardnum);
+	boolean removeReply(long replynum);
+	boolean updateReply(ReplyDTO reply);
 }

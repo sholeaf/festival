@@ -34,4 +34,18 @@ public class ReplyServiceImpl implements ReplyService {
 		
 		return dto;
 	}
+
+	@Override
+	public boolean removeReply(long replynum) {
+//		if(rmapper.removeReply(replynum) == 1) {
+//			return true;
+//		}
+//		else return false;
+		return (rmapper.removeReply(replynum) == 1)? true : false;
+	}
+
+	@Override
+	public boolean updateReply(ReplyDTO reply) {
+		return (rmapper.updateReply(reply) == 1)? true : false;
+	}
 }
