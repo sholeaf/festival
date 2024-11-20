@@ -17,6 +17,7 @@ import org.springframework.web.multipart.MultipartFile;
 import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.UserDTO;
 import com.example.demo.mapper.BoardMapper;
+import com.example.demo.mapper.BookmarkMapper;
 import com.example.demo.mapper.UserFileMapper;
 import com.example.demo.mapper.UserMapper;
 
@@ -35,6 +36,9 @@ public class UserServiceImp implements UserService{
 	@Autowired
 	private BoardMapper bmapper;
 
+	@Autowired
+	private BookmarkMapper bmmapper;
+	
 	@Override
 	public boolean join(UserDTO user) {
 		if(fmapper.firstInsert(user.getUserid())) {
@@ -189,13 +193,14 @@ public class UserServiceImp implements UserService{
 	}
 
 	@Override
-	public List<BoardDTO> getList(String userid) {
-		System.out.println("Imp userid : "+userid);
+	public HashMap<String, Object> getList(String userid) {
+		HashMap<String, Object> result = new HashMap<>();
+		
 		List<BoardDTO> list = bmapper.getListByUserid(userid);
-		System.out.println("list : "+list);
-		if(list != null && list.size() != 0) {
-			return list;
-		}
-		return null;
+		List<String> bookmarks = bmmapper.getBookmarkByUserid(userid);
+		
+		result.put("list", list);
+		result.put("bookmarks", bookmarks);
+		return result;
 	}
 }

@@ -1,0 +1,11 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BookmarkMapper">
+	<insert id="insertBookmark">
+		insert into bookmark(userid, contentid) values(#{userid}, #{contentid})
+	</insert>
+	<select id="getBookmarkByUserid">
+		select contentid from bookmark where userid=#{userid}
+	</select>
+</mapper>

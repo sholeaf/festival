@@ -21,6 +21,6 @@ public interface UserService {
 	int profileModify(String userid, MultipartFile file, String deleteFile);
 	int defaultProfile(String userid, String deleteFile);
 	int deleteUser(String userid);
-	List<BoardDTO> getList(String userid);
+	HashMap<String, Object> getList(String userid);
 
 }

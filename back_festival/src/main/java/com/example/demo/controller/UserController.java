@@ -182,10 +182,8 @@ public class UserController {
 	}
 	
 	@GetMapping("list")
-	public ResponseEntity<List<BoardDTO>> getList(@RequestParam String userid) {
-		System.out.println("컨트롤러 : "+userid);
-		List<BoardDTO> list = service.getList(userid);
-		System.out.println("컨트롤러 list : "+list);
-		return new ResponseEntity<List<BoardDTO>>(list,HttpStatus.OK);
+	public ResponseEntity<HashMap<String, Object>> getList(@RequestParam String userid) {
+		HashMap<String, Object> result = service.getList(userid);
+		return new ResponseEntity<HashMap<String, Object>>(result,HttpStatus.OK);
 	}
 }

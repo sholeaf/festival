@@ -11,10 +11,12 @@ const MyPage = () => {
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
     const [list, setList] = useState([]);
+    const [bookmarks, setBookmarks] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [file, setFile] = useState("");
     const [deleteFile, setDeleteFile] = useState("");
     const [updateFile, setUpdateFile] = useState();
+    const [profileImg, setProfileImg] = useState('');
     const [user, setUser] = useState({
         userid: '',
         userpw: '',
@@ -275,29 +277,29 @@ const MyPage = () => {
         const files = e.target.files;
         const img = document.getElementById("profileImg");
         const file = files[0];
-        if(file != null){
-            let ext = file.name.split(".").pop();
-            if(!(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp')){
-                alert("이미지 파일만 선택할 수 있습니다.");
-                img.src = `{/api/user/file/thumbnail/${deleteFile}}`;
-                setIsModalOpen(false);
-            }
-        }
-
+        
         const reader = new FileReader();
-
+        
         if (files.length === 0) {
             return;
         }
-
-
+        
+        
         reader.onload = (e) => {
+            if(file != null){
+                let ext = file.name.split(".").pop();
+                if(!(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp')){
+                    alert("이미지 파일만 선택할 수 있습니다.");
+                    setIsModalOpen(false);
+                    return;
+                }
+            }
+
             const newProfile = e.target.result;
             img.src = newProfile;
             setUpdateFile(file);
         }
         reader.readAsDataURL(file);
-
 
     }
 
@@ -447,11 +449,13 @@ const MyPage = () => {
     }, [loginUser, isModalOpen]);
 
     useEffect(() => {
+        setProfileImg(`/api/user/file/thumbnail/${deleteFile}`);
         if (user) {
             axios.get(`/api/user/list`, { params: { userid: user.userid } })
                 .then((resp) => {
                     if (resp) {
-                        setList(resp.data);
+                        setList(resp.data.list);
+                        setBookmarks(resp.data.bookmarks);
                     }
                     else {
                         alert("가져오기 실패")
@@ -557,7 +561,7 @@ const MyPage = () => {
                                     <div id='profileModify'>
                                         <h3>프로필 변경</h3>
                                         <div className='img'>
-                                            <img src={`/api/user/file/thumbnail/${deleteFile}`} alt="" id='profileImg' />
+                                            <img src={profileImg} alt="" id='profileImg' />
                                         </div>
                                         <Button onClick={openFile} value="프로필 변경"></Button>
                                         <Button value="기본 프로필 변경" onClick={returnProfile}></Button>

@@ -24,6 +24,8 @@ create table bookmark(
     contentid varchar(50)
 );
 
+insert into bookmark(userid, contentid) value("apple", "2905567");
+
 create table user_photo(
 	userid varchar(50),
     systemname varchar(300)
@@ -39,16 +41,15 @@ create table board(
     boardcontent varchar(1000),
     userid varchar(50),
     boardregdate datetime default now(),
-    boardreadcnt bigint,
-	reportcnt bigint,
+    boardreadcnt bigint default 0,
     tag varchar(300),
-    titleImage varchar(300),
-    preview varchar(300)
+    titleImage varchar(300)
 );
 select * from board;
-insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('신고테스트','테스트중입니다','apple','1',now(),'1');
-insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('신고테스트','테스트중입니다','apple','1',now(),'6');
+insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate) values ('신고테스트','테스트중입니다','apple','1',now());
+insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate) values ('신고테스트','테스트중입니다','apple','1',now());
 drop table board;
+
 create table board_photo(
 	boardnum bigint,
     systemname varchar(300)
@@ -62,18 +63,50 @@ create table reply(
     replyregdate datetime default now()
 );
 
+
+select * from reply where replynum = 1;
+
 create table board_like(
 	boardnum bigint,
     userid varchar(50)
 );
 create table reply_report(
-	boardnum bigint,
+    replynum bigint,
     userid varchar(50)
 );
+
+drop table reply_report;
+insert into reply_report values(1, "1", 1);
+insert into reply_report values(1, "1", 2);
+insert into reply_report values(1, "2", 3);
+
+select replynum from reply_report group by replynum having count(*)>4;
+
+delete from reply_report where replynum = 1;
+
+drop table reply_report;
+select * from reply_report;
+
 create table board_report(
 	boardnum bigint,
     userid varchar(50)
 );
+
+drop table board_report;
+insert into board_report values(7, "banana");
+insert into board_report values(8, "banana");
+insert into board_report values(9, "banana");
+select boardnum from board_report group by boardnum having count(*)>4;
+
+SELECT * 
+FROM board b
+WHERE NOT EXISTS (
+   SELECT 1 
+   FROM board_report c
+   WHERE b.boardnum = c.boardnum
+   GROUP BY c.boardnum
+   HAVING COUNT(*) > 4
+) AND boardnum > 0 order by boardnum desc;
 
 ############## notice ###################
 create table notice(
