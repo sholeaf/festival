@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../components/Paginstion";
-import Modal from "../../components/Modal"; // Modal 컴포넌트를 가져온다고 가정
+import Modal from "../../components/Modal"; 
 
 const Note = ({ loginUser }) => {
     const navigate = useNavigate();
