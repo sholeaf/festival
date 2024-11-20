@@ -16,4 +16,5 @@ public interface BoardMapper {
 	long getTotal(Criteria cri);
 	void updateBoard(BoardDTO board);
 	int deleteBoard(long boardnum);
+	List<BoardDTO> getListByUserid(String userid);
 }

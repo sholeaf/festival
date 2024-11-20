@@ -1,9 +1,11 @@
 package com.example.demo.service;
 
 import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.web.multipart.MultipartFile;
 
+import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.UserDTO;
 
 public interface UserService {
@@ -19,5 +21,6 @@ public interface UserService {
 	int profileModify(String userid, MultipartFile file, String deleteFile);
 	int defaultProfile(String userid, String deleteFile);
 	int deleteUser(String userid);
+	HashMap<String, Object> getList(String userid);
 
 }

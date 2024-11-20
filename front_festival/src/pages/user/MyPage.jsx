@@ -6,14 +6,19 @@ import axios from "axios";
 import Modal from '../../components/Modal';
 import DaumPostCode from '../../components/DaumPostCode';
 import Button from '../../components/Button';
+import noimage from "../../assets/images/no-image.jpg";
 
 const MyPage = () => {
+    const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
+    const [list, setList] = useState([]);
+    const [bookmarks, setBookmarks] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [file, setFile] = useState("");
     const [deleteFile, setDeleteFile] = useState("");
     const [updateFile, setUpdateFile] = useState();
+    const [profileImg, setProfileImg] = useState('');
     const [user, setUser] = useState({
         userid: '',
         userpw: '',
@@ -26,15 +31,21 @@ const MyPage = () => {
         addrdetail: '',
         addretc: ''
     });
+    const [festival, setFestival] = useState([]);
+
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeModal, setActiveModal] = useState('');
 
     const [emailCode, setEmailCode] = useState("");
+
+    const [isAllBoard, setIsAllBoard] = useState(false);
+
     let codeFlag = false;
 
 
     const openModal1 = () => {
+        console.log(festival)
         setActiveModal('userModify');  // 'userModify' 모달을 여는 것
         setIsModalOpen(true);
     };
@@ -52,6 +63,7 @@ const MyPage = () => {
     };
 
     const closeModal = () => {
+
         setIsModalOpen(false);  // 모달을 닫는 함수
     };
 
@@ -270,6 +282,7 @@ const MyPage = () => {
         const files = e.target.files;
         const img = document.getElementById("profileImg");
         const file = files[0];
+
         const reader = new FileReader();
 
         if (files.length === 0) {
@@ -278,12 +291,20 @@ const MyPage = () => {
 
 
         reader.onload = (e) => {
+            if (file != null) {
+                let ext = file.name.split(".").pop();
+                if (!(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp')) {
+                    alert("이미지 파일만 선택할 수 있습니다.");
+                    setIsModalOpen(false);
+                    return;
+                }
+            }
+
             const newProfile = e.target.result;
             img.src = newProfile;
             setUpdateFile(file);
         }
         reader.readAsDataURL(file);
-
 
     }
 
@@ -298,9 +319,9 @@ const MyPage = () => {
     const profileModify = () => {
         const formData = new FormData();
 
-        console.log("file : "+file)
-        console.log("updateFile : "+updateFile)
-        console.log("deleteFile : "+deleteFile)
+        console.log("file : " + file)
+        console.log("updateFile : " + updateFile)
+        console.log("deleteFile : " + deleteFile)
 
 
         if (deleteFile == updateFile) {
@@ -319,8 +340,8 @@ const MyPage = () => {
             formData.append("userid", user.userid);
 
             axios.put('/api/user/profileModify', formData)
-                .then(resp=>{
-                    if(resp.data == "O"){
+                .then(resp => {
+                    if (resp.data == "O") {
                         alert("프로필이 변경되었습니다.");
                         setIsModalOpen(false);
                     }
@@ -332,29 +353,82 @@ const MyPage = () => {
         const pw = document.getElementById("userpw");
         const userid = user.userid;
 
-        if(pw.value == ""){
+        if (pw.value == "") {
             alert("비밀번호를 입력해주세요!");
             pw.focus();
             return;
         }
-        if(pw.value != user.userpw){
+        if (pw.value != user.userpw) {
             alert("비밀번호가 일치하지 않습니다!\n확인 후 다시 시도해 주세요!");
             return;
         }
-        if(window.confirm("정말 탈퇴하시겠습니까?")){
+        if (window.confirm("정말 탈퇴하시겠습니까?")) {
             pw.value = "";
-            axios.delete('/api/user/delete', { params : {userid} } ).then(resp=>{
-                if(resp.data == "O"){
+            axios.delete('/api/user/delete', { params: { userid } }).then(resp => {
+                if (resp.data == "O") {
                     alert("회원 탈퇴가 완료되었습니다.\n그동안 이용해 주셔서 감사합니다. 안녕히 가십시오.");
                     navigate("/");
                 }
             })
         }
-        else{
+        else {
             alert("회원 탈퇴가 취소되었습니다.");
             pw.value = "";
             setIsModalOpen(false);
         }
+    }
+
+    const showCommunity = () => {
+        document.getElementById("openCommunity").style.display = 'none';
+        document.getElementById("closeCommunity").style.display = 'inline-block';
+        document.getElementsByClassName("bookmark")[0].style.display = 'none';
+        setIsAllBoard(true);
+    };
+    const closeCommunity = () => {
+        document.getElementById("openCommunity").style.display = 'inline-block';
+        document.getElementById("closeCommunity").style.display = 'none';
+        document.getElementsByClassName("bookmark")[0].style.display = 'block';
+        setIsAllBoard(false);
+    };
+    const showBookmark = () => {
+        document.getElementById("openBookmark").style.display = 'none';
+        document.getElementById("closeBookmark").style.display = 'inline-block';
+        document.getElementsByClassName("community")[0].style.display = 'none';
+        setIsAllBoard(true);
+    };
+    const closeBookmark = () => {
+        document.getElementById("openBookmark").style.display = 'inline-block';
+        document.getElementById("closeBookmark").style.display = 'none';
+        document.getElementsByClassName("community")[0].style.display = 'block';
+        setIsAllBoard(false);
+    };
+
+    const boardList = [];
+    if (list && list.length > 0) {
+        list.slice(0, isAllBoard ? list.length : 3).map((board) => {
+            boardList.push(
+                <div key={board.boardnum} className='board'>
+                    <img src={board.titleImage} alt="" />
+                    <span>{board.boardtitle}</span>
+                </div>
+            )
+        })
+    }
+    const festivalList = [];
+    if (festival && festival.length > 0) {
+        festival.slice(0, isAllBoard ? festival.length : 3).map((festival) => {
+            festivalList.push(
+                <div key={festival.contentid} className='board'>
+                    {
+                        festival.firstimage ?
+                        <img src={festival.firstimage} alt="" />
+                        :
+                        <img src={noimage} alt="" />
+                    }
+                    <span>{festival.title}</span>
+                </div>
+            )
+        })
     }
 
     // 페이지 로드 시 관리자 여부를 확인하는 API 호출
@@ -375,7 +449,7 @@ const MyPage = () => {
         }
     }, [isAdmin, navigate]);
 
-
+    // 유저 로그인 확인
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
             .then((resp) => {
@@ -391,6 +465,7 @@ const MyPage = () => {
             });
     }, []);
 
+    // 유저 정보 가져오기
     useEffect(() => {
         if (loginUser) {
             axios.get(`/api/user/userInfo`, { params: { userid: loginUser } })
@@ -403,9 +478,55 @@ const MyPage = () => {
                 .catch((error) => {
 
                 });
-
         }
     }, [loginUser, isModalOpen]);
+
+    useEffect(() => {
+        setProfileImg(`/api/user/file/thumbnail/${deleteFile}`);
+        if (user) {
+            axios.get(`/api/user/list`, { params: { userid: user.userid } })
+                .then((resp) => {
+                    if (resp) {
+                        setList(resp.data.list);
+                        setBookmarks(resp.data.bookmarks);
+                    }
+                    else {
+                        alert("가져오기 실패")
+                        return;
+                    }
+                })
+        }
+    }, [user])
+
+
+    useEffect(() => {
+        if (bookmarks.length != 0) {
+            for (let i = 0; i < bookmarks.length; i++) {
+                axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${bookmarks[i]}`)
+                    .then((resp) => {
+
+                        const item = resp.data.response.body.items.item[0];
+
+                        const newFestival = {
+                            contentid: item.contentid,
+                            firstimage: item.firstimage,
+                            title: item.title
+                        };
+                        if (festival.length == 0) {
+                            setFestival(item => [
+                                ...item,
+                                newFestival
+                            ]);
+
+                        }
+
+                    })
+                    .catch((error) => {
+                        console.error("API 호출 오류:", error);
+                    });
+            }
+        }
+    }, [bookmarks])
 
     return (
         <>
@@ -417,7 +538,7 @@ const MyPage = () => {
                             <div className="profile">
                                 <div className="info_area">
                                     <div className='img'>
-                                        <img src={`/api/user/file/thumbnail/${file}`} alt="" />
+                                        <img src={`/api/user/file/thumbnail/${deleteFile}`} alt="" />
                                     </div>
                                     <div className='info'>
                                         <div>이름 : {user.username}</div>
@@ -435,17 +556,27 @@ const MyPage = () => {
                                 </div>
                             </div>
                             <div className="bookmark">
-                                <span>즐겨찾기 목록</span>
-                                <span>더 보기</span>
-                                <div>
-                                    목록 3개
+                                <p>즐겨찾기 목록</p>
+                                {
+                                    festival.length > 3 ? (<span onClick={showBookmark} id='openBookmark'>더 보기...</span>)
+                                    :
+                                    (<></>)
+                                }
+                                <span onClick={closeBookmark} id='closeBookmark'>돌아가기</span>
+                                <div className='list'>
+                                    {festivalList}
                                 </div>
                             </div>
                             <div className="community">
-                                <span>후기 목록</span>
-                                <span>더 보기</span>
-                                <div>
-                                    목록 4개
+                                <p>후기 목록</p>
+                                {
+                                    list.length > 3 ? (<span onClick={showCommunity} id='openCommunity'>더 보기...</span>)
+                                        :
+                                        (<></>)
+                                }
+                                <span onClick={closeCommunity} id='closeCommunity'>돌아가기</span>
+                                <div className='list'>
+                                    {boardList}
                                 </div>
                             </div>
                             <Modal isOpen={isModalOpen} closeModal={closeModal}>
@@ -498,7 +629,7 @@ const MyPage = () => {
                                     <div id='profileModify'>
                                         <h3>프로필 변경</h3>
                                         <div className='img'>
-                                            <img src={`/api/user/file/thumbnail/${deleteFile}`} alt="" id='profileImg' />
+                                            <img src={profileImg} alt="" id='profileImg' />
                                         </div>
                                         <Button onClick={openFile} value="프로필 변경"></Button>
                                         <Button value="기본 프로필 변경" onClick={returnProfile}></Button>
@@ -514,7 +645,7 @@ const MyPage = () => {
                                         <h3>회원 탈퇴</h3>
                                         <div>
                                             <p>비밀번호 확인</p>
-                                            <input type="password" name="userpw" id="userpw" placeholder='비밀번호'/>
+                                            <input type="password" name="userpw" id="userpw" placeholder='비밀번호' />
                                         </div>
                                         <Button value="탈퇴" onClick={deleteUser}></Button>
                                         <Button value="취소" onClick={() => {

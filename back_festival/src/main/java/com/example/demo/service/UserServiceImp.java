@@ -16,6 +16,8 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.UserDTO;
+import com.example.demo.mapper.BoardMapper;
+import com.example.demo.mapper.BookmarkMapper;
 import com.example.demo.mapper.UserFileMapper;
 import com.example.demo.mapper.UserMapper;
 
@@ -30,7 +32,13 @@ public class UserServiceImp implements UserService{
 	
 	@Autowired
 	private UserFileMapper fmapper;
+	
+	@Autowired
+	private BoardMapper bmapper;
 
+	@Autowired
+	private BookmarkMapper bmmapper;
+	
 	@Override
 	public boolean join(UserDTO user) {
 		if(fmapper.firstInsert(user.getUserid())) {
@@ -155,9 +163,14 @@ public class UserServiceImp implements UserService{
 	@Override
 	public int defaultProfile(String userid, String deleteFile) {
 		if(fmapper.defaultFile(userid) == 1) {
-			File file = new File(saveFolder+"user/",deleteFile);
-			if(file.exists()) {
-				file.delete();
+			if(deleteFile.equals("test.png")) {
+				return 1;
+			}
+			else {
+				File file = new File(saveFolder+"user/",deleteFile);
+				if(file.exists()) {
+					file.delete();
+				}				
 			}
 			return 1;
 		}
@@ -177,5 +190,17 @@ public class UserServiceImp implements UserService{
 			
 		}
 		return -1;
+	}
+
+	@Override
+	public HashMap<String, Object> getList(String userid) {
+		HashMap<String, Object> result = new HashMap<>();
+		
+		List<BoardDTO> list = bmapper.getListByUserid(userid);
+		List<String> bookmarks = bmmapper.getBookmarkByUserid(userid);
+		
+		result.put("list", list);
+		result.put("bookmarks", bookmarks);
+		return result;
 	}
 }
