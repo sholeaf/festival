@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.BoardDTO;
@@ -53,20 +54,16 @@ public class AdminPageController {
 	    }
 	}
 	// 신고 횟수 초기화 API
-    @PostMapping("/updateReportCount")
-    public ResponseEntity<String> updateReportCount(@RequestBody Map<String, Object> request) {
-        Long boardnum = Long.valueOf(request.get("boardnum").toString());
-        int reportcnt = Integer.parseInt(request.get("reportcnt").toString());
-
-        try {
-            apservice.updateReportCount(boardnum, reportcnt);
-            return ResponseEntity.ok("신고 횟수 리셋 성공");
-        } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-                    .body("서버 오류: " + e.getMessage());
+    @DeleteMapping("/boardReportreset/{boardnum}")
+    public ResponseEntity<Long> boardReportreset(@PathVariable long boardnum) {
+    	if (apservice.boardreset(boardnum) != -1) {
+            return new ResponseEntity<>(boardnum, HttpStatus.OK);  // 성공 시 댓글 번호 반환
+        } else {
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);  // 실패 시 에러 응답
         }
     }
-    @DeleteMapping("/{boardnum}")
+    //신고글 삭제
+    @DeleteMapping("/boardremove/{boardnum}")
     public ResponseEntity<Long> deleteList(@PathVariable long boardnum){
     	if(apservice.deleteList(boardnum) != -1) {
 			return new ResponseEntity<>(boardnum, HttpStatus.OK);
@@ -103,13 +100,12 @@ public class AdminPageController {
         }
     }
 
-    @PostMapping("/replyreset")
-    public ResponseEntity<Long> replyreset(@RequestBody long replynum) {
-        // replynum을 이용하여 신고 기록을 삭제하는 서비스 호출
+    @DeleteMapping("/replyreset/{replynum}")
+    public ResponseEntity<Long> replyreset(@PathVariable long replynum) {
         if (apservice.replyreset(replynum) != -1) {
-            return new ResponseEntity<>(replynum, HttpStatus.OK);  // 성공 시 댓글 번호 반환
+            return new ResponseEntity<>(replynum, HttpStatus.OK);  
         } else {
-            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);  // 실패 시 에러 응답
+            return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);  
         }
     }
     //신고된 댓글 삭제 (reply_report 데이터 삭제)

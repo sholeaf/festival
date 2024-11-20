@@ -29,10 +29,17 @@
 		select * from board where reportcnt >= #{reportCount}
 	</select>
 	<select id="getList">
-		select * from board
-		where
-		<include refid="cri"></include>
-		boardnum > 0 order by boardnum desc limit #{startrow}, #{amount}
+select b.*
+    from board b
+    join board_report br on b.boardnum = br.boardnum
+    <where>
+        <include refid="cri" />
+        and b.boardnum > 0
+    </where>
+    group by b.boardnum
+    having count(br.boardnum) >= 5
+    order by b.boardnum desc
+    limit #{startrow}, #{amount}
 	</select>
 	<select id="getTotal">
 		select count(*) from board
@@ -40,22 +47,17 @@
 		<include refid="cri"></include>
 		boardnum > 0
 	</select>
-	<update id="updateReportCount">
-    UPDATE board
-    SET reportcnt = #{reportcnt}
-    WHERE boardnum = #{boardnum}
-    <selectKey resultType="int" keyProperty="affectedRows" order="AFTER">
-        select count(*) from board where boardnum = #{boardnum}
-    </selectKey>
-</update>
 <select id="findById">
 	select * from board where boardnum =#{boardnum}
 </select>
 <delete id="deleteList">
 delete from board where boardnum = #{boardnum}
 </delete>
+<select id="findBoardByReport">
+	select count(*) from board_report where boardnum = #{boardnum}
+</select>
 <delete id="deleteReportList">
-delete from board_report where boardnum = #{boardnum} limit 50;
+delete from board_report where boardnum = #{boardnum}
 </delete>
 <select id="getReportList">
 select count(*) from board_report where boardnum = #{boardnum};
@@ -73,10 +75,22 @@ select r.*
     order by r.replynum desc
     limit #{startrow}, #{amount}
 </select>
-<select id="findById">
+<select id="findReplyById">
 	select * from reply where replynum =#{replynum}
 </select>
+<select id="findByreplynum">
+	select * from reply_report where replynum =#{replynum}
+</select>
 <delete id="deleteReplyList">
+	delete from reply where boardnum = #{boardnum}
+</delete>
+<delete id="deleteReplyReport">
+delete from reply_report where replynum = #{replynum}
+</delete>
+<select id="findRepliesByBoardnum">
+	select * from reply where boardnum = #{boardnum}
+</select>
+<delete id="deleteReply">
 	delete from reply where replynum = #{replynum}
 </delete>
 </mapper>

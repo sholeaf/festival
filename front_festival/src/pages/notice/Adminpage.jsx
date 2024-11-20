@@ -15,6 +15,10 @@ const Adminpage = (props) => {
     const [ loginUser, setLoginUser] = useState("");
     const [boardList, setBoardList] = useState([]);
     const [replyReportList, setReplyReportList] =useState([]);
+    const [test, setTest] = useState([]);
+    useEffect(() => {
+        console.log("상태업데이트");
+    }, [replyReportList, boardList]);
     //로그인체크
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
@@ -112,7 +116,8 @@ const Adminpage = (props) => {
             .catch((error) => {
                 console.error('API 호출 오류:', error);
             });
-    }, [cri]);
+    }, [cri,boardList]);
+
 
     // location.state가 있을 때 cri 상태 업데이트
     useEffect(() => {
@@ -139,7 +144,7 @@ const Adminpage = (props) => {
             .catch((error) => {
                 console.log("댓글 신고 목록 오류", error);
             });
-    }, [cri]);
+    }, [cri,test]);
     useEffect(() => {
         if (location.state) {
             setCri(location.state);
@@ -176,17 +181,36 @@ const Adminpage = (props) => {
         );
     }
     //신고목록
+     // 신고 횟수 리셋 처리
+     const handleReportReset = (boardnum) => {
+        if (window.confirm('신고 해제를 하시겠습니까?')) {
+            axios.delete(`/api/adminpage/boardReportreset/${boardnum}`)
+                .then(response => {
+                    console.log("신고 횟수 리셋됨:", response.data);
+                    setBoardList(prevBoards => prevBoards.filter(board => board.boardnum !== boardnum));
+                    alert('신고 해제 완료.');
+                    // navigate('/notice/adminpage', { state: { pagenum: 1 } });
+                })
+                .catch(error => {
+                    console.error("서버 업데이트 실패:", error);
+                    alert("신고 해제 실패.");
+                });
+        } else {
+            console.log("신고 횟수 리셋이 취소되었습니다.");
+        }
+    };
+    
     //게시글 삭제
     const deleteList = (boardnum) => {
         
             if (window.confirm('정말로 삭제하시겠습니까?')) {
-                axios.delete(`/api/adminpage/${boardnum}`)
+                axios.delete(`/api/adminpage/boardremove/${boardnum}`)
                     .then((response) => {
                         console.log(response.data); // 삭제 성공 메시지
                         // 삭제 후 클라이언트에서 해당 게시글만 제거
                         setBoardList(prevBoards => prevBoards.filter(board => board.boardnum !== boardnum));
                         alert('게시글이 삭제되었습니다.');
-                        navigate('/notice/adminpage', { state: { pagenum: 1 } });
+                        // navigate('/notice/adminpage', { state: { pagenum: 1 } });
                     })
                     .catch((error) => {
                         console.error('게시글 삭제 실패:', error);
@@ -198,64 +222,75 @@ const Adminpage = (props) => {
     
     const list = data.board;
     const elList = [];
-    if (list && list.length >= 0) {
-        // 신고 횟수가 5 이상인 게시글만 표시
+    if (!list || list.length === 0) {
+        // list가 비어 있으면 바로 "신고된 게시글이 없습니다." 메시지를 추가
+        elList.push(
+            <div className="row no-report" key={-1}>
+                <div>신고된 게시글이 없습니다.</div>
+            </div>
+        );
+    } else {
+        // list가 비어있지 않으면 게시글 목록을 순차적으로 렌더링
         for (const board of list) {
-            if (board.reportcnt >= 5) {
-                elList.push(
-                    <div className="row" key={board.boardnum} >
-                        <div>{board.boardnum}</div>
-                        <div><a className="get" onClick={() => {
-                            navigate(`/board/${board.boardnum}`, { state: cri });
-                        }}>{board.boardtitle}</a></div>
-                        <div>{board.userid}</div>
-                        <div>{board.boardregdate}</div>
-                        <div>{board.reportcnt}</div>
-                        <div>
-                            {/* 클릭 시 신고 횟수 0으로 변경 */}
-                            <button onClick={() => handleReportReset(board.boardnum)} >신고해제</button>
-                            <button onClick={() => deleteList(board.boardnum)} >게시글삭제</button>     
-                        </div>
-                    </div>
-                );
-            }
-        }
-
-        // 신고 횟수가 5 이상인 게시글이 없으면 "신고된 게시글이 없습니다." 메시지 표시
-        if (elList.length === 0) {
             elList.push(
-                <div className="row no-report" key={-1}>
-                    <div>신고된 게시글이 없습니다.</div>
+                <div className="row" key={board.boardnum}>
+                    <div>{board.boardnum}</div>
+                    <div>
+                        <a
+                            className="get"
+                            onClick={() => {
+                                navigate(`/board/${board.boardnum}`, { state: cri });
+                            }}
+                        >
+                            {board.boardtitle}
+                        </a>
+                    </div>
+                    <div>{board.userid}</div>
+                    <div>{board.boardregdate}</div>
+                    <div>{board.reportcnt}</div>
+                    <div>
+                        {/* 클릭 시 신고 횟수 0으로 변경 */}
+                        <button onClick={() => handleReportReset(board.boardnum)}>신고해제</button>
+                        <button onClick={() => deleteList(board.boardnum)}>게시글삭제</button>
+                    </div>
                 </div>
             );
         }
     }
-    const replyReset = (replynum)=>{
-        if(window.confirm('신고를 해제하시겠습니까?')){
-            axios.post(`/api/adminpage/replyreset`,{replynum})
-            .then(resp=>{
-                setReplyReportList(prevData => ({
-                    ...prevData,
-                    reply: prevData.reply.filter(reply => reply.replynum !== replynum)
-                }));
-            })
-            .catch(error =>{
-                console.log("신고해제 실패", error)
-            })
+    const replyReset = (replynum) => {
+        if (window.confirm('신고를 해제하시겠습니까?')) {
+            axios.delete(`/api/adminpage/replyreset/${replynum}`)
+                .then((response) => {
+                    console.log("신고 해제 성공:", response.data);
+                        setTest("check ok");
+                    // 신고 해제된 댓글을 상태에서 제거
+                        setReplyReportList(prevReplies => 
+                        Array.isArray(prevReplies) ? prevReplies.filter(reply => reply.replynum !== replynum) : []
+                    );
+    
+                    alert('신고 해제 완료.');
+                    // navigate('/notice/adminpage', { state: { pagenum: 1 } });
+                })
+                .catch((error) => {
+                    console.log("신고해제 실패", error);
+                    alert("신고 해제 실패.");
+                });
         }
-    }
+    };
+
     const deletereply =(replynum)=>{
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             axios.delete(`/api/adminpage/${replynum}`)
                 .then((resp) => {
                     console.log(resp.data); // 삭제 성공 메시지
                     // 삭제 후 클라이언트에서 해당 게시글만 제거
-                    setReplyReportList(prevData => ({
-                        ...prevData,
-                        reply: prevData.reply.filter(reply => reply.replynum !== replynum)
-                    }));
+                    // 신고 해제된 댓글을 상태에서 제거
+                    setTest("check ok");
+                    setReplyReportList(prevReplies => 
+                        Array.isArray(prevReplies) ? prevReplies.filter(reply => reply.replynum !== replynum) : []
+                    );
                     alert('게시글이 삭제되었습니다.');
-                    navigate('/notice/adminpage', { state: { pagenum: 1 } });
+                    // navigate('/notice/adminpage', { state: { pagenum: 1 } });
                 })
                 .catch((error) => {
                     console.error('게시글 삭제 실패:', error);
@@ -263,6 +298,7 @@ const Adminpage = (props) => {
                 });
         }
     }
+    
     //댓글신고목록
     const replyList = replyReportList.board;
     const reply_reportList = [];
@@ -299,36 +335,7 @@ if (reply_reportList.length === 0) {
         setCri(changedCri);
     };
 
-    // 신고 횟수 리셋 처리
-    const handleReportReset = (boardnum) => {
-        // 사용자에게 신고 해제를 할지 여부를 확인하는 창을 띄웁니다
-        if (window.confirm('신고해제를 하시겠습니까?')) {
-            // 서버에 신고 횟수를 0으로 업데이트 요청
-            axios.post('/api/adminpage/updateReportCount', { boardnum, reportcnt: 0 })
-                .then(response => {
-                    console.log("신고 횟수 리셋됨:", response.data);
-    
-                    // 리셋 후 상태 업데이트
-                    setData(prevData => ({
-                        ...prevData,
-                        board: prevData.board.map(board =>
-                            board.boardnum === boardnum
-                                ? { ...board, reportcnt: 0 } // 해당 게시글의 신고 횟수만 0으로 설정
-                                : board // 다른 게시글들은 그대로 유지
-                        )
-                    }));
-    
-                    // 신고 횟수가 리셋된 후 성공 메시지 알림
-                    alert('신고 해제 완료.');
-                })
-                .catch(error => {
-                    console.error("서버 업데이트 실패:", error);
-                    alert("신고 해제 실패.");
-                });
-        } else {
-            console.log("신고 횟수 리셋이 취소되었습니다.");
-        }
-    };
+   
 
     return (
         <>
