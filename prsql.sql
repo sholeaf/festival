@@ -24,7 +24,8 @@ create table bookmark(
     contentid varchar(50)
 );
 
-insert into bookmark(userid, contentid) value("apple", "2905567");
+insert into bookmark(userid, contentid) value("apple", "2786391");
+drop table bookmark;
 
 create table user_photo(
 	userid varchar(50),

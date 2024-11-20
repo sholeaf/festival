@@ -6,8 +6,10 @@ import axios from "axios";
 import Modal from '../../components/Modal';
 import DaumPostCode from '../../components/DaumPostCode';
 import Button from '../../components/Button';
+import noimage from "../../assets/images/no-image.jpg";
 
 const MyPage = () => {
+    const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
     const [list, setList] = useState([]);
@@ -29,6 +31,8 @@ const MyPage = () => {
         addrdetail: '',
         addretc: ''
     });
+    const [festival, setFestival] = useState([]);
+
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeModal, setActiveModal] = useState('');
@@ -41,6 +45,7 @@ const MyPage = () => {
 
 
     const openModal1 = () => {
+        console.log(festival)
         setActiveModal('userModify');  // 'userModify' 모달을 여는 것
         setIsModalOpen(true);
     };
@@ -277,18 +282,18 @@ const MyPage = () => {
         const files = e.target.files;
         const img = document.getElementById("profileImg");
         const file = files[0];
-        
+
         const reader = new FileReader();
-        
+
         if (files.length === 0) {
             return;
         }
-        
-        
+
+
         reader.onload = (e) => {
-            if(file != null){
+            if (file != null) {
                 let ext = file.name.split(".").pop();
-                if(!(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp')){
+                if (!(ext == 'jpeg' || ext == 'jpg' || ext == 'png' || ext == 'gif' || ext == 'webp')) {
                     alert("이미지 파일만 선택할 수 있습니다.");
                     setIsModalOpen(false);
                     return;
@@ -373,26 +378,54 @@ const MyPage = () => {
         }
     }
 
-    const showAll = () => {
-        document.getElementById("showOpen").style.display = 'none';
-        document.getElementById("showClose").style.display = 'inline-block';
+    const showCommunity = () => {
+        document.getElementById("openCommunity").style.display = 'none';
+        document.getElementById("closeCommunity").style.display = 'inline-block';
         document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
     };
-    const showClose = () => {
-        document.getElementById("showOpen").style.display = 'inline-block';
-        document.getElementById("showClose").style.display = 'none';
+    const closeCommunity = () => {
+        document.getElementById("openCommunity").style.display = 'inline-block';
+        document.getElementById("closeCommunity").style.display = 'none';
         document.getElementsByClassName("bookmark")[0].style.display = 'block';
         setIsAllBoard(false);
     };
-    
-    const elList = [];
-    if(list && list.length > 0){
-        list.slice(0, isAllBoard ? list.length : 3).map((board)=>{
-            elList.push(
+    const showBookmark = () => {
+        document.getElementById("openBookmark").style.display = 'none';
+        document.getElementById("closeBookmark").style.display = 'inline-block';
+        document.getElementsByClassName("community")[0].style.display = 'none';
+        setIsAllBoard(true);
+    };
+    const closeBookmark = () => {
+        document.getElementById("openBookmark").style.display = 'inline-block';
+        document.getElementById("closeBookmark").style.display = 'none';
+        document.getElementsByClassName("community")[0].style.display = 'block';
+        setIsAllBoard(false);
+    };
+
+    const boardList = [];
+    if (list && list.length > 0) {
+        list.slice(0, isAllBoard ? list.length : 3).map((board) => {
+            boardList.push(
                 <div key={board.boardnum} className='board'>
                     <img src={board.titleImage} alt="" />
                     <span>{board.boardtitle}</span>
+                </div>
+            )
+        })
+    }
+    const festivalList = [];
+    if (festival && festival.length > 0) {
+        festival.slice(0, isAllBoard ? festival.length : 3).map((festival) => {
+            festivalList.push(
+                <div key={festival.contentid} className='board'>
+                    {
+                        festival.firstimage ?
+                        <img src={festival.firstimage} alt="" />
+                        :
+                        <img src={noimage} alt="" />
+                    }
+                    <span>{festival.title}</span>
                 </div>
             )
         })
@@ -465,6 +498,36 @@ const MyPage = () => {
         }
     }, [user])
 
+
+    useEffect(() => {
+        if (bookmarks.length != 0) {
+            for (let i = 0; i < bookmarks.length; i++) {
+                axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${bookmarks[i]}`)
+                    .then((resp) => {
+
+                        const item = resp.data.response.body.items.item[0];
+
+                        const newFestival = {
+                            contentid: item.contentid,
+                            firstimage: item.firstimage,
+                            title: item.title
+                        };
+                        if (festival.length == 0) {
+                            setFestival(item => [
+                                ...item,
+                                newFestival
+                            ]);
+
+                        }
+
+                    })
+                    .catch((error) => {
+                        console.error("API 호출 오류:", error);
+                    });
+            }
+        }
+    }, [bookmarks])
+
     return (
         <>
             {loginUser ? (
@@ -493,22 +556,27 @@ const MyPage = () => {
                                 </div>
                             </div>
                             <div className="bookmark">
-                                <span>즐겨찾기 목록</span>
-                                <span>더 보기</span>
-                                <div>
-                                    목록 3개
+                                <p>즐겨찾기 목록</p>
+                                {
+                                    festival.length > 3 ? (<span onClick={showBookmark} id='openBookmark'>더 보기...</span>)
+                                    :
+                                    (<></>)
+                                }
+                                <span onClick={closeBookmark} id='closeBookmark'>돌아가기</span>
+                                <div className='list'>
+                                    {festivalList}
                                 </div>
                             </div>
                             <div className="community">
                                 <p>후기 목록</p>
                                 {
-                                    list.length > 3 ? (<span onClick={showAll} id='showOpen'>더 보기...</span>)
-                                    :
-                                    (<></>)
+                                    list.length > 3 ? (<span onClick={showCommunity} id='openCommunity'>더 보기...</span>)
+                                        :
+                                        (<></>)
                                 }
-                                <span onClick={showClose} id='showClose'>돌아가기</span>
+                                <span onClick={closeCommunity} id='closeCommunity'>돌아가기</span>
                                 <div className='list'>
-                                    {elList}
+                                    {boardList}
                                 </div>
                             </div>
                             <Modal isOpen={isModalOpen} closeModal={closeModal}>

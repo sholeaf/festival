@@ -275,22 +275,27 @@ header{
     height: 400px;
 }
 
-#showClose{
+#closeCommunity,
+#closeBookmark{
     display: none;
 }
 /* 후기 */
-.mypage .community p{
+.mypage .community p,
+.mypage .bookmark p{
     font-size: 18px;
     font-weight: bold;
     margin: 0px 0 15px 0;
 }
-.mypage .community #showOpen,
-.mypage .community #showClose {
+.mypage .community #openCommunity,
+.mypage .community #closeCommunity,
+.mypage .bookmark #openBookmark,
+.mypage .bookmark #closeBookmark {
     right: 25px;
     top: 26px;
     position: absolute;
 }
-.mypage .community .list{
+.mypage .community .list,
+.mypage .bookmark .list{
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -299,21 +304,25 @@ header{
     border-radius: 30px;
     padding: 20px 0;
 }
-.mypage .community .list .board{
+.mypage .community .list .board,
+.mypage .bookmark .list .board{
     width: 220px;
     height: 220px;
     margin: 0px 15px;
 }
-.mypage .community .list .board:nth-child(n+4){
+.mypage .community .list .board:nth-child(n+4),
+.mypage .bookmark .list .board:nth-child(n+4){
     width: 220px;
     height: 220px;
     margin: 25px 15px 0;
 }
-.mypage .community .list .board img{
+.mypage .community .list .board img,
+.mypage .bookmark .list .board img{
     width: 220px;
     height: 180px;
 }
-.mypage .community .list .board span{
+.mypage .community .list .board span,
+.mypage .bookmark .list .board span{
     display: inline-block;
     width: 100%;
     white-space: nowrap;
@@ -321,7 +330,8 @@ header{
     text-overflow: ellipsis;
     transition: all 0.3s ease;
 }
-.mypage .community .list .board span:hover{
+.mypage .community .list .board span:hover,
+.mypage .bookmark .list .board span:hover{
     white-space: normal;
     overflow: visible;
     text-overflow: unset;
