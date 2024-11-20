@@ -19,4 +19,15 @@
 	<select id="getDetail">
 		select * from reply where replynum = #{replynum}
 	</select>
+	<delete id="removeReply">
+		delete from reply where replynum = #{replynum}
+	</delete>
+	<update id="updateReply">
+		update reply
+		set replycontent = #{replycontent}
+		where replynum = #{replynum}
+	</update>
+	<delete id="removeInBoard">
+		delete from reply where boardnum = #{boardnum}
+	</delete>
 </mapper>
