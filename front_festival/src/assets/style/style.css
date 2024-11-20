@@ -1289,6 +1289,114 @@ a#nsearch-btn {
 .noteget {
     margin-top: 20px;
 }
+/* noteModal send 부분 디자인 */
+/* Modal overlay style */
+.notesend-modal-overlay {
+    display: block;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: 10;
+}
+
+.notesend-modal-overlay.hidden {
+    display: none;
+}
+
+/* Background behind the modal */
+.notesend-modal-background {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.35);
+    z-index: 10;
+}
+
+/* Modal content style */
+.notesend-modal-content {
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 120%;
+    overflow-y: auto;
+    background-color: white;
+    z-index: 11;
+    border-radius: 30px;
+    text-align: center;
+    padding: 20px;
+    width: 500px;
+}
+
+/* Input field and textarea */
+.notesend-note-input {
+    width: 80%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+.notesend-note-textarea {
+    width: 80%;
+    padding: 8px;
+    margin: 10px 0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    height: 150px;
+}
+
+/* Button styles */
+.notesend-btn {
+    padding: 10px 20px;
+    background-color: #4CAF50;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.notesend-btn-send {
+    background-color: #4CAF50;
+}
+
+.notesend-msbtn {
+    background-color: #f44336;
+}
+
+.notesend-btn:hover {
+    background-color: #45a049;
+}
+
+.notesend-sendms {
+    margin-top: 15px;
+}
+
+/* Modal Close button */
+.notesend-close {
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    color: #aaa;
+}
+
+.notesend-close:hover,
+.notesend-close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+/* noteModal send 부분 디자인 끝 */
 
 /* note are end  쪽지 종료*/
 
