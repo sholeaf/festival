@@ -4,12 +4,37 @@ import Dropdown from "../../components/Dropdown";
 import Pagination from "../../components/Paginstion";
 import Header from "../../layout/Header";
 import axios from "axios";
+import NoteModal from "../../components/NoteModal";
 
 const Notice = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const sendedCri = location.state;
+    //모달테스트
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
+    const [selectedUserId, setSelectedUserId] = useState(''); 
+    const [loginUser, setLoginUser] = useState(null);
+    // 모달 열기
+    const openModal = (userId) => {
+        setSelectedUserId(userId);  // 클릭된 작성자의 userid를 저장
+        setIsModalOpen(true);  // 모달 열기
+    };
 
+    // 모달 닫기
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
+    };
+    useEffect(() => {
+        axios.get(`/api/user/loginCheck`)
+            .then((resp) => {
+                setLoginUser(resp.data);
+            })
+            .catch((error) => {
+                console.error("로그인 상태 확인 오류: ", error);
+            });
+    }, []);
+//모달부분 끗
     const [cri, setCri] = useState(sendedCri || {
         pagenum: 1,
         amount: 10,
@@ -138,17 +163,18 @@ const Notice = () => {
         for (const notice of list) {
             console.log("notice데이터new확인:", notice);
             noticeList.push(
-                <div className="row" key={notice.noticenum} onClick={() => {
-                    navigate(`/notice/${notice.noticenum}`, { state: cri });
-                }}>
+                <div className="row" key={notice.noticenum} >
                     <div>{notice.noticenum}</div>
                     <div>{notice.new ? <sup className="noticenew">New</sup> : ""}
-                        <a className="nget">
+                        <a className="nget" onClick={() => {
+                    navigate(`/notice/${notice.noticenum}`, { state: cri });
+                }}>
                             {notice.noticetitle}
                             {notice.nreplyCnt !== 0 && <span id="nreply_cnt">[{notice.nreplyCnt}]</span>}
                         </a>
                     </div>
-                    <div>{notice.userid}</div>
+                    <div><a onClick={() => openModal(notice.userid)}>{notice.userid}</a>
+                    </div>
                     <div>
                         {notice.noticeregdate}
                         {notice.noticeregdate !== notice.updatedate && (
@@ -195,6 +221,14 @@ const Notice = () => {
                     </div>
                     <div className="ntbody">
                         {noticeList}
+                    </div>
+                    <div>
+                    <NoteModal
+                isOpen={isModalOpen}
+                closeModal={closeModal}
+                toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
+                loginUser={loginUser}      // 로그인된 유저의 userid를 전달
+            />
                     </div>
                 </div>
                 <Pagination pageMaker={pageMaker} />

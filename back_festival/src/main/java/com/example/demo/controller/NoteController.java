@@ -58,8 +58,8 @@ public class NoteController {
 	    }
 	}
 
-	@PostMapping("write")
-	public ResponseEntity<Long> write(@RequestBody NoteDTO note, HttpServletRequest req) throws Exception {
+	@PostMapping("send")
+	public ResponseEntity<Long> send(@RequestBody NoteDTO note, HttpServletRequest req) throws Exception {
 		String userid = (String) req.getSession().getAttribute("loginUser");
 		note.setSenduser(userid);
 		long notenum = ntservice.regist(note);
