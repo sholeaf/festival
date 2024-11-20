@@ -5,7 +5,7 @@ import FestivalParam from "../../hooks/FestivalParam";
 import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
 
-const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
+const FestivalSearch = ({ API_URL, API_KEY, noHyphen, activeTab }) => {
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -72,7 +72,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
     const fetchFestivals = () => {
         if (isLoading || param.eventStartDate === "")
             return;  // 필수 값이 없으면 요청 안 함
-        
+
         setIsLoading(true);
 
         axios
@@ -83,7 +83,7 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
                     ...prevFestivals,
                     ...festivalsData, // 기존 데이터에 새로운 데이터를 추가
                 ]);
-                
+
                 setIsLoading(false);
                 // 추가로 더 데이터를 요청할 수 있는지 체크
                 if (festivalsData.length < param.numOfRow) {
@@ -142,17 +142,22 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
                     <ul className="festival-list">
                         {festivals.map((festival) => (
                             <li className={`festiva-${festival.contentid}`} key={festival.contentid}
-                            onClick={()=>{
-                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY, activeTab}})
-                            }}>
-                                <h4>{festival.title}</h4>
-                                <p>{festival.addr1}</p>
-                                {festival.firstimage ? (
-                                    <img src={festival.firstimage} alt={festival.title} style={{ width: "100px", height: "100px" }} />
-                                ) : (
-                                    <img src={noimage} alt="no-image" style={{ width: "100px", height: "100px" }} />
-                                )}
-                                <p>{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                onClick={() => {
+                                    navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab } })
+                                }}>
+                                <p className="festival-title">{festival.title}</p>
+                                <div className="festival-list-area">
+                                    {festival.firstimage ? (
+                                        <img className="festival-img" src={festival.firstimage} alt={festival.title} style={{ width: "100%", height: "150px" }} />
+                                    ) : (
+                                        <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
+                                    )}
+                                    <div>
+                                        <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
+                                        <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                    </div>
+
+                                </div>
                             </li>
                         ))}
                     </ul>

@@ -1295,6 +1295,46 @@ a#nsearch-btn {
 
 /* festival .css */
 
+/* festival list */
+
+.festival-list .festival-title{
+    font-size: 18px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.festival-list-area{
+    margin-top: 10px;
+}
+.festival-list-area img{
+    object-fit: contain;
+    object-position: center;
+}
+
+.festival-list-area p {
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+}
+.festival-list-area .festival-small-info {
+    margin-left: 10px;
+    display: flex;
+}
+
+.festival-small-info div:last-child{
+    margin-left: 90px;
+    margin-top: 20px;
+}
+
+
+.festival-list .festival-date{
+    font-size: 12px;
+}
+
+/* festival list end */
 .festival_img_area {
     position: relative;
     overflow: hidden;
@@ -1407,6 +1447,7 @@ a#nsearch-btn {
 
 .festival-list li {
     width: 21%;
+    height: 300px;
     margin: 15px;
     border: 1px solid black;
     padding: 5px;
