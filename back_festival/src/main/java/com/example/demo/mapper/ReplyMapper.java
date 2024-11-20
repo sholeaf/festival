@@ -14,4 +14,7 @@ public interface ReplyMapper {
 	ReplyDTO getLastReply(String userid);
 	long getTotal(long boardnum);
 	List<ReplyDTO> getList(Criteria cri, long boardnum);
+	int removeReply(long replynum);
+	int updateReply(ReplyDTO reply);
+	void removeInBoard(long boardnum);
 }
