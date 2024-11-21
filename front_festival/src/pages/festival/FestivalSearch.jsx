@@ -152,9 +152,12 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen, activeTab }) => {
                                     ) : (
                                         <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
                                     )}
-                                    <div>
-                                        <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
-                                        <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                    <div className="festival-small-info">
+                                        <div>
+                                            <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
+                                            <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                        </div>
+                                        <div style={{ border: "1px solid black", width: "30px", height: "30px" }}></div>
                                     </div>
 
                                 </div>

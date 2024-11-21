@@ -1320,12 +1320,12 @@ a#nsearch-btn {
     display: flex;
 }
 .festival-list-area .festival-small-info {
-    margin-left: 10px;
+    margin-left: 20px;
     display: flex;
 }
 
 .festival-small-info div:last-child{
-    margin-left: 90px;
+    margin-left: 70px;
     margin-top: 20px;
 }
 
