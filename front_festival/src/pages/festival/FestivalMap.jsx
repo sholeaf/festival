@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import festival_map from "../../assets/images/festivalImg/festival_map.png";
+import bookmark from "../../assets/images/bookmark.png"
+import nobookmark from "../../assets/images/nobookmark.png"
 import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
+import ClickBookmark from "../../hooks/ClickBookmark";
 
-
-const FestivalMap = ( props ) => {
-    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, noHyphen  } = props;
+const FestivalMap = (props) => {
+    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, data, setData, noHyphen } = props;
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -96,6 +98,10 @@ const FestivalMap = ( props ) => {
         }
     };
 
+    const handleBookmarkClick = (festivalContentid) => {
+        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setData);
+    };
+
     // 스크롤 이벤트 리스너를 등록하는 effect
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -131,29 +137,38 @@ const FestivalMap = ( props ) => {
                 <div>
                     <h3>축제 목록</h3>
                     <ul className="festival-list">
-                        {festivals.map((festival) => (
-                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}
-                                onClick={() => {
-                                    navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab } })
-                                }}>
-                                <p className="festival-title">{festival.title}</p>
-                                <div className="festival-list-area">
-                                    {festival.firstimage ? (
-                                        <img className="festival-img" src={festival.firstimage} alt={festival.title} style={{ width: "100%", height: "150px" }} />
-                                    ) : (
-                                        <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
-                                    )}
-                                    <div className="festival-small-info">
-                                        <div>
-                                            <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
-                                            <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                        {festivals.map((festival) => {
+                            // isBookmarked 계산 : bmlist에 해당 festival.contentid가 포함되어 있는지 확인
+                            const isBookmarked = bmlist.includes(festival.contentid);
+                            
+                            return (
+                                <li className={`festiva-${festival.contentid}`} key={festival.contentid}
+                                    onClick={() => {
+                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, setData, bmlist, setBmlist } })
+                                    }}>
+                                    <p className="festival-title">{festival.title}</p>
+                                    <div className="festival-list-area">
+                                        {festival.firstimage ? (
+                                            <img className="festival-img" src={festival.firstimage} alt={festival.title} style={{ width: "100%", height: "150px" }} />
+                                        ) : (
+                                            <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
+                                        )}
+                                        <div className="festival-small-info">
+                                            <div>
+                                                <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
+                                                <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                            </div>
+                                            <div onClick={(e) => {
+                                                e.stopPropagation();  
+                                                handleBookmarkClick(festival.contentid);
+                                            }}>
+                                                <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
+                                            </div>
                                         </div>
-                                        <div style={{ border: "1px solid black", width: "30px", height: "30px" }}></div>
                                     </div>
-
-                                </div>
-                            </li>
-                        ))}
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             )}
