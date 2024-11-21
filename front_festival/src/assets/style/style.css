@@ -1316,14 +1316,18 @@ a#nsearch-btn {
     background-color: rgba(0, 0, 0, 0.35);
     z-index: 10;
 }
-
+.notesend-modal-content .notesend-row div:nth-child(1) {
+    width: 80px !important;
+}
+.notesend-modal-content .notesend-row input:nth-child(2){
+    width: 300px !important;
+}
 /* Modal content style */
 .notesend-modal-content {
     position: absolute;
-    top: 70%;
+    top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-    max-width: 100%;
     max-height: 120%;
     overflow-y: auto;
     background-color: white;
@@ -1332,6 +1336,7 @@ a#nsearch-btn {
     text-align: center;
     padding: 20px;
     width: 500px;
+    height: 700px;
 }
 
 /* Input field and textarea */
@@ -1342,36 +1347,46 @@ a#nsearch-btn {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
+.notesendtitle{
+    width: 300px !important;
+    margin-left: 18px;
+}
 
 .notesend-note-textarea {
-    width: 80%;
+    width: 300px;
     padding: 8px;
-    margin: 10px 0;
+    margin: 10px 0 10px 18px;
     border: 1px solid #ccc;
     border-radius: 5px;
-    height: 150px;
+    height: 200px;
+    resize: none;
 }
 
 /* Button styles */
 .notesend-btn {
     padding: 10px 20px;
-    background-color: #4CAF50;
+    width: 80px;
+    background-color: #5cb5ff;
     color: white;
     border: none;
+    margin: 0 0 18px 18px;
     border-radius: 5px;
     cursor: pointer;
 }
 
 .notesend-btn-send {
-    background-color: #4CAF50;
+    background-color: #5cb5ff;
 }
-
+.notesend-notegetbtn_area{
+    vertical-align: middle;
+    display: inline-block;
+}
 .notesend-msbtn {
     background-color: #f44336;
 }
 
 .notesend-btn:hover {
-    background-color: #45a049;
+    background-color: #4024f9;
 }
 
 .notesend-sendms {
@@ -1399,6 +1414,23 @@ a#nsearch-btn {
 /* noteModal send 부분 디자인 끝 */
 
 /* note are end  쪽지 종료*/
+/* 댓글내용모달 css */
+.replycontentmodal{
+    position: absolute;
+    top: 70%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    max-width: 100%;
+    max-height: 120%;
+    overflow-y: auto;
+    background-color: white;
+    z-index: 11;
+    border-radius: 30px;
+    text-align: center;
+    padding: 20px;
+    width: 500px;
+    border: 1px solid #000;
+}
 
 
 /* festival .css */
