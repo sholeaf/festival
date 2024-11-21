@@ -37,8 +37,8 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                 <div className="notesend-modal-content" onClick={(e) => e.stopPropagation()}>
                     <span className="notesend-close" onClick={closeModal}>&times;</span>
                     <h2>쪽지 보내기</h2>
-                    <div className="notesend-row">
-                        <div>받는 사람</div>
+                    <div className="notesend-row row">
+                        <div>To</div>
                         <div>
                             <input 
                                 type="text" 
@@ -48,8 +48,8 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                             />
                         </div>
                     </div>
-                    <div className="notesend-row">
-                        <div>보내는 사람</div>
+                    <div className="notesend-row row">
+                        <div>From</div>
                         <div>
                             <input 
                                 type="text" 
@@ -58,20 +58,31 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                                 readOnly 
                             />
                         </div>
+                        <div className="notesend-row row">
+                        <div className="notesend-sendms">
+                            <button 
+                                type="button" 
+                                className="notesend-btn notesend-btn-send" 
+                                onClick={handleSendNote}
+                            >
+                                보내기
+                            </button>
+                        </div>
                     </div>
-                    <div className="notesend-row">
+                    </div>
+                    <div className="notesend-row row ">
                         <div>제목</div>
                         <div>
                             <input
                                 type="text"
-                                className="notesend-note-input"
+                                className="notesend-note-input notesendtitle"
                                 value={title}
                                 onChange={(e) => setTitle(e.target.value)}
                                 placeholder="제목을 입력하세요"
                             />
                         </div>
                     </div>
-                    <div className="notesend-row">
+                    <div className="notesend-row row">
                         <div>내용</div>
                         <div>
                             <textarea
@@ -83,17 +94,7 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                             />
                         </div>
                     </div>
-                    <div className="notesend-row">
-                        <div className="notesend-sendms">
-                            <button 
-                                type="button" 
-                                className="notesend-btn notesend-btn-send" 
-                                onClick={handleSendNote}
-                            >
-                                보내기
-                            </button>
-                        </div>
-                    </div>
+                    
                     <table className="notesend-notegetbtn_area">
                         <tbody>
                             <tr>
