@@ -12,4 +12,6 @@ public class BoardDTO {
 	private long boardreadcnt;
 	private String tag;
 	private String titleImage;
+	private long likeCnt;
+	private long replyCnt;
 }

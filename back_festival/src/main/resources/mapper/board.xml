@@ -63,10 +63,39 @@
 	</select>
 	<update id="updateBoard">
 		update board
-		set boardtitle = #{boardtitle}, boardcontent = #{boardcontent}, tag = #{tag}
+		set boardtitle = #{boardtitle}, boardcontent = #{boardcontent}, tag = #{tag}, titleImage = #{titleImage}
 		where boardnum = #{boardnum}
 	</update>
 	<delete id="deleteBoard">
 		delete from board where boardnum=#{boardnum}
 	</delete>
+	<insert id="reportReply">
+		insert into reply_report value(#{replynum}, #{userid})
+	</insert>
+	<insert id="reportBoard">
+		insert into board_report value(#{boardnum}, #{userid})
+	</insert>
+	<select id="searchBoardReport">
+		select count(*) from board_report where boardnum = #{boardnum} AND userid = #{userid}
+	</select>
+	<select id="searchReplyReport">
+		select count(*) from reply_report where replynum = #{replynum} AND userid = #{userid}
+	</select>
+	
+	<insert id="like">
+		insert into board_like value(#{boardnum}, #{userid})
+	</insert>
+	<select id="searchLike">
+		select count(*) from board_like where boardnum = #{boardnum} AND userid = #{userid}
+	</select>
+	<delete id="deleteLike">
+		delete from board_like where boardnum = #{boardnum} AND userid = #{userid}
+	</delete>
+	<select id="likeCnt">
+		select count(*) from board_like where boardnum = #{boardnum}
+	</select>
+	<select id="replyCnt">
+		select count(*) from reply where boardnum = #{boardnum};
+	</select>
+	
 </mapper>

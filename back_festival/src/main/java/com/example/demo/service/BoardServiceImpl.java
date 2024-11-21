@@ -39,7 +39,10 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public BoardDTO getBoardbyBoardnum(long boardnum) {
-		return bmapper.getBoardbyBoardnum(boardnum);
+		BoardDTO board =  bmapper.getBoardbyBoardnum(boardnum);
+		board.setLikeCnt(bmapper.likeCnt(boardnum));
+		System.out.println(boardnum+": "+board.getLikeCnt());
+		return board;
 	}
 
 	@Override
@@ -54,6 +57,10 @@ public class BoardServiceImpl implements BoardService {
 	public HashMap<String, Object> getList(Criteria cri) {
 		HashMap<String, Object> result = new HashMap<>();
 		List<BoardDTO> list = bmapper.getList(cri);
+		for(BoardDTO board : list) {
+			board.setLikeCnt(bmapper.likeCnt(board.getBoardnum()));
+			board.setReplyCnt(bmapper.replyCnt(board.getBoardnum()));
+		}
 		long total = bmapper.getTotal(cri);
 		result.put("list",list);
 		result.put("pageMaker", new PageDTO(total, cri));
@@ -75,5 +82,31 @@ public class BoardServiceImpl implements BoardService {
 			return boardnum;
 		}
 		return -1;
+	}
+
+	@Override
+	public boolean reportReply(long replynum, String userid) {
+		if(!bmapper.searchReplyReport(replynum, userid)) {
+			return bmapper.reportReply(replynum, userid);
+		}
+		else return false;
+	}
+
+	@Override
+	public boolean reportBoard(long boardnum, String userid) {
+		if(!bmapper.searchBoardReport(boardnum, userid)) {
+			return bmapper.reportBoard(boardnum, userid);
+		}
+		else return false;
+	}
+
+	@Override
+	public boolean like(long boardnum, String userid) {
+		if(!bmapper.searchLike(boardnum, userid)) {
+			return bmapper.like(boardnum, userid);
+		}
+		else {
+			return !bmapper.deleteLike(boardnum, userid);
+		}
 	}
 }
