@@ -8,13 +8,12 @@ import nobookmark from "../../assets/images/nobookmark.png";
 import { useNavigate } from "react-router-dom";
 
 const FestivalCalendar = (props) => {
-    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, data, setData, noHyphen } = props;
+    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, sampleData, setSampleData, noHyphen } = props;
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const navigate = useNavigate();
-    console.log("data check : ",data);
-    console.log("calendar props : ", props);
+
 
     const handleDateChange = (date) => {
         const selectedDate = date.getFullYear().toString() +
@@ -90,7 +89,7 @@ const FestivalCalendar = (props) => {
 
 
     const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setData);
+        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setSampleData);
     };
 
     return (
@@ -107,7 +106,7 @@ const FestivalCalendar = (props) => {
                             return (
                                 <li className={`festival-${festival.contentid}`} key={festival.contentid}
                                     onClick={() => {
-                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab } })
+                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist } })
                                     }}>
                                     <p className="festival-title">{festival.title}</p>
                                     <div className="festival-list-area">

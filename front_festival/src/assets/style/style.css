@@ -1479,13 +1479,19 @@ a#nsearch-btn {
     font-weight: bold;
     display: flex;
 }
+.festival-small-info div:last-child{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    margin-top: 10px;
+}
 
 .festival-list-area .festival-small-info {
     margin-left: 35px;
     display: flex;
 }
 
-.festival-list-area .bookmark-img{
+.festival-list-area .bookmark-img {
     margin: 0 20px 0 50px;
     cursor: pointer;
 }
@@ -2080,6 +2086,12 @@ a#nsearch-btn {
     font-size: 50px !important;
 }
 
+.festival-detail-bookmark {
+    cursor: pointer;
+    pointer-events: auto;
+    /* 클릭 가능하도록 설정 */
+}
+
 .festival-introduction {
     width: 800px;
     display: flex;
@@ -2192,17 +2204,30 @@ td {
     font-weight: bold;
 }
 
-.btn-area {
+.remote-area {
     width: 70px;
     height: 40px;
     background-color: #92B4EC;
     color: white;
     font-weight: bold;
-    text-align: center;
+    display: flex;
+    justify-content: center;
+    position: fixed;
+    top: 500px;
+    right: 100px;
     line-height: 38px;
     border-radius: 8px;
     margin: 10px auto;
     cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.festival-detail-area .festival-detail-bookmark {
+    display: flex;
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+    float: right;
 }
 
 /* fade-in 애니메이션 */

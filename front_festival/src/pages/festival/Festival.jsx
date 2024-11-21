@@ -42,7 +42,7 @@ const Festival = () => {
     const [img, setImg] = useState();
     const [imgIndex, setImgIndex] = useState(0);
     const [season, setSeason] = useState();
-    const {data, setData} = useState();
+    const { sampleData, setSampleData} = useState();
     const [animate, setAnimate] = useState(false); // 애니메이션 상태
     const { param, setParam } = FestivalParam(noHyphen);
 
@@ -73,8 +73,8 @@ const Festival = () => {
         userid: loginUser,
         bmlist,
         setBmlist,
-        data : bmlist,
-        setData,
+        sampleData: bmlist,
+        setSampleData,
         noHyphen
     };
 
@@ -92,8 +92,7 @@ const Festival = () => {
             .catch((error) => {
                 console.log("bmlist 오류", error);
             })
-            console.log("data check : ",data);
-    }, [loginUser,data]);
+    }, [loginUser,sampleData]);
 
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
