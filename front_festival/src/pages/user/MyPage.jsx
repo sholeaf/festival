@@ -48,7 +48,6 @@ const MyPage = () => {
 
 
     const openModal1 = () => {
-        console.log(festival)
         setActiveModal('userModify');  // 'userModify' 모달을 여는 것
         setIsModalOpen(true);
     };
@@ -262,6 +261,9 @@ const MyPage = () => {
                     ...user,
                     userpw: newPw.value
                 }));
+                orgPw.value = "";
+                newPw.value = "";
+                newPw_re.value = "";
                 setIsModalOpen(false);
             }
             else {
@@ -320,11 +322,6 @@ const MyPage = () => {
 
     const profileModify = () => {
         const formData = new FormData();
-
-        console.log("file : " + file)
-        console.log("updateFile : " + updateFile)
-        console.log("deleteFile : " + deleteFile)
-
 
         if (deleteFile == updateFile) {
             alert("변경사항이 없습니다.");
@@ -409,8 +406,10 @@ const MyPage = () => {
     if (list && list.length > 0) {
         list.slice(0, isAllBoard ? list.length : 3).map((board) => {
             boardList.push(
-                <div key={board.boardnum} className='board'>
-                    <img src={board.titleImage} alt="" />
+                <div key={board.boardnum} className='board' onClick={()=>{
+                    navigate(`/board/${board.boardnum}`)
+                }}>
+                    <img src={`/api/file/thumbnail?systemname=${board.titleImage}`} alt="" />
                     <span>{board.boardtitle}</span>
                 </div>
             )

@@ -19,6 +19,11 @@ const Join = () => {
             result.style.display = "none";
             return;
         }
+        if(e.target.value.length > 12){
+            user.blur();
+            return;
+        }
+
         if (user.value.length >= 5) {
             axios.get('/api/user/checkId', { params: { userid } })
                 .then(resp => {

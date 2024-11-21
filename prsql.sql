@@ -19,11 +19,13 @@ select * from user;
 insert into user(userid, userpw, username,addrdetail) values ("admin","1234","관리자","korea");
 
 create table bookmark(
-	bmnum bigint primary key auto_increment,
 	userid varchar(50),
     contentid varchar(50)
 );
 
+drop table bookmark;
+
+select * from bookmark;
 insert into bookmark(userid, contentid) value("apple", "2786391");
 drop table bookmark;
 
