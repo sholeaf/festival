@@ -53,21 +53,30 @@ const Adminpage = (props) => {
     
     const [modalData, setModalData] = useState(null); // Modal에 표시할 데이터
     const [isModalOpen, setIsModalOpen] = useState(false);
-    const openModal = (notenum) => {
-        axios.get(`/api/note/${notenum}`)
-            .then((resp) => {
-                setModalData(resp.data);  // Modal에 보여줄 데이터
-                setIsModalOpen(true);      // Modal 열기
-            })
-            .catch((error) => {
-                console.error("쪽지 세부 정보 호출 중 오류:", error);
-            });
+    const [selectedReplyData, setSelectedReplyData] = useState(null);
+    const openModal = (replynum) => {
+        // modalData에서 해당 댓글을 찾아 모달에 전달
+        if (!modalData || modalData.length === 0) {
+            console.error("modalData가 비어있거나 null입니다.");
+            return;
+        }
+    
+        const selectedReply = modalData.find(reply => reply.replynum === replynum);
+        console.log("모달창에 신고내용 띄우기:", selectedReply);
+    
+        if (selectedReply) {
+            setSelectedReplyData(selectedReply);  // 선택된 댓글 데이터를 모달에 전달
+            setIsModalOpen(true);  // 모달 열기
+        } else {
+            console.error("해당 댓글을 찾을 수 없습니다.");
+        }
     };
+    
+    // 모달 닫기 함수
     const closeModal = () => {
         setIsModalOpen(false);
-        setModalData(null);  // Modal 닫을 때 데이터 초기화
+        setSelectedReplyData(null);  // 모달 닫을 때만 데이터 초기화
     };
-
     const [inputs, setInputs] = useState(""); // 검색어 상태
 
     // 검색어 입력
@@ -140,6 +149,7 @@ const Adminpage = (props) => {
             .then((resp) => {
                 console.log("댓글신고목록 api 요청",resp.data)
                 setReplyReportList(resp.data);  // 댓글 신고 목록을 상태로 저장
+                setModalData(Array.isArray(resp.data.board) ? resp.data.board : []);
             })
             .catch((error) => {
                 console.log("댓글 신고 목록 오류", error);
@@ -282,9 +292,7 @@ const Adminpage = (props) => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             axios.delete(`/api/adminpage/${replynum}`)
                 .then((resp) => {
-                    console.log(resp.data); // 삭제 성공 메시지
-                    // 삭제 후 클라이언트에서 해당 게시글만 제거
-                    // 신고 해제된 댓글을 상태에서 제거
+                    console.log(resp.data); 
                     setTest("check ok");
                     setReplyReportList(prevReplies => 
                         Array.isArray(prevReplies) ? prevReplies.filter(reply => reply.replynum !== replynum) : []
@@ -308,7 +316,7 @@ if (replyList && replyList.length > 0) {
             <div className="row" key={reply.replynum}>
                 <div>{reply.boardnum}</div>
                 <div>{reply.replynum}</div>
-                <div className="replylimited-text">{reply.replycontent}</div>
+                <div className="replylimited-text" onClick={()=>{openModal(reply.replynum)}}>{reply.replycontent}</div>
                 <div>{reply.userid}</div>
                 <div>
                     <button onClick={() => replyReset(reply.replynum)}>신고해제</button>
@@ -379,6 +387,7 @@ if (reply_reportList.length === 0) {
                     </div>
                 <Pagination pageMaker={pageMaker}></Pagination>
                 </div>
+                
             </div>
             <div className="nsearch_area">
                 <form name="searchForm" action="/notice/adminpage" className="row">
@@ -389,6 +398,18 @@ if (reply_reportList.length === 0) {
                     <input type="hidden" name="amount" />
                 </form>
             </div>
+            {isModalOpen && modalData && (
+                <div className="replycontentmodal">
+                <div className="replymodal">
+                    <h2>댓글 내용</h2>
+        <p>{selectedReplyData.replycontent}</p>
+        <p><strong>작성자:</strong> {selectedReplyData.userid}</p>
+        <p><strong>등록일:</strong> {selectedReplyData.replyregdate}</p>
+        <button onClick={closeModal}>닫기</button>
+                </div>
+                </div>
+            )}
+            
         </>
     );
 };
