@@ -33,9 +33,7 @@ public class BoardController {
 	@GetMapping("list/{pagenum}")
 	public ResponseEntity<HashMap<String, Object>> getList(Criteria cri, @PathVariable("pagenum")int pagenum){
 		cri.setPagenum(pagenum);
-		System.out.println(cri);
 		HashMap<String, Object> result = bservice.getList(cri);
-		System.out.println(result);
 		if(result != null) {
 			return new ResponseEntity<>(result,HttpStatus.OK);
 		}
@@ -83,5 +81,26 @@ public class BoardController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
-
+	
+	@PostMapping("/reportBoard/{boardnum}")
+	public ResponseEntity<Boolean> reportBoard(@PathVariable long boardnum, @RequestParam String userid){
+		if(bservice.reportBoard(boardnum, userid)) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		else return new ResponseEntity<>(false, HttpStatus.OK);
+	}
+	@PostMapping("/reportReply/{replynum}")
+	public ResponseEntity<Boolean> reportReply(@PathVariable long replynum, @RequestParam String userid){
+		if(bservice.reportReply(replynum, userid)) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		else return new ResponseEntity<>(false, HttpStatus.OK);
+	}
+	@PostMapping("/like/{boardnum}")
+	public ResponseEntity<Boolean> like(@PathVariable long boardnum, @RequestParam String userid){
+		if(bservice.like(boardnum, userid)) {
+			return new ResponseEntity<>(true, HttpStatus.OK);
+		}
+		else return new ResponseEntity<>(false, HttpStatus.OK);
+	}
 }

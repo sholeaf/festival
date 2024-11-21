@@ -16,5 +16,14 @@ public interface BoardMapper {
 	long getTotal(Criteria cri);
 	void updateBoard(BoardDTO board);
 	int deleteBoard(long boardnum);
+	boolean reportReply(long replynum, String userid);
+	boolean reportBoard(long boardnum, String userid);
+	boolean searchBoardReport(long boardnum, String userid);
+	boolean searchReplyReport(long replynum, String userid);
+	boolean like(long boardnum, String userid);
+	boolean deleteLike(long boardnum, String userid);
+	boolean searchLike(long boardnum, String userid);
+	int likeCnt(long boardnum);
+	int replyCnt(long boardnum);
 	List<BoardDTO> getListByUserid(String userid);
 }
