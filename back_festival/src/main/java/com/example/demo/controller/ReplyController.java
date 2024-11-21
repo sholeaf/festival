@@ -28,10 +28,10 @@ public class ReplyController {
 	private ReplyService rservice;
 	
 	@PostMapping("regist")
-	public ResponseEntity<Long> regist(@RequestBody ReplyDTO reply){
+	public ResponseEntity<ReplyDTO> regist(@RequestBody ReplyDTO reply){
 		ReplyDTO createdReply = rservice.regist(reply);
 		if(createdReply != null) {
-			return new ResponseEntity<>(createdReply.getReplynum(), HttpStatus.OK);
+			return new ResponseEntity<>(createdReply, HttpStatus.OK);
 		}
 		else {
 			return new ResponseEntity<>(HttpStatusCode.valueOf(500));
@@ -53,10 +53,9 @@ public class ReplyController {
 				new ResponseEntity<>(-1l,HttpStatus.INTERNAL_SERVER_ERROR);
 	}
 	
-	@PutMapping("{replynum}")
-	public ResponseEntity<Long> modify(@RequestBody ReplyDTO reply) {
-		return rservice.updateReply(reply) ? 
-				new ResponseEntity<>(reply.getReplynum(),HttpStatus.OK) :
-				new ResponseEntity<>(-1l,HttpStatus.INTERNAL_SERVER_ERROR);
+	@PutMapping("/{replynum}")
+	public ResponseEntity<ReplyDTO> modify(@RequestBody ReplyDTO reply) {
+		System.out.println(rservice.updateReply(reply));
+		return new ResponseEntity<>(rservice.updateReply(reply),HttpStatus.OK);
 	}
 }

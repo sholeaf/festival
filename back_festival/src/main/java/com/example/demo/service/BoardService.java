@@ -16,4 +16,5 @@ public interface BoardService {
 	boolean reportReply(long replynum, String userid);
 	boolean reportBoard(long boardnum, String userid);
 	boolean like(long boardnum, String userid);
+	boolean checkLike(long boardnum, String userid);
 }

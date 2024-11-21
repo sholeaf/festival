@@ -100,5 +100,4 @@
 	<select id="replyCnt">
 		select count(*) from reply where boardnum = #{boardnum};
 	</select>
-	
 </mapper>

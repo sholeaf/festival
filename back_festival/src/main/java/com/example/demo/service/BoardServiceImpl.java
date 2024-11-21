@@ -109,4 +109,9 @@ public class BoardServiceImpl implements BoardService {
 			return !bmapper.deleteLike(boardnum, userid);
 		}
 	}
+
+	@Override
+	public boolean checkLike(long boardnum, String userid) {
+		return bmapper.searchLike(boardnum, userid);
+	}
 }
