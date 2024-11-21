@@ -347,13 +347,6 @@ no-post {
     align-items: center;
 }
 
-.ntable>.row>*:nth-child(n+2) {
-    border: none;
-}
-
-.ntable>.row:nth-child(n+2)>* {
-    border: none;
-}
 
 .nbtn_table {
     text-align: right;
@@ -489,7 +482,7 @@ no-post {
 
 .nlist .ntable,
 .nwrite .ntable,
-.nget .ntable,
+.nget .ngettable,
 .nmodify .ntable {
     border: 0px;
     width: 1000px;
@@ -670,27 +663,34 @@ a.nwrite {
 #noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
-    background-color: #92B4EC;
+    margin:10px;
+    /* border: 1px solid #000; */
 }
 
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
+    
 }
 
 #noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
+    
 
 }
 
 #noticeForm>.ntable>.row>div:nth-child(2) {
     vertical-align: middle;
     width: 80%;
+    border: 1px solid #000;
 }
 
 #noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
+}
+#noticeForm{
+    border: 1px solid #000;
 }
 
 .nwrite input[type="text"],
@@ -731,11 +731,21 @@ a.nwrite {
     text-align: center;
     width: 100%;
     min-height: 10px;
+    margin-left: 30px;
 }
-
+.nwritethumbnail_area{
+    margin-left: 30px;
+}
+.ngetthumbnail_area{
+    margin-top: 50px;
+}
 /* 게시판 썸네일애니메이션 thumbnail animation*/
 img.nthumbnail {
-    max-width: 70%;
+    max-width: 50%;
+    transition: all 0.2s linear;
+}
+img.nwritethumbnail {
+    max-width: 40%;
     transition: all 0.2s linear;
 }
 
@@ -813,11 +823,49 @@ input.nrremove.btn {
 }
 
 
-/* noticecontents css */
+/* nget css */
+
 .nget #noticecontents {
     width: 700px;
     height: 290px;
     vertical-align: top;
+}
+.getNoticeForm{
+    border: none;
+}
+.ngettitle{
+    position: relative;
+    display: flex;
+    text-align: center;
+    background-color: #d0eefa;
+}
+.ngettitle div:nth-child(1){
+    width: 10%;
+}
+.ngettitle div:nth-child(2){
+    width: 60%;
+}
+.ngettitle div:nth-child(3){
+    width: 20%;
+}
+.ngettitle div:nth-child(4){
+    width: 10%;
+}
+.ngetrow{
+    text-align: center;
+}
+.ngetcontent{
+    margin-bottom: 50px;
+}
+.ngetrow textarea {
+    width: 98%;
+    height: 300px !important;
+    margin-left: 80px;
+    margin-top: 40px;
+    
+}
+.ngetdownload{
+    width: 300px;
 }
 
 /* 댓글 reply css */
@@ -826,6 +874,9 @@ input.nrremove.btn {
     margin-top: 20px;
     border-top: 1px solid grey;
     position: relative;
+}
+.replycontent{
+    margin-left: 30px;
 }
 
 .nreply_line>.nregist {
