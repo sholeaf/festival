@@ -1537,15 +1537,25 @@ a#nsearch-btn {
     font-weight: bold;
     display: flex;
 }
+.festival-small-info div:last-child{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    margin-top: 10px;
+    margin-left: 15px;
+}
 
 .festival-list-area .festival-small-info {
     margin-left: 35px;
     display: flex;
 }
 
-.festival-list-area .bookmark-img{
+.festival-list-area .bookmark-img {
     margin: 0 20px 0 50px;
     cursor: pointer;
+    object-fit: contain;
+    /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center;
 }
 
 
@@ -1637,7 +1647,7 @@ a#nsearch-btn {
     border: 1px solid #a0a096;
     font-family: 'Arial', 'Helvetica', sans-serif;
     line-height: 1.125em;
-    margin: 0 auto;
+    margin: 50px auto;
 }
 
 .react-calendar__navigation {
@@ -1662,15 +1672,18 @@ a#nsearch-btn {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 50px;
 }
 
 .festival-list li {
-    width: 21%;
+    width: 300px;
     height: 300px;
-    margin: 15px;
-    border: 1px solid black;
+    margin: 25px;
     padding: 5px;
     cursor: pointer;
+    background: linear-gradient(to bottom right, rgba(146, 180, 236, 0.7), rgba(146, 180, 236, 0.2));
+    border-radius: 20px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* festival map */
@@ -2138,6 +2151,12 @@ a#nsearch-btn {
     font-size: 50px !important;
 }
 
+.festival-detail-bookmark {
+    cursor: pointer;
+    pointer-events: auto;
+    /* 클릭 가능하도록 설정 */
+}
+
 .festival-introduction {
     width: 800px;
     display: flex;
@@ -2250,17 +2269,37 @@ td {
     font-weight: bold;
 }
 
-.btn-area {
-    width: 70px;
-    height: 40px;
+.remote-area {
+    width: 100px;
     background-color: #92B4EC;
     color: white;
     font-weight: bold;
-    text-align: center;
+    position: fixed;
+    top: 500px;
+    right: 100px;
     line-height: 38px;
     border-radius: 8px;
     margin: 10px auto;
     cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.remote-area div{
+    text-align: center;
+    border-bottom: 1px solid white;
+    margin: 5px;
+}
+
+.remote-area div:last-child{
+    border: none;
+}
+
+.festival-detail-area .festival-detail-bookmark {
+    display: flex;
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+    float: right;
 }
 
 /* fade-in 애니메이션 */

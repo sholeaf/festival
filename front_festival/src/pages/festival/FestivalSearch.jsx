@@ -9,7 +9,7 @@ import bookmark from "../../assets/images/bookmark.png"
 import ClickBookmark from "../../hooks/ClickBookmark";
 
 const FestivalSearch = (props) => {
-    const { API_URL, API_KEY, activeTab, userid, bmlist, setBmlist, data, setData, noHyphen } = props;
+    const { API_URL, API_KEY, activeTab, userid, bmlist, setBmlist, sampleData, setSampleData, noHyphen } = props;
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -105,7 +105,7 @@ const FestivalSearch = (props) => {
     };
 
     const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setData);
+        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setSampleData);
     };
 
     useEffect(() => {
@@ -142,7 +142,7 @@ const FestivalSearch = (props) => {
                             return (
                                 <li className={`festiva-${festival.contentid}`} key={festival.contentid}
                                     onClick={() => {
-                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist, setBmlist } })
+                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist } })
                                     }}>
                                     <p className="festival-title">{festival.title}</p>
                                     <div className="festival-list-area">
