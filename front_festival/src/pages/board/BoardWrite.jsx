@@ -15,7 +15,7 @@ const BoardWrite = () => {
   const navigate = useNavigate();
   const cri = useLocation().state;
 
-  const change = (e)=>{
+  const change  = (e)=>{
     const {name,value} = e.target;
     setInputs({...inputs,[name]:value});
   }
@@ -113,7 +113,7 @@ const BoardWrite = () => {
     const board = {
       boardtitle: writeForm.boardtitle.value,
       boardcontent: content,
-      userid : "apple",
+      userid : document.writeForm.userid.value,
       tag : writeForm.userhobby.value,
       titleImage: useImages[0],
     };
@@ -138,6 +138,14 @@ const BoardWrite = () => {
   //   canselWrite();
   // });
 
+  useEffect(()=>{
+    axios.get(`/api/user/loginCheck`).then(resp=>{
+        if(resp.data.trim() != ""){
+            document.writeForm.userid.value = resp.data.trim();
+        }
+    })
+  })
+
   return (
     <>
     <Header></Header>
@@ -150,7 +158,9 @@ const BoardWrite = () => {
           </tr>
           <tr>
               <th>아이디</th>
-              <td>apple</td>
+              <td><div>
+                            <input type="text" name="userid" maxLength={50} readOnly />
+                        </div></td>
           </tr>
           <tr>
             <th>태그</th>

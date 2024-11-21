@@ -8,5 +8,6 @@ public interface ReplyService {
 	ReplyDTO regist(ReplyDTO reply);
 	ReplyPageDTO getList(Criteria cri, long boardnum);
 	boolean removeReply(long replynum);
-	boolean updateReply(ReplyDTO reply);
+	ReplyDTO updateReply(ReplyDTO reply);
+	ReplyDTO getReplyByNum(long replynum);
 }
