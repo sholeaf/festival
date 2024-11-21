@@ -206,6 +206,7 @@ const Notice = () => {
     return (
         <>
             <Header />
+            <div className="noticeWrap">
             <div className="nwrap nlist" id="nwrap">
                 <div className="notice-title">Notice</div>
                 <div className="tar w1000 notice-cnt">글 개수 :{data.pageMaker.total} </div>
@@ -247,7 +248,7 @@ const Notice = () => {
                 </div>
 
                 <div className="nsearch_area">
-                    <form name="searchForm" action="/notice/list" className="row">
+                    <form name="searchForm" action="/notice/list" className="row searchrow">
                         <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}>
                         </Dropdown>
                         <input type="search" id="nkeyword" name="keyword" onChange={inputkeyword} value={inputs} onKeyDown={searchenter} />
@@ -256,6 +257,7 @@ const Notice = () => {
                         <input type="hidden" name="amount" />
                     </form>
                 </div>
+            </div>
             </div>
         </>
     );

@@ -103,4 +103,8 @@ public class BoardController {
 		}
 		else return new ResponseEntity<>(false, HttpStatus.OK);
 	}
+	@GetMapping("/like/{boardnum}")
+	public ResponseEntity<Boolean> checkLike(@PathVariable long boardnum, @RequestParam String userid){
+		return new ResponseEntity<Boolean>(bservice.checkLike(boardnum, userid), HttpStatus.OK);
+	}
 }

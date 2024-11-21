@@ -9,45 +9,63 @@ import map_img from "../../assets/images/festivalImg/map_img.png";
 import noimage from "../../assets/images/no-image.jpg";
 import bookmark from "../../assets/images/bookmark.png"
 import nobookmark from "../../assets/images/nobookmark.png"
+import ClickBookmark from "../../hooks/ClickBookmark";
 
 const DetailFestival = () => {
     const { contentid } = useParams();
     const navigate = useNavigate();
-    const API_KEY = useLocation().state.API_KEY;
-    const activeTab = useLocation().state.activeTab;
+    const location = useLocation();
+    const { API_KEY, activeTab, bmlist } = location.state;
 
-    const [data, setData] = useState([]);
+    const [data, setData] = useState({});
     const [images, setImages] = useState([]);
-    const [intro, setIntro] = useState([]);
+    const [intro, setIntro] = useState({});
+    const [userid, setUserid] = useState();
+    const [list, setList] = useState(bmlist || []);  // 초기 값으로 location에서 전달된 bmlist를 사용
+    const [sampleData, setSampleData] = useState(bmlist || []); 
 
-    // 각 요소에 대한 ref
     const introRef = useRef(null);
     const festivalInfoRef = useRef(null);
     const locationRef = useRef(null);
 
-
-    // Slick Slider 설정
     const settings = {
-        dots: true,        // 아래에 페이지네이션 표시
-        infinite: true,    // 무한 슬라이드
-        speed: 1100,       // 전환 속도
-        slidesToShow: 1,   // 한 번에 보이는 이미지 수
-        slidesToScroll: 1, // 한 번에 스크롤되는 이미지 수
-        autoplay: true,    // 자동 재생
-        autoplaySpeed: 5000, // 자동 재생 속도 (5초)
+        dots: true,
+        infinite: true,
+        speed: 1100,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
     };
 
-
     const formatDate = (dateStr) => {
-        if (!dateStr) return "-";  // 날짜가 없으면 "-"로 처리
+        if (!dateStr) return "-";
         const date = new Date(dateStr.slice(0, 4), dateStr.slice(4, 6) - 1, dateStr.slice(6, 8));
         const year = date.getFullYear();
-        const month = String(date.getMonth() + 1).padStart(2, '0'); // 월은 0부터 시작하므로 +1
+        const month = String(date.getMonth() + 1).padStart(2, '0');
         const day = String(date.getDate()).padStart(2, '0');
         return `${year}.${month}.${day}`;
     };
 
-    // Festival 데이터 불러오기
+    const handleBookmarkClick = (festivalContentid) => {
+        ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
+    };
+
+    useEffect(() => {
+        axios.get(`/api/user/loginCheck`)
+            .then((resp) => {
+                setUserid(resp.data);
+            })
+            .catch((error) => {
+                console.error("로그인 상태 확인 오류: ", error);
+            });
+
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    }, []);
+
     useEffect(() => {
         axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${contentid}`)
             .then((resp) => {
@@ -74,32 +92,8 @@ const DetailFestival = () => {
             });
     }, [contentid]);
 
-    // 지도 로딩
-    useEffect(() => {
-        if (data.mapx && data.mapy) {
-            const script = document.createElement('script');
-            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=db24bdb6dad4a16a8feeb6f6ef35d0e7&libraries=services,clusterer`;
-            script.onload = () => {
-                const container = document.getElementById("map");
-                const options = {
-                    center: new window.kakao.maps.LatLng(data.mapy, data.mapx),
-                    level: 3, // 지도 확대 레벨
-                };
-
-                const map = new window.kakao.maps.Map(container, options);
-                const marker = new window.kakao.maps.Marker({
-                    position: new window.kakao.maps.LatLng(data.mapy, data.mapx)
-                });
-                marker.setMap(map);
-            };
-            document.body.appendChild(script);
-        }
-    }, [data]);
-
-    // IntersectionObserver 설정
     useEffect(() => {
         const observerOptions = { threshold: 0.1 };
-
         const observer = new IntersectionObserver((entries) => {
             entries.forEach((entry) => {
                 if (entry.isIntersecting) {
@@ -109,22 +103,41 @@ const DetailFestival = () => {
                 }
             });
         }, observerOptions);
-        // 각 ref 요소에 대해 observer 적용
         if (introRef.current) observer.observe(introRef.current);
         if (festivalInfoRef.current) observer.observe(festivalInfoRef.current);
         if (locationRef.current) observer.observe(locationRef.current);
 
-        // Cleanup: 옵저버 해제
         return () => {
             if (introRef.current) observer.unobserve(introRef.current);
             if (festivalInfoRef.current) observer.unobserve(festivalInfoRef.current);
             if (locationRef.current) observer.unobserve(locationRef.current);
         };
-    }, [data]); // 데이터가 변경될 때마다 옵저버 재실행
+    }, [data]);
+
+    useEffect(() => {
+        if (userid == '' || userid == null) {
+            return;
+        }
+
+        axios.get(`/api/bookmark/checkBookmark`, { params: { userid } })
+            .then((resp) => {
+                setList(resp.data);
+                console.log("요청 하기! : ", resp.data);
+            })
+            .catch((error) => {
+                console.log("bmlist 오류", error);
+            });
+    }, [userid, sampleData]);
 
     if (!data || data.length === 0) {
         return <>로딩중...</>;
     }
+
+    const isBookmarked = list.includes(contentid);  // bmlist 대신 list를 사용
+
+    const scrollToSection = (ref) => {
+        ref.current?.scrollIntoView({ behavior: 'smooth' });
+    };
 
     return (
         <>
@@ -135,16 +148,20 @@ const DetailFestival = () => {
                     <h1>{data.title}</h1>
 
                     <div className="detail-img">
-                        {images.length == 0 ? <img className="detail-img" src={noimage}></img> :
-                            images.length <= 1 ? <div className="detail-img"><img src={images[0].originimgurl}></img></div> :
+                        {images.length === 0 ? <img className="detail-img" src={noimage} alt="No Image" /> :
+                            images.length <= 1 ? <div className="detail-img"><img src={images[0].originimgurl} alt="Festival Image" /></div> :
                                 <Slider {...settings}>
                                     {images.map((image, index) => (
                                         <div className="detail-img" key={index}>
-                                            <img src={image.originimgurl} alt={`Slide ${index + 1}`}></img>
+                                            <img src={image.originimgurl} alt={`Slide ${index + 1}`} />
                                         </div>
                                     ))}
                                 </Slider>
                         }
+                    </div>
+
+                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid)}>
+                        <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="Bookmark" />
                     </div>
 
                     <div className="festival-info">
@@ -167,7 +184,7 @@ const DetailFestival = () => {
                                     </tr>
                                     <tr>
                                         <th>운영 시간</th>
-                                        <td>{intro.playtime === "" ? "-" : <span dangerouslySetInnerHTML={{ __html: intro.playtime }} />}</td>
+                                        <td>{intro.playtime || "-"}</td>
                                     </tr>
                                     <tr>
                                         <th>요금</th>
@@ -175,9 +192,9 @@ const DetailFestival = () => {
                                     </tr>
                                     <tr>
                                         <th>연령 제한</th>
-                                        {intro.agelimit === "" ? <td>-</td> : <td dangerouslySetInnerHTML={{ __html: intro.agelimit }} />}
+                                        <td>{intro.agelimit || "-"}</td>
                                     </tr>
-                                    {intro.spendtimefestival !== "" && (
+                                    {intro.spendtimefestival && (
                                         <tr>
                                             <th>공연 시간</th>
                                             <td dangerouslySetInnerHTML={{ __html: intro.spendtimefestival }} />
@@ -185,7 +202,7 @@ const DetailFestival = () => {
                                     )}
                                     <tr>
                                         <th>페이지</th>
-                                        {data.homepage === "" ? <td>-</td> : <td dangerouslySetInnerHTML={{ __html: data.homepage }} />}
+                                        <td dangerouslySetInnerHTML={{ __html: data.homepage }} />
                                     </tr>
                                     <tr>
                                         <th>전화</th>
@@ -196,29 +213,31 @@ const DetailFestival = () => {
                         </div>
 
                         <div className="festival-intro3">
-                            <h2 >위치</h2>
+                            <h2>위치</h2>
                             <div className="festival-location" ref={locationRef}>
                                 <div className="map-img-area">
-                                    <img src={map_img} />
+                                    <img src={map_img} alt="Map" />
                                 </div>
                                 <div className="map-addr-area">
                                     <div id="map" style={{ width: "100%", height: "400px", marginTop: "20px" }}></div>
                                     <div className="festival-addr">
-                                        <div dangerouslySetInnerHTML={{ __html: intro.eventplace }} />
-                                        <div>[ {data.addr1} {data.addr2} ({data.zipcode}) ]</div>
+                                        <div dangerouslySetInnerHTML={{ __html: data.addr1 }} />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
 
-                    <div className="btn-area" onClick={() => navigate("/festival", { state: activeTab })}>
-                        목 록
+                        <div className="remote-area">
+                            <div onClick={() => scrollToSection(introRef)}>소개</div>
+                            <div onClick={() => scrollToSection(festivalInfoRef)}>축제정보</div>
+                            <div onClick={() => scrollToSection(locationRef)}>위치</div>
+                            <div onClick={() => navigate("/festival", { state: activeTab })}>목록</div>
+                        </div>
                     </div>
                 </div>
             </div>
         </>
     );
-}
+};
 
 export default DetailFestival;

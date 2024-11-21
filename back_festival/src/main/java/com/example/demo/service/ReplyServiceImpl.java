@@ -45,7 +45,14 @@ public class ReplyServiceImpl implements ReplyService {
 	}
 
 	@Override
-	public boolean updateReply(ReplyDTO reply) {
-		return (rmapper.updateReply(reply) == 1)? true : false;
+	public ReplyDTO updateReply(ReplyDTO reply) {
+		rmapper.updateReply(reply);
+		return rmapper.getReplyByNum(reply.getReplynum());
+	}
+
+	@Override
+	public ReplyDTO getReplyByNum(long replynum) {
+		
+		return rmapper.getReplyByNum(replynum);
 	}
 }

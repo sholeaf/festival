@@ -8,7 +8,7 @@ import { useNavigate } from "react-router-dom";
 import ClickBookmark from "../../hooks/ClickBookmark";
 
 const FestivalMap = (props) => {
-    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, data, setData, noHyphen } = props;
+    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, sampleData, setSampleData, noHyphen } = props;
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -99,7 +99,7 @@ const FestivalMap = (props) => {
     };
 
     const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setData);
+        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setSampleData);
     };
 
     // 스크롤 이벤트 리스너를 등록하는 effect
@@ -144,7 +144,7 @@ const FestivalMap = (props) => {
                             return (
                                 <li className={`festiva-${festival.contentid}`} key={festival.contentid}
                                     onClick={() => {
-                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, setData, bmlist, setBmlist } })
+                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist } })
                                     }}>
                                     <p className="festival-title">{festival.title}</p>
                                     <div className="festival-list-area">

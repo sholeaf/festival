@@ -8,6 +8,7 @@ import Header from "../../layout/Header";
 const BoardList = () =>{
     const navigate = useNavigate();
     const location = useLocation();
+    const [loginUser, setLoginUser] = useState("");
 
     const [data, setData] = useState();
     const [cri,setCri] = useState({
@@ -46,6 +47,11 @@ const BoardList = () =>{
             setData(resp.data);
             setPagemaker(resp.data.pageMaker);
             setInputs(resp.data.pageMaker.cri.keyword);
+        })
+        axios.get(`/api/user/loginCheck`).then(resp=>{
+            if(resp.data.trim() != ""){
+                setLoginUser(resp.data.trim());
+            }
         })
     },[cri])
     useEffect(()=>{
@@ -106,7 +112,12 @@ const BoardList = () =>{
             <div id="board_wrap" className="list">
                 
                 <div>
-                    <a className="btn" onClick={()=> navigate("/board/write",{state:cri})}>글쓰기</a>
+                    <a className="btn" onClick={()=> {
+                        if(loginUser == null || loginUser == ""){
+                            alert("로그인해야 글을 쓰실 수 있습니다!");
+                            return;
+                        }
+                        navigate("/board/write",{state:cri})}}>글쓰기</a>
                 </div>
                 <div className="tbody">
                     <div className="board_obj">

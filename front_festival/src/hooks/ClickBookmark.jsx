@@ -1,7 +1,8 @@
 import axios from "axios";
 
-const ClickBookmark = (contentid, bmlist, setBmlist, userid, setData) => {
+const ClickBookmark = (contentid, bmlist, setBmlist, userid, setSampleData) => {
     if (userid == '' || userid == null) {
+        alert("로그인을 해야 즐겨찾기가 가능합니다.");
         return;
     }
     if (bmlist.includes(contentid)) {
@@ -10,7 +11,7 @@ const ClickBookmark = (contentid, bmlist, setBmlist, userid, setData) => {
                 if (resp.data == "o") {
                     setBmlist(bmlist.filter(id => id !== contentid));
                     alert("즐겨찾기가 해제되었습니다.");
-                    setData(bmlist.filter(id => id !== contentid));
+                    setSampleData(bmlist.filter(id => id !== contentid));
                 }
                 if (resp.data == "x") {
                     alert("오류가 발생했습니다.");
@@ -28,7 +29,7 @@ const ClickBookmark = (contentid, bmlist, setBmlist, userid, setData) => {
                 if (resp.data == "o") {
                     setBmlist([...bmlist, contentid]);
                     alert("즐겨찾기가 추가되었습니다.");
-                    setData([...bmlist, contentid]);
+                    setSampleData([...bmlist, contentid]);
                 }
                 if (resp.data == "x") {
                     alert("오류가 발생했습니다.");

@@ -16,10 +16,19 @@ const BoardGet = () =>{
     const [nowPage,setNowPage] = useState(1);
     const [list,setList] = useState([]);
     const [replyCnt, setReplyCnt] = useState(0);
+    const [loginUser, setLoginUser] = useState("");
+    const [checkLike, setcheckLike] = useState();
 
     useEffect(()=>{
         getData();
-        
+        axios.get(`/api/user/loginCheck`).then(resp=>{
+            if(resp.data.trim() != ""){
+                setLoginUser(resp.data.trim());
+            }
+        })
+        axios.get(`/api/board/like/${boardnum}?userid=${loginUser}`).then(resp=>{
+            resp.data? setcheckLike(true) : setcheckLike(false);
+        })
     },[])
     
     const getData = async () => {
@@ -38,6 +47,13 @@ const BoardGet = () =>{
             setReplyCnt(resp.data.replyCnt);
         })
     },[nowPage])
+
+    useEffect(()=>{
+        if(prevPageRef.current != nowPage){
+            replyEndRef.current?.scrollIntoView({behavior:'smooth'});
+            prevPageRef.current = nowPage;
+        }
+    },[list])
 
     const remove = async () => {
         const regex = /systemname=([a-zA-Z0-9\-]+(?:\.[a-zA-Z]{3,4})?)"/g;
@@ -58,9 +74,6 @@ const BoardGet = () =>{
             useImages.forEach((image) => {
                 queryParams.append('useImages[]', image); // useImages[]로 배열을 전달
         });
-        if(queryParams == []){
-            console.log("check");
-        }
         const response = await axios.delete(`/api/board/${boardnum}?${queryParams.toString()}`);
         alert(`${response.data}번 게시글 삭제!`)
         navigate(`/board/list`,{state:cri});
@@ -73,33 +86,35 @@ const BoardGet = () =>{
             replycontents.focus();
             return;
         }
-        const reply = {replycontent:replycontents.value, userid:"loginUser", boardnum:data.boardnum};
+        const reply = {replycontent:replycontents.value, userid:loginUser, boardnum:data.boardnum};
         axios.post(`/api/reply/regist`,reply)
         .then(resp => {
-            alert(`${resp.data}번 댓글 등록 완료!`);
+            alert(`댓글 등록 완료!`);
             reply.replynum = resp.data;
 
             if(list.length == 5){
                 setNowPage(Math.ceil((replyCnt+1)/5));
             }
             else{
-                setList([...list,reply]);
+                setList([...list,resp.data]);
             }
             replycontents.value = "";
         })
     }
     
     const like = async () =>{
-        const response = await axios.post(`/api/board/like/${boardnum}?userid=apple`);
+        const response = await axios.post(`/api/board/like/${boardnum}?userid=${loginUser}`);
         if(response.data){
+            setcheckLike(true);
             alert("좋아요!");
         }
         else{
+            setcheckLike(false);
             alert("좋아요취소");
         }
     }
     const reportBoard = async()=>{
-        const response = await axios.post(`/api/board/reportBoard/${boardnum}?userid=apple`);
+        const response = await axios.post(`/api/board/reportBoard/${boardnum}?userid=${loginUser}`);
         if(response.data){
             alert("신고되었습니다!");
         }
@@ -108,7 +123,7 @@ const BoardGet = () =>{
         }
     }
     const reportReply = async(replynum) =>{
-        const response = await axios.post(`/api/board/reportReply/${replynum}?userid=apple`);
+        const response = await axios.post(`/api/board/reportReply/${replynum}?userid=${loginUser}`);
         if(response.data){
             alert("신고되었습니다!");
         }
@@ -135,6 +150,97 @@ const BoardGet = () =>{
         );
     };
 
+    const NormalReply = ({ reply }) => {
+        const [isEditing, setIsEditing] = useState(false); // 수정 모드 여부
+        const [editedContent, setEditedContent] = useState(reply.replycontent); // 수정된 댓글 내용
+
+        // 수정 버튼 클릭 시 수정 모드 활성화
+        const handleEditClick = () => {
+          setIsEditing(true);
+        };
+      
+        // 수정된 댓글 내용 업데이트
+        const handleContentChange = (e) => {
+          setEditedContent(e.target.value);
+        };
+        
+        // 수정 완료 버튼 클릭 시 댓글 수정 완료
+        const handleSaveClick = async (replynum) => {
+            const replycontents = document.querySelector("#replycontents2");
+            if(editedContent == ""){
+                alert("수정할 댓글 내용을 입력하세요!")
+                replycontents.focus();
+                return;
+            }
+            const reply = {replynum:replynum, replycontent:editedContent, userid:loginUser};
+            const response = await axios.put(`/api/reply/${replynum}`, reply);
+            alert(`댓글 수정 완료!`);
+            const updatedList = list.map((item) => {
+                if(item.replynum == replynum){
+                    return response.data;
+                }
+                else{
+                    return item;
+                }
+            })
+            setList(updatedList);
+            
+            setIsEditing(false);
+        };
+      
+        // 수정 취소 버튼 클릭 시 수정 취소
+        const handleCancelClick = () => {
+          setIsEditing(false);
+          setEditedContent(reply.replycontent); // 원래 내용으로 돌아갑니다.
+        };
+        return (
+            <div>
+              {isEditing ? (
+                // 수정 모드일 때, 댓글 내용을 텍스트 입력란으로 보여줌
+                <div>
+                    <div>
+                        <textarea name="replycontents" id="replycontents2" value={editedContent} placeholder="Contents" onChange={handleContentChange} rows="3" cols="40" ></textarea>
+                    </div>
+                  <div>
+                    <button onClick={()=>handleSaveClick(reply.replynum)}>수정 완료</button>
+                    <button onClick={handleCancelClick}>수정 취소</button>
+                  </div>
+                </div>
+              ) : (
+                // 수정 모드가 아닐 때, 댓글 내용 표시
+                <div>
+                  <div>{reply.replycontent}</div>
+                  <div>{
+                    reply.userid == loginUser?
+                        <>
+                            <button onClick={handleEditClick}>수정</button>
+                            <button onClick={()=>removeReply(reply.replynum)}>삭제</button>
+                        </>
+                        :""
+                    }
+                  </div>
+                </div>
+              )}
+            </div>
+        );
+    };
+    const removeReply = (replynum) =>{
+        console.log(replynum);
+        axios.delete(`/api/reply/${replynum}`)
+        .then(resp => {
+            alert(`댓글 삭제 완료!`)
+            if(list.length == 1 && nowPage != 1){
+                setNowPage(nowPage-1);
+            }
+            else{
+                axios.get(`/api/reply/${boardnum}/${nowPage}`)
+                .then(resp => {
+                    setList(resp.data.list);
+                    setReplyCnt(resp.data.replyCnt);
+                })
+            }
+        })
+    }
 
     if(!data){
         return <>로딩중...</>
@@ -178,9 +284,11 @@ const BoardGet = () =>{
                     <div className="row rrow">
                         <strong className={`userid${reply.userid}`}>{reply.userid}</strong>
                         <div className={`reply${reply.replynum}`}>
-                            {reply.reportcnt < 5 ? reply.replycontent
-                            :<BlindReply reply={reply} />
-                            }</div>
+                            {reply.reportcnt < 5 ?(
+                                <NormalReply reply={reply} />
+                            )
+                            :(<BlindReply reply={reply}/>)
+                        }</div>
                             <Button className="btn" value="신고" onClick={()=> reportReply(reply.replynum)}></Button>
                         <div className={`reply${reply.replyregdate}`}>{reply.replyregdate}</div>
                     </div>
@@ -217,11 +325,14 @@ const BoardGet = () =>{
                 <div className="bgContent">
                     <div dangerouslySetInnerHTML={{ __html: data.boardcontent }}/>
                 </div>
-                <div>
+                <div>{ checkLike? 
+                    <Button value="좋아요취소" onClick={like}></Button>
+                    :
                     <Button value="좋아요" onClick={like}></Button>
+                    }
                 </div>
                 <div className="btnArea">
-                        { boardnum == 2?
+                        { data.userid == loginUser?
                         <>
                             <div>
                             <input type="button" value="수정" onClick={()=>{        
@@ -246,7 +357,7 @@ const BoardGet = () =>{
 
                         <div>
                             {/* <h4>작성자</h4> */}
-                            <input type="text" name="userid" value={"loginUser"} readOnly/>
+                            <input type="text" name="userid" value={loginUser} readOnly/>
                         </div>
                         <div>
                             {/* <h4>내 용</h4> */}

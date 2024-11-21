@@ -163,6 +163,9 @@ img {
 
 
 /* notice area 공지페이지 시작 */
+.noticeWrap{
+    padding-top: 70px;
+}
 #nwrap {
     width: 1000px;
     margin: 0 20px;
@@ -349,13 +352,6 @@ no-post {
     align-items: center;
 }
 
-.ntable>.row>*:nth-child(n+2) {
-    border: none;
-}
-
-.ntable>.row:nth-child(n+2)>* {
-    border: none;
-}
 
 .nbtn_table {
     text-align: right;
@@ -479,7 +475,7 @@ no-post {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 200;
+    z-index: 5;
 }
 
 @keyframes nlistWrap {
@@ -492,7 +488,7 @@ no-post {
 
 .nlist .ntable,
 .nwrite .ntable,
-.nget .ntable,
+.nget .ngettable,
 .nmodify .ntable {
     border: 0px;
     width: 1000px;
@@ -547,6 +543,9 @@ no-post {
 .nsearch_area .dropdown-content.show {
     max-height: 500px;
     transition: max-height 0.3s ease-in-out;
+}
+.searchrow:last-child {
+    border-bottom: none !important;
 }
 
 /* Notice list css */
@@ -619,7 +618,8 @@ no-post {
 
 /* Pagination 페이지 버튼 디자인 */
 .pagination {
-    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
@@ -673,27 +673,34 @@ a.nwrite {
 #noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
-    background-color: #92B4EC;
+    margin:10px;
+    /* border: 1px solid #000; */
 }
 
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
+    
 }
 
 #noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
+    
 
 }
 
 #noticeForm>.ntable>.row>div:nth-child(2) {
     vertical-align: middle;
     width: 80%;
+    border: 1px solid #000;
 }
 
 #noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
+}
+#noticeForm{
+    border: 1px solid #000;
 }
 
 .nwrite input[type="text"],
@@ -734,11 +741,21 @@ a.nwrite {
     text-align: center;
     width: 100%;
     min-height: 10px;
+    margin-left: 30px;
 }
-
+.nwritethumbnail_area{
+    margin-left: 30px;
+}
+.ngetthumbnail_area{
+    margin-top: 50px;
+}
 /* 게시판 썸네일애니메이션 thumbnail animation*/
 img.nthumbnail {
-    max-width: 70%;
+    max-width: 50%;
+    transition: all 0.2s linear;
+}
+img.nwritethumbnail {
+    max-width: 40%;
     transition: all 0.2s linear;
 }
 
@@ -816,11 +833,49 @@ input.nrremove.btn {
 }
 
 
-/* noticecontents css */
+/* nget css */
+
 .nget #noticecontents {
     width: 700px;
     height: 290px;
     vertical-align: top;
+}
+.getNoticeForm{
+    border: none;
+}
+.ngettitle{
+    position: relative;
+    display: flex;
+    text-align: center;
+    background-color: #d0eefa;
+}
+.ngettitle div:nth-child(1){
+    width: 10%;
+}
+.ngettitle div:nth-child(2){
+    width: 60%;
+}
+.ngettitle div:nth-child(3){
+    width: 20%;
+}
+.ngettitle div:nth-child(4){
+    width: 10%;
+}
+.ngetrow{
+    text-align: center;
+}
+.ngetcontent{
+    margin-bottom: 50px;
+}
+.ngetrow textarea {
+    width: 98%;
+    height: 300px !important;
+    margin-left: 80px;
+    margin-top: 40px;
+    
+}
+.ngetdownload{
+    width: 300px;
 }
 
 /* 댓글 reply css */
@@ -829,6 +884,9 @@ input.nrremove.btn {
     margin-top: 20px;
     border-top: 1px solid grey;
     position: relative;
+}
+.replycontent{
+    margin-left: 30px;
 }
 
 .nreply_line>.nregist {
@@ -1046,6 +1104,7 @@ a#nsearch-btn {
     align-items: center;
     font-family: 'EBSJSKMedium';
     font-size: 18px;
+    margin: 20px;
 }
 
 .rplist .row {
@@ -1076,7 +1135,7 @@ a#nsearch-btn {
     background-color: #fff;
 }
 
-.rptable>.rptbody>.row:last-child {
+.row:last-child {
     border-bottom: 1px solid #ccc;
 }
 
@@ -1185,6 +1244,9 @@ a#nsearch-btn {
     width: 80%;
     /* 글자수 제한을 위한 너비 설정 */
 }
+.adminsearch_area{
+    margin-left: 10%;
+}
 
 /* adminpage area end 관리자페이지 종료 */
 /* note area start 쪽지 시작 */
@@ -1193,10 +1255,6 @@ a#nsearch-btn {
     max-width: 1000px;
 }
 
-.notewrap div {
-    margin: 0 auto;
-    border: 1px solid #000;
-}
 
 .notetitle {
     text-align: center;
@@ -1479,15 +1537,25 @@ a#nsearch-btn {
     font-weight: bold;
     display: flex;
 }
+.festival-small-info div:last-child{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    margin-top: 10px;
+    margin-left: 15px;
+}
 
 .festival-list-area .festival-small-info {
     margin-left: 35px;
     display: flex;
 }
 
-.festival-list-area .bookmark-img{
+.festival-list-area .bookmark-img {
     margin: 0 20px 0 50px;
     cursor: pointer;
+    object-fit: contain;
+    /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center;
 }
 
 
@@ -1579,7 +1647,7 @@ a#nsearch-btn {
     border: 1px solid #a0a096;
     font-family: 'Arial', 'Helvetica', sans-serif;
     line-height: 1.125em;
-    margin: 0 auto;
+    margin: 50px auto;
 }
 
 .react-calendar__navigation {
@@ -1604,15 +1672,18 @@ a#nsearch-btn {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 50px;
 }
 
 .festival-list li {
-    width: 21%;
+    width: 300px;
     height: 300px;
-    margin: 15px;
-    border: 1px solid black;
+    margin: 25px;
     padding: 5px;
     cursor: pointer;
+    background: linear-gradient(to bottom right, rgba(146, 180, 236, 0.7), rgba(146, 180, 236, 0.2));
+    border-radius: 20px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* festival map */
@@ -2080,6 +2151,12 @@ a#nsearch-btn {
     font-size: 50px !important;
 }
 
+.festival-detail-bookmark {
+    cursor: pointer;
+    pointer-events: auto;
+    /* 클릭 가능하도록 설정 */
+}
+
 .festival-introduction {
     width: 800px;
     display: flex;
@@ -2192,17 +2269,37 @@ td {
     font-weight: bold;
 }
 
-.btn-area {
-    width: 70px;
-    height: 40px;
+.remote-area {
+    width: 100px;
     background-color: #92B4EC;
     color: white;
     font-weight: bold;
-    text-align: center;
+    position: fixed;
+    top: 500px;
+    right: 100px;
     line-height: 38px;
     border-radius: 8px;
     margin: 10px auto;
     cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.remote-area div{
+    text-align: center;
+    border-bottom: 1px solid white;
+    margin: 5px;
+}
+
+.remote-area div:last-child{
+    border: none;
+}
+
+.festival-detail-area .festival-detail-bookmark {
+    display: flex;
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+    float: right;
 }
 
 /* fade-in 애니메이션 */

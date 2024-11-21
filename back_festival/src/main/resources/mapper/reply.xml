@@ -13,9 +13,6 @@
 	<select id="getTotal">
 		select count(*) from reply where boardnum=#{boardnum}
 	</select>
-	<select id="getList2">
-		select * from reply where boardnum=#{boardnum} limit #{cri.startrow},#{cri.amount}
-	</select>
 	<select id="getList">
 		select r.*, count(rr.replynum) as reportcnt 
 		from reply r
@@ -39,5 +36,8 @@
 	</delete>
 	<select id="checkreport">
 		select count(*) from reply_report where replynum = #{replynum}
+	</select>
+	<select id="getReplyByNum">
+		select * from reply where replynum = #{replynum}
 	</select>
 </mapper>
