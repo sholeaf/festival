@@ -13,4 +13,7 @@ public interface BoardService {
 	HashMap<String, Object> getList(Criteria cri);
 	void updateBoard (BoardDTO board, String[] removeImages);
 	long remove(long boardnum);
+	boolean reportReply(long replynum, String userid);
+	boolean reportBoard(long boardnum, String userid);
+	boolean like(long boardnum, String userid);
 }
