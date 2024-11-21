@@ -13,7 +13,6 @@ const MyPage = () => {
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
     const [list, setList] = useState([]);
-    const [bookmarks, setBookmarks] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
     const [file, setFile] = useState("");
     const [deleteFile, setDeleteFile] = useState("");
@@ -31,6 +30,10 @@ const MyPage = () => {
         addrdetail: '',
         addretc: ''
     });
+    
+    // 즐겨찾기 목록, contentid를 담은 배열
+    const [bookmarks, setBookmarks] = useState([]);
+    // api로 가져온 축제 디테일 정보를 담은 배열
     const [festival, setFestival] = useState([]);
 
 
@@ -63,7 +66,6 @@ const MyPage = () => {
     };
 
     const closeModal = () => {
-
         setIsModalOpen(false);  // 모달을 닫는 함수
     };
 
@@ -414,11 +416,15 @@ const MyPage = () => {
             )
         })
     }
+
+    // festivalList에 html 정보 담기
     const festivalList = [];
     if (festival && festival.length > 0) {
         festival.slice(0, isAllBoard ? festival.length : 3).map((festival) => {
             festivalList.push(
-                <div key={festival.contentid} className='board'>
+                <div key={festival.contentid} className='board' onClick={()=>{
+                    navigate(`/festival/${festival.contentid}`,{state:{API_KEY}})
+                }}>
                     {
                         festival.firstimage ?
                         <img src={festival.firstimage} alt="" />
@@ -481,6 +487,7 @@ const MyPage = () => {
         }
     }, [loginUser, isModalOpen]);
 
+    // 후기 및 즐겨찾기 리스트 가져오기
     useEffect(() => {
         setProfileImg(`/api/user/file/thumbnail/${deleteFile}`);
         if (user) {
@@ -498,7 +505,7 @@ const MyPage = () => {
         }
     }, [user])
 
-
+    // 즐겨찾기 리스트로 디테일 정보 가져오기
     useEffect(() => {
         if (bookmarks.length != 0) {
             for (let i = 0; i < bookmarks.length; i++) {
