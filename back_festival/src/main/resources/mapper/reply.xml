@@ -13,8 +13,15 @@
 	<select id="getTotal">
 		select count(*) from reply where boardnum=#{boardnum}
 	</select>
-	<select id="getList">
+	<select id="getList2">
 		select * from reply where boardnum=#{boardnum} limit #{cri.startrow},#{cri.amount}
+	</select>
+	<select id="getList">
+		select r.*, count(rr.replynum) as reportcnt 
+		from reply r
+		left join reply_report rr on r.replynum = rr.replynum
+		where boardnum = #{boardnum}
+		group by r.replynum limit #{cri.startrow},#{cri.amount}
 	</select>
 	<select id="getDetail">
 		select * from reply where replynum = #{replynum}
@@ -30,4 +37,7 @@
 	<delete id="removeInBoard">
 		delete from reply where boardnum = #{boardnum}
 	</delete>
+	<select id="checkreport">
+		select count(*) from reply_report where replynum = #{replynum}
+	</select>
 </mapper>

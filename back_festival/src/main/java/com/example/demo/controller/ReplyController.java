@@ -43,7 +43,6 @@ public class ReplyController {
 			@PathVariable("boardnum") long boardnum,
 			@PathVariable("pagenum") int pagenum){
 		Criteria cri = new Criteria(pagenum,5);
-		
 		return new ResponseEntity<>(rservice.getList(cri,boardnum),HttpStatus.OK);
 	}
 	

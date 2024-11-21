@@ -9,4 +9,5 @@ public class ReplyDTO {
 	private String userid;
 	private long boardnum;
 	private String replyregdate;
+	private long reportcnt;
 }
