@@ -22,7 +22,7 @@ const DetailFestival = () => {
     const [intro, setIntro] = useState({});
     const [userid, setUserid] = useState();
     const [list, setList] = useState(bmlist || []);  // 초기 값으로 location에서 전달된 bmlist를 사용
-    const [sampleData, setSampleData] = useState(bmlist || []);
+    const [sampleData, setSampleData] = useState(bmlist || []); 
 
     const introRef = useRef(null);
     const festivalInfoRef = useRef(null);
@@ -135,6 +135,10 @@ const DetailFestival = () => {
 
     const isBookmarked = list.includes(contentid);  // bmlist 대신 list를 사용
 
+    const scrollToSection = (ref) => {
+        ref.current?.scrollIntoView({ behavior: 'smooth' });
+    };
+
     return (
         <>
             <Header />
@@ -222,8 +226,12 @@ const DetailFestival = () => {
                                 </div>
                             </div>
                         </div>
-                        <div className="remote-area" onClick={() => navigate("/festival", { state: activeTab })}>
-                            목록
+
+                        <div className="remote-area">
+                            <div onClick={() => scrollToSection(introRef)}>소개</div>
+                            <div onClick={() => scrollToSection(festivalInfoRef)}>축제정보</div>
+                            <div onClick={() => scrollToSection(locationRef)}>위치</div>
+                            <div onClick={() => navigate("/festival", { state: activeTab })}>목록</div>
                         </div>
                     </div>
                 </div>
