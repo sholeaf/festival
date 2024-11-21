@@ -373,9 +373,9 @@ const Nget = () => {
                             </a>
                         </div>
                         {isModalOpen && (
-                                                <Modal isOpen={isModalOpen} closeModal={closeModal} >
+                                                <Modal isOpen={isModalOpen} closeModal={closeModal} modalStyle={{ top: '30%' }}>
                                                     <div onClick={(e) => e.stopPropagation()}>
-                                                        <img src={modalImage} alt="Full size" style={{ width: '100%', height: 'auto' }} />
+                                                        <img src={modalImage} alt="Full size" style={{ width: '100%', height: 'auto', top: '20%' }} />
                                                     </div>
                                                 </Modal>
                                             )}
