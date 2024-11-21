@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 import Header from "../../layout/Header";
 import TodayDate from "../../hooks/TodayDate";
@@ -41,11 +42,14 @@ const Festival = () => {
     const [img, setImg] = useState();
     const [imgIndex, setImgIndex] = useState(0);
     const [season, setSeason] = useState();
+    const {data, setData} = useState();
     const [animate, setAnimate] = useState(false); // 애니메이션 상태
     const { param, setParam } = FestivalParam(noHyphen);
 
     const [activeTab, setActiveTab] = useState(location.state || 'calendar');
 
+    const [loginUser, setLoginUser] = useState("");
+    const [bmlist, setBmlist] = useState([]);
     console.log(location.state);
 
 
@@ -59,6 +63,48 @@ const Festival = () => {
     ];
 
     const todayRef = useRef(noHyphen);
+
+    const props = {
+        API_URL,
+        API_KEY,
+        param,
+        setParam,
+        activeTab,
+        userid: loginUser,
+        bmlist,
+        setBmlist,
+        data : bmlist,
+        setData,
+        noHyphen
+    };
+
+
+    useEffect(() => {
+        if (loginUser == '' || loginUser == null) {
+            return;
+        }
+
+        axios.get(`/api/bookmark/checkBookmark`, { params: { userid: props.userid } })
+            .then((resp) => {
+                setBmlist(resp.data);
+                console.log("요청 하기! : ", resp.data);
+            })
+            .catch((error) => {
+                console.log("bmlist 오류", error);
+            })
+            console.log("data check : ",data);
+    }, [loginUser,data]);
+
+    useEffect(() => {
+        axios.get(`/api/user/loginCheck`)
+            .then((resp) => {
+                setLoginUser(resp.data);
+                console.log("yes");
+            })
+            .catch((error) => {
+                console.error("로그인 상태 확인 오류: ", error);
+            });
+    }, []);
 
     useEffect(() => {
         const month = param.eventStartDate.substring(4, 6);
@@ -145,7 +191,6 @@ const Festival = () => {
             setParam(prevParam => ({
                 ...prevParam,
                 pageNo: 1,
-                areaCode: '',
                 eventStartDate: noHyphen,  // 날짜 초기화
                 eventEndDate: noHyphen     // 날짜 초기화
             }));
@@ -156,7 +201,7 @@ const Festival = () => {
                 pageNo: 1,
                 areaCode: '',
                 eventStartDate: noHyphen,  // 날짜 초기화
-                eventEndDate: noHyphen     // 날짜 초기화
+                eventEndDate: noHyphen    // 날짜 초기화
             }));
         }
     }, [activeTab, noHyphen]); // activeTab 또는 noHyphen이 변경될 때마다 실행
@@ -210,9 +255,9 @@ const Festival = () => {
                 </div>
 
                 <div className="content">
-                    {activeTab === 'calendar' && <FestivalCalendar API_URL={API_URL} API_KEY={API_KEY} param={param} setParam={setParam} activeTab='calendar' />}
-                    {activeTab === 'map' && <FestivalMap API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} param={param} setParam={setParam} activeTab='map' />}
-                    {activeTab === 'search' && <FestivalSearch API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} activeTab='search' />}
+                    {activeTab === 'calendar' && <FestivalCalendar {...props} />}
+                    {activeTab === 'map' && <FestivalMap {...props} />}
+                    {activeTab === 'search' && <FestivalSearch {...props} />}
                 </div>
             </div>
         </>

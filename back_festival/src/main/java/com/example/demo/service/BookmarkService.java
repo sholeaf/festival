@@ -1,15 +1,9 @@
-package com.example.demo.mapper;
+package com.example.demo.service;
 
 import java.util.ArrayList;
 
-import org.apache.ibatis.annotations.Mapper;
-
-@Mapper
-public interface BookmarkMapper {
-
+public interface BookmarkService {
 	ArrayList<String> getBookmark(String userid);
-
 	boolean addBookmark(String userid, String contentid);
-
 	boolean removeBookmark(String userid, String contentid);
 }

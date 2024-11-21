@@ -7,6 +7,8 @@ import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import map_img from "../../assets/images/festivalImg/map_img.png";
 import noimage from "../../assets/images/no-image.jpg";
+import bookmark from "../../assets/images/bookmark.png"
+import nobookmark from "../../assets/images/nobookmark.png"
 
 const DetailFestival = () => {
     const { contentid } = useParams();
@@ -34,6 +36,7 @@ const DetailFestival = () => {
         autoplay: true,    // 자동 재생
         autoplaySpeed: 5000, // 자동 재생 속도 (5초)
     };
+
 
     const formatDate = (dateStr) => {
         if (!dateStr) return "-";  // 날짜가 없으면 "-"로 처리
