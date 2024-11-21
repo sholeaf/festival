@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import DaumPostCode from "../../components/DaumPostCode";
 import axios from 'axios';
 import { useState } from "react";
+import Button from '../../components/Button';
 
 const Join = () => {
     const navigate = useNavigate();
@@ -10,9 +11,14 @@ const Join = () => {
     let codeFlag = false;
 
     const idCheck = (e) => {
+        console.log(e.target.value)
         const result = document.getElementById(`id_result`);
         const user = document.joinForm.userid;
         let userid = user.value;
+        if(e.target.value == "" || e.target.value == null){
+            result.style.display = "none";
+            return;
+        }
         if (user.value.length >= 5) {
             axios.get('/api/user/checkId', { params: { userid } })
                 .then(resp => {
@@ -20,19 +26,19 @@ const Join = () => {
                         result.innerHTML = "사용할 수 있는 아이디입니다!";
                         if(user.value.length > 12){
                             result.innerHTML = "아이디는 최대 12자 입니다!";
+                            return;
                         }
                     }
                     else {
                         result.innerHTML = "중복된 아이디가 있습니다!";
+                        return;
                     }
                 })
         }
         if(user.value.length < 5){
+            result.style.display = "block";
             result.innerHTML = "아이디는 최소 5자 입니다!";
-        }
-        if(user.value.length == 0){
-            result.innerHTML = "아이디를 입력해 주세요!";
-            user.focus();
+            return;
         }
     }
     const pwCheck = (e) => {
@@ -41,7 +47,12 @@ const Join = () => {
         const pw_result = document.getElementById(`pw_result`);
         const reg = /^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[~?!@#$%^&*\-]).{4,}$/;
 
+        if(userpw.value.length == "" || userpw.value.length == null){
+            pw_result.style.display = "none";
+            return;
+        }
         if(userpw.value.length <= 8){
+            pw_result.style.display = "block";
             pw_result.innerHTML = "비밀번호의 길이는 최소 9자 입니다!";
             return;
         }
@@ -249,7 +260,7 @@ const Join = () => {
                     <input type="text" name="username" id="username" placeholder="이름을 입력 하세요" />
                     <input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" />
                     <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" />
-                    <input type="button" value="인증번호 받기" onClick={getCode}/>
+                    <input type="button" value="인증번호 받기" id='codeGet' onClick={getCode}/>
                     <input type="text" name="codeCheck" id="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e)=>{
                         codeCheck(e)
                     }}/>
@@ -273,10 +284,10 @@ const Join = () => {
                         <input type="text" name="addrdetail" id="addrdetail" placeholder="상세주소" />
                         <input type="text" name="addretc" id="addretc" placeholder="참고항목" readOnly />
                     </div>
+                    <Button value="회원가입" className="joinBtn" onClick={() => {
+                        clickJoin()
+                    }}></Button>
                 </form>
-                <input type="button" value="회원가입" onClick={() => {
-                    clickJoin()
-                }} />
             </div>
         </div>
     )

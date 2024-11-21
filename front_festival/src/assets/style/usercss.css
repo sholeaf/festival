@@ -121,7 +121,7 @@ header{
     cursor: pointer;
     text-align: center;
     font-size: 55px;
-    width: 250px;
+    width: 300px;
     background-color: #fff;
     border-radius: 15px;
     margin-bottom: 10px;
@@ -129,7 +129,7 @@ header{
 
 
 .joinpage .wrap form {
-    width: 500px;
+    width: 610px;
     position: relative;
 }
 
@@ -145,11 +145,11 @@ header{
 
 .joinpage .wrap form .flexBox {
     display: flex;
-    margin-top: 3px;
+    margin: 5px;
 }
 
 .joinpage .wrap form .flexBox .radio_item {
-    width: 250px;
+    width: 300px;
 }
 
 .joinpage .wrap form .flexBox .radio_item input {
@@ -158,8 +158,12 @@ header{
 
 .joinpage .wrap form .flexBox .radio_item label {
     display: inline-block;
-    width: 250px;
+    width: 300px;
     background-color: #fff;
+    height: 50px;
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px;
 }
 
 .flexBox .radio_item input[type="radio"]:checked+label {
@@ -172,18 +176,43 @@ header{
 }
 #id_result{
     position: absolute;
-    right: -465px;
+    right: -360px;
     top: 0;
     width: 350px;
     text-align: center;
 }
 #pw_result{
     position: absolute;
-    right: -465px;
+    right: -360px;
     top: 80px;
     width: 350px;
     text-align: center;
 }
+
+#codeGet, #codeCheck{
+    display: inline-block;
+    width: 300px;
+    margin: 5px 0;
+}
+#codeGet{
+    margin-left: 5px;
+}
+.joinpage .wrap .joinBtn{
+    position: absolute;
+    right: 0;
+    margin: 5px;
+    background-color: #ccc;
+    border: none;
+    font-size: 16px;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+}
+
+
 
 /* joinpage end */
 
