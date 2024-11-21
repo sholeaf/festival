@@ -25,4 +25,5 @@ public interface BoardMapper {
 	boolean searchLike(long boardnum, String userid);
 	int likeCnt(long boardnum);
 	int replyCnt(long boardnum);
+	List<BoardDTO> getListByUserid(String userid);
 }

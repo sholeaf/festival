@@ -213,14 +213,24 @@ header{
     margin: 0 auto;
 }
 
-.mypage .profile{
-    display: flex;
-    justify-content: space-evenly;
+.mypage * {
+    user-select: none;
+}
+
+.mypage .profile, .mypage .bookmark, .mypage .community{
     width: 800px;
+    margin: 0 auto;
+    margin-bottom: 50px;
     background-color: #ccc;
     border-radius: 30px;
     padding: 25px;
-    margin: 30px auto;
+    position: relative;
+}
+
+.mypage .profile{
+    display: flex;
+    justify-content: space-evenly;
+    margin-top: 80px;
 }
 .mypage .profile .info_area{
     display: flex;
@@ -253,11 +263,80 @@ header{
     width: 125px;
     text-align: center;
 }
+.mypage .profile .btn_area p:hover{
+    font-weight: bold;
+    color: blue;
+    cursor: pointer;
+}
 
 /* 모달 프로필 변경 */
 #profileModify .img img{
     width: 400px;
     height: 400px;
+}
+
+#closeCommunity,
+#closeBookmark{
+    display: none;
+}
+/* 후기 */
+.mypage .community p,
+.mypage .bookmark p{
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0px 0 15px 0;
+}
+.mypage .community #openCommunity,
+.mypage .community #closeCommunity,
+.mypage .bookmark #openBookmark,
+.mypage .bookmark #closeBookmark {
+    right: 25px;
+    top: 26px;
+    position: absolute;
+}
+.mypage .community .list,
+.mypage .bookmark .list{
+    display: flex;
+    flex-wrap: wrap;
+    width: 100%;
+    height: 100%;
+    background-color: #FFF;
+    border-radius: 30px;
+    padding: 20px 0;
+}
+.mypage .community .list .board,
+.mypage .bookmark .list .board{
+    width: 220px;
+    height: 220px;
+    margin: 0px 15px;
+}
+.mypage .community .list .board:nth-child(n+4),
+.mypage .bookmark .list .board:nth-child(n+4){
+    width: 220px;
+    height: 220px;
+    margin: 25px 15px 0;
+}
+.mypage .community .list .board img,
+.mypage .bookmark .list .board img{
+    width: 220px;
+    height: 180px;
+}
+.mypage .community .list .board span,
+.mypage .bookmark .list .board span{
+    display: inline-block;
+    width: 100%;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: all 0.3s ease;
+}
+.mypage .community .list .board span:hover,
+.mypage .bookmark .list .board span:hover{
+    white-space: normal;
+    overflow: visible;
+    text-overflow: unset;
+    background-color: #f0f0f0;
+    cursor: pointer;   
 }
 
 
