@@ -7,6 +7,7 @@ import Modal from '../../components/Modal';
 import DaumPostCode from '../../components/DaumPostCode';
 import Button from '../../components/Button';
 import noimage from "../../assets/images/no-image.jpg";
+import Note from "../notes/Note";
 
 const MyPage = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -30,7 +31,7 @@ const MyPage = () => {
         addrdetail: '',
         addretc: ''
     });
-    
+
     // 즐겨찾기 목록, contentid를 담은 배열
     const [bookmarks, setBookmarks] = useState([]);
     // api로 가져온 축제 디테일 정보를 담은 배열
@@ -406,7 +407,7 @@ const MyPage = () => {
     if (list && list.length > 0) {
         list.slice(0, isAllBoard ? list.length : 3).map((board) => {
             boardList.push(
-                <div key={board.boardnum} className='board' onClick={()=>{
+                <div key={board.boardnum} className='board' onClick={() => {
                     navigate(`/board/${board.boardnum}`)
                 }}>
                     <img src={`/api/file/thumbnail?systemname=${board.titleImage}`} alt="" />
@@ -421,14 +422,14 @@ const MyPage = () => {
     if (festival && festival.length > 0) {
         festival.slice(0, isAllBoard ? festival.length : 3).map((festival) => {
             festivalList.push(
-                <div key={festival.contentid} className='board' onClick={()=>{
-                    navigate(`/festival/${festival.contentid}`,{state:{API_KEY}})
+                <div key={festival.contentid} className='board' onClick={() => {
+                    navigate(`/festival/${festival.contentid}`, { state: { API_KEY } })
                 }}>
                     {
                         festival.firstimage ?
-                        <img src={festival.firstimage} alt="" />
-                        :
-                        <img src={noimage} alt="" />
+                            <img src={festival.firstimage} alt="" />
+                            :
+                            <img src={noimage} alt="" />
                     }
                     <span>{festival.title}</span>
                 </div>
@@ -565,8 +566,8 @@ const MyPage = () => {
                                 <p>즐겨찾기 목록</p>
                                 {
                                     festival.length > 3 ? (<span onClick={showBookmark} id='openBookmark'>더 보기...</span>)
-                                    :
-                                    (<></>)
+                                        :
+                                        (<></>)
                                 }
                                 <span onClick={closeBookmark} id='closeBookmark'>돌아가기</span>
                                 <div className='list'>
@@ -660,6 +661,9 @@ const MyPage = () => {
                                     </div>
                                 )}
                             </Modal>
+                            <div>
+                                <Note loginUser={loginUser} />
+                            </div>
                         </div>
                     )}
                 </>
