@@ -104,9 +104,11 @@ header{
 
 /* Join page */
 .joinpage {
-    width: 100%;
+    width: 99%;
     background: no-repeat url(../images/회원가입바탕.png);
-
+    background-size: cover;
+    height: 99%;
+    position: absolute;
 }
 
 .wrap {
@@ -122,14 +124,23 @@ header{
     width: 250px;
     background-color: #fff;
     border-radius: 15px;
+    margin-bottom: 10px;
 }
+
 
 .joinpage .wrap form {
     width: 500px;
+    position: relative;
 }
 
 .joinpage .wrap form input {
-    width: 500px;
+    width: 600px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 15px;
+    margin: 5px;
 }
 
 .joinpage .wrap form .flexBox {
@@ -159,46 +170,37 @@ header{
 #pw_result {
     background-color: #fff;
 }
+#id_result{
+    position: absolute;
+    right: -465px;
+    top: 0;
+    width: 350px;
+    text-align: center;
+}
+#pw_result{
+    position: absolute;
+    right: -465px;
+    top: 80px;
+    width: 350px;
+    text-align: center;
+}
 
 /* joinpage end */
 
 /* modal */
-.login_wrap .main .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 900px;
-    position: relative;
-    top: 40px;
-}
-
-.login_wrap .main .modal-content .mflex{
-    display: flex;
-    justify-content: space-around;
-    margin-top: 15px;
-}
-.login_wrap .main .modal-content .mflex .findId, 
-.login_wrap .main .modal-content .mflex .findPw{
+.login_wrap .main .findId, 
+.login_wrap .main .findPw{
     width: 400px;
-    height: 600px;
+    height: 300px;
     padding: 25px;
     border: 1px solid #ccc;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
-.login_wrap .main .modal-content .mflex .findId #result1, 
-.login_wrap .main .modal-content .mflex .findPw #result2{
+.login_wrap .main .findId #result1, 
+.login_wrap .main .findPw #result2{
+    margin-top: 30px;
     display: none;
-}
-
-.login_wrap .main .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
 }
 /* modal end */
 
@@ -336,6 +338,10 @@ header{
     overflow: visible;
     text-overflow: unset;
     background-color: #f0f0f0;
+    cursor: pointer;   
+}
+.mypage .community .list .board:hover,
+.mypage .bookmark .list .board:hover{
     cursor: pointer;   
 }
 
