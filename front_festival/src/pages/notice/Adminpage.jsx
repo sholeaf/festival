@@ -4,7 +4,6 @@ import { useEffect, useState } from "react";
 import axios from "axios";
 import Pagination from "../../components/Paginstion";
 import Header from "../../layout/Header";
-import Modal from "../../components/Modal";
 import Note from "../notes/Note";
 
 const Adminpage = (props) => {

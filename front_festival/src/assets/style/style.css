@@ -1390,10 +1390,14 @@ a#nsearch-btn {
 
 .notesend-modal-content .notesend-row div:nth-child(1) {
     width: 80px !important;
+    border-bottom: none;
 }
 
 .notesend-modal-content .notesend-row input:nth-child(2) {
     width: 300px !important;
+}
+.notesend-row:last-child{
+    border-bottom: none;
 }
 
 /* Modal content style */
