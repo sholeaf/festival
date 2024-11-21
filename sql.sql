@@ -23,11 +23,18 @@ create table bookmark(
     contentid varchar(50)
 );
 
+<<<<<<< HEAD:prsql.sql
 drop table bookmark;
 
 select * from bookmark;
 insert into bookmark(userid, contentid) value("apple", "2786391");
+=======
+>>>>>>> b124c0ecb1aaca22968432834c0cd9666be129ce:sql.sql
 drop table bookmark;
+
+select * from bookmark where userid="apple";
+insert into bookmark(userid,contentid) value("apple","3392074");
+
 
 create table user_photo(
 	userid varchar(50),
@@ -49,8 +56,8 @@ create table board(
     titleImage varchar(300)
 );
 select * from board;
-insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate) values ('신고테스트','테스트중입니다','apple','1',now());
-insert into board (boardtitle, boardcontent, userid, boardreadcnt, boardregdate) values ('신고테스트','테스트중입니다','apple','1',now());
+insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('1','신고테스트','테스트중입니다','apple','1',now(),'1');
+insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('2','신고테스트','테스트중입니다','apple','1',now(),'6');
 drop table board;
 
 create table board_photo(
