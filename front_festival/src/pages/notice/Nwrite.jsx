@@ -119,43 +119,54 @@ const Nwrite = () => {
                                 <input type="text" name="userid" maxLength={50} readOnly />
                             </div>
                         </div>
+                        
+                            {
+            files.map((item) => (
+                item.thumbnail ? (
+                    <div className="row ">
+                            <div>첨부사진</div>
+                    <div key={item.id} className="nthumbnail_area ">
+                        <img src={item.thumbnail} alt={`thumbnail${item.id}`} className="nwritethumbnail" />
+                    </div>
+                    <div className=" row">
+                                                <Button className={"btn"} value={"파일 선택"} onClick={() => { upload(item.id); }}></Button>
+                                                <Button className={"btn"} value={"파일 삭제"} onClick={() => { removeFile(item.id); }}></Button>
+                                            </div>
+                    </div>
+                ) : ""
+            ))
+        }
+                        
                         <div className="row">
                             <div>내용</div>
                             <div>
                                 <textarea name="noticecontent" onChange={change} id=""></textarea>
                             </div>
                         </div>
-                        {
-                            files.map((item) => {
-                                return (
-                                    <div className={`row r${item.id}`} key={item.id}>
-                                        <div>파일첨부{item.id + 1}</div>
-                                        <div className={`file${item.id}_cont row`}>
-                                            <div className="cols-7">
-                                                <input
-                                                    type="file"
-                                                    name="files"
-                                                    id={`file${item.id}`}
-                                                    style={{ display: 'none' }}
-                                                    onChange={(e) => { selectFile(e, item.id); }}
-                                                />
-                                                <span id={`files${item.id}name`}>{item.file.name || '선택된 파일 없음'}</span>
-                                            </div>
-                                            <div className="cols-3 row">
-                                                <Button className={"btn"} value={"파일 선택"} onClick={() => { upload(item.id); }}></Button>
-                                                <Button className={"btn"} value={"파일 삭제"} onClick={() => { removeFile(item.id); }}></Button>
-                                            </div>
-                                            {
-                                                item.thumbnail ?
-                                                    <div className="nthumbnail_area">
-                                                        <img src={item.thumbnail} alt={`thumbnail${item.id}`} className="nthumbnail" />
-                                                    </div> : ""
-                                            }
+                        {files.map((item) => (
+                            // file이 thumbnail이 아닐 때만 파일 첨부 칸을 렌더링합니다.
+                            !item.thumbnail && (
+                                <div className={`row r${item.id}`} key={item.id}>
+                                    <div>파일첨부 {item.id + 1}</div>
+                                    <div className={`file${item.id}_cont row`}>
+                                        <div className="cols-7">
+                                            <input
+                                                type="file"
+                                                name="files"
+                                                id={`file${item.id}`}
+                                                style={{ display: 'none' }}
+                                                onChange={(e) => selectFile(e, item.id)}
+                                            />
+                                            <span id={`files${item.id}name`}>{item.file.name || '선택된 파일 없음'}</span>
+                                        </div>
+                                        <div className="cols-3 row">
+                                            <Button className={"btn"} value={"파일 선택"} onClick={() => upload(item.id)} />
+                                            <Button className={"btn"} value={"파일 삭제"} onClick={() => removeFile(item.id)} />
                                         </div>
                                     </div>
-                                )
-                            })
-                        }
+                                </div>
+                            )
+                        ))}
                     </div>
                 </form>
                 <table className="nbtn_area">
