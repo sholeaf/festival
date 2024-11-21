@@ -277,6 +277,8 @@ img {
 /* notice area 공지페이지 시작 */
 .noticeWrap{
     padding-top: 70px;
+    margin: 0 auto;
+    width: 1000px;
 }
 #nwrap {
     width: 1000px;
