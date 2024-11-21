@@ -180,7 +180,9 @@ img {
 }
 
 
-.nlist, .rplist, .replyrplist {
+.nlist,
+.rplist,
+.replyrplist {
 
     font-family: 'GowunDodum-Regular';
     text-align: center;
@@ -347,13 +349,6 @@ no-post {
     align-items: center;
 }
 
-.ntable>.row>*:nth-child(n+2) {
-    border: none;
-}
-
-.ntable>.row:nth-child(n+2)>* {
-    border: none;
-}
 
 .nbtn_table {
     text-align: right;
@@ -456,6 +451,7 @@ no-post {
 .loading-text span:nth-child(3) {
     animation: nblink 1.5s infinite, ncolorChange 2s infinite alternate, nscaleText 1.5s infinite alternate;
 }
+
 .no-files {
     padding: 50px;
     text-align: center;
@@ -489,7 +485,7 @@ no-post {
 
 .nlist .ntable,
 .nwrite .ntable,
-.nget .ntable,
+.nget .ngettable,
 .nmodify .ntable {
     border: 0px;
     width: 1000px;
@@ -670,27 +666,34 @@ a.nwrite {
 #noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
-    background-color: #92B4EC;
+    margin:10px;
+    /* border: 1px solid #000; */
 }
 
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
+    
 }
 
 #noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
+    
 
 }
 
 #noticeForm>.ntable>.row>div:nth-child(2) {
     vertical-align: middle;
     width: 80%;
+    border: 1px solid #000;
 }
 
 #noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
+}
+#noticeForm{
+    border: 1px solid #000;
 }
 
 .nwrite input[type="text"],
@@ -731,11 +734,21 @@ a.nwrite {
     text-align: center;
     width: 100%;
     min-height: 10px;
+    margin-left: 30px;
 }
-
+.nwritethumbnail_area{
+    margin-left: 30px;
+}
+.ngetthumbnail_area{
+    margin-top: 50px;
+}
 /* 게시판 썸네일애니메이션 thumbnail animation*/
 img.nthumbnail {
-    max-width: 70%;
+    max-width: 50%;
+    transition: all 0.2s linear;
+}
+img.nwritethumbnail {
+    max-width: 40%;
     transition: all 0.2s linear;
 }
 
@@ -813,11 +826,49 @@ input.nrremove.btn {
 }
 
 
-/* noticecontents css */
+/* nget css */
+
 .nget #noticecontents {
     width: 700px;
     height: 290px;
     vertical-align: top;
+}
+.getNoticeForm{
+    border: none;
+}
+.ngettitle{
+    position: relative;
+    display: flex;
+    text-align: center;
+    background-color: #d0eefa;
+}
+.ngettitle div:nth-child(1){
+    width: 10%;
+}
+.ngettitle div:nth-child(2){
+    width: 60%;
+}
+.ngettitle div:nth-child(3){
+    width: 20%;
+}
+.ngettitle div:nth-child(4){
+    width: 10%;
+}
+.ngetrow{
+    text-align: center;
+}
+.ngetcontent{
+    margin-bottom: 50px;
+}
+.ngetrow textarea {
+    width: 98%;
+    height: 300px !important;
+    margin-left: 80px;
+    margin-top: 40px;
+    
+}
+.ngetdownload{
+    width: 300px;
 }
 
 /* 댓글 reply css */
@@ -826,6 +877,9 @@ input.nrremove.btn {
     margin-top: 20px;
     border-top: 1px solid grey;
     position: relative;
+}
+.replycontent{
+    margin-left: 30px;
 }
 
 .nreply_line>.nregist {
@@ -1105,11 +1159,13 @@ a#nsearch-btn {
 .rplist.rptable .row div:nth-child(6) {
     width: 20%;
 }
+
 /* 댓글신고리스트 */
-.replyrptable > a{
+.replyrptable>a {
     cursor: pointer;
 }
-.replyrplist .row{
+
+.replyrplist .row {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -1128,6 +1184,7 @@ a#nsearch-btn {
 .replyrptable>.row:nth-child(n+2)>* {
     border: none;
 }
+
 .replyrptable>.rptbody>.row:nth-child(2n+1) {
     background-color: #fff;
 }
@@ -1164,14 +1221,20 @@ a#nsearch-btn {
 .replyrplist.replyrptable .row div:nth-child(5) {
     width: 20%;
 }
+
 .replyrptable>.replyrptbody>.row>div {
     padding: 5px;
 }
+
 .replylimited-text {
-    white-space: nowrap;       /* 텍스트가 한 줄로 유지되도록 설정 */
-    overflow: hidden;          /* 텍스트가 넘칠 경우 숨김 처리 */
-    text-overflow: ellipsis;   /* 넘친 텍스트는 '...'으로 표시 */
-    width: 80%;              /* 글자수 제한을 위한 너비 설정 */
+    white-space: nowrap;
+    /* 텍스트가 한 줄로 유지되도록 설정 */
+    overflow: hidden;
+    /* 텍스트가 넘칠 경우 숨김 처리 */
+    text-overflow: ellipsis;
+    /* 넘친 텍스트는 '...'으로 표시 */
+    width: 80%;
+    /* 글자수 제한을 위한 너비 설정 */
 }
 
 /* adminpage area end 관리자페이지 종료 */
@@ -1289,6 +1352,7 @@ a#nsearch-btn {
 .noteget {
     margin-top: 20px;
 }
+
 /* noteModal send 부분 디자인 */
 /* Modal overlay style */
 .notesend-modal-overlay {
@@ -1316,12 +1380,15 @@ a#nsearch-btn {
     background-color: rgba(0, 0, 0, 0.35);
     z-index: 10;
 }
+
 .notesend-modal-content .notesend-row div:nth-child(1) {
     width: 80px !important;
 }
-.notesend-modal-content .notesend-row input:nth-child(2){
+
+.notesend-modal-content .notesend-row input:nth-child(2) {
     width: 300px !important;
 }
+
 /* Modal content style */
 .notesend-modal-content {
     position: absolute;
@@ -1347,7 +1414,8 @@ a#nsearch-btn {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-.notesendtitle{
+
+.notesendtitle {
     width: 300px !important;
     margin-left: 18px;
 }
@@ -1377,10 +1445,12 @@ a#nsearch-btn {
 .notesend-btn-send {
     background-color: #5cb5ff;
 }
-.notesend-notegetbtn_area{
+
+.notesend-notegetbtn_area {
     vertical-align: middle;
     display: inline-block;
 }
+
 .notesend-msbtn {
     background-color: #f44336;
 }
@@ -1415,7 +1485,7 @@ a#nsearch-btn {
 
 /* note are end  쪽지 종료*/
 /* 댓글내용모달 css */
-.replycontentmodal{
+.replycontentmodal {
     position: absolute;
     top: 70%;
     left: 50%;
@@ -1435,6 +1505,48 @@ a#nsearch-btn {
 
 /* festival .css */
 
+/* festival list */
+
+.festival-list .festival-title {
+    font-size: 18px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.festival-list-area {
+    margin-top: 10px;
+}
+
+.festival-list-area img {
+    object-fit: contain;
+    object-position: center;
+}
+
+.festival-list-area p {
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+}
+
+.festival-list-area .festival-small-info {
+    margin-left: 35px;
+    display: flex;
+}
+
+.festival-list-area .bookmark-img{
+    margin: 0 20px 0 50px;
+    cursor: pointer;
+}
+
+
+.festival-list .festival-date {
+    font-size: 12px;
+}
+
+/* festival list end */
 .festival_img_area {
     position: relative;
     overflow: hidden;
@@ -1547,9 +1659,11 @@ a#nsearch-btn {
 
 .festival-list li {
     width: 21%;
+    height: 300px;
     margin: 15px;
     border: 1px solid black;
     padding: 5px;
+    cursor: pointer;
 }
 
 /* festival map */
@@ -2061,13 +2175,9 @@ a#nsearch-btn {
     display: flex;
     background-color: rgba(146, 180, 236, 0.2);
     border-radius: 15px;
-    justify-content: center;
+    justify-content: space-around;
     margin: 0 176px;
     opacity: 0;
-}
-
-.festival-location div {
-    margin-left: 50px;
 }
 
 .map-img-area {
@@ -2186,53 +2296,58 @@ td {
 
 /* board css 임시 */
 
-#board_wrap{
-	margin: 0 auto;
+#board_wrap {
+    margin: 0 auto;
     margin-top: 100px;
-	width: 1000px;
+    width: 1000px;
     text-align: center;
 }
 
-.board_obj{
-	display: flex;
-	flex-wrap: wrap;
-	position: relative;
+.board_obj {
+    display: flex;
+    flex-wrap: wrap;
+    position: relative;
     margin: 10px 10px 10px 10px;
     margin-bottom: 40px;
 }
-.board_obj div:nth-child(1){
-	width: 10%;
-	color: rgb(79, 73, 134);
+
+.board_obj div:nth-child(1) {
+    width: 10%;
+    color: rgb(79, 73, 134);
     font-size: 18px;
     margin-bottom: 5px;
 }
-.board_obj div:nth-child(2){
-	width: 30%;
-	color: rgb(121, 121, 121);
+
+.board_obj div:nth-child(2) {
+    width: 30%;
+    color: rgb(121, 121, 121);
     font-size: 14px;
     margin-bottom: 5px;
 }
-.board_obj div:nth-child(3){
-	width: 70%;
-	color: black;
+
+.board_obj div:nth-child(3) {
+    width: 70%;
+    color: black;
     font-size: 20px;
     margin-bottom: 5px;
 }
-.board_obj div:nth-child(4){
-	width: 100%;
+
+.board_obj div:nth-child(4) {
+    width: 100%;
     padding-left: 50px;
     padding-right: 170px;
-	color: rgb(143, 143, 143);
+    color: rgb(143, 143, 143);
     text-align: left;
     font-size: 14px;
     margin-bottom: 10px;
-    
+
 }
-.board_obj div:nth-child(5){
-	position: absolute;
-	right: 10px;
-	width: 10%;
-	color: red;
+
+.board_obj div:nth-child(5) {
+    position: absolute;
+    right: 10px;
+    width: 10%;
+    color: red;
     width: 150px;
     height: 140px;
     top: 5px;
@@ -2240,53 +2355,60 @@ td {
     justify-content: center;
     align-items: center;
 }
-.board_obj div:nth-child(5) img{
+
+.board_obj div:nth-child(5) img {
     max-width: 140px;
     max-height: 140px;
 }
 
 
-.board_obj div:nth-child(6){
-	width: 10%;
-	color: red;
+.board_obj div:nth-child(6) {
+    width: 10%;
+    color: red;
 }
-.board_obj div:nth-child(7){
-	width: 10%;
-	color: red;
+
+.board_obj div:nth-child(7) {
+    width: 10%;
+    color: red;
 }
+
 .nowPage {
-	color: #92B4EC;
+    color: #92B4EC;
 }
 
 .btn,
 .nowPage {
-	margin: 5px;
+    margin: 5px;
 }
 
-.getBoard{
+.getBoard {
     cursor: pointer;
 }
 
-.boardget_wrap{
+.boardget_wrap {
     margin: 0 auto;
     margin-top: 100px;
-	width: 1000px;
+    width: 1000px;
 }
 
-.rrow{
-	display: flex;
+.rrow {
+    display: flex;
 }
-.reply_write{
-	display: flex;
-	flex-wrap: wrap;
+
+.reply_write {
+    display: flex;
+    flex-wrap: wrap;
 }
-.replies{
-	width: 100%;
+
+.replies {
+    width: 100%;
 }
-.page{
-	text-align: center;
+
+.page {
+    text-align: center;
 }
-.btnArea{
-	display: flex;
+
+.btnArea {
+    display: flex;
     text-align: center;
 }

@@ -1,11 +1,15 @@
 import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Dropdown from "../../components/Dropdown";
 import FestivalParam from "../../hooks/FestivalParam";
 import noimage from "../../assets/images/no-image.jpg";
-import { useNavigate } from "react-router-dom";
+import nobookmark from "../../assets/images/nobookmark.png"
+import bookmark from "../../assets/images/bookmark.png"
+import ClickBookmark from "../../hooks/ClickBookmark";
 
-const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
+const FestivalSearch = (props) => {
+    const { API_URL, API_KEY, activeTab, userid, bmlist, setBmlist, data, setData, noHyphen } = props;
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
@@ -21,34 +25,33 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
     const year = (noHyphen + '').substring(0, 4);
     const getLastDateOfMonth = (year, month) => {
         return new Date(year, month, 0).getDate();
-    }
+    };
 
     const searchType1 = {
         "전체 지역": "", "서울": "1", "인천": "2", "대전": "3", "대구": "4", "광주": "5",
         "부산": "6", "울산": "7", "세종": "8", "경기": "31", "강원": "32", "충북": "33",
         "충남": "34", "경북": "35", "경남": "36", "전북": "37", "전남": "38", "제주": "39"
-    }
+    };
 
     const searchType2 = {
         "날짜 선택": "",
         "1월": "01", "2월": "02", "3월": "03", "4월": "04",
         "5월": "05", "6월": "06", "7월": "07", "8월": "08",
         "9월": "09", "10월": "10", "11월": "11", "12월": "12"
-    }
+    };
 
     const changeType1 = (value) => {
         setTemp({ ...temp, areaCode: value });
-    }
+    };
 
     const changeType2 = (value) => {
         const month = parseInt(value, 10);
         const lastDate = getLastDateOfMonth(parseInt(year, 10), month);
-        //if
         const eventStartDate = year + value + "01";
         const eventEndDate = year + value + lastDate + "";
 
-        setTemp({ ...temp, eventStartDate: eventStartDate, eventEndDate: eventEndDate })
-    }
+        setTemp({ ...temp, eventStartDate: eventStartDate, eventEndDate: eventEndDate });
+    };
 
     const search = (e) => {
         e.preventDefault();
@@ -63,16 +66,13 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
             eventEndDate: temp.eventEndDate
         });
 
-        // setTemp({...temp, eventStartDate: "", eventEndDate: ""});
         setFestivals([]);  // 기존 축제 목록 초기화
         setHasMore(true);  // 더 많은 데이터가 있을 수 있으므로 초기화
-        // 검색이 눌릴 때 param값을 갱신
-    }
+    };
 
     const fetchFestivals = () => {
-        if (isLoading || param.eventStartDate === "")
-            return;  // 필수 값이 없으면 요청 안 함
-        
+        if (isLoading || param.eventStartDate === "") return;
+
         setIsLoading(true);
 
         axios
@@ -83,9 +83,8 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
                     ...prevFestivals,
                     ...festivalsData, // 기존 데이터에 새로운 데이터를 추가
                 ]);
-                
+
                 setIsLoading(false);
-                // 추가로 더 데이터를 요청할 수 있는지 체크
                 if (festivalsData.length < param.numOfRow) {
                     setHasMore(false);  // 더 이상 데이터가 없으면
                 }
@@ -97,7 +96,6 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
     };
 
     const handleScroll = () => {
-        // 페이지 하단에 다다르면 추가 데이터 요청
         if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100 && hasMore && !isLoading) {
             setParam(prev => ({
                 ...prev,
@@ -106,10 +104,9 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
         }
     };
 
-    // useEffect(()=>{
-    //    temp 값 변경되게 해보기 
-    //      64번 쨰 줄 참고
-    // });
+    const handleBookmarkClick = (festivalContentid) => {
+        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setData);
+    };
 
     useEffect(() => {
         window.addEventListener('scroll', handleScroll);
@@ -119,56 +116,66 @@ const FestivalSearch = ({ API_URL, API_KEY, noHyphen ,activeTab }) => {
         };
     }, [isLoading, hasMore]);
 
-    // param의 변화에 따라 fetchFestivals 실행
     useEffect(() => {
         fetchFestivals();
         console.log("param : ", param)
-    }, [param]);  // param이 변경될 때마다 실행
-
-
+    }, [param]);
 
     return (
         <>
             <div>축제 검색</div>
             <div className="festival-search-area">
-                <Dropdown list={searchType1} name={"type1"} width={100} value={param.areaCode} onChange={changeType1} ></Dropdown>
+                <Dropdown list={searchType1} name={"type1"} width={100} value={param.areaCode} onChange={changeType1}></Dropdown>
                 <Dropdown list={searchType2} name={"type2"} width={100} value={param.eventStartDate ? "날짜 선택" : ""} onChange={changeType2}></Dropdown>
                 <div className="search-btn" onClick={search}>검 색</div>
             </div>
+
             {param.eventStartDate === "" && <p>날짜를 선택해주세요.</p>}
+
             {festivals.length > 0 && (
                 <div>
                     <h3>축제 목록</h3>
                     <ul className="festival-list">
-                        {festivals.map((festival) => (
-                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}
-                            onClick={()=>{
-                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY, activeTab}})
-                            }}>
-                                <h4>{festival.title}</h4>
-                                <p>{festival.addr1}</p>
-                                {festival.firstimage ? (
-                                    <img src={festival.firstimage} alt={festival.title} style={{ width: "100px", height: "100px" }} />
-                                ) : (
-                                    <img src={noimage} alt="no-image" style={{ width: "100px", height: "100px" }} />
-                                )}
-                                <p>{festival.eventstartdate} ~ {festival.eventenddate}</p>
-                            </li>
-                        ))}
+                        {festivals.map((festival) => {
+                            const isBookmarked = bmlist.includes(festival.contentid); // 즐겨찾기 여부 계산
+
+                            return (
+                                <li className={`festiva-${festival.contentid}`} key={festival.contentid}
+                                    onClick={() => {
+                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist, setBmlist } })
+                                    }}>
+                                    <p className="festival-title">{festival.title}</p>
+                                    <div className="festival-list-area">
+                                        {festival.firstimage ? (
+                                            <img className="festival-img" src={festival.firstimage} alt={festival.title} style={{ width: "100%", height: "150px" }} />
+                                        ) : (
+                                            <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
+                                        )}
+                                        <div className="festival-small-info">
+                                            <div>
+                                                <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
+                                                <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                            </div>
+                                            <div onClick={(e) => {
+                                                e.stopPropagation();  // 클릭 이벤트 전파 방지
+                                                handleBookmarkClick(festival.contentid);  // 즐겨찾기 추가/삭제
+                                            }}>
+                                                <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             )}
 
-            {/* 축제 목록이 없을 때 */}
             {festivals.length === 0 && param.eventStartDate !== "" && !isLoading && <p>해당 지역에 축제가 없습니다.</p>}
-
-            {/* 로딩 상태 */}
             {isLoading && <p>Loading...</p>}
-
-            {/* 더 이상 데이터가 없을 때 */}
             {!hasMore && <p>더 이상 축제가 없습니다.</p>}
         </>
     );
-}
+};
 
 export default FestivalSearch;
