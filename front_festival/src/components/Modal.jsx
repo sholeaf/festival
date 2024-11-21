@@ -1,4 +1,4 @@
-const Modal = ({isOpen, children, closeModal}) => {
+const Modal = ({isOpen, children, closeModal, modalStyle }) => {
     return (
         <div style={{display:isOpen ? "block":"none"}} onClick={closeModal}>
            <div style={{
@@ -21,8 +21,9 @@ const Modal = ({isOpen, children, closeModal}) => {
             backgroundColor:"white",
             zIndex:11,
             borderRadius:"30px",
-            textAlign:"center"
-           }}  onClick={(e) => e.stopPropagation()}>
+            textAlign:"center",
+            ...modalStyle
+           }}  onClick={(e) => e.stopPropagation()} >
             <div>{children}</div>
            </div>
         </div>

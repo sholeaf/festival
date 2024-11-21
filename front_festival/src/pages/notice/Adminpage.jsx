@@ -348,6 +348,7 @@ if (reply_reportList.length === 0) {
     return (
         <>
             <Header />
+            <div className="noticeWrap">
             <div>
                 <Note loginUser={loginUser} />
             </div>
@@ -389,8 +390,8 @@ if (reply_reportList.length === 0) {
                 </div>
                 
             </div>
-            <div className="nsearch_area">
-                <form name="searchForm" action="/notice/adminpage" className="row">
+            <div className="nsearch_area adminsearch_area">
+                <form name="searchForm" action="/notice/adminpage" className="row searchrow">
                     <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
                     <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={searchenter} />
                     <a id="nsearch-btn" className="btn" onClick={clickSearch}>검색</a>
@@ -409,7 +410,7 @@ if (reply_reportList.length === 0) {
                 </div>
                 </div>
             )}
-            
+            </div>
         </>
     );
 };

@@ -97,6 +97,7 @@ const Nwrite = () => {
     return (
         <>
             <Header />
+            <div className="noticeWrap">
             <div id="nwrap" className="nwrite">
                 <div className="notice-title">Notice</div>
                 <form id="noticeForm" name="noticeForm">
@@ -181,6 +182,7 @@ const Nwrite = () => {
                         </tr>
                     </tbody>
                 </table>
+            </div>
             </div>
         </>
     )

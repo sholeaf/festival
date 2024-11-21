@@ -163,6 +163,9 @@ img {
 
 
 /* notice area 공지페이지 시작 */
+.noticeWrap{
+    padding-top: 70px;
+}
 #nwrap {
     width: 1000px;
     margin: 0 20px;
@@ -469,7 +472,7 @@ no-post {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 200;
+    z-index: 5;
 }
 
 @keyframes nlistWrap {
@@ -537,6 +540,9 @@ no-post {
 .nsearch_area .dropdown-content.show {
     max-height: 500px;
     transition: max-height 0.3s ease-in-out;
+}
+.searchrow:last-child {
+    border-bottom: none !important;
 }
 
 /* Notice list css */
@@ -609,7 +615,8 @@ no-post {
 
 /* Pagination 페이지 버튼 디자인 */
 .pagination {
-    margin-top: 20px;
+    margin-bottom: 20px;
+    margin-top: 10px;
     display: flex;
     justify-content: center;
 }
@@ -1094,6 +1101,7 @@ a#nsearch-btn {
     align-items: center;
     font-family: 'EBSJSKMedium';
     font-size: 18px;
+    margin: 20px;
 }
 
 .rplist .row {
@@ -1124,7 +1132,7 @@ a#nsearch-btn {
     background-color: #fff;
 }
 
-.rptable>.rptbody>.row:last-child {
+.row:last-child {
     border-bottom: 1px solid #ccc;
 }
 
@@ -1224,6 +1232,9 @@ a#nsearch-btn {
     text-overflow: ellipsis;   /* 넘친 텍스트는 '...'으로 표시 */
     width: 80%;              /* 글자수 제한을 위한 너비 설정 */
 }
+.adminsearch_area{
+    margin-left: 10%;
+}
 
 /* adminpage area end 관리자페이지 종료 */
 /* note area start 쪽지 시작 */
@@ -1232,10 +1243,6 @@ a#nsearch-btn {
     max-width: 1000px;
 }
 
-.notewrap div {
-    margin: 0 auto;
-    border: 1px solid #000;
-}
 
 .notetitle {
     text-align: center;

@@ -287,6 +287,7 @@ const modify = () => {
         return (
           <>
           <Header/>
+          <div className="noticeWrap">
           <div id="nwrap" className="nmodify">
             <div className="notice-title">Notice</div>
             <form id="noticeForm" name="noticeForm">
@@ -399,6 +400,7 @@ const modify = () => {
                 </tr>
               </tbody>
             </table>
+          </div>
           </div>
           </>    
         );
