@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../components/Paginstion";
-import Modal from "../../components/Modal"; 
+import Modal from "../../components/Modal";
 
 const Note = ({ loginUser }) => {
     const navigate = useNavigate();
@@ -250,7 +250,7 @@ const Note = ({ loginUser }) => {
             {/* Modal 창 */}
             {isModalOpen && modalData && (
                 <Modal isOpen={isModalOpen} closeModal={closeModal}  >
-                    <div id="wrap" className="noteget" style={{width:"500px"}}>
+                    <div id="wrap" className="noteget" style={{ width: "500px" }}>
                         <form id="notegetForm" name="notegetForm">
                             <div className="ntable notegettable">
                                 <div className="row notegetrow">
@@ -279,8 +279,8 @@ const Note = ({ loginUser }) => {
                                 </div>
                                 <div className="row notegetrow">
                                     <div>From</div>
-<div className="sendms">
-                                    {isReplyMode ? (
+                                    <div className="sendms">
+                                        {isReplyMode ? (
                                             <button
                                                 type="button"
                                                 value="답장 전송"

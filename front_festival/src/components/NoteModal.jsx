@@ -36,7 +36,6 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                 <div className="notesend-modal-background"></div>
                 <div className="notesend-modal-content" onClick={(e) => e.stopPropagation()}>
                     <span className="notesend-close" onClick={closeModal}>&times;</span>
-                    <h2>쪽지 보내기</h2>
                     <div className="notesend-row row">
                         <div>To</div>
                         <div>
