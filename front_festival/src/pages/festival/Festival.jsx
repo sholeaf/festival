@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 
 import Header from "../../layout/Header";
 import TodayDate from "../../hooks/TodayDate";
@@ -46,6 +47,8 @@ const Festival = () => {
 
     const [activeTab, setActiveTab] = useState(location.state || 'calendar');
 
+    const [loginUser, setLoginUser] = useState("");
+    const [bmlist, setBmlist] = useState([]);
     console.log(location.state);
 
 
@@ -59,6 +62,46 @@ const Festival = () => {
     ];
 
     const todayRef = useRef(noHyphen);
+
+    const props = {
+        API_URL,
+        API_KEY,
+        param,
+        setParam,
+        activeTab,
+        userid: loginUser,
+        bmlist,
+        setBmlist,
+        noHyphen,
+    };
+    console.log("props : ",props);
+    console.log("props url : ",props.API_URL);
+    console.log("bmlist",bmlist);
+    useEffect(() => {
+        if(loginUser =='' || loginUser==null){
+            return;
+        }
+
+        axios.get(`/api/bookmark/checkBookmark`, {params:{userid: props.userid}})
+        .then((resp)=>{
+            setBmlist(resp.data);
+            console.log("요청 하기! : ",resp.data);
+        })
+        .catch((error)=>{
+            console.log("bmlist 오류",error);
+        })
+    },[loginUser]);
+
+    useEffect(() => {
+        axios.get(`/api/user/loginCheck`)
+            .then((resp) => {
+                setLoginUser(resp.data);
+                console.log("yes");
+            })
+            .catch((error) => {
+                console.error("로그인 상태 확인 오류: ", error);
+            });
+    }, []);
 
     useEffect(() => {
         const month = param.eventStartDate.substring(4, 6);
@@ -210,9 +253,9 @@ const Festival = () => {
                 </div>
 
                 <div className="content">
-                    {activeTab === 'calendar' && <FestivalCalendar API_URL={API_URL} API_KEY={API_KEY} param={param} setParam={setParam} activeTab='calendar' />}
-                    {activeTab === 'map' && <FestivalMap API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} param={param} setParam={setParam} activeTab='map' />}
-                    {activeTab === 'search' && <FestivalSearch API_URL={API_URL} API_KEY={API_KEY} noHyphen={noHyphen} activeTab='search' />}
+                    {activeTab === 'calendar' && <FestivalCalendar {...props} />}
+                    {activeTab === 'map' && <FestivalMap {...props} />}
+                    {activeTab === 'search' && <FestivalSearch {...props} />}
                 </div>
             </div>
         </>

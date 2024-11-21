@@ -1,6 +1,7 @@
 package com.example.demo.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -168,14 +169,21 @@ public class UserController {
 	        }
 	        return new ResponseEntity<String>("X",HttpStatus.OK);
 	    }
-
 	}
 	
 	@DeleteMapping("delete")
-	public ResponseEntity<String> deleteUser(@RequestParam String userid) {
+	public ResponseEntity<String> deleteUser(@RequestParam String userid, HttpServletRequest req) {
 		if(service.deleteUser(userid) == 1) {
+			HttpSession session = req.getSession();
+			session.removeAttribute("loginUser");
 			return new ResponseEntity<String>("O",HttpStatus.OK);
 		}
 		return new ResponseEntity<String>("X",HttpStatus.OK);
+	}
+	
+	@GetMapping("list")
+	public ResponseEntity<HashMap<String, Object>> getList(@RequestParam String userid) {
+		HashMap<String, Object> result = service.getList(userid);
+		return new ResponseEntity<HashMap<String, Object>>(result,HttpStatus.OK);
 	}
 }

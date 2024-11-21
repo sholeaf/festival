@@ -5,7 +5,8 @@ import FestivalParam from "../../hooks/FestivalParam";
 import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
 
-const FestivalSearch = ({ API_URL, API_KEY, noHyphen, activeTab }) => {
+const FestivalSearch = ( props ) => {
+    const { API_URL, API_KEY, activeTab, userid, bmlist, setBmlist, noHyphen  } = props;
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);

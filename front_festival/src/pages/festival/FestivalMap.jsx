@@ -5,7 +5,8 @@ import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
 
 
-const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam, activeTab }) => {
+const FestivalMap = ( props ) => {
+    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, noHyphen  } = props;
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);

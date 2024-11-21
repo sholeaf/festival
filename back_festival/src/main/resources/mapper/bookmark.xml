@@ -1,0 +1,14 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.BookmarkMapper">
+	<select id="getBookmark">
+		select contentid from bookmark where userid=#{userid}
+	</select>
+	<insert id="addBookmark">
+		insert into bookmark(userid, contentid) value(#{userid},#{contentid})
+	</insert>
+	<delete id="removeBookmark">
+		delete from bookmark where userid=#{userid} and contentid=#{contentid}
+	</delete>
+</mapper>

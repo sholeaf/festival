@@ -5,13 +5,15 @@ import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
 
 
-const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
+const FestivalCalendar = (props) => {
+    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, noHyphen } = props;
     const [festivals, setFestivals] = useState([]);
     const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const navigate = useNavigate();
 
-    // 날짜 선택 시 처리 함수
+    console.log("calendar props : ", props);
+
     const handleDateChange = (date) => {
         const selectedDate = date.getFullYear().toString() +
             (date.getMonth() + 1).toString().padStart(2, '0') +
@@ -68,7 +70,9 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
             }));
         }
     };
-    // 페이지가 처음 로드되거나 날짜가 변경될 때마다 축제 데이터를 가져옴
+
+
+    console.log("bmlist : ", bmlist);
     useEffect(() => {
         fetchFestivals();
         console.log("calendarParam : ", param);
@@ -83,6 +87,7 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
             window.removeEventListener('scroll', handleScroll);
         };
     }, [hasMore, isLoading]);
+
 
     return (
         <div>
@@ -109,7 +114,12 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
                                             <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
                                             <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
                                         </div>
-                                        <div style={{border:"1px solid black", width:"30px", height: "30px"}}></div>
+                                        {bmlist.includes(festival.contentid) ? (
+                                            <div style={{ border: "1px solid black", width: "30px", height: "30px", backgroundColor: "black" }}></div>
+                                        ) : (
+                                            <div style={{ border: "1px solid black", width: "30px", height: "30px" }}></div>
+                                        )}
+
                                     </div>
 
                                 </div>

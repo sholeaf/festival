@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.example.demo.domain.BoardDTO;
+import com.example.demo.domain.BoardReportDTO;
 import com.example.demo.domain.Criteria;
 import com.example.demo.domain.NoticeDTO;
 import com.example.demo.domain.PageDTO;
 import com.example.demo.domain.ReplyDTO;
+import com.example.demo.domain.ReplyReportDTO;
 import com.example.demo.mapper.AdminPageMapper;
 
 @Service
@@ -58,54 +60,54 @@ public class AdminPageServiceImpl implements AdminPageService {
         return result;
 	}
 
-	@Override
-	@Transactional
-	public void updateReportCount(Long boardnum, int reportcnt) {
-		// 보고서 카운트가 유효한지 확인
-	    if (reportcnt >= 0) {
-	        // DB 업데이트: 카운트 값 업데이트
-	        apmapper.updateReportCount(boardnum, reportcnt);
-	        System.out.println("신고카운트 초기화: " + boardnum);
-	        
-	        // 삭제 조건: 해당 boardnum에 대한 보고서가 존재하는지 확인
-	        int reportList = apmapper.getReportList(boardnum);
-	        if (reportList > 0) {
-	            // DB에서 리포트 리스트 삭제
-	            apmapper.deleteReportList(boardnum);
-	            System.out.println("신고목록 삭제: " + boardnum);
-	        } else {
-	            System.out.println("신고목록 없음: " + boardnum);
-	        }
-	    } else {
-	        System.out.println("리스트없음: " + reportcnt);
-	        throw new IllegalArgumentException("Report count must be a non-negative value.");
-	    }
-	}
 
 	@Override
 	public int deleteList(long boardnum) {
-		Optional<BoardDTO> board = apmapper.findById(boardnum);
+	    // 게시글 찾기
+	    Optional<BoardDTO> board = apmapper.findById(boardnum);
 	    
-	    // 게시글이 존재하면 삭제
 	    if (board.isPresent()) {
-	        apmapper.deleteList(board.get());  // 실제 삭제
-	        return 1;  // 삭제 성공
+	        // 게시글에 속한 댓글들 삭제
+	        List<ReplyDTO> replies = apmapper.findRepliesByBoardnum(boardnum);
+	        // 댓글이 있으면 댓글 삭제
+	        if (replies != null && !replies.isEmpty()) {
+	            for (ReplyDTO reply : replies) {
+	                apmapper.deleteReplyList(reply);  // 댓글 삭제
+	            }
+	        }
+	        // 게시글 삭제
+	        apmapper.deleteList(board.get());      
+	        return 1;  
 	    } else {
-	        return -1;
+	        return -1;  
 	    }
 	}
 
 	@Override
 	public int replyreset(long replynum) {
-		// TODO Auto-generated method stub
-		return 0;
+	    // 해당 replynum에 관련된 모든 레코드를 삭제하는 메서드 호출
+	    int deletedCount = apmapper.deleteReplyReport(replynum);
+	    
+	    // 삭제된 레코드 수가 0보다 크면 성공, 아니면 실패
+	    if (deletedCount > 0) {
+	        return 1;
+	    } else {
+	        return -1;
+	    }
 	}
 
 	
 	@Override
-	public int deletereply(long boardnum) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int deletereply(long replynum) {
+		 System.out.println("넘어오는 replynum: " + replynum); 
+int deletedreply = apmapper.deleteReply(replynum);
+	    
+	    // 삭제된 레코드 수가 0보다 크면 성공, 아니면 실패
+	    if (deletedreply > 0) {
+	        return 1;
+	    } else {
+	        return -1;
+	    }
 	}
 
 	@Override
@@ -120,4 +122,17 @@ public class AdminPageServiceImpl implements AdminPageService {
 
         return result;
 	}
+
+	@Override
+	public int boardreset(long boardnum) {
+	    int reportCount = apmapper.findBoardByReport(boardnum); // 신고 횟수 카운트
+	    // 신고 내역이 있다면 삭제
+	    if (reportCount > 0) {
+	        apmapper.deleteReportList(boardnum);  // 해당 boardnum에 대한 신고 내역 삭제
+	        return 1;  // 삭제 성공
+	    } else {
+	        return -1;  // 신고 내역이 없으면 실패
+	    }
+	}
+
 }
