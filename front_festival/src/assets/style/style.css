@@ -812,9 +812,7 @@ input.nrremove.btn {
 .ngetrow{
     text-align: center;
 }
-.ngetcontent{
-    margin-bottom: 50px;
-}
+
 .ngetrow textarea {
     width: 98%;
     height: 300px !important;
@@ -824,6 +822,26 @@ input.nrremove.btn {
 }
 .ngetdownload{
     width: 300px;
+}
+.ndownload-btn {
+    display: flex;
+    justify-content: flex-start;
+}
+
+.ndownload-btn a {
+    background-color: rgb(179, 222, 245);
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    text-align: center;
+    position: relative;
+    right: 20px;
+    text-decoration: none;
+    display: inline-block;
+}
+
+.ndownload-btn a:hover {
+    background-color: rgb(160, 200, 230); /* hover 시 색 변경 */
 }
 
 /* 댓글 reply css */
@@ -1025,7 +1043,28 @@ a#nsearch-btn {
     padding-top: 7px;
     padding-left: 15px;
 }
-
+/* 파일첨부 글자 css */
+.filetextcontainer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 10px;
+  }
+  
+  .filetext {
+    position: relative;
+    font-weight: bold; 
+    font-size: 18px;
+    color: #ccc; 
+    padding: 0 15px;
+  }
+  .filetextcontainer > hr {
+    border: 0;
+    border-top: 1px solid #ccc; 
+    width: 45%; 
+    margin: 0;
+  }
+  
 /* notice area end 공지페이지 종료 */
 /* adminpage area start 관리자페이지 시작 */
 #rpwrap {
@@ -1034,7 +1073,31 @@ a#nsearch-btn {
     padding: 0;
     position: relative;
 }
+/* 상단 버튼 3개 */
+.admin-top {
+    display: flex;
+    justify-content: flex-end; 
+    gap: 10px;  
+    padding: 10px 20px;
+}
 
+.admin-top button {
+    background-color: #4CAF50;  
+    border: none;  
+    color: white;  
+    padding: 10px 20px;  
+    text-align: center;  
+    text-decoration: none;  
+    display: inline-block;  
+    font-size: 16px;  
+    cursor: pointer; 
+    border-radius: 5px;  
+    transition: background-color 0.3s ease;  
+}
+
+.admin-top button:hover {
+    background-color: #45a049;  
+}
 .rptable>a {
     cursor: pointer;
 }
