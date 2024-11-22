@@ -207,4 +207,9 @@ public class UserServiceImp implements UserService{
 		result.put("bookmarks", bookmarks);
 		return result;
 	}
+	
+	@Override
+	public int updateInfo(UserInfoDTO userInfo) {
+		return uimapper.updateUserInfo(userInfo);
+	}
 }

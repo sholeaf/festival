@@ -191,4 +191,12 @@ public class UserController {
 		HashMap<String, Object> result = service.getList(userid);
 		return new ResponseEntity<HashMap<String, Object>>(result,HttpStatus.OK);
 	}
+	
+	@PutMapping("infoModify")
+	public ResponseEntity<String> infoModify(@RequestBody UserInfoDTO userInfo) {
+		if(service.updateInfo(userInfo) == 1) {
+			return new ResponseEntity<String>("O",HttpStatus.OK);
+		}
+		return new ResponseEntity<String>("X",HttpStatus.OK);
+	}
 }

@@ -23,5 +23,6 @@ public interface UserService {
 	int defaultProfile(String userid, String deleteFile);
 	int deleteUser(String userid);
 	HashMap<String, Object> getList(String userid);
+	int updateInfo(UserInfoDTO userInfo);
 
 }

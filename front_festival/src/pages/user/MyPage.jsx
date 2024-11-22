@@ -447,6 +447,36 @@ const MyPage = () => {
         })
     }
 
+    const infoModify = () => {
+        const name = document.querySelector('input[name="name"]:checked').value;
+        const email = document.querySelector('input[name="email"]:checked').value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+
+        const orgName = userInfo.nameinfo;
+        const orgEmail = userInfo.emailinfo;
+        const orgGender = userInfo.genderinfo;
+
+        if(orgName == name && orgEmail == email && orgGender == gender){
+            alert("변경사항이 없습니다.");
+            return;
+        }
+
+        const updateUserInfo = {
+            userid : loginUser,
+            nameinfo : name,
+            emailinfo : email,
+            genderinfo : gender
+        }
+
+        axios.put('/api/user/infoModify', updateUserInfo)
+            .then(resp=>{
+                if(resp.data.trim() == "O"){
+                    alert("정보 공개 여부가 변경되었습니다.");
+                    setIsModalOpen(false);
+                }
+            })
+    }
+
     // 페이지 로드 시 관리자 여부를 확인하는 API 호출
     useEffect(() => {
         axios.get('/api/notice/checkadmin')
@@ -674,32 +704,55 @@ const MyPage = () => {
                                                 <tr>
                                                     <td>이름</td>
                                                     <td>
+                                                        {userInfo.nameinfo == "T"? <input type="radio" name="name" id="name1" value="T" checked/>
+                                                        :
                                                         <input type="radio" name="name" id="name1" value="T"/>
+                                                        }
                                                     </td>
                                                     <td>
+                                                        {userInfo.nameinfo == "F"? <input type="radio" name="name" id="name2" value="F" checked/>
+                                                        :
                                                         <input type="radio" name="name" id="name2" value="F"/>
+                                                        }
+                                                        
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>이메일</td>
                                                     <td>
+                                                        {userInfo.emailinfo == "T"? <input type="radio" name="email" id="email1" value="T" checked/>
+                                                        :
                                                         <input type="radio" name="email" id="email1" value="T"/>
+                                                        }
                                                     </td>
                                                     <td>
+                                                        {userInfo.emailinfo == "F"? <input type="radio" name="email" id="email2" value="F" checked/>
+                                                        :
                                                         <input type="radio" name="email" id="email2" value="F"/>
+                                                        }
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>성별</td>
                                                     <td>
+                                                        {userInfo.genderinfo == "T"? <input type="radio" name="gender" id="gender1" value="T" checked/>
+                                                        :
                                                         <input type="radio" name="gender" id="gender1" value="T"/>
+                                                        }
                                                     </td>
                                                     <td>
+                                                        {userInfo.genderinfo == "F"? <input type="radio" name="gender" id="gender2" value="F" checked/>
+                                                        :
                                                         <input type="radio" name="gender" id="gender2" value="F"/>
+                                                        }
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
+                                        <Button value={"변경"} onClick={infoModify}></Button>
+                                        <Button value={"취소"} onClick={() => {
+                                            setIsModalOpen(false)
+                                        }}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (

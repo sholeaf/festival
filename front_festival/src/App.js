@@ -3,9 +3,7 @@ import './assets/style/style.css';
 import 'react-calendar/dist/Calendar.css';
 import Main from './pages/Main';
 import Festival from './pages/festival/Festival';
-import Community from './pages/Community';
 import Notice from './pages/notice/Notice';
-import Header from './layout/Header';
 import Nwrite from './pages/notice/Nwrite';
 import Nget from './pages/notice/Nget';
 import Nmodify from './pages/notice/Nmodify';
@@ -14,10 +12,9 @@ import MyPage from './pages/user/MyPage';
 import Login from './pages/user/Login';
 import Join from './pages/user/Join';
 import DetailFestival from './pages/festival/DetailFestival';
-import Note from './pages/notes/Note';
 import BoardWrite from './pages/board/BoardWrite';
 import BoardList from './pages/board/BoardList';
-import BoardListUserInfo from './pages/board/BoardListUserInfo';
+import BoardList2 from './pages/board/BoardList2';
 import BoardGet from './pages/board/BoardGet';
 import BoardModify from './pages/board/BoardModify';
 
@@ -39,8 +36,8 @@ function App() {
           <Route path="/notice/nmodify" element={<Nmodify></Nmodify>}></Route>
           <Route path="/notice/:noticenum" element={<Nget></Nget>}></Route>
           <Route path="/notice/adminpage" element={<Adminpage></Adminpage>}></Route>
-          <Route path='/board/list' element={<BoardList></BoardList>}></Route>
-          {/* <Route path='/board/list' element={<BoardListUserInfo></BoardListUserInfo>}></Route> */}
+          {/* <Route path='/board/list' element={<BoardList></BoardList>}></Route> */}
+          <Route path='/board/list' element={<BoardList2></BoardList2>}></Route>
           <Route path='/board/write' element={<BoardWrite></BoardWrite>}></Route>
           <Route path="/board/:boardnum" element={<BoardGet></BoardGet>}></Route>
           <Route path="/board/modify" element={<BoardModify></BoardModify>}></Route>
