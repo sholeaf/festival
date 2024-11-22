@@ -23,13 +23,6 @@ create table bookmark(
     contentid varchar(50)
 );
 
-<<<<<<< HEAD:prsql.sql
-drop table bookmark;
-
-select * from bookmark;
-insert into bookmark(userid, contentid) value("apple", "2786391");
-=======
->>>>>>> b124c0ecb1aaca22968432834c0cd9666be129ce:sql.sql
 drop table bookmark;
 
 select * from bookmark where userid="apple";
@@ -40,9 +33,20 @@ create table user_photo(
 	userid varchar(50),
     systemname varchar(300)
 );
-insert into user_photo value("admin", "test.png");
+insert into user_photo value("banana", "test.png");
 select * from user_photo;
 drop table user_photo;
+delete from user_photo where userid = "banana";
+
+create table user_info(
+	userid varchar(50),
+    nameinfo char(3),
+    emailinfo char(3),
+    genderinfo char(3)
+); 
+insert into user_info value("apple", "T", "T", "T");
+select * from user_info;
+drop table user_info;
 
 ################## BOARD #####################
 create table board(

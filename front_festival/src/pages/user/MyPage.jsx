@@ -31,6 +31,12 @@ const MyPage = () => {
         addrdetail: '',
         addretc: ''
     });
+    const [userInfo, setUserInfo] = useState({
+        userid: '',
+        nameinfo: '',
+        emailinfo: '',
+        genderinfo: ''
+    });
 
     // 즐겨찾기 목록, contentid를 담은 배열
     const [bookmarks, setBookmarks] = useState([]);
@@ -481,6 +487,7 @@ const MyPage = () => {
             axios.get(`/api/user/userInfo`, { params: { userid: loginUser } })
                 .then((resp) => {
                     setUser(resp.data.user);
+                    setUserInfo(resp.data.userInfo);
                     setFile(resp.data.file);
                     setDeleteFile(resp.data.file);
                     setUpdateFile(resp.data.file);
@@ -666,23 +673,30 @@ const MyPage = () => {
                                             <tbody>
                                                 <tr>
                                                     <td>이름</td>
-                                                    <td>라디오박스(공개)</td>
-                                                    <td>라디오박스(비공개)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>성별</td>
-                                                    <td>라디오박스(공개)</td>
-                                                    <td>라디오박스(비공개)</td>
-                                                </tr>
-                                                <tr>
-                                                    <td>전화번호</td>
-                                                    <td>라디오박스(공개)</td>
-                                                    <td>라디오박스(비공개)</td>
+                                                    <td>
+                                                        <input type="radio" name="name" id="name1" value="T"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" name="name" id="name2" value="F"/>
+                                                    </td>
                                                 </tr>
                                                 <tr>
                                                     <td>이메일</td>
-                                                    <td>라디오박스(공개)</td>
-                                                    <td>라디오박스(비공개)</td>
+                                                    <td>
+                                                        <input type="radio" name="email" id="email1" value="T"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" name="email" id="email2" value="F"/>
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>성별</td>
+                                                    <td>
+                                                        <input type="radio" name="gender" id="gender1" value="T"/>
+                                                    </td>
+                                                    <td>
+                                                        <input type="radio" name="gender" id="gender2" value="F"/>
+                                                    </td>
                                                 </tr>
                                             </tbody>
                                         </table>

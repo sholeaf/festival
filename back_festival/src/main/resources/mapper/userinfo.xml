@@ -1,0 +1,25 @@
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.UserInfoMapper">
+	<insert id="insertUserInfo">
+		insert into user_info values(#{userid},#{nameinfo},#{emailinfo},#{genderinfo})
+	</insert>
+	<update id="updateUserInfo">
+		update user_info
+		set nameinfo=#{nameinfo}, emailinfo=#{emailinfo}, genderinfo=#{genderinfo}
+		where userid=#{userid}
+	</update>
+	<delete id="deleteUserInfo">
+		delete from user_info where userid=#{userid}
+	</delete>
+	<select id="getUserInfoByUserid">
+		select * from user_info where userid=#{userid}
+	</select>
+</mapper>
+
+
+
+
+
+

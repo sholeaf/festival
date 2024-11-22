@@ -39,8 +39,8 @@ function App() {
           <Route path="/notice/nmodify" element={<Nmodify></Nmodify>}></Route>
           <Route path="/notice/:noticenum" element={<Nget></Nget>}></Route>
           <Route path="/notice/adminpage" element={<Adminpage></Adminpage>}></Route>
-          {/* <Route path='/board/list' element={<BoardList></BoardList>}></Route> */}
-          <Route path='/board/list' element={<BoardListUserInfo></BoardListUserInfo>}></Route>
+          <Route path='/board/list' element={<BoardList></BoardList>}></Route>
+          {/* <Route path='/board/list' element={<BoardListUserInfo></BoardListUserInfo>}></Route> */}
           <Route path='/board/write' element={<BoardWrite></BoardWrite>}></Route>
           <Route path="/board/:boardnum" element={<BoardGet></BoardGet>}></Route>
           <Route path="/board/modify" element={<BoardModify></BoardModify>}></Route>

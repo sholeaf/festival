@@ -7,10 +7,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.UserDTO;
+import com.example.demo.domain.UserInfoDTO;
 
 public interface UserService {
 
-	boolean join(UserDTO user);
+	boolean join(UserDTO user, UserInfoDTO userInfo);
 	boolean login(String userid, String userpw);
 	boolean checkId(String userid);
 	boolean leaveId(String userid);

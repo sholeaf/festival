@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.UserDTO;
+import com.example.demo.domain.UserInfoDTO;
 import com.example.demo.service.UserService;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
@@ -47,7 +49,6 @@ public class UserController {
 	
 	@GetMapping("userInfo")
 	public ResponseEntity<HashMap<String, Object>> userInfo(@RequestParam String userid) {
-		System.out.println(userid);
 		HashMap<String, Object> result = service.getUser(userid);
 		if(result != null) {
 			return new ResponseEntity<HashMap<String, Object>>(result ,HttpStatus.OK);
@@ -75,8 +76,12 @@ public class UserController {
 	}
 	
 	@PostMapping("join")
-	public ResponseEntity<String> join(@RequestBody UserDTO user, HttpServletResponse resp) {
-		if(service.join(user)) {
+	public ResponseEntity<String> join(@RequestBody Map<String, Object> userData, HttpServletResponse resp) {
+	    // Map으로 받아서 user와 userInfo 분리하기
+	    UserDTO user = new ObjectMapper().convertValue(userData.get("user"), UserDTO.class);
+	    UserInfoDTO userInfo = new ObjectMapper().convertValue(userData.get("userInfo"), UserInfoDTO.class);
+
+		if(service.join(user, userInfo)) {
 			Cookie cookie = new Cookie("joinid", user.getUserid());
 			cookie.setPath("/");
 			cookie.setMaxAge(60);
