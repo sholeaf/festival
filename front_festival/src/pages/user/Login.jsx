@@ -1,4 +1,4 @@
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import '../../assets/style/usercss.css';
 import loginImg from '../../assets/images/로그인바탕.png'
 import naverImg from '../../assets/images/네이버.png'
@@ -12,6 +12,7 @@ import Modal from "../../components/Modal";
 
 const Login = () => {
     const navigate = useNavigate();
+    const location = useLocation();
     const [inputs, setInputs] = useState({ userid: "", userpw: "" })
     const { userid, userpw } = inputs;
     const [loginUser, setLoginUser] = useState("");
@@ -66,7 +67,7 @@ const Login = () => {
         axios.get('/api/user/login', { params: user }).then((resp) => {
             if (resp.data.trim() == "O") {
                 alert(`${userid}님 환영합니다!`);
-                navigate("/home");
+                navigate(location.state?.from || '/');
                 setLoginUser(userid);
             }
             else {

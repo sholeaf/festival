@@ -116,11 +116,13 @@ const BoardList = () => {
         if (loginUser == "" || loginUser == null) {
             alert("로그인 후 이용할 수 있습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
         if(loginUser == selectedUserId){
             alert("본인에게는 쪽지를 보낼 수 없습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
         setIsNoteModalOpen(true);  // 모달 열기
@@ -129,7 +131,6 @@ const BoardList = () => {
     // 모달 닫기
     const closeNoteModal = () => {
         setIsNoteModalOpen(false);
-        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
     };
 
     // 회원 정보 모달
@@ -137,6 +138,7 @@ const BoardList = () => {
         if (loginUser == "" || loginUser == null) {
             alert("로그인 후 이용할 수 있습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
         setIsModalOpen(true);  // 모달 열기
@@ -145,7 +147,6 @@ const BoardList = () => {
     // 모달 닫기
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
     };
 
     // 팝업열기
@@ -292,7 +293,7 @@ const BoardList = () => {
                         }
                         {
                             userInfo.genderinfo == "T" ?
-                                <div className="gender">성별 : {user.usergender}</div>
+                                <div className="gender">성별 : {user.usergender=="M"?"남성":"여성"}</div>
                                 :
                                 <div className="gender">성별 : 비공개</div>
                         }
