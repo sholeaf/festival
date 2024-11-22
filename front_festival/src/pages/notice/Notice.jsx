@@ -96,6 +96,7 @@ const Notice = () => {
                 console.log("응답 데이터:", resp.data);
                 setData(resp.data);
                 setPageMaker(resp.data.pageMaker);
+                console.log("공지게시판페이지메이커상태:",pageMaker);
                 setInputs(resp.data.pageMaker.cri.keyword);
             })
             .catch((error) => {
@@ -163,17 +164,17 @@ const Notice = () => {
         for (const notice of list) {
             console.log("notice데이터new확인:", notice);
             noticeList.push(
-                <div className="row" key={notice.noticenum} >
-                    <div>{notice.noticenum}</div>
-                    <div>{notice.new ? <sup className="noticenew">New</sup> : ""}
-                        <a className="nget" onClick={() => {
+                <div className="row" key={notice.noticenum} onClick={() => {
                     navigate(`/notice/${notice.noticenum}`, { state: cri });
                 }}>
+                    <div>{notice.noticenum}</div>
+                    <div>{notice.new ? <sup className="noticenew">New</sup> : ""}
+                        <a className="nget" >
                             {notice.noticetitle}
                             {notice.nreplyCnt !== 0 && <span id="nreply_cnt">[{notice.nreplyCnt}]</span>}
                         </a>
                     </div>
-                    <div><a onClick={() => openModal(notice.userid)}>{notice.userid}</a>
+                    <div><a onClick={(e) =>{e.stopPropagation(); openModal(notice.userid)}}>{notice.userid}</a>
                     </div>
                     <div>
                         {notice.noticeregdate}
@@ -232,7 +233,7 @@ const Notice = () => {
             />
                     </div>
                 </div>
-                <Pagination pageMaker={pageMaker} />
+                <Pagination pageMaker={pageMaker} url="/notice/list" />
 
                 {/* 관리자일 때만 글쓰기 버튼 보이기 */}
                 <div className={`nbtn_table ${isAdmin ? 'show' : ''}`}>

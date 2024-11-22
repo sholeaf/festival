@@ -13,13 +13,14 @@
     font-style: normal;
 }
 
-header{
+header {
     width: 100%;
     position: fixed;
     z-index: 100000;
     background-color: white;
-    top :0;
+    top: 0;
 }
+
 /* 헤더 */
 
 .header_area {
@@ -104,9 +105,11 @@ header{
 
 /* Join page */
 .joinpage {
-    width: 100%;
+    width: 99%;
     background: no-repeat url(../images/회원가입바탕.png);
-
+    background-size: cover;
+    height: 99%;
+    position: absolute;
 }
 
 .wrap {
@@ -119,26 +122,73 @@ header{
     cursor: pointer;
     text-align: center;
     font-size: 55px;
-    width: 250px;
+    width: 300px;
+    background-color: #fff;
+    border-radius: 15px;
+    margin-bottom: 10px;
+}
+
+
+.joinpage .wrap form {
+    width: 610px;
+    position: relative;
+}
+
+.joinpage .wrap form input {
+    width: 600px;
+    height: 50px;
+    border: none;
+    border-radius: 15px;
+    padding: 10px;
+    font-size: 15px;
+    margin: 5px;
+}
+
+.joinpage .wrap form #username,
+.joinpage .wrap form #useremail {
+    width: 400px;
+    display: inline-block;
+}
+
+.joinpage .wrap form .infoSelect {
+    width: 200px;
+    display: inline-block;
+    text-align: center;
+}
+
+.joinpage .wrap form .infoSelect div {
+    display: inline-block;
+    width: 80px;
     background-color: #fff;
     border-radius: 15px;
 }
 
-.joinpage .wrap form {
-    width: 500px;
+.joinpage .wrap form .infoSelect div input {
+    display: none;
 }
 
-.joinpage .wrap form input {
-    width: 500px;
+.joinpage .wrap form .infoSelect div label {
+    display: inline-block;
+    width: 80px;
+    border-radius: 15px;
+}
+
+.infoSelect div input[type="radio"]:checked+label {
+    background-color: lightblue;
+}
+
+.joinpage .wrap form .radioBox {
+    display: inline-block;
+    margin: 5px 0px 5px 5px;
+    width: 400px;
 }
 
 .joinpage .wrap form .flexBox {
     display: flex;
-    margin-top: 3px;
 }
 
 .joinpage .wrap form .flexBox .radio_item {
-    width: 250px;
+    width: 200px;
 }
 
 .joinpage .wrap form .flexBox .radio_item input {
@@ -147,8 +197,12 @@ header{
 
 .joinpage .wrap form .flexBox .radio_item label {
     display: inline-block;
-    width: 250px;
+    width: 200px;
     background-color: #fff;
+    height: 50px;
+    text-align: center;
+    padding: 15px;
+    border-radius: 15px;
 }
 
 .flexBox .radio_item input[type="radio"]:checked+label {
@@ -160,55 +214,83 @@ header{
     background-color: #fff;
 }
 
+#id_result {
+    position: absolute;
+    right: -360px;
+    top: 0;
+    width: 350px;
+    text-align: center;
+}
+
+#pw_result {
+    position: absolute;
+    right: -360px;
+    top: 80px;
+    width: 350px;
+    text-align: center;
+}
+
+#codeGet,
+#codeCheck {
+    display: inline-block;
+    width: 300px;
+    margin: 5px 0;
+}
+
+#codeGet {
+    margin-left: 5px;
+}
+
+.joinpage .wrap .joinBtn {
+    position: absolute;
+    right: 0;
+    margin: 5px;
+    background-color: #ccc;
+    border: none;
+    font-size: 16px;
+    border-radius: 15px;
+    width: 100px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    padding: 0;
+}
+
+.joinpage label,
+.joinpage input[type="button"] {
+    cursor: pointer;
+}
+
+
+
 /* joinpage end */
 
 /* modal */
-.login_wrap .main .modal-content {
-    background: white;
-    padding: 20px;
-    border-radius: 8px;
-    width: 900px;
-    position: relative;
-    top: 40px;
-}
-
-.login_wrap .main .modal-content .mflex{
-    display: flex;
-    justify-content: space-around;
-    margin-top: 15px;
-}
-.login_wrap .main .modal-content .mflex .findId, 
-.login_wrap .main .modal-content .mflex .findPw{
+.login_wrap .main .findId,
+.login_wrap .main .findPw {
     width: 400px;
-    height: 600px;
+    height: 300px;
     padding: 25px;
     border: 1px solid #ccc;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
-.login_wrap .main .modal-content .mflex .findId #result1, 
-.login_wrap .main .modal-content .mflex .findPw #result2{
+
+.login_wrap .main .findId #result1,
+.login_wrap .main .findPw #result2 {
+    margin-top: 30px;
     display: none;
 }
 
-.login_wrap .main .close-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    background: none;
-    border: none;
-    font-size: 20px;
-    cursor: pointer;
-}
 /* modal end */
 
 /* 임시 테스트용 */
-.login_btn{
+.login_btn {
     width: 150px;
 }
 
 /* myPage */
-.mypage{
+.mypage {
     width: 1000px;
     margin: 0 auto;
 }
@@ -217,7 +299,9 @@ header{
     user-select: none;
 }
 
-.mypage .profile, .mypage .bookmark, .mypage .community{
+.mypage .profile,
+.mypage .bookmark,
+.mypage .community {
     width: 800px;
     margin: 0 auto;
     margin-bottom: 50px;
@@ -227,65 +311,74 @@ header{
     position: relative;
 }
 
-.mypage .profile{
+.mypage .profile {
     display: flex;
     justify-content: space-evenly;
     margin-top: 80px;
 }
-.mypage .profile .info_area{
+
+.mypage .profile .info_area {
     display: flex;
     background-color: #fff;
     border-radius: 30px;
-    padding: 20px;
+    padding: 40px 20px;
 }
+
 .mypage .profile .info_area .img,
-.mypage .profile .info_area .info{
+.mypage .profile .info_area .info {
     height: 125px;
 }
-.mypage .profile .info_area .img{
+
+.mypage .profile .info_area .img {
     margin-right: 24px;
 }
-.mypage .profile .info_area img{
+
+.mypage .profile .info_area img {
     width: 125px;
     height: 125px;
     border-radius: 50%;
 }
-.mypage .profile .info_area .info{
+
+.mypage .profile .info_area .info {
     width: 400px;
 }
-.mypage .profile .info_area .info div{
+
+.mypage .profile .info_area .info div {
     margin-bottom: 13px;
 }
 
-.mypage .profile .btn_area{
+.mypage .profile .btn_area {
     background-color: #fff;
     border-radius: 30px;
     width: 125px;
     text-align: center;
 }
-.mypage .profile .btn_area p:hover{
+
+.mypage .profile .btn_area p:hover {
     font-weight: bold;
     color: blue;
     cursor: pointer;
 }
 
 /* 모달 프로필 변경 */
-#profileModify .img img{
+#profileModify .img img {
     width: 400px;
     height: 400px;
 }
 
 #closeCommunity,
-#closeBookmark{
+#closeBookmark {
     display: none;
 }
+
 /* 후기 */
 .mypage .community p,
-.mypage .bookmark p{
+.mypage .bookmark p {
     font-size: 18px;
     font-weight: bold;
     margin: 0px 0 15px 0;
 }
+
 .mypage .community #openCommunity,
 .mypage .community #closeCommunity,
 .mypage .bookmark #openBookmark,
@@ -294,8 +387,9 @@ header{
     top: 26px;
     position: absolute;
 }
+
 .mypage .community .list,
-.mypage .bookmark .list{
+.mypage .bookmark .list {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -304,25 +398,29 @@ header{
     border-radius: 30px;
     padding: 20px 0;
 }
+
 .mypage .community .list .board,
-.mypage .bookmark .list .board{
+.mypage .bookmark .list .board {
     width: 220px;
     height: 220px;
     margin: 0px 15px;
 }
+
 .mypage .community .list .board:nth-child(n+4),
-.mypage .bookmark .list .board:nth-child(n+4){
+.mypage .bookmark .list .board:nth-child(n+4) {
     width: 220px;
     height: 220px;
     margin: 25px 15px 0;
 }
+
 .mypage .community .list .board img,
-.mypage .bookmark .list .board img{
+.mypage .bookmark .list .board img {
     width: 220px;
     height: 180px;
 }
+
 .mypage .community .list .board span,
-.mypage .bookmark .list .board span{
+.mypage .bookmark .list .board span {
     display: inline-block;
     width: 100%;
     white-space: nowrap;
@@ -330,13 +428,52 @@ header{
     text-overflow: ellipsis;
     transition: all 0.3s ease;
 }
+
 .mypage .community .list .board span:hover,
-.mypage .bookmark .list .board span:hover{
+.mypage .bookmark .list .board span:hover {
     white-space: normal;
     overflow: visible;
     text-overflow: unset;
     background-color: #f0f0f0;
-    cursor: pointer;   
+    cursor: pointer;
+}
+
+.mypage .community .list .board:hover,
+.mypage .bookmark .list .board:hover {
+    cursor: pointer;
 }
 
 
+
+/* 보드 쪽지 및 회원 정보 팝업 / 모달 */
+#board_wrap .popup {
+    display: none;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}
+
+.BoardModal .img img{
+    width: 400px;
+    height: 400px;
+    padding: 25px;
+}
+.BoardModal .children{
+    position: relative;
+    width: 450px;
+    height: 530px;
+}
+.BoardModal .id{
+    margin: 30px 0 0 0;
+    font-size: 22px;
+}
+.BoardModal .closeBoardModal{
+    position: absolute;
+    right: 55px;
+    top: -10px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}

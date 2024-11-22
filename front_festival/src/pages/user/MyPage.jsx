@@ -7,6 +7,7 @@ import Modal from '../../components/Modal';
 import DaumPostCode from '../../components/DaumPostCode';
 import Button from '../../components/Button';
 import noimage from "../../assets/images/no-image.jpg";
+import Note from "../notes/Note";
 
 const MyPage = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -30,7 +31,13 @@ const MyPage = () => {
         addrdetail: '',
         addretc: ''
     });
-    
+    const [userInfo, setUserInfo] = useState({
+        userid: '',
+        nameinfo: '',
+        emailinfo: '',
+        genderinfo: ''
+    });
+
     // 즐겨찾기 목록, contentid를 담은 배열
     const [bookmarks, setBookmarks] = useState([]);
     // api로 가져온 축제 디테일 정보를 담은 배열
@@ -48,7 +55,6 @@ const MyPage = () => {
 
 
     const openModal1 = () => {
-        console.log(festival)
         setActiveModal('userModify');  // 'userModify' 모달을 여는 것
         setIsModalOpen(true);
     };
@@ -61,6 +67,10 @@ const MyPage = () => {
         setIsModalOpen(true);
     };
     const openModal4 = () => {
+        setActiveModal('infoModify');  // 'userDelete' 모달을 여는 것
+        setIsModalOpen(true);
+    };
+    const openModal5 = () => {
         setActiveModal('userDelete');  // 'userDelete' 모달을 여는 것
         setIsModalOpen(true);
     };
@@ -262,6 +272,9 @@ const MyPage = () => {
                     ...user,
                     userpw: newPw.value
                 }));
+                orgPw.value = "";
+                newPw.value = "";
+                newPw_re.value = "";
                 setIsModalOpen(false);
             }
             else {
@@ -320,11 +333,6 @@ const MyPage = () => {
 
     const profileModify = () => {
         const formData = new FormData();
-
-        console.log("file : " + file)
-        console.log("updateFile : " + updateFile)
-        console.log("deleteFile : " + deleteFile)
-
 
         if (deleteFile == updateFile) {
             alert("변경사항이 없습니다.");
@@ -409,8 +417,10 @@ const MyPage = () => {
     if (list && list.length > 0) {
         list.slice(0, isAllBoard ? list.length : 3).map((board) => {
             boardList.push(
-                <div key={board.boardnum} className='board'>
-                    <img src={board.titleImage} alt="" />
+                <div key={board.boardnum} className='board' onClick={() => {
+                    navigate(`/board/${board.boardnum}`)
+                }}>
+                    <img src={`/api/file/thumbnail?systemname=${board.titleImage}`} alt="" />
                     <span>{board.boardtitle}</span>
                 </div>
             )
@@ -422,19 +432,49 @@ const MyPage = () => {
     if (festival && festival.length > 0) {
         festival.slice(0, isAllBoard ? festival.length : 3).map((festival) => {
             festivalList.push(
-                <div key={festival.contentid} className='board' onClick={()=>{
-                    navigate(`/festival/${festival.contentid}`,{state:{API_KEY}})
+                <div key={festival.contentid} className='board' onClick={() => {
+                    navigate(`/festival/${festival.contentid}`, { state: { API_KEY } })
                 }}>
                     {
                         festival.firstimage ?
-                        <img src={festival.firstimage} alt="" />
-                        :
-                        <img src={noimage} alt="" />
+                            <img src={festival.firstimage} alt="" />
+                            :
+                            <img src={noimage} alt="" />
                     }
                     <span>{festival.title}</span>
                 </div>
             )
         })
+    }
+
+    const infoModify = () => {
+        const name = document.querySelector('input[name="name"]:checked').value;
+        const email = document.querySelector('input[name="email"]:checked').value;
+        const gender = document.querySelector('input[name="gender"]:checked').value;
+
+        const orgName = userInfo.nameinfo;
+        const orgEmail = userInfo.emailinfo;
+        const orgGender = userInfo.genderinfo;
+
+        if(orgName == name && orgEmail == email && orgGender == gender){
+            alert("변경사항이 없습니다.");
+            return;
+        }
+
+        const updateUserInfo = {
+            userid : loginUser,
+            nameinfo : name,
+            emailinfo : email,
+            genderinfo : gender
+        }
+
+        axios.put('/api/user/infoModify', updateUserInfo)
+            .then(resp=>{
+                if(resp.data.trim() == "O"){
+                    alert("정보 공개 여부가 변경되었습니다.");
+                    setIsModalOpen(false);
+                }
+            })
     }
 
     // 페이지 로드 시 관리자 여부를 확인하는 API 호출
@@ -477,6 +517,7 @@ const MyPage = () => {
             axios.get(`/api/user/userInfo`, { params: { userid: loginUser } })
                 .then((resp) => {
                     setUser(resp.data.user);
+                    setUserInfo(resp.data.userInfo);
                     setFile(resp.data.file);
                     setDeleteFile(resp.data.file);
                     setUpdateFile(resp.data.file);
@@ -559,15 +600,16 @@ const MyPage = () => {
                                     <p onClick={openModal1}>개인정보 변경</p>
                                     <p onClick={openModal2}>비밀번호 변경</p>
                                     <p onClick={openModal3}>프로필 변경</p>
-                                    <p onClick={openModal4}>회원 탈퇴</p>
+                                    <p onClick={openModal4}>정보공개 변경</p>
+                                    <p onClick={openModal5}>회원 탈퇴</p>
                                 </div>
                             </div>
                             <div className="bookmark">
                                 <p>즐겨찾기 목록</p>
                                 {
                                     festival.length > 3 ? (<span onClick={showBookmark} id='openBookmark'>더 보기...</span>)
-                                    :
-                                    (<></>)
+                                        :
+                                        (<></>)
                                 }
                                 <span onClick={closeBookmark} id='closeBookmark'>돌아가기</span>
                                 <div className='list'>
@@ -647,6 +689,72 @@ const MyPage = () => {
                                         <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
                                     </div>
                                 )}
+                                {activeModal === 'infoModify' && (
+                                    <div id='infoModify'>
+                                        <h3>정보공개 변경</h3>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>정보</th>
+                                                    <th>공개</th>
+                                                    <th>비공개</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>이름</td>
+                                                    <td>
+                                                        {userInfo.nameinfo == "T"? <input type="radio" name="name" id="name1" value="T" checked/>
+                                                        :
+                                                        <input type="radio" name="name" id="name1" value="T"/>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {userInfo.nameinfo == "F"? <input type="radio" name="name" id="name2" value="F" checked/>
+                                                        :
+                                                        <input type="radio" name="name" id="name2" value="F"/>
+                                                        }
+                                                        
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>이메일</td>
+                                                    <td>
+                                                        {userInfo.emailinfo == "T"? <input type="radio" name="email" id="email1" value="T" checked/>
+                                                        :
+                                                        <input type="radio" name="email" id="email1" value="T"/>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {userInfo.emailinfo == "F"? <input type="radio" name="email" id="email2" value="F" checked/>
+                                                        :
+                                                        <input type="radio" name="email" id="email2" value="F"/>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                                <tr>
+                                                    <td>성별</td>
+                                                    <td>
+                                                        {userInfo.genderinfo == "T"? <input type="radio" name="gender" id="gender1" value="T" checked/>
+                                                        :
+                                                        <input type="radio" name="gender" id="gender1" value="T"/>
+                                                        }
+                                                    </td>
+                                                    <td>
+                                                        {userInfo.genderinfo == "F"? <input type="radio" name="gender" id="gender2" value="F" checked/>
+                                                        :
+                                                        <input type="radio" name="gender" id="gender2" value="F"/>
+                                                        }
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                        <Button value={"변경"} onClick={infoModify}></Button>
+                                        <Button value={"취소"} onClick={() => {
+                                            setIsModalOpen(false)
+                                        }}></Button>
+                                    </div>
+                                )}
                                 {activeModal === 'userDelete' && (
                                     <div id='userDelete'>
                                         <h3>회원 탈퇴</h3>
@@ -661,6 +769,9 @@ const MyPage = () => {
                                     </div>
                                 )}
                             </Modal>
+                            <div>
+                                <Note loginUser={loginUser} />
+                            </div>
                         </div>
                     )}
                 </>

@@ -17,9 +17,19 @@ const Login = () => {
     const [loginUser, setLoginUser] = useState("");
     const [emailCode, setEmailCode] = useState("");
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [activeModal, setActiveModal] = useState('');
 
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
+    const openModal1 = () => {
+        setActiveModal('findId');
+        setIsModalOpen(true);
+    };
+    const openModal2 = () => {
+        setActiveModal('findPw');
+        setIsModalOpen(true);
+    };
+    const closeModal = () => {
+        setIsModalOpen(false);  // 모달을 닫는 함수
+    };
 
     const inputRef = useRef([]);
 
@@ -56,7 +66,7 @@ const Login = () => {
         axios.get('/api/user/login', { params: user }).then((resp) => {
             if (resp.data.trim() == "O") {
                 alert(`${userid}님 환영합니다!`);
-                navigate("/");
+                navigate("/home");
                 setLoginUser(userid);
             }
             else {
@@ -237,7 +247,7 @@ const Login = () => {
                                 }} />
                                 <div>
                                     <div className="text">
-                                        <p onClick={openModal}>아이디 찾기 / 비밀번호 찾기</p>
+                                        <p><span onClick={openModal1}>아이디 찾기</span> / <span onClick={openModal2}>비밀번호 찾기</span></p>
                                         <p onClick={() => {
                                             navigate("/user/join")
                                         }}>회원가입</p>
@@ -256,8 +266,8 @@ const Login = () => {
                     </div>
                 </div>
                 <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                    <div className="modal-content">
-                        <div className="mflex">
+                    {
+                        activeModal === 'findId' && (
                             <div className="findId">
                                 <h2>아이디 찾기</h2>
                                 <input type="email" name="useremail" id="useremail1" placeholder="이메일" />
@@ -269,6 +279,9 @@ const Login = () => {
                                     <p id="result_id"></p>
                                 </div>
                             </div>
+                        )}
+                    {
+                        activeModal === 'findPw' && (
                             <div className="findPw">
                                 <h2>비밀번호 찾기</h2>
                                 <input type="text" name="userId" id="userId" placeholder="아이디" />
@@ -281,10 +294,8 @@ const Login = () => {
                                     <p id="result_pw"></p>
                                 </div>
                             </div>
-                        </div>
-                    </div>
+                        )}
                 </Modal>
-
             </div>
         </div>
     )

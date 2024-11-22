@@ -285,8 +285,10 @@ const Nget = () => {
     }
 
     return (
-        <div id="wrap" className="nget">
+        <>
             <Header />
+        <div className="noticeWrap">
+        <div id="wrap" className="nget">
             <form id="noticeForm getNoticeForm" name="noticeForm">
                 <div className="ngettable">
                     <div className="ngetrow ngettitle">
@@ -342,6 +344,11 @@ const Nget = () => {
                         <div className="ngetTextarea">
                             <textarea name="noticecontents" readOnly value={notice.noticecontent}></textarea>
                         </div>
+                        <div className="filetextcontainer">
+                        <hr className="line-left" />
+                            <b className="filetext">첨부파일</b>
+                        <hr className="line-right" />
+                        </div>
                     </div>
                     {
     files.length === 0 ? (
@@ -383,17 +390,7 @@ const Nget = () => {
                             <a
                                 href={`/api/notice/file/download/${file.systemname}`}
                                 className="btn nownload-file-btn"
-                                download
-                                style={{
-                                    backgroundColor: 'rgb(179 222 245)',
-                                    color: 'white',
-                                    padding: '10px 20px',
-                                    borderRadius: '5px',
-                                    textAlign: 'center',
-                                    right: '20px',
-                                    position: 'relative'
-                                }}
-                            >
+                                download>
                                 다운로드
                             </a>
                         </div>
@@ -447,6 +444,8 @@ const Nget = () => {
                 <div ref={replyEndRef}></div>
             </div>
         </div>
+        </div>
+        </>
     )
 }
 

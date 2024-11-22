@@ -33,9 +33,20 @@ create table user_photo(
 	userid varchar(50),
     systemname varchar(300)
 );
-insert into user_photo value("admin", "test.png");
+insert into user_photo value("banana", "test.png");
 select * from user_photo;
 drop table user_photo;
+delete from user_photo where userid = "banana";
+
+create table user_info(
+	userid varchar(50),
+    nameinfo char(3),
+    emailinfo char(3),
+    genderinfo char(3)
+); 
+insert into user_info value("apple", "T", "T", "T");
+select * from user_info;
+drop table user_info;
 
 ################## BOARD #####################
 create table board(
