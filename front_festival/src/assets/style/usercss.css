@@ -13,13 +13,14 @@
     font-style: normal;
 }
 
-header{
+header {
     width: 100%;
     position: fixed;
     z-index: 100000;
     background-color: white;
-    top :0;
+    top: 0;
 }
+
 /* 헤더 */
 
 .header_area {
@@ -144,32 +145,35 @@ header{
 }
 
 .joinpage .wrap form #username,
-.joinpage .wrap form #useremail{
+.joinpage .wrap form #useremail {
     width: 400px;
     display: inline-block;
 }
 
-.joinpage .wrap form .infoSelect{
+.joinpage .wrap form .infoSelect {
     width: 200px;
     display: inline-block;
     text-align: center;
 }
 
-.joinpage .wrap form .infoSelect div{
+.joinpage .wrap form .infoSelect div {
     display: inline-block;
     width: 80px;
     background-color: #fff;
     border-radius: 15px;
 }
-.joinpage .wrap form .infoSelect div input{
+
+.joinpage .wrap form .infoSelect div input {
     display: none;
 }
-.joinpage .wrap form .infoSelect div label{
+
+.joinpage .wrap form .infoSelect div label {
     display: inline-block;
     width: 80px;
     border-radius: 15px;
 }
-.infoSelect div input[type="radio"]:checked+label{
+
+.infoSelect div input[type="radio"]:checked+label {
     background-color: lightblue;
 }
 
@@ -178,6 +182,7 @@ header{
     margin: 5px 0px 5px 5px;
     width: 400px;
 }
+
 .joinpage .wrap form .flexBox {
     display: flex;
 }
@@ -208,14 +213,16 @@ header{
 #pw_result {
     background-color: #fff;
 }
-#id_result{
+
+#id_result {
     position: absolute;
     right: -360px;
     top: 0;
     width: 350px;
     text-align: center;
 }
-#pw_result{
+
+#pw_result {
     position: absolute;
     right: -360px;
     top: 80px;
@@ -223,15 +230,18 @@ header{
     text-align: center;
 }
 
-#codeGet, #codeCheck{
+#codeGet,
+#codeCheck {
     display: inline-block;
     width: 300px;
     margin: 5px 0;
 }
-#codeGet{
+
+#codeGet {
     margin-left: 5px;
 }
-.joinpage .wrap .joinBtn{
+
+.joinpage .wrap .joinBtn {
     position: absolute;
     right: 0;
     margin: 5px;
@@ -247,7 +257,7 @@ header{
 }
 
 .joinpage label,
-.joinpage input[type="button"]{
+.joinpage input[type="button"] {
     cursor: pointer;
 }
 
@@ -256,8 +266,8 @@ header{
 /* joinpage end */
 
 /* modal */
-.login_wrap .main .findId, 
-.login_wrap .main .findPw{
+.login_wrap .main .findId,
+.login_wrap .main .findPw {
     width: 400px;
     height: 300px;
     padding: 25px;
@@ -265,20 +275,22 @@ header{
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
-.login_wrap .main .findId #result1, 
-.login_wrap .main .findPw #result2{
+
+.login_wrap .main .findId #result1,
+.login_wrap .main .findPw #result2 {
     margin-top: 30px;
     display: none;
 }
+
 /* modal end */
 
 /* 임시 테스트용 */
-.login_btn{
+.login_btn {
     width: 150px;
 }
 
 /* myPage */
-.mypage{
+.mypage {
     width: 1000px;
     margin: 0 auto;
 }
@@ -287,7 +299,9 @@ header{
     user-select: none;
 }
 
-.mypage .profile, .mypage .bookmark, .mypage .community{
+.mypage .profile,
+.mypage .bookmark,
+.mypage .community {
     width: 800px;
     margin: 0 auto;
     margin-bottom: 50px;
@@ -297,65 +311,74 @@ header{
     position: relative;
 }
 
-.mypage .profile{
+.mypage .profile {
     display: flex;
     justify-content: space-evenly;
     margin-top: 80px;
 }
-.mypage .profile .info_area{
+
+.mypage .profile .info_area {
     display: flex;
     background-color: #fff;
     border-radius: 30px;
     padding: 40px 20px;
 }
+
 .mypage .profile .info_area .img,
-.mypage .profile .info_area .info{
+.mypage .profile .info_area .info {
     height: 125px;
 }
-.mypage .profile .info_area .img{
+
+.mypage .profile .info_area .img {
     margin-right: 24px;
 }
-.mypage .profile .info_area img{
+
+.mypage .profile .info_area img {
     width: 125px;
     height: 125px;
     border-radius: 50%;
 }
-.mypage .profile .info_area .info{
+
+.mypage .profile .info_area .info {
     width: 400px;
 }
-.mypage .profile .info_area .info div{
+
+.mypage .profile .info_area .info div {
     margin-bottom: 13px;
 }
 
-.mypage .profile .btn_area{
+.mypage .profile .btn_area {
     background-color: #fff;
     border-radius: 30px;
     width: 125px;
     text-align: center;
 }
-.mypage .profile .btn_area p:hover{
+
+.mypage .profile .btn_area p:hover {
     font-weight: bold;
     color: blue;
     cursor: pointer;
 }
 
 /* 모달 프로필 변경 */
-#profileModify .img img{
+#profileModify .img img {
     width: 400px;
     height: 400px;
 }
 
 #closeCommunity,
-#closeBookmark{
+#closeBookmark {
     display: none;
 }
+
 /* 후기 */
 .mypage .community p,
-.mypage .bookmark p{
+.mypage .bookmark p {
     font-size: 18px;
     font-weight: bold;
     margin: 0px 0 15px 0;
 }
+
 .mypage .community #openCommunity,
 .mypage .community #closeCommunity,
 .mypage .bookmark #openBookmark,
@@ -364,8 +387,9 @@ header{
     top: 26px;
     position: absolute;
 }
+
 .mypage .community .list,
-.mypage .bookmark .list{
+.mypage .bookmark .list {
     display: flex;
     flex-wrap: wrap;
     width: 100%;
@@ -374,25 +398,29 @@ header{
     border-radius: 30px;
     padding: 20px 0;
 }
+
 .mypage .community .list .board,
-.mypage .bookmark .list .board{
+.mypage .bookmark .list .board {
     width: 220px;
     height: 220px;
     margin: 0px 15px;
 }
+
 .mypage .community .list .board:nth-child(n+4),
-.mypage .bookmark .list .board:nth-child(n+4){
+.mypage .bookmark .list .board:nth-child(n+4) {
     width: 220px;
     height: 220px;
     margin: 25px 15px 0;
 }
+
 .mypage .community .list .board img,
-.mypage .bookmark .list .board img{
+.mypage .bookmark .list .board img {
     width: 220px;
     height: 180px;
 }
+
 .mypage .community .list .board span,
-.mypage .bookmark .list .board span{
+.mypage .bookmark .list .board span {
     display: inline-block;
     width: 100%;
     white-space: nowrap;
@@ -400,17 +428,29 @@ header{
     text-overflow: ellipsis;
     transition: all 0.3s ease;
 }
+
 .mypage .community .list .board span:hover,
-.mypage .bookmark .list .board span:hover{
+.mypage .bookmark .list .board span:hover {
     white-space: normal;
     overflow: visible;
     text-overflow: unset;
     background-color: #f0f0f0;
-    cursor: pointer;   
+    cursor: pointer;
 }
+
 .mypage .community .list .board:hover,
-.mypage .bookmark .list .board:hover{
-    cursor: pointer;   
+.mypage .bookmark .list .board:hover {
+    cursor: pointer;
 }
 
 
+
+/* 보드 쪽지 및 회원 정보 팝업 / 모달 */
+#board_wrap .popup {
+    display: none;
+    position: fixed;
+    background-color: rgba(0, 0, 0, 0.7);
+    color: white;
+    padding: 10px;
+    border-radius: 5px;
+}

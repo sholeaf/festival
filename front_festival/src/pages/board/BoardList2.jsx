@@ -1,17 +1,41 @@
 import { useEffect, useState } from "react";
+import '../../assets/style/usercss.css';
 import Dropdown from "../../components/Dropdown";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Pagination from "../../components/Paginstion";
 import Header from "../../layout/Header";
 import NoteModal from "../../components/NoteModal";
+import Modal from "../../components/Modal";
 
 const BoardList = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [loginUser, setLoginUser] = useState("");
-    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
+    // 쪽지 모달 상태
+    const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+    // 회원 정보 모달 상태
+    const [isModalOpen, setIsModalOpen] = useState(false);
     const [selectedUserId, setSelectedUserId] = useState('');
+    const [user, setUser] = useState({
+        userid: '',
+        userpw: '',
+        username: '',
+        userphone: '',
+        useremail: '',
+        usergender: '',
+        zipcode: '',
+        addr: '',
+        addrdetail: '',
+        addretc: ''
+    });
+    const [userInfo, setUserInfo] = useState({
+        userid: '',
+        nameinfo: '',
+        emailinfo: '',
+        genderinfo: ''
+    });
+    const [userFile, setUserFile] = useState();
 
     const [data, setData] = useState();
     const [cri, setCri] = useState({
@@ -87,8 +111,29 @@ const BoardList = () => {
         }
         return textContent;
     };
-    const openModal = (userId) => {
-        setSelectedUserId(userId);  // 클릭된 작성자의 userid를 저장
+    // 쪽지 보내기 모달
+    const openNoteModal = () => {
+        if(loginUser == "" || loginUser == null){
+            alert("로그인 후 이용할 수 있습니다.");
+            document.getElementsByClassName('popup')[0].style.display = "none";
+            return;
+        }
+        setIsNoteModalOpen(true);  // 모달 열기
+    };
+
+    // 모달 닫기
+    const closeNoteModal = () => {
+        setIsNoteModalOpen(false);
+        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
+    };
+
+    // 회원 정보 모달
+    const openModal = () => {
+        if(loginUser == "" || loginUser == null){
+            alert("로그인 후 이용할 수 있습니다.");
+            document.getElementsByClassName('popup')[0].style.display = "none";
+            return;
+        }
         setIsModalOpen(true);  // 모달 열기
     };
 
@@ -99,10 +144,39 @@ const BoardList = () => {
     };
 
     // 팝업열기
-    const openPopup = (userid) => {
-        
-    }
+    const openPopup = (e, userId) => {
+        setSelectedUserId(userId);
+        const rect = e.target.getBoundingClientRect()
+        console.log(rect.left)
 
+        const popup = document.getElementsByClassName('popup')[0]
+        popup.style.display = "block";
+        popup.style.left = rect.left + "px";
+        popup.style.top = (rect.top + 20) + "px";
+
+        
+        const handleClickOutside = (event) => {
+            if (!popup.contains(event.target) && event.target !== e.target) {
+                popup.style.display = "none"; // 팝업 숨기기
+                document.body.removeEventListener('click', handleClickOutside); // 이벤트 리스너 제거
+            }
+        };
+        // body에 클릭 이벤트 리스너 추가
+        document.body.addEventListener('click', handleClickOutside);
+
+        axios.get('/api/user/userInfo', { params: { userid: userId } })
+            .then(resp => {
+                if (resp) {
+                    console.log(resp.data)
+                    setUser(resp.data.user)
+                    setUserInfo(resp.data.userInfo)
+                    setUserFile(resp.data.file)
+                }
+            })
+    }
+    
+    
+    
 
     if (!data) {
         return <>로딩중...</>
@@ -121,7 +195,7 @@ const BoardList = () => {
                         </div>
                         <div className="boardbox3 boardbox">
                             <div className="boardbox4 boardbox">
-                                <div className="getBoard"><a onClick={() => openPopup(board.userid)}>{board.userid}</a></div>
+                                <div className="getBoard"><a onClick={(e) => openPopup(e, board.userid)}>{board.userid}</a></div>
                                 <div>{board.boardregdate}</div>
                             </div>
                             <div className="boardbox5 boardbox">
@@ -147,7 +221,6 @@ const BoardList = () => {
             <>
                 <Header></Header>
                 <div id="board_wrap" className="list">
-
                     <div>
                         <a className="btn" onClick={() => {
                             if (loginUser == null || loginUser == "") {
@@ -191,11 +264,21 @@ const BoardList = () => {
                             <input type="hidden" name="amount" />
                         </form>
                     </div>
+                    <div className="popup">
+                        <a onClick={() => openNoteModal()}>쪽지 보내기</a>
+                        <a onClick={() => openModal()}>회원 정보</a>
+                    </div>
                 </div>
+                <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                    <div>회원정보</div>
+                    <div>
+                        <img src={`/api/user/file/thumbnail/${userFile}`} alt="" />
+                    </div>
+                </Modal>
                 <div>
                     <NoteModal
-                        isOpen={isModalOpen}
-                        closeModal={closeModal}
+                        isOpen={isNoteModalOpen}
+                        closeModal={closeNoteModal}
                         toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
                         loginUser={loginUser}      // 로그인된 유저의 userid를 전달
                     />

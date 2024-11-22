@@ -17,6 +17,7 @@ import BoardList from './pages/board/BoardList';
 import BoardList2 from './pages/board/BoardList2';
 import BoardGet from './pages/board/BoardGet';
 import BoardModify from './pages/board/BoardModify';
+import { useEffect } from 'react';
 
 
 

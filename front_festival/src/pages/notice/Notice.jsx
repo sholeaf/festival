@@ -232,7 +232,7 @@ const Notice = () => {
             />
                     </div>
                 </div>
-                <Pagination pageMaker={pageMaker} />
+                <Pagination pageMaker={pageMaker} url="/notice/list" />
 
                 {/* 관리자일 때만 글쓰기 버튼 보이기 */}
                 <div className={`nbtn_table ${isAdmin ? 'show' : ''}`}>
