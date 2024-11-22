@@ -6,6 +6,12 @@ const Hobby = ({name,data}) => {
     const [result,setResult] = useState("")
     const inputRef = useRef(null);
     
+    const handleKeyDown = (e)=>{
+        if (e.key === 'Enter'){
+            addData();
+        }
+    }
+    
     const addData = () => {
         if(inputRef.current.value == ""){
             alert(`${name}를(을) 입력해 주세요.`);
@@ -19,7 +25,7 @@ const Hobby = ({name,data}) => {
             return;
         }
         if(!/^[가-힣a-zA-Z\s]+$/.test(inputRef.current.value)){
-            alert(`정확한 ${name}를(을) 입력해 주세요.`)
+            alert(`정확한 ${name}를 입력해 주세요.`)
             inputRef.current.focus();
             inputRef.current.value = "";
             return;
@@ -55,7 +61,7 @@ const Hobby = ({name,data}) => {
     return (
         <div>
             <div className="hobby_input">
-                <input type="text"  name="hobby" ref={inputRef}/><Button value="추가" onClick={addData}/>
+                <input type="text"  name="hobby" ref={inputRef} onKeyDown={handleKeyDown}/><Button value="추가"  onClick={addData}/>
             </div>
             <div className="hobby_list">
                 {

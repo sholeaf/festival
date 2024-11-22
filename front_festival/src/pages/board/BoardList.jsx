@@ -112,7 +112,7 @@ const BoardList = () =>{
                         <div className="board_title getBoard"  onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{board.boardtitle}</div>
                         <div className="boardbox2 boardbox">
                             <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{extractTextFromHTML(board.boardcontent, 203)}</div>
-                            <div ><img src={board.titleImage? `/api/file/thumbnail?systemname=`+board.titleImage:""} className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}></img></div>
+                            <div><img src={board.titleImage? `/api/file/thumbnail?systemname=`+board.titleImage:""} className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}></img></div>
                         </div>
                         <div className="boardbox3 boardbox">
                             <div className="boardbox4 boardbox">
@@ -124,16 +124,6 @@ const BoardList = () =>{
                                 <div>댓글 {board.replyCnt}</div>
                             </div>
                         </div>
-                        
-                        {/* <div>
-                            <a onClick={() => openModal(board.userid)}>{board.userid}</a>
-                            </div>
-                        <div>{board.boardregdate}</div>
-                        <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{board.boardtitle}</div>
-                        <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{extractTextFromHTML(board.boardcontent, 210)}</div>
-                        <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}><img src={board.titleImage? `/api/file/thumbnail?systemname=`+board.titleImage:""} ></img></div>
-                        <div>좋아요 {board.likeCnt}</div>
-                        <div>댓글 {board.replyCnt}</div> */}
                     </div>
                 )
             }
@@ -142,7 +132,6 @@ const BoardList = () =>{
             <>
             <Header></Header>
             <div id="board_wrap" className="list">
-                
                 <div>
                     <a className="btn" onClick={()=> {
                         if(loginUser == null || loginUser == ""){
@@ -150,25 +139,6 @@ const BoardList = () =>{
                             return;
                         }
                         navigate("/board/write",{state:cri})}}>글쓰기</a>
-                </div>
-                <div className="tbody">
-                    <div className="board_obj">
-                        <div className="board_title">제목</div>
-                        <div className="boardbox2 boardbox">
-                            <div>내용</div>
-                            <div>이미지</div>
-                        </div>
-                        <div className="boardbox3 boardbox">
-                            <div className="boardbox4 boardbox">
-                                <div>아이디</div>
-                                <div>등록시간</div>
-                            </div>
-                            <div className="boardbox5 boardbox">
-                                <div>좋아요</div>
-                                <div>댓글</div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
                 <div style={{height:"30px"}}>
                 </div>

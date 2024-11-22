@@ -14,6 +14,7 @@ const BoardWrite = () => {
   const [tempImages, setTempImages] = useState([]);
   const navigate = useNavigate();
   const cri = useLocation().state;
+  const [loginUser, setLoginUser] = useState("");
 
   const change  = (e)=>{
     const {name,value} = e.target;
@@ -53,12 +54,6 @@ const BoardWrite = () => {
       }
     });
   };
-
-  useEffect(() => {
-    if (tempImages) {
-      console.log("image: " + tempImages); // tempImage가 업데이트될 때마다 실행
-    }
-  }, [tempImages]);
 
   const modules = useMemo(
     () => ({
@@ -141,10 +136,17 @@ const BoardWrite = () => {
   useEffect(()=>{
     axios.get(`/api/user/loginCheck`).then(resp=>{
         if(resp.data.trim() != ""){
-            document.writeForm.userid.value = resp.data.trim();
+            // document.writeForm.userid.value = resp.data.trim();
+            setLoginUser(resp.data.trim());
+        }
+        else{
+          alert("로그인 하셔야 글을 쓸 수 있습니다!");
+          navigate(`/board/list`,{state: cri});
         }
     })
-  })
+    const writeForm = document.writeForm;
+    writeForm.boardtitle.focus();
+  },[])
 
   return (
     <>
@@ -158,24 +160,28 @@ const BoardWrite = () => {
           </tr>
           <tr>
               <th>아이디</th>
-              <td><div>
-                            <input type="text" name="userid" maxLength={50} readOnly />
-                        </div></td>
+              <td>{loginUser == ""?"":loginUser}</td>
+              {/* <td><div>
+                  <input type="text" name="userid" maxLength={50} readOnly />
+              </div>
+              </td> */}
           </tr>
           <tr>
             <th>태그</th>
-            <Hobby name={"태그"}></Hobby>
+            <td>
+                <Hobby name={"태그"}></Hobby>
+            </td>
           </tr>
         </table>
         <div className="text-editor" style={{height:"550px"}}>
           {/* <CustomToolbar/> */}
           <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"500px"}}/>
         </div>
-        <div>
+        <div style={{textAlign:"center"}}>
           <input type="button" value="작성완료" onClick={regist}></input>
           <input type="button" value="돌아가기" onClick={()=>{
             canselWrite();
-            navigate('/board/list')}}></input>
+            navigate('/board/list',{state: cri})}}></input>
         </div>
       </form>
     </div>
