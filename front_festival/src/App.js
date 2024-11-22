@@ -14,7 +14,6 @@ import Join from './pages/user/Join';
 import DetailFestival from './pages/festival/DetailFestival';
 import BoardWrite from './pages/board/BoardWrite';
 import BoardList from './pages/board/BoardList';
-import BoardList2 from './pages/board/BoardList2';
 import BoardGet from './pages/board/BoardGet';
 import BoardModify from './pages/board/BoardModify';
 import MainLogin from './pages/MainLogin';
@@ -38,8 +37,7 @@ function App() {
           <Route path="/notice/nmodify" element={<Nmodify></Nmodify>}></Route>
           <Route path="/notice/:noticenum" element={<Nget></Nget>}></Route>
           <Route path="/notice/adminpage" element={<Adminpage></Adminpage>}></Route>
-          {/* <Route path='/board/list' element={<BoardList></BoardList>}></Route> */}
-          <Route path='/board/list' element={<BoardList2></BoardList2>}></Route>
+          <Route path='/board/list' element={<BoardList></BoardList>}></Route>
           <Route path='/board/write' element={<BoardWrite></BoardWrite>}></Route>
           <Route path="/board/:boardnum" element={<BoardGet></BoardGet>}></Route>
           <Route path="/board/modify" element={<BoardModify></BoardModify>}></Route>

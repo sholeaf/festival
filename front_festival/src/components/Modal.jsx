@@ -24,7 +24,7 @@ const Modal = ({isOpen, children, closeModal, modalStyle }) => {
             textAlign:"center",
             ...modalStyle
            }}  onClick={(e) => e.stopPropagation()} >
-            <div>{children}</div>
+            <div className="children">{children}</div>
            </div>
         </div>
     )
