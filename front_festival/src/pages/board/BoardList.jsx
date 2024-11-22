@@ -4,11 +4,14 @@ import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
 import Pagination from "../../components/Paginstion";
 import Header from "../../layout/Header";
+import NoteModal from "../../components/NoteModal";
 
 const BoardList = () =>{
     const navigate = useNavigate();
     const location = useLocation();
     const [loginUser, setLoginUser] = useState("");
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
+    const [selectedUserId, setSelectedUserId] = useState(''); 
 
     const [data, setData] = useState();
     const [cri,setCri] = useState({
@@ -84,6 +87,17 @@ const BoardList = () =>{
         }
         return textContent;
       };
+      const openModal = (userId) => {
+        setSelectedUserId(userId);  // 클릭된 작성자의 userid를 저장
+        setIsModalOpen(true);  // 모달 열기
+    };
+
+    // 모달 닫기
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
+    };
+
 
     if(!data){
         return <>로딩중...</>
@@ -95,13 +109,31 @@ const BoardList = () =>{
             for(const board of list){
                 elList.push(
                     <div className="board_obj" key={board.boardnum} >
-                        <div>{board.userid}</div>
+                        <div className="board_title getBoard"  onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{board.boardtitle}</div>
+                        <div className="boardbox2 boardbox">
+                            <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{extractTextFromHTML(board.boardcontent, 203)}</div>
+                            <div ><img src={board.titleImage? `/api/file/thumbnail?systemname=`+board.titleImage:""} className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}></img></div>
+                        </div>
+                        <div className="boardbox3 boardbox">
+                            <div className="boardbox4 boardbox">
+                                <div className="getBoard"><a onClick={() => openModal(board.userid)}>{board.userid}</a></div>
+                                <div>{board.boardregdate}</div>
+                            </div>
+                            <div className="boardbox5 boardbox">
+                                <div>좋아요 {board.likeCnt}</div>
+                                <div>댓글 {board.replyCnt}</div>
+                            </div>
+                        </div>
+                        
+                        {/* <div>
+                            <a onClick={() => openModal(board.userid)}>{board.userid}</a>
+                            </div>
                         <div>{board.boardregdate}</div>
                         <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{board.boardtitle}</div>
                         <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{extractTextFromHTML(board.boardcontent, 210)}</div>
                         <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}><img src={board.titleImage? `/api/file/thumbnail?systemname=`+board.titleImage:""} ></img></div>
                         <div>좋아요 {board.likeCnt}</div>
-                        <div>댓글 {board.replyCnt}</div>
+                        <div>댓글 {board.replyCnt}</div> */}
                     </div>
                 )
             }
@@ -121,13 +153,21 @@ const BoardList = () =>{
                 </div>
                 <div className="tbody">
                     <div className="board_obj">
-                        <div>아이디</div>
-                        <div>등록시간</div>
-                        <div>제목</div>
-                        <div>내용</div>
-                        <div>이미지</div>
-                        <div>좋아요</div>
-                        <div>댓글</div>
+                        <div className="board_title">제목</div>
+                        <div className="boardbox2 boardbox">
+                            <div>내용</div>
+                            <div>이미지</div>
+                        </div>
+                        <div className="boardbox3 boardbox">
+                            <div className="boardbox4 boardbox">
+                                <div>아이디</div>
+                                <div>등록시간</div>
+                            </div>
+                            <div className="boardbox5 boardbox">
+                                <div>좋아요</div>
+                                <div>댓글</div>
+                            </div>
+                        </div>
                     </div>
                 </div>
                 <div style={{height:"30px"}}>
@@ -146,6 +186,14 @@ const BoardList = () =>{
                     </form>
                 </div>
             </div>
+            <div>
+                    <NoteModal
+                isOpen={isModalOpen}
+                closeModal={closeModal}
+                toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
+                loginUser={loginUser}      // 로그인된 유저의 userid를 전달
+            />
+                    </div>
             </>
         )
     }

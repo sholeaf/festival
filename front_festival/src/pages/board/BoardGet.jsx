@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/Button";
 import Header from "../../layout/Header";
+import NoteModal from "../../components/NoteModal";
 
 const BoardGet = () =>{
     const {boardnum} = useParams();
@@ -19,28 +20,45 @@ const BoardGet = () =>{
     const [loginUser, setLoginUser] = useState("");
     const [checkLike, setcheckLike] = useState();
 
+    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
+    const [selectedUserId, setSelectedUserId] = useState(''); 
+
     useEffect(()=>{
         getData();
-        axios.get(`/api/user/loginCheck`).then(resp=>{
-            if(resp.data.trim() != ""){
-                setLoginUser(resp.data.trim());
-            }
-        })
-        axios.get(`/api/board/like/${boardnum}?userid=${loginUser}`).then(resp=>{
-            resp.data? setcheckLike(true) : setcheckLike(false);
-        })
     },[])
     
+    const openModal = (userId) => {
+        setSelectedUserId(userId);  // 클릭된 작성자의 userid를 저장
+        setIsModalOpen(true);  // 모달 열기
+    };
+
+    // 모달 닫기
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
+    };
+
+
     const getData = async () => {
+        await axios.get(`/api/user/loginCheck`).then(resp=>{
+            if(resp.data.trim() != ""){
+                setLoginUser(resp.data.trim());
+                axios.get(`/api/board/like/${boardnum}?userid=${resp.data}`).then(resp=>{
+                    resp.data? setcheckLike(true) : setcheckLike(false);
+                })
+            }
+        })
         const response = await axios.get(`/api/board/${boardnum}`);
         setData(response.data);
     };
+    
     window.addEventListener('popstate', (e)=>{
         // navigate('/board/list');
         e.preventDefault();
     });
     
     useEffect(()=>{
+        
         axios.get(`/api/reply/${boardnum}/${nowPage}`)
         .then(resp => {
             setList(resp.data.list);
@@ -225,7 +243,6 @@ const BoardGet = () =>{
         );
     };
     const removeReply = (replynum) =>{
-        console.log(replynum);
         axios.delete(`/api/reply/${replynum}`)
         .then(resp => {
             alert(`댓글 삭제 완료!`)
@@ -282,7 +299,9 @@ const BoardGet = () =>{
             replyList.push(
                 <li className={`li${reply.replynum} row`} key={`li${reply.replynum}`}>
                     <div className="row rrow">
-                        <strong className={`userid${reply.userid}`}>{reply.userid}</strong>
+                    <a onClick={() => openModal(reply.userid)}><strong className={`userid${reply.userid}`}>{reply.userid}</strong> </a>
+
+                        
                         <div className={`reply${reply.replynum}`}>
                             {reply.reportcnt < 5 ?(
                                 <NormalReply reply={reply} />
@@ -312,11 +331,14 @@ const BoardGet = () =>{
             
         }
 
+        
+
         return(
             <>
             <Header></Header>
             <div className="boardget_wrap">
-                <div className="bgUserid"><strong>{data.userid}</strong></div>
+                <div className="bgUserid"><a onClick={() => openModal(data.userid)}><strong>{data.userid}</strong></a>
+                </div>
                 <div className="bgTitle"><strong>{data.boardtitle}</strong></div>
                 <div>
                     <div onClick={reportBoard}>신고하기</div>
@@ -325,10 +347,8 @@ const BoardGet = () =>{
                 <div className="bgContent">
                     <div dangerouslySetInnerHTML={{ __html: data.boardcontent }}/>
                 </div>
-                <div>{ checkLike? 
-                    <Button value="좋아요취소" onClick={like}></Button>
-                    :
-                    <Button value="좋아요" onClick={like}></Button>
+                <div>{ checkLike? <Button value="좋아요취소" onClick={like}></Button>
+                    :<Button value="좋아요" onClick={like}></Button>
                     }
                 </div>
                 <div className="btnArea">
@@ -376,6 +396,14 @@ const BoardGet = () =>{
                     <div ref={replyEndRef}></div>
                 </div>
             </div>
+            <div>
+                    <NoteModal
+                isOpen={isModalOpen}
+                closeModal={closeModal}
+                toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
+                loginUser={loginUser}      // 로그인된 유저의 userid를 전달
+            />
+                    </div>
             </>
         )
     }
