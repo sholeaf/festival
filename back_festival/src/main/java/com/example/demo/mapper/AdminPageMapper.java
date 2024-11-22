@@ -17,7 +17,7 @@ public interface AdminPageMapper {
 	List<BoardDTO> findReportedBoards();
 	List<BoardDTO> findByReportcntGreaterThanEqual(int i);
 	List<BoardDTO> getList(Criteria cri);
-	long getTotal(Criteria cri);
+	long getListReporoTotal(Criteria cri);
 	Optional<BoardDTO> findById(long boardnum);
 	void deleteList(BoardDTO boardDTO);
 	int getReportList(Long boardnum);
@@ -30,4 +30,5 @@ public interface AdminPageMapper {
 	int findBoardByReport(long boardnum);
 	void deleteReportList(long boardnum);
 	int deleteReply(long replynum);
+	long getReplyReportTotal(Criteria cri);
 }

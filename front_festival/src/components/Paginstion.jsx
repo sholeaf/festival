@@ -9,11 +9,7 @@ const Pagination = ({ pageMaker, url }) => {
     const pagenum = cri.pagenum;
     const location = useLocation();
     const [stateCri, setStateCri] = useState(cri);
-    useEffect(() => {
-        if (location.state) {
-            setStateCri(location.state);  // location.state가 바뀌면 cri 상태 업데이트
-        }
-    }, [location.state]);
+    
     const elList = [];
 
     const clickBtn = (e, pageNumber) => {
@@ -25,9 +21,9 @@ const Pagination = ({ pageMaker, url }) => {
             amount: cri.amount,
             type: cri.type,
             keyword: cri.keyword,
-            startrow: (target - 1) * cri.amount // startrow 계산
+            startrow: cri.startrow
         };
-        setStateCri(temp);
+        
         navigate(`${url}?pagenum=${pageNumber}`, { state:temp });
     };
 
