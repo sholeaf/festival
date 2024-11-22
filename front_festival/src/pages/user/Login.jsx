@@ -56,7 +56,7 @@ const Login = () => {
         axios.get('/api/user/login', { params: user }).then((resp) => {
             if (resp.data.trim() == "O") {
                 alert(`${userid}님 환영합니다!`);
-                navigate("/");
+                navigate("/home");
                 setLoginUser(userid);
             }
             else {
