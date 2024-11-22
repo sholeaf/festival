@@ -17,7 +17,7 @@ import BoardList from './pages/board/BoardList';
 import BoardList2 from './pages/board/BoardList2';
 import BoardGet from './pages/board/BoardGet';
 import BoardModify from './pages/board/BoardModify';
-import { useEffect } from 'react';
+import MainLogin from './pages/MainLogin';
 
 
 
@@ -28,6 +28,7 @@ function App() {
         <Routes>
           <Route path="/" element={<Main></Main>}></Route>
           <Route path="/festival" element={<Festival></Festival>}></Route>
+          <Route path="/home" element={<MainLogin></MainLogin>}></Route>
           <Route path="/festival/:contentid" element={<DetailFestival></DetailFestival>}></Route>
           <Route path="/user/mypage" element={<MyPage></MyPage>}></Route>
           <Route path="/user/login" element={<Login></Login>}></Route>

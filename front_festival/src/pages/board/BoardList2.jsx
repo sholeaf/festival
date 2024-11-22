@@ -272,8 +272,27 @@ const BoardList = () => {
                 <Modal isOpen={isModalOpen} closeModal={closeModal}>
                     <div>회원정보</div>
                     <div>
-                        <img src={`/api/user/file/thumbnail/${userFile}`} alt="" />
+                        <img src={`/api/user/file/thumbnail/${userFile}`}/>
                     </div>
+                    {
+                        userInfo.nameinfo == "T"?
+                        <div>이름 : {user.username}</div>
+                        :
+                        <div>이름 : 비공개</div>
+                    }
+                    {
+                        userInfo.genderinfo == "T"?
+                        <div>성별 : {user.usergender}</div>
+                        :
+                        <div>성별 : 비공개</div>
+                    }
+                    {
+                        userInfo.emailinfo == "T"?
+                        <div>이메일 : {user.useremail}</div>
+                        :
+                        <div>이메일 : 비공개</div>
+                    }
+
                 </Modal>
                 <div>
                     <NoteModal
