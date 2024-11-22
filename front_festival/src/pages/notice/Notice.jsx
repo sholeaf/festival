@@ -96,6 +96,7 @@ const Notice = () => {
                 console.log("응답 데이터:", resp.data);
                 setData(resp.data);
                 setPageMaker(resp.data.pageMaker);
+                console.log("공지게시판페이지메이커상태:",pageMaker);
                 setInputs(resp.data.pageMaker.cri.keyword);
             })
             .catch((error) => {

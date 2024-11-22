@@ -19,6 +19,8 @@ const Adminpage = (props) => {
 
     useEffect(() => {
         console.log("상태업데이트");
+        console.log("location.state:", location.state);
+        console.log("sendedCri 상태:", sendedCri);
     }, [replyReportList, boardList]);
 
     // 로그인 체크
@@ -50,7 +52,15 @@ const Adminpage = (props) => {
         next: false,
         cri: null
     });
-
+    const [replyPageMaker, setReplyPageMaker] = useState({
+        startPage: 1,
+        endPage: 1,
+        realEnd: 1,
+        total: 0,
+        prev: false,
+        next: false,
+        cri: null
+      });
     // 모달창
     const [modalData, setModalData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -100,49 +110,53 @@ const Adminpage = (props) => {
         }
     };
 
-    useEffect(() => {
-        const temp = {
-            pagenum: cri.pagenum,
-            amount: cri.amount,
-            type: cri.type,
-            keyword: cri.keyword,
-            startrow: cri.startrow
-        };
+    // 게시글 신고 목록
+useEffect(() => {
+    const temp = {
+        pagenum: cri.pagenum,
+        amount: cri.amount,
+        type: cri.type,
+        keyword: cri.keyword,
+        startrow: cri.startrow
+    };
+    axios.get(`/api/adminpage/${cri.pagenum}`, { params: cri })
+    .then((resp) => {
 
-        axios.get(`/api/adminpage/${cri.pagenum}`, { params: temp })
-            .then((resp) => {
-                setData(resp.data);
-                console.log("신고게시판호출",resp.data)           
-                setPageMaker(resp.data.pageMaker);
-                console.log("pageMaker 데이터", resp.data.pageMaker);
-                setInputs(resp.data.pageMaker.cri.keyword);
-            })
-            .catch((error) => {
-                console.error('API 호출 오류:', error);
-            });
-    }, [cri, boardList]);
+            setData(resp.data);
+            setPageMaker(resp.data.pageMaker);
+            console.log("게시글 pageMaker 데이터:", resp.data.pageMaker);
+            setInputs(resp.data.pageMaker.cri.keyword);
+        })
+        .catch((error) => {
+            console.error('게시글 API 호출 오류:', error);
+        });
+}, [cri, boardList]);  // cri만 의존성 배열에 넣어서 cri 변경 시만 호출
 
-    // 댓글신고목록
-    useEffect(() => {
-        const temp = {
-            pagenum: cri.pagenum,
-            amount: cri.amount,
-            type: cri.type,
-            keyword: cri.keyword,
-            startrow: cri.startrow
-        };
-        axios.get(`/api/adminpage/replyreportlist/${cri.pagenum}`, {params: temp})
-            .then((resp) => {
-                console.log("댓글신고목록 api 요청", resp.data);
-                setReplyReportList(resp.data);
-                setPageMaker(resp.data.pageMaker);
-                setInputs(resp.data.pageMaker.cri.keyword);
-                setModalData(Array.isArray(resp.data.board) ? resp.data.board : []);
-            })
-            .catch((error) => {
-                console.log("댓글 신고 목록 오류", error);
-            });
-    }, [cri, test]);
+
+    // 댓글 신고 목록
+useEffect(() => {
+    const temp = {
+        pagenum: cri.pagenum,
+        amount: cri.amount,
+        type: cri.type,
+        keyword: cri.keyword,
+        startrow: cri.startrow
+    };
+    console.log("댓글cri전송:", cri);
+    axios.get(`/api/adminpage/replyreportlist/${cri.pagenum}`, { params: cri })
+    .then((resp) => {
+            setReplyReportList(resp.data);
+            console.log("댓글데이터내용",resp.data);
+            setReplyPageMaker(resp.data.pageMaker);
+            console.log("댓글 신고 pageMaker 데이터:", resp.data.pageMaker);
+            console.log("댓글페이지메이커셋팅:",replyPageMaker);
+            setInputs(resp.data.pageMaker.cri.keyword);
+            setModalData(Array.isArray(resp.data.board) ? resp.data.board : []);
+        })
+        .catch((error) => {
+            console.log("댓글 신고 목록 오류:", error);
+        });
+}, [cri, test]); 
 
     useEffect(() => {
         if (location.state) {
@@ -384,7 +398,7 @@ const changeType = (value) => {
                     <div className="replyrptbody">
                         {reply_reportList}
                     </div>
-                    <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
+                    <Pagination pageMaker={replyPageMaker} url="/notice/adminpage" />
                 </div>
                 <div className="nsearch_area adminsearch_area">
                 <form name="searchForm" action="/notice/adminpage" className="row searchrow">
