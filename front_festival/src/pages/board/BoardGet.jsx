@@ -215,23 +215,23 @@ const BoardGet = () =>{
             <div>
               {isEditing ? (
                 // 수정 모드일 때, 댓글 내용을 텍스트 입력란으로 보여줌
-                <div>
-                    <div>
+                <div className="rpBody_wrap">
+                    <div className="rpBody" >
                         <textarea name="replycontents" id="replycontents2" value={editedContent} placeholder="Contents" onChange={handleContentChange} rows="3" cols="40" ></textarea>
                     </div>
                   <div>
-                    <button onClick={()=>handleSaveClick(reply.replynum)}>수정 완료</button>
-                    <button onClick={handleCancelClick}>수정 취소</button>
+                    <div><button onClick={()=>handleSaveClick(reply.replynum)}>완료</button></div>
+                    <button onClick={handleCancelClick}>취소</button>
                   </div>
                 </div>
               ) : (
                 // 수정 모드가 아닐 때, 댓글 내용 표시
-                <div>
-                  <div>{reply.replycontent}</div>
+                <div className="rpBody_wrap">
+                  <div className="rpBody" >{reply.replycontent}</div>
                   <div>{
                     reply.userid == loginUser?
                         <>
-                            <button onClick={handleEditClick}>수정</button>
+                            <div><button onClick={handleEditClick}>수정</button></div>
                             <button onClick={()=>removeReply(reply.replynum)}>삭제</button>
                         </>
                         :""
@@ -299,10 +299,8 @@ const BoardGet = () =>{
             replyList.push(
                 <li className={`li${reply.replynum} row`} key={`li${reply.replynum}`}>
                     <div className="row rrow">
-                    <a onClick={() => openModal(reply.userid)}><strong className={`userid${reply.userid}`}>{reply.userid}</strong> </a>
-
-                        
-                        <div className={`reply${reply.replynum}`}>
+                    <a className="getBoard" onClick={() => openModal(reply.userid)}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
+                        <div className={`reply${reply.replynum}`} >
                             {reply.reportcnt < 5 ?(
                                 <NormalReply reply={reply} />
                             )
@@ -337,55 +335,57 @@ const BoardGet = () =>{
             <>
             <Header></Header>
             <div className="boardget_wrap">
-                <div className="bgUserid"><a onClick={() => openModal(data.userid)}><strong>{data.userid}</strong></a>
-                </div>
                 <div className="bgTitle"><strong>{data.boardtitle}</strong></div>
-                <div>
+                <div className="bgUserid"><a className="getBoard" onClick={() => openModal(data.userid)}><strong>{data.userid}</strong></a>
+                </div>
+                <div style={{display:"flex", justifyContent:"flex-end"}}>
                     <div onClick={reportBoard}>신고하기</div>
                     <div>{data.boardregdate}</div>
                 </div>
                 <div className="bgContent">
                     <div dangerouslySetInnerHTML={{ __html: data.boardcontent }}/>
                 </div>
-                <div>{ checkLike? <Button value="좋아요취소" onClick={like}></Button>
-                    :<Button value="좋아요" onClick={like}></Button>
-                    }
-                </div>
-                <div className="btnArea">
-                        { data.userid == loginUser?
-                        <>
-                            <div>
-                            <input type="button" value="수정" onClick={()=>{        
-                                navigate('/board/modify',{state:{"cri":cri, "boardnum":data.boardnum}})}}></input>
-                            </div>
-                            <div>
-                            <input type="button" value="삭제" onClick={remove}></input>
-                            </div>
-                            <div>
-                                <input type="button" value="목록" onClick={()=>{
-                                    navigate('/board/list',{ state: cri })}}></input>
-                            </div>
-                        </>:
-                            <div>
-                                <input type="button" value="목록" onClick={()=>{
-                                    navigate('/board/list',{ state: cri })}}></input>
-                            </div>
-                        }   
+                <div style={{display:"flex",justifyContent:"space-between", padding:"20px"}}>
+                    <div>{ checkLike? <Button value="좋아요취소" onClick={like}></Button>
+                        :<Button value="좋아요" onClick={like}></Button>
+                        }
+                    </div>
+                    <div className="btnArea">
+                            { data.userid == loginUser?
+                            <>
+                                <div>
+                                <input type="button" value="수정" onClick={()=>{        
+                                    navigate('/board/modify',{state:{"cri":cri, "boardnum":data.boardnum}})}}></input>
+                                </div>
+                                <div>
+                                <input type="button" value="삭제" onClick={remove}></input>
+                                </div>
+                                <div>
+                                    <input type="button" value="목록" onClick={()=>{
+                                        navigate('/board/list',{ state: cri })}}></input>
+                                </div>
+                            </>:
+                                <div>
+                                    <input type="button" value="목록" onClick={()=>{
+                                        navigate('/board/list',{ state: cri })}}></input>
+                                </div>
+                            }   
+                    </div>
                 </div>
                 <div className="reply_line">
-                    <div className="reply_write">
-
-                        <div>
-                            {/* <h4>작성자</h4> */}
-                            <input type="text" name="userid" value={loginUser} readOnly/>
-                        </div>
-                        <div>
-                            {/* <h4>내 용</h4> */}
-                            <textarea name="replycontents" id="replycontents" placeholder="Contents"></textarea>
-                        </div>
-                        <div>
-                            <input type="button" value="등록" className="btn finish" onClick={clickRegist}/>
-                        </div>
+                    <div className="reply_write rpBody_wrap">
+                        { loginUser == ""? <div>로그인 하셔야 댓글을 등록할 수 있습니다.</div>
+                        :<>
+                            <div>{loginUser}</div>
+                            <div className="rpBody">
+                                {/* <h4>내 용</h4> */}
+                                <textarea name="replycontents" id="replycontents" placeholder="Contents"></textarea>
+                            </div>
+                            <div>
+                                <input type="button" value="등록" className="btn finish" onClick={clickRegist}/>
+                            </div>
+                        </>    
+                        }
                     </div>
                     <ul className="replies">
                         {replyList}
