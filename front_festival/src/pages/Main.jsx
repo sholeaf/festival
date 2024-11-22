@@ -1,11 +1,12 @@
 import Header from "../layout/Header";
+import MainLogout from "./MainLogout";
 
 const Main = () => {
-    
+
     return (
         <>
             <Header></Header>
-           여기는 메인
+            <MainLogout></MainLogout>
         </>
     );
 }

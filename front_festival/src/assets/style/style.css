@@ -58,7 +58,9 @@ a {
     background-color: transparent;
     font-family: 'EBSJSKMedium';
 }
-
+body{
+    margin: 0;
+}
 p,
 span,
 div {
@@ -76,6 +78,48 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 }
+/* main */
+.main-title {
+    font-size: 250px;
+    font-family: 'EBSJSKMedium';
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    opacity: 0; /* 처음에는 보이지 않도록 설정 */
+    visibility: visible; /* 보이게 설정 */
+    animation: fadeInOut 5s forwards; /* 2초 동안 애니메이션 진행 */
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0; /* 처음에는 보이지 않음 */
+        visibility: visible; /* 애니메이션 시작 시 보이도록 설정 */
+    }
+    50% {
+        opacity: 1; /* 중간에서 완전히 보이도록 */
+        visibility: visible; /* 중간에는 여전히 보이도록 */
+    }
+    100% {
+        opacity: 0; /* 마지막에는 다시 사라짐 */
+        visibility: hidden; /* 애니메이션 후 숨겨짐 */
+    }
+}
+
+.main-title.hide {
+    display: none; /* hide 클래스가 추가되면 요소를 숨깁니다 */
+}
+.main-logout{
+    margin-top: 50px;
+    background-color: rgba(146, 180, 236, 0.6);
+}
+
+.main-section{
+    width: 100%;
+    height: 700px;
+    margin: 50px 0;
+}
+
+/* main끝 */
 /* Pagination 페이지 버튼 디자인 */
 .pagination {
     max-width: 840px;
@@ -2420,7 +2464,7 @@ td {
 #board_wrap {
     margin: 0 auto;
     margin-top: 100px;
-	width: 1000px;
+   width: 1000px;
     /* text-align: center; */
 }
 .board_obj{
@@ -2451,7 +2495,6 @@ td {
     top: -25px;
     right: 0;
     width: 140px;
-    width: 1000px;
     text-align: center;
 }
 .boardbox2 div:nth-child(2) img{
