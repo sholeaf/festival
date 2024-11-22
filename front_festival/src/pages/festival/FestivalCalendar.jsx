@@ -1,17 +1,20 @@
 import { useEffect, useState } from "react";
 import Calendar from 'react-calendar';
 import axios from "axios";
+import ClickBookmark from "../../hooks/ClickBookmark";  // 훅 임포트
 import noimage from "../../assets/images/no-image.jpg";
+import bookmark from "../../assets/images/bookmark.png";
+import nobookmark from "../../assets/images/nobookmark.png";
 import { useNavigate } from "react-router-dom";
 
-
-const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
+const FestivalCalendar = (props) => {
+    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, sampleData, setSampleData, noHyphen } = props;
     const [festivals, setFestivals] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);  
+    const [isLoading, setIsLoading] = useState(false);
     const [hasMore, setHasMore] = useState(true);
     const navigate = useNavigate();
 
-    // 날짜 선택 시 처리 함수
+
     const handleDateChange = (date) => {
         const selectedDate = date.getFullYear().toString() +
             (date.getMonth() + 1).toString().padStart(2, '0') +
@@ -31,7 +34,7 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
         setFestivals([]);
         setHasMore(true); // 더 이상 데이터가 없다는 상태를 리셋
     };
-    console.log("calendar active tab : ",activeTab);
+
     // API 요청 함수
     const fetchFestivals = () => {
         if (isLoading) return;  // 로딩 중이면 API 요청을 방지
@@ -44,7 +47,7 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
                     ...prevFestivals,
                     ...festivalsData, // 기존 데이터에 새로운 데이터를 추가
                 ]);
-                
+
                 setIsLoading(false);
 
                 // 추가로 더 데이터를 요청할 수 있는지 체크
@@ -68,10 +71,10 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
             }));
         }
     };
-    // 페이지가 처음 로드되거나 날짜가 변경될 때마다 축제 데이터를 가져옴
+
     useEffect(() => {
         fetchFestivals();
-        console.log("calendarParam : ",param);
+        console.log("calendarParam : ", param);
     }, [param]);
 
     // 페이지 스크롤 이벤트 리스너 추가
@@ -84,6 +87,11 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
         };
     }, [hasMore, isLoading]);
 
+
+    const handleBookmarkClick = (festivalContentid) => {
+        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setSampleData);
+    };
+
     return (
         <div>
             <Calendar onChange={handleDateChange} />
@@ -92,21 +100,37 @@ const FestivalCalendar = ({ API_URL, API_KEY, param, setParam, activeTab }) => {
                 <div>
                     <h3>축제 목록</h3>
                     <ul className="festival-list">
-                        {festivals.map((festival) => (
-                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}
-                            onClick={()=>{
-                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY,activeTab}})
-                            }}>
-                                <h4>{festival.title}</h4>
-                                <p>{festival.addr1}</p>
-                                {festival.firstimage ? (
-                                    <img src={festival.firstimage} alt={festival.title} style={{ width: "100px", height: "100px" }} />
-                                ) : (
-                                    <img src={noimage} alt="no-image" style={{ width: "100px", height: "100px" }} />
-                                )}
-                                <p>{festival.eventstartdate} ~ {festival.eventenddate}</p>
-                            </li>
-                        ))}
+                        {festivals.map((festival) => {
+                            const isBookmarked = bmlist.includes(festival.contentid); // 즐겨찾기 여부 확인
+
+                            return (
+                                <li className={`festival-${festival.contentid}`} key={festival.contentid}
+                                    onClick={() => {
+                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist } })
+                                    }}>
+                                    <p className="festival-title">{festival.title}</p>
+                                    <div className="festival-list-area">
+                                        {festival.firstimage ? (
+                                            <img className="festival-img" src={festival.firstimage} alt={festival.title} style={{ width: "100%", height: "150px" }} />
+                                        ) : (
+                                            <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
+                                        )}
+                                        <div className="festival-small-info">
+                                            <div>
+                                                <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
+                                                <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                            </div>
+                                            <div onClick={(e) => {
+                                                e.stopPropagation();  // 클릭 이벤트가 목록 아이템에 전파되지 않도록 방지
+                                                handleBookmarkClick(festival.contentid); // 북마크 클릭 처리
+                                            }}>
+                                                <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             )}

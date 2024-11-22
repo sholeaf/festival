@@ -197,7 +197,7 @@ public class UserServiceImp implements UserService{
 		HashMap<String, Object> result = new HashMap<>();
 		
 		List<BoardDTO> list = bmapper.getListByUserid(userid);
-		List<String> bookmarks = bmmapper.getBookmarkByUserid(userid);
+		List<String> bookmarks = bmmapper.getBookmark(userid);
 		
 		result.put("list", list);
 		result.put("bookmarks", bookmarks);

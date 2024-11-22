@@ -1,15 +1,18 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
 import festival_map from "../../assets/images/festivalImg/festival_map.png";
+import bookmark from "../../assets/images/bookmark.png"
+import nobookmark from "../../assets/images/nobookmark.png"
 import noimage from "../../assets/images/no-image.jpg";
 import { useNavigate } from "react-router-dom";
+import ClickBookmark from "../../hooks/ClickBookmark";
 
-
-const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam, activeTab}) => {
+const FestivalMap = (props) => {
+    const { API_URL, API_KEY, param, setParam, activeTab, userid, bmlist, setBmlist, sampleData, setSampleData, noHyphen } = props;
     const [festivals, setFestivals] = useState([]);
-    const [isLoading, setIsLoading] = useState(false);  
-    const [hasMore, setHasMore] = useState(true); 
-    const [selectedArea, setSelectedArea] = useState(null);  
+    const [isLoading, setIsLoading] = useState(false);
+    const [hasMore, setHasMore] = useState(true);
+    const [selectedArea, setSelectedArea] = useState(null);
     const navigate = useNavigate();
 
     const areas = [
@@ -66,7 +69,7 @@ const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam, activeTab}) 
                     ...festivalsData, // 기존 데이터에 새로운 데이터를 추가
                 ]);
                 setIsLoading(false);
-               
+
                 // 추가로 더 데이터를 요청할 수 있는지 체크
                 if (festivalsData.length < param.numOfRow) {
                     setHasMore(false);  // 더 이상 데이터가 없으면
@@ -93,6 +96,10 @@ const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam, activeTab}) 
                 pageNo: prev.pageNo + 1,  // 페이지 번호를 증가시켜 추가 데이터를 요청
             }));
         }
+    };
+
+    const handleBookmarkClick = (festivalContentid) => {
+        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setSampleData);
     };
 
     // 스크롤 이벤트 리스너를 등록하는 effect
@@ -130,21 +137,38 @@ const FestivalMap = ({ API_URL, API_KEY, noHyphen, param, setParam, activeTab}) 
                 <div>
                     <h3>축제 목록</h3>
                     <ul className="festival-list">
-                        {festivals.map((festival) => (
-                            <li className={`festiva-${festival.contentid}`} key={festival.contentid}
-                            onClick={()=>{
-                                navigate(`/festival/${festival.contentid}`,{state:{API_KEY, activeTab}})
-                            }}>
-                                <h4>{festival.title}</h4>
-                                <p>{festival.addr1}</p>
-                                {festival.firstimage ? (
-                                    <img src={festival.firstimage} alt={festival.title} style={{ width: "100px", height: "100px" }} />
-                                ) : (
-                                    <img src={noimage} alt="no-image" style={{ width: "100px", height: "100px" }} />
-                                )}
-                                <p>{festival.eventstartdate} ~ {festival.eventenddate}</p>
-                            </li>
-                        ))}
+                        {festivals.map((festival) => {
+                            // isBookmarked 계산 : bmlist에 해당 festival.contentid가 포함되어 있는지 확인
+                            const isBookmarked = bmlist.includes(festival.contentid);
+                            
+                            return (
+                                <li className={`festiva-${festival.contentid}`} key={festival.contentid}
+                                    onClick={() => {
+                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist } })
+                                    }}>
+                                    <p className="festival-title">{festival.title}</p>
+                                    <div className="festival-list-area">
+                                        {festival.firstimage ? (
+                                            <img className="festival-img" src={festival.firstimage} alt={festival.title} style={{ width: "100%", height: "150px" }} />
+                                        ) : (
+                                            <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
+                                        )}
+                                        <div className="festival-small-info">
+                                            <div>
+                                                <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
+                                                <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                            </div>
+                                            <div onClick={(e) => {
+                                                e.stopPropagation();  
+                                                handleBookmarkClick(festival.contentid);
+                                            }}>
+                                                <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
+                                            </div>
+                                        </div>
+                                    </div>
+                                </li>
+                            );
+                        })}
                     </ul>
                 </div>
             )}

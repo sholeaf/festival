@@ -287,6 +287,7 @@ const modify = () => {
         return (
           <>
           <Header/>
+          <div className="noticeWrap">
           <div id="nwrap" className="nmodify">
             <div className="notice-title">Notice</div>
             <form id="noticeForm" name="noticeForm">
@@ -316,6 +317,22 @@ const modify = () => {
                     />
                   </div>
                 </div>
+                {
+                            files.map((item) => (
+                                item.thumbnail ? (
+                                    <div className="row">
+                                        <div>첨부사진</div>
+                                        <div key={item.id} className="nthumbnail_area nwritethumbnail_area">
+                                            <img src={item.thumbnail} alt={`thumbnail${item.id}`} className="nwritethumbnail" />
+                                        </div>
+                                        <div className=" row">
+                                            <Button className={"btn"} value={"파일 선택"} onClick={() => { upload(item.id); }}></Button>
+                                            <Button className={"btn"} value={"파일 삭제"} onClick={() => { removeFile(item.id); }}></Button>
+                                        </div>
+                                    </div>
+                                ) : ""
+                            ))
+                        }
                 <div className="row">
                   <div>내용</div>
                   <div>
@@ -361,15 +378,6 @@ const modify = () => {
                             }}
                           />
                         </div>
-                        {item.thumbnail && (
-                          <div className="nthumbnail_area">
-                            <img
-                              src={item.thumbnail}
-                              alt={`thumbnail${item.id}`}
-                              className="nthumbnail"
-                            />
-                          </div>
-                        )}
                       </div>
                     </div>
                   );
@@ -392,6 +400,7 @@ const modify = () => {
                 </tr>
               </tbody>
             </table>
+          </div>
           </div>
           </>    
         );
