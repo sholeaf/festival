@@ -195,8 +195,8 @@ const BoardList = () => {
                     <div className="board_obj" key={board.boardnum} >
                         <div className="board_title getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{board.boardtitle}</div>
                         <div className="boardbox2 boardbox">
-                            <div className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{extractTextFromHTML(board.boardcontent, 203)}</div>
-                            <div ><img src={board.titleImage ? `/api/file/thumbnail?systemname=` + board.titleImage : ""} className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}></img></div>
+                            <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{extractTextFromHTML(board.boardcontent, 203)}</div>
+                            <div><img src={board.titleImage? `/api/file/thumbnail?systemname=`+board.titleImage:""} className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}></img></div>
                         </div>
                         <div className="boardbox3 boardbox">
                             <div className="boardbox4 boardbox">
@@ -224,6 +224,17 @@ const BoardList = () => {
         }
         return (
             <>
+            <Header></Header>
+            <div id="board_wrap" className="list">
+                <div>
+                    <a className="btn" onClick={()=> {
+                        if(loginUser == null || loginUser == ""){
+                            alert("로그인해야 글을 쓰실 수 있습니다!");
+                            return;
+                        }
+                        navigate("/board/write",{state:cri})}}>글쓰기</a>
+                </div>
+                <div style={{height:"30px"}}>
                 <Header></Header>
                 <div id="board_wrap" className="list">
                     <div>
