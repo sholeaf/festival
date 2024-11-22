@@ -20,6 +20,9 @@
     margin: 70px auto 0;
     position: relative;
 }
+body{
+    margin: 0;
+}
 
 * {
     box-sizing: border-box;
@@ -76,6 +79,50 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 }
+
+/* main */
+.main-logout{
+    width: 100%;
+    margin-top: 50px;
+    height: 6000px;
+    background-color: rgba(146, 180, 236, 0.5);
+    object-fit: contain;
+    object-position: center;
+}
+.main-background-img{
+    width: 1000px;
+    
+}
+
+
+.main-logout div{
+    text-align: center;
+}
+.main-title {
+    font-size: 200px;
+    font-family: 'EBSJSKMedium';
+    font-weight: bold;
+    color: white;
+    text-align: center;
+    opacity: 0; /* 처음에는 보이지 않도록 설정 */
+    animation: fadeInOut 5s forwards; /* 2초 동안 애니메이션 진행 */
+}
+
+@keyframes fadeInOut {
+    0% {
+        opacity: 0; /* 처음에는 보이지 않음 */
+    }
+    50% {
+        opacity: 1; /* 중간에서 완전히 보이도록 */
+    }
+    100% {
+        opacity: 0; /* 마지막에는 다시 사라짐 */
+        display: none;
+    }
+}
+
+/* main 끝 */
+
 /* Pagination 페이지 버튼 디자인 */
 .pagination {
     max-width: 840px;
@@ -2386,9 +2433,8 @@ td {
 .boardbox2 div:nth-child(2){
     position: absolute;
     top: -25px;
-    right: 0;
+    right: 0px;
     width: 140px;
-    width: 1000px;
     text-align: center;
 }
 .boardbox2 div:nth-child(2) img{
