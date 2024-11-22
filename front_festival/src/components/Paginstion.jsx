@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Pagination = ({ pageMaker }) => {
+const Pagination = ({ pageMaker, url }) => {
     const navigate = useNavigate();
     const startPage = pageMaker.startPage;
     const endPage = pageMaker.endPage;
@@ -16,7 +16,7 @@ const Pagination = ({ pageMaker }) => {
     }, [location.state]);
     const elList = [];
 
-    const clickBtn = (e) => {
+    const clickBtn = (e, pageNumber) => {
         e.preventDefault();
 
         const target = e.target.getAttribute("href");
@@ -27,7 +27,8 @@ const Pagination = ({ pageMaker }) => {
             keyword: cri.keyword,
             startrow: (target - 1) * cri.amount // startrow 계산
         };
-        navigate(`/notice/list`, { state:temp });
+        setStateCri(temp);
+        navigate(`${url}?pagenum=${pageNumber}`, { state:temp });
     };
 
     for (let i = startPage; i <= endPage; i++) {

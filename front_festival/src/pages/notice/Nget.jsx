@@ -285,9 +285,10 @@ const Nget = () => {
     }
 
     return (
+        <>
+            <Header />
         <div className="noticeWrap">
         <div id="wrap" className="nget">
-            <Header />
             <form id="noticeForm getNoticeForm" name="noticeForm">
                 <div className="ngettable">
                     <div className="ngetrow ngettitle">
@@ -389,17 +390,7 @@ const Nget = () => {
                             <a
                                 href={`/api/notice/file/download/${file.systemname}`}
                                 className="btn nownload-file-btn"
-                                download
-                                style={{
-                                    backgroundColor: 'rgb(179 222 245)',
-                                    color: 'white',
-                                    padding: '10px 20px',
-                                    borderRadius: '5px',
-                                    textAlign: 'center',
-                                    right: '20px',
-                                    position: 'relative'
-                                }}
-                            >
+                                download>
                                 다운로드
                             </a>
                         </div>
@@ -454,6 +445,7 @@ const Nget = () => {
             </div>
         </div>
         </div>
+        </>
     )
 }
 

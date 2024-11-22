@@ -885,7 +885,7 @@ input.nrremove.btn {
 }
 
 .ndownload-btn a:hover {
-    background-color: rgb(160, 200, 230); /* hover 시 색 변경 */
+    background-color: rgb(160, 200, 230);
 }
 
 /* 댓글 reply css */
@@ -1292,6 +1292,24 @@ a#nsearch-btn {
 }
 .adminsearch_area{
     margin-left: 10%;
+}
+
+.replymodal {
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 400px;
+    max-height: 120%;
+    overflow-y: auto;
+    background-color: #f9f9f9;
+    z-index: 11;
+    border-radius: 30px;
+    text-align: center;
+
 }
 /* adminpage area end 관리자페이지 종료 */
 /* 쪽지리스트 부분 note area start 쪽지 시작 */

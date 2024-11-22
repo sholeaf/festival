@@ -34,7 +34,7 @@ const Adminpage = (props) => {
 
     const [cri, setCri] = useState({
         pagenum: 1,
-        amount: 10,
+        amount: 5,
         type: "a", 
         keyword: "",
         startrow: 0
@@ -71,11 +71,11 @@ const Adminpage = (props) => {
             console.error("해당 댓글을 찾을 수 없습니다.");
         }
     };
-    
     const closeModal = () => {
         setIsModalOpen(false);
         setSelectedReplyData(null);
     };
+
 
     const [inputs, setInputs] = useState("");
     const inputKeyword = (e) => {
@@ -114,6 +114,7 @@ const Adminpage = (props) => {
                 setData(resp.data);
                 console.log("신고게시판호출",resp.data)           
                 setPageMaker(resp.data.pageMaker);
+                console.log("pageMaker 데이터", resp.data.pageMaker);
                 setInputs(resp.data.pageMaker.cri.keyword);
             })
             .catch((error) => {
@@ -134,6 +135,8 @@ const Adminpage = (props) => {
             .then((resp) => {
                 console.log("댓글신고목록 api 요청", resp.data);
                 setReplyReportList(resp.data);
+                setPageMaker(resp.data.pageMaker);
+                setInputs(resp.data.pageMaker.cri.keyword);
                 setModalData(Array.isArray(resp.data.board) ? resp.data.board : []);
             })
             .catch((error) => {
@@ -348,8 +351,17 @@ const changeType = (value) => {
                     <div className="rptbody">
                         {elList}
                     </div>
-                <Pagination pageMaker={pageMaker}></Pagination>
+                    <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
                 </div>
+                <div className="nsearch_area adminsearch_area">
+                <form name="searchForm" action="/notice/adminpage" className="row searchrow">
+                    <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
+                    <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={searchenter} />
+                    <a id="nsearch-btn" className="btn" onClick={clickSearch}>검색</a>
+                    <input type="hidden" name="pagenum" />
+                    <input type="hidden" name="amount" />
+                </form>
+            </div>
             </div>
 
                     </div>
@@ -372,16 +384,9 @@ const changeType = (value) => {
                     <div className="replyrptbody">
                         {reply_reportList}
                     </div>
-                <Pagination pageMaker={pageMaker}></Pagination>
+                    <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
                 </div>
-                
-            </div>
-
-                    </div>
-                )}
-                
-            </div>
-            <div className="nsearch_area adminsearch_area">
+                <div className="nsearch_area adminsearch_area">
                 <form name="searchForm" action="/notice/adminpage" className="row searchrow">
                     <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
                     <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={searchenter} />
@@ -390,17 +395,24 @@ const changeType = (value) => {
                     <input type="hidden" name="amount" />
                 </form>
             </div>
+            </div>
+
+                    </div>
+                )}
+                
+            </div>
 
             {isModalOpen && modalData && (
-                <div className="replycontentmodal">
-                <div className="replymodal">
-                    <h2>댓글 내용</h2>
-        <p>{selectedReplyData.replycontent}</p>
-        <p><strong>작성자:</strong> {selectedReplyData.userid}</p>
-        <p><strong>등록일:</strong> {selectedReplyData.replyregdate}</p>
-        <button onClick={closeModal}>닫기</button>
+                <div className="notesend-modal-overlay" onClick={closeModal}>
+                <div className="replymodaloverlay"></div>
+                <div className="replymodal"onClick={(e) => e.stopPropagation()}>
+                  <h2>댓글 내용</h2>
+                  <p>{selectedReplyData.replycontent}</p>
+                  <p><strong>작성자:</strong> {selectedReplyData.userid}</p>
+                  <p><strong>등록일:</strong> {selectedReplyData.replyregdate}</p>
+                  <button onClick={closeModal}>닫기</button>
                 </div>
-                </div>
+              </div>
             )}
             
             </div>
