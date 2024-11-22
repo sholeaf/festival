@@ -41,12 +41,34 @@ select b.*
     order by b.boardnum desc
     limit #{startrow}, #{amount}
 	</select>
-	<select id="getTotal">
-		select count(*) from board
-		where
-		<include refid="cri"></include>
-		boardnum > 0
-	</select>
+	<select id="getListReporoTotal">
+    select count(*) 
+    from board b
+    where b.boardnum > 0
+    <include refid="cri"></include>
+    and exists (
+        select 1
+        from board_report br
+        where br.boardnum = b.boardnum
+        group by br.boardnum
+        having count(br.boardnum) > 4
+        limit #{startrow}, #{amount} 
+    )
+</select>
+<select id="getReplyReportTotal">
+    select count(*) 
+    from reply r
+    where r.replynum > 0
+    <include refid="cri"></include>
+    and exists (
+        select 1
+        from reply_report rr
+        where rr.replynum = r.replynum
+        group by rr.replynum
+        having count(rr.replynum) > 4
+        limit #{startrow}, #{amount}
+    )
+</select>
 <select id="findById">
 	select * from board where boardnum =#{boardnum}
 </select>
