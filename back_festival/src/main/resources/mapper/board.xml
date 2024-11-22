@@ -28,7 +28,7 @@
 
 	<insert id="insertBoard">
 		insert into board(boardtitle, boardcontent, userid, tag, titleImage) values(#{boardtitle}, 
-		#{boardcontent}, "apple", #{tag}, #{titleImage})
+		#{boardcontent}, #{userid}, #{tag}, #{titleImage})
 	</insert>
 	<select id="getLastNum">
 		select max(boardnum) from board where userid=#{userid}
