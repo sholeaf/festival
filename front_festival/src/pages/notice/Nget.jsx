@@ -285,6 +285,7 @@ const Nget = () => {
     }
 
     return (
+        <div className="noticeWrap">
         <div id="wrap" className="nget">
             <Header />
             <form id="noticeForm getNoticeForm" name="noticeForm">
@@ -341,6 +342,11 @@ const Nget = () => {
 
                         <div className="ngetTextarea">
                             <textarea name="noticecontents" readOnly value={notice.noticecontent}></textarea>
+                        </div>
+                        <div className="filetextcontainer">
+                        <hr className="line-left" />
+                            <b className="filetext">첨부파일</b>
+                        <hr className="line-right" />
                         </div>
                     </div>
                     {
@@ -446,6 +452,7 @@ const Nget = () => {
                 </div>
                 <div ref={replyEndRef}></div>
             </div>
+        </div>
         </div>
     )
 }
