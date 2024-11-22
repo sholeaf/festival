@@ -10,12 +10,12 @@ const Header = () => {
         navigate(path);
     };
     const logoutClick = () => {
-        if(window.confirm("로그아웃하시겠습니까?")){
+        if (window.confirm("로그아웃하시겠습니까?")) {
             axios.get(`/api/user/logout`)
-            .then(resp => {
-                if (resp.data === "O") {
-                    alert("안녕히 가세요!");
-                    setLoginUser("");
+                .then(resp => {
+                    if (resp.data === "O") {
+                        alert("안녕히 가세요!");
+                        setLoginUser("");
                         handleNavigation("/");
                     }
                 })
@@ -53,7 +53,10 @@ const Header = () => {
         <header>
             <div className="header_area">
                 <div className="navigate">
-                    <div className="logo" onClick={() => handleNavigation("/")}>
+                    <div className="logo" onClick={() =>
+                        loginUser === "" ? handleNavigation("/"):
+                        handleNavigation("/home")
+                        }>
                         <a>모두의 축제</a>
                     </div>
                     <div className="schedule_btn">
