@@ -61,6 +61,10 @@ const MyPage = () => {
         setIsModalOpen(true);
     };
     const openModal4 = () => {
+        setActiveModal('infoModify');  // 'userDelete' 모달을 여는 것
+        setIsModalOpen(true);
+    };
+    const openModal5 = () => {
         setActiveModal('userDelete');  // 'userDelete' 모달을 여는 것
         setIsModalOpen(true);
     };
@@ -559,7 +563,8 @@ const MyPage = () => {
                                     <p onClick={openModal1}>개인정보 변경</p>
                                     <p onClick={openModal2}>비밀번호 변경</p>
                                     <p onClick={openModal3}>프로필 변경</p>
-                                    <p onClick={openModal4}>회원 탈퇴</p>
+                                    <p onClick={openModal4}>정보공개 변경</p>
+                                    <p onClick={openModal5}>회원 탈퇴</p>
                                 </div>
                             </div>
                             <div className="bookmark">
@@ -645,6 +650,42 @@ const MyPage = () => {
                                             setIsModalOpen(false)
                                         }}></Button>
                                         <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
+                                    </div>
+                                )}
+                                {activeModal === 'infoModify' && (
+                                    <div id='infoModify'>
+                                        <h3>정보공개 변경</h3>
+                                        <table>
+                                            <thead>
+                                                <tr>
+                                                    <th>정보</th>
+                                                    <th>공개</th>
+                                                    <th>비공개</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>이름</td>
+                                                    <td>라디오박스(공개)</td>
+                                                    <td>라디오박스(비공개)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>성별</td>
+                                                    <td>라디오박스(공개)</td>
+                                                    <td>라디오박스(비공개)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>전화번호</td>
+                                                    <td>라디오박스(공개)</td>
+                                                    <td>라디오박스(비공개)</td>
+                                                </tr>
+                                                <tr>
+                                                    <td>이메일</td>
+                                                    <td>라디오박스(공개)</td>
+                                                    <td>라디오박스(비공개)</td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (

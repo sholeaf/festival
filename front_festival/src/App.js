@@ -17,6 +17,7 @@ import DetailFestival from './pages/festival/DetailFestival';
 import Note from './pages/notes/Note';
 import BoardWrite from './pages/board/BoardWrite';
 import BoardList from './pages/board/BoardList';
+import BoardListUserInfo from './pages/board/BoardListUserInfo';
 import BoardGet from './pages/board/BoardGet';
 import BoardModify from './pages/board/BoardModify';
 
@@ -30,7 +31,6 @@ function App() {
           <Route path="/" element={<Main></Main>}></Route>
           <Route path="/festival" element={<Festival></Festival>}></Route>
           <Route path="/festival/:contentid" element={<DetailFestival></DetailFestival>}></Route>
-          <Route path="/community" element={<Community></Community>}></Route>
           <Route path="/user/mypage" element={<MyPage></MyPage>}></Route>
           <Route path="/user/login" element={<Login></Login>}></Route>
           <Route path="/user/join" element={<Join></Join>}></Route>
@@ -39,7 +39,8 @@ function App() {
           <Route path="/notice/nmodify" element={<Nmodify></Nmodify>}></Route>
           <Route path="/notice/:noticenum" element={<Nget></Nget>}></Route>
           <Route path="/notice/adminpage" element={<Adminpage></Adminpage>}></Route>
-          <Route path='/board/list' element={<BoardList></BoardList>}></Route>
+          {/* <Route path='/board/list' element={<BoardList></BoardList>}></Route> */}
+          <Route path='/board/list' element={<BoardListUserInfo></BoardListUserInfo>}></Route>
           <Route path='/board/write' element={<BoardWrite></BoardWrite>}></Route>
           <Route path="/board/:boardnum" element={<BoardGet></BoardGet>}></Route>
           <Route path="/board/modify" element={<BoardModify></BoardModify>}></Route>

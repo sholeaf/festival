@@ -263,26 +263,40 @@ const Join = () => {
                     <input type="password" name="userpw_re" id="userpw_re" placeholder="비밀번호확인" onChange={pwCheck} />
                     <p id="pw_result"></p>
                     <input type="text" name="username" id="username" placeholder="이름을 입력 하세요" />
+                    <div className='infoSelect'>
+                        <div>
+                            <input type="radio" name="name" id="name1" value="T"/>
+                            <label htmlFor="name1">공개</label>
+                        </div>
+                        <div>
+                            <input type="radio" name="name" id="name2" value="F"/>
+                            <label htmlFor="name2">비공개</label>
+                        </div>
+                    </div>
                     <input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" />
                     <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" />
+                    <div className='infoSelect'></div>
                     <input type="button" value="인증번호 받기" id='codeGet' onClick={getCode}/>
                     <input type="text" name="codeCheck" id="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e)=>{
                         codeCheck(e)
                     }}/>
-                    <div className="flexBox">
-                        <div className="radio_item">
-                            <input type="radio" id="usergender1" name="usergender" value="M" />
-                            <label htmlFor="usergender1">
-                                남자
-                            </label>
-                        </div>
-                        <div className="radio_item">
-                            <input type="radio" id="usergender2" name="usergender" value="W" />
-                            <label htmlFor="usergender2">
-                                여자
-                            </label>
+                    <div className='radioBox'>
+                        <div className="flexBox">
+                            <div className="radio_item">
+                                <input type="radio" id="usergender1" name="usergender" value="M" />
+                                <label htmlFor="usergender1">
+                                    남자
+                                </label>
+                            </div>
+                            <div className="radio_item">
+                                <input type="radio" id="usergender2" name="usergender" value="W" />
+                                <label htmlFor="usergender2">
+                                    여자
+                                </label>
+                            </div>
                         </div>
                     </div>
+                    <div className='infoSelect'></div>
                     <div className="zipcode_area">
                         <DaumPostCode></DaumPostCode>
                         <input type="text" name="addr" id="addr" placeholder="주소" readOnly />
