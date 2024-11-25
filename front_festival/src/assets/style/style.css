@@ -459,7 +459,6 @@ no-post {
     vertical-align: middle;
     align-items: center;
 }
-
 /* 공지사항 글쓰기버튼  */
 .nbtn_table {
     text-align: right;
@@ -474,7 +473,6 @@ no-post {
 .nbtn_table.show {
     display: block;
 }
-
 a.nwrite {
     padding: 5px;
     width: 60px;
@@ -483,7 +481,6 @@ a.nwrite {
     cursor: pointer;
     position: absolute;
 }
-
 /* 로딩 텍스트 애니메이션 */
 /* 1. 깜빡이는 애니메이션 */
 @keyframes nblink {
@@ -516,7 +513,6 @@ a.nwrite {
     /* 세로 중앙 정렬 */
     z-index: 9999;
 }
-
 .loading-text span {
     display: inline-block;
     /* 안의 글자 나눠주기 */
@@ -659,6 +655,9 @@ a.nwrite {
     max-height: 500px;
     transition: max-height 0.3s ease-in-out;
 }
+.searchrow:last-child {
+    border-bottom: none !important;
+}
 
 .searchrow:last-child {
     border-bottom: none !important;
@@ -742,13 +741,13 @@ a.nwrite {
 
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
-
 }
 
 #noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
+    
 
 
 }
@@ -761,6 +760,9 @@ a.nwrite {
 
 #noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
+}
+#noticeForm{
+    border: 1px solid #000;
 }
 
 #noticeForm {
@@ -815,13 +817,11 @@ a.nwrite {
 .ngetthumbnail_area {
     margin-top: 50px;
 }
-
 /* 게시판 썸네일애니메이션 thumbnail animation*/
 img.nthumbnail {
     max-width: 50%;
     transition: all 0.2s linear;
 }
-
 img.nwritethumbnail {
     max-width: 40%;
     transition: all 0.2s linear;
@@ -979,6 +979,9 @@ input.nrremove.btn {
     margin-top: 20px;
     border-top: 1px solid grey;
     position: relative;
+}
+.replycontent{
+    margin-left: 30px;
 }
 
 .replycontent {
@@ -1246,7 +1249,6 @@ a#nsearch-btn {
     font-size: 18px;
     margin: 20px;
 }
-
 /* 게시판신고부분 */
 .rplist .row {
     display: flex;
@@ -1403,7 +1405,6 @@ a#nsearch-btn {
     text-align: center;
 
 }
-
 /* adminpage area end 관리자페이지 종료 */
 /* 쪽지리스트 부분 note area start 쪽지 시작 */
 .notewrap {
@@ -1473,7 +1474,6 @@ a#nsearch-btn {
 .noteget {
     margin-top: 20px;
 }
-
 /* 전체 wrapper 스타일 */
 #wrap.noteget {
     width: 500px;
@@ -1641,6 +1641,9 @@ a#nsearch-btn {
     padding: 20px;
     width: 500px;
     height: 700px;
+}
+.notesend-modal-content th, .notesend-modal-content td {
+    height: 59px !important;
 }
 
 .notesend-modal-content th,
@@ -2585,31 +2588,28 @@ td {
 
 /* board css 임시 */
 
-#board_wrap {
-    margin: 0 auto;
+#board_wrap{
+	margin: 0 auto;
     margin-top: 100px;
-    width: 1000px;
+	width: 1000px;
     /* text-align: center; */
 }
-
-.board_obj {
+.board_obj{
     margin: 10px;
     width: 950px;
     min-height: 130px;
     margin-bottom: 60px;
 }
 
-.boardbox {
+.boardbox{
     display: flex;
     position: relative;
 }
-
-.board_title {
+.board_title{
     font-size: 21px;
     max-width: 80%;
 }
-
-.boardbox2 div:nth-child(1) {
+.boardbox2 div:nth-child(1){
     color: rgb(143, 143, 143);
     width: 85%;
     min-height: 70px;
@@ -2617,81 +2617,87 @@ td {
     font-size: 15px;
 }
 
-.boardbox2 div:nth-child(2) {
+.boardbox2 div:nth-child(2){
     position: absolute;
     top: -25px;
     right: 0;
     width: 140px;
-    text-align: center;
+    height: 140px;
 }
-
-.boardbox2 div:nth-child(2) img {
+.boardbox2 div:nth-child(2) img{
     max-width: 140px;
     max-height: 140px;
 }
-
-.boardbox4 div:nth-child(1) {
+.boardbox4 div:nth-child(1){
     color: rgb(79, 73, 134);
     font-size: 18px;
     margin-right: 15px;
     padding-left: 5px;
     width: 70px;
 }
-
-.boardbox4 div:nth-child(2) {
+.boardbox4 div:nth-child(2){
     color: rgb(121, 121, 121);
     font-size: 14px;
     margin-top: 7px;
     width: 200px;
 }
-
-.boardbox5 {
+.boardbox5{
     position: absolute;
     right: 160px;
 }
-
-.boardbox5 div {
+.boardbox5 div{
     color: red;
     margin-left: 10px;
 }
 
 .nowPage {
-    color: #92B4EC;
+	color: #92B4EC;
 }
 
 .btn,
 .nowPage {
-    margin: 5px;
+	margin: 5px;
 }
 
-.getBoard {
+.getBoard{
     cursor: pointer;
 }
 
-.boardget_wrap {
+.boardget_wrap{
     margin: 0 auto;
     margin-top: 100px;
-    width: 1000px;
+	width: 1000px;
 }
 
-.rrow {
+.bgContent{
+    min-height: 200px;
+}
+
+.rrow{
+	display: flex;
+}
+.reply_write{
+	display: flex;
+	flex-wrap: wrap;
+}
+.replies{
+    margin-top: 15px;
+	width: 100%;
+}
+.rpBody_wrap{
     display: flex;
 }
-
-.reply_write {
-    display: flex;
-    flex-wrap: wrap;
+.rpBody{
+    width: 700px;
+    margin-left: 20px;
 }
-
-.replies {
-    width: 100%;
+.page{
+	text-align: center;
 }
-
-.page {
+.btnArea{
+	display: flex;
     text-align: center;
 }
-
-.btnArea {
-    display: flex;
-    text-align: center;
+.reply_line{
+    margin-top: 20px;
 }

@@ -16,6 +16,8 @@ import BoardWrite from './pages/board/BoardWrite';
 import BoardList from './pages/board/BoardList';
 import BoardGet from './pages/board/BoardGet';
 import BoardModify from './pages/board/BoardModify';
+import BoardWriteT from './pages/board/BoardWriteT';
+
 
 
 function App() {
@@ -36,7 +38,8 @@ function App() {
           <Route path="/notice/:noticenum" element={<Nget></Nget>}></Route>
           <Route path="/notice/adminpage" element={<Adminpage></Adminpage>}></Route>
           <Route path='/board/list' element={<BoardList></BoardList>}></Route>
-          <Route path='/board/write' element={<BoardWrite></BoardWrite>}></Route>
+          {/* <Route path='/board/write' element={<BoardWrite></BoardWrite>}></Route> */}
+          <Route path='/board/write' element={<BoardWriteT></BoardWriteT>}></Route>
           <Route path="/board/:boardnum" element={<BoardGet></BoardGet>}></Route>
           <Route path="/board/modify" element={<BoardModify></BoardModify>}></Route>
         </Routes>
