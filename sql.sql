@@ -59,6 +59,28 @@ create table board(
     tag varchar(300),
     titleImage varchar(300)
 );
+
+
+SELECT 
+    b.boardnum, 
+    b.boardtitle, 
+    b.boardcontent, 
+    b.userid, 
+    b.boardregdate, 
+    b.boardreadcnt, 
+    b.tag, 
+    b.titleImage, 
+    COUNT(bl.userid) AS like_count
+FROM 
+    board b
+LEFT JOIN 
+    board_like bl ON b.boardnum = bl.boardnum
+GROUP BY 
+    b.boardnum
+ORDER BY 
+    like_count DESC limit 4;
+
+insert into board (boardtitle,boardcontent,userid,boardregdate) value('test','test','test','2024-10-21 11:50:57');
 select * from board;
 insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('1','신고테스트','테스트중입니다','apple','1',now(),'1');
 insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('2','신고테스트','테스트중입니다','apple','1',now(),'6');
@@ -79,7 +101,7 @@ create table reply(
 
 
 select * from reply where replynum = 1;
-
+insert into board_like(boardnum,userid) value(1,'test');
 create table board_like(
 	boardnum bigint,
     userid varchar(50)
