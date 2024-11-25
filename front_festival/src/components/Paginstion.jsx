@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Pagination = ({ pageMaker, url }) => {
+const Pagination = ({ pageMaker, url, setCri }) => {
     const navigate = useNavigate();
     const startPage = pageMaker.startPage;
     const endPage = pageMaker.endPage;
@@ -14,7 +14,7 @@ const Pagination = ({ pageMaker, url }) => {
 
     const clickBtn = (e, pageNumber) => {
         e.preventDefault();
-
+        
         const target = e.target.getAttribute("href");
         const temp = {
             pagenum: target,

@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -112,6 +113,7 @@ int deletedreply = apmapper.deleteReply(replynum);
 
 	@Override
 	public HashMap<String, Object> getReplyReportList(Criteria cri) {
+		System.out.println("cri : "+cri);
 		HashMap<String, Object> result = new HashMap<>();
         List<ReplyDTO> list = apmapper.getReplyList(cri);
 
@@ -135,4 +137,6 @@ int deletedreply = apmapper.deleteReply(replynum);
 	    }
 	}
 
+
+	
 }

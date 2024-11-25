@@ -56,7 +56,7 @@ public class NoticeServiceImpl implements NoticeService{
         }
         result.put("notice", list);
         result.put("pageMaker", new PageDTO(total, cri));
-
+        System.out.println("공지게시글토탈"+total);
         return result;
     }
 

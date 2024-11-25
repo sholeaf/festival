@@ -41,6 +41,13 @@ const Adminpage = (props) => {
         keyword: "",
         startrow: 0
     });
+    const [replyCri, setReplyCri] = useState({
+        pagenum: 1,
+        amount: 5,
+        type: "a", 
+        keyword: "",
+        startrow: 0
+    });
 
     const [data, setData] = useState();
     const [pageMaker, setPageMaker] = useState({
@@ -61,6 +68,20 @@ const Adminpage = (props) => {
         next: false,
         cri: null
       });
+      //탑버튼 눌렀을때
+      const [key, setKey] = useState(0);
+    const topButtonClick =(viewMode) =>{
+        setViewMode(viewMode);
+        setCri(
+            prevCri =>({
+                ...prevCri,
+                pagenum:1
+            })
+            
+        )
+        setKey(prevKey => prevKey + 1);
+    }
+    
     // 모달창
     const [modalData, setModalData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -88,11 +109,14 @@ const Adminpage = (props) => {
 
 
     const [inputs, setInputs] = useState("");
+    const [replyInputs, setReplyInputs] = useState("");
     const inputKeyword = (e) => {
         setInputs(e.target.value);
     };
-
-    const clickSearch = (e) => {
+    const inputreplyKeyword = (e) => {
+        setReplyInputs(e.target.value);
+    };
+    const boardSearch = (e) => {
         e.preventDefault();
         const changedCri = {
             ...cri,
@@ -100,13 +124,28 @@ const Adminpage = (props) => {
             keyword: inputs,
             pagenum: 1
         };
-        setCri(changedCri);
+        setCri(changedCri);  // board에 대한 상태만 업데이트
     };
-
-    const searchenter = (e) => {
+    
+    const replySearch = (e) => {
+        e.preventDefault();
+        const changedCri = {
+            ...replyCri,
+            type: document.getElementById("type").value,
+            keyword: replyInputs,
+            pagenum: 1
+        };
+        setReplyCri(changedCri);  // reply에 대한 상태만 업데이트
+    };
+    
+    const searchenter = (e, type) => {
         if (e.key === 'Enter') {
             e.preventDefault();
-            clickSearch(e);
+            if (type === 'board') {
+                boardSearch(e);  // board 검색
+            } else if (type === 'reply') {
+                replySearch(e);  // reply 검색
+            }
         }
     };
 
@@ -136,14 +175,14 @@ useEffect(() => {
     // 댓글 신고 목록
 useEffect(() => {
     const temp = {
-        pagenum: cri.pagenum,
-        amount: cri.amount,
-        type: cri.type,
-        keyword: cri.keyword,
-        startrow: cri.startrow
+        pagenum: replyCri.pagenum,
+        amount: replyCri.amount,
+        type: replyCri.type,
+        keyword: replyCri.keyword,
+        startrow: replyCri.startrow
     };
-    console.log("댓글cri전송:", cri);
-    axios.get(`/api/adminpage/replyreportlist/${cri.pagenum}`, { params: cri })
+    console.log("댓글cri전송:", replyCri);
+    axios.get(`/api/adminpage/replyreportlist/${replyCri.pagenum}`, { params: replyCri })
     .then((resp) => {
             setReplyReportList(resp.data);
             console.log("댓글데이터내용",resp.data);
@@ -156,7 +195,7 @@ useEffect(() => {
         .catch((error) => {
             console.log("댓글 신고 목록 오류:", error);
         });
-}, [cri, test]); 
+}, [replyCri, test]); 
 
     useEffect(() => {
         if (location.state) {
@@ -335,15 +374,15 @@ const changeType = (value) => {
         <Header />
         <div className="noticeWrap">
             <div className="admin-top">
-                <button onClick={() => setViewMode('쪽지리스트')}>쪽지리스트</button>
-                <button onClick={() => setViewMode('게시글리스트')}>게시글리스트</button>
-                <button onClick={() => setViewMode('댓글리스트')}>댓글리스트</button>
+                <button onClick={() => topButtonClick('쪽지리스트')}>쪽지리스트</button>
+                <button onClick={() => topButtonClick('게시글리스트')}>게시글리스트</button>
+                <button onClick={() => topButtonClick('댓글리스트')}>댓글리스트</button>
             </div>
 
             <div className="content">
                 {viewMode === '쪽지리스트' && (
                     <div className="noteList">
-                         <Note loginUser={loginUser} />
+                         <Note loginUser={loginUser} viewMode={viewMode} cri={cri} setCri={setCri} key={key}/>
                     </div>
                 )}
 
@@ -370,8 +409,8 @@ const changeType = (value) => {
                 <div className="nsearch_area adminsearch_area">
                 <form name="searchForm" action="/notice/adminpage" className="row searchrow">
                     <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
-                    <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={searchenter} />
-                    <a id="nsearch-btn" className="btn" onClick={clickSearch}>검색</a>
+                    <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={(e) => searchenter(e, 'board')} />
+                    <a id="nsearch-btn" className="btn" onClick={(e) => boardSearch(e)}>검색</a>
                     <input type="hidden" name="pagenum" />
                     <input type="hidden" name="amount" />
                 </form>
@@ -402,9 +441,9 @@ const changeType = (value) => {
                 </div>
                 <div className="nsearch_area adminsearch_area">
                 <form name="searchForm" action="/notice/adminpage" className="row searchrow">
-                    <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
-                    <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={searchenter} />
-                    <a id="nsearch-btn" className="btn" onClick={clickSearch}>검색</a>
+                    <Dropdown list={searchType} name={"type"} width={250} value={replyCri.type} onChange={changeType}></Dropdown>
+                    <input type="search" id="nkeyword" name="keyword" onChange={inputreplyKeyword} value={replyInputs} onKeyDown={(e) => searchenter(e, 'reply')} />
+                    <a id="nsearch-btn" className="btn" onClick={(e) => replySearch(e)}>검색</a>
                     <input type="hidden" name="pagenum" />
                     <input type="hidden" name="amount" />
                 </form>
