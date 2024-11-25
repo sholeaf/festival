@@ -237,56 +237,26 @@ const BoardList = () => {
                         }}>글쓰기</a>
                     </div>
                     <div style={{ height: "30px" }}>
-                        <div id="board_wrap" className="list">
-                            <div>
-                                <a className="btn" onClick={() => {
-                                    if (loginUser == null || loginUser == "") {
-                                        alert("로그인해야 글을 쓰실 수 있습니다!");
-                                        return;
-                                    }
-                                    navigate("/board/write", { state: cri })
-                                }}>글쓰기</a>
-                            </div>
-                            <div className="tbody">
-                                <div className="board_obj">
-                                    <div className="board_title">제목</div>
-                                    <div className="boardbox2 boardbox">
-                                        <div>내용</div>
-                                        <div>이미지</div>
-                                    </div>
-                                    <div className="boardbox3 boardbox">
-                                        <div className="boardbox4 boardbox">
-                                            <div>아이디</div>
-                                            <div>등록시간</div>
-                                        </div>
-                                        <div className="boardbox5 boardbox">
-                                            <div>좋아요</div>
-                                            <div>댓글</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style={{ height: "30px" }}>
-                            </div>
-                            <div>
-                                {elList}
-                            </div>
-                            <Pagination pageMaker={pageMaker}></Pagination>
-                            <div className="search_area">
-                                <form name="searchForm" id="searchForm" action="/board/list" className="row">
-                                    <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
-                                    <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} />
-                                    <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
-                                    <input type="hidden" name="pagenum" />
-                                    <input type="hidden" name="amount" />
-                                </form>
-                            </div>
-                            <div className="popup">
-                                <a onClick={() => openNoteModal()}>쪽지 보내기</a>
-                                <a onClick={() => openModal()}>회원 정보</a>
-                            </div>
-                        </div>
                     </div>
+                    <div>
+                        {elList}
+                    </div>
+                    <Pagination pageMaker={pageMaker}></Pagination>
+                    <div className="search_area">
+                        <form name="searchForm" id="searchForm" action="/board/list" className="row">
+                            <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
+                            <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} />
+                            <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
+                            <input type="hidden" name="pagenum" />
+                            <input type="hidden" name="amount" />
+                        </form>
+                    </div>
+                    <div className="popup">
+                        <a onClick={() => openNoteModal()}>쪽지 보내기</a>
+                        <a onClick={() => openModal()}>회원 정보</a>
+                    </div>
+
+
                     <div className="BoardModal">
                         <Modal isOpen={isModalOpen} closeModal={closeModal}>
                             <p className="id">{user.userid}님의 정보</p>

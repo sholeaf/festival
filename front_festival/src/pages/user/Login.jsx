@@ -54,6 +54,7 @@ const Login = () => {
 
     const login = () => {
         const from = location.state.state.from;
+        console.log(from)
         if (!userid) {
             alert("아이디를 입력해주세요!");
             inputRef.current[0].focus();

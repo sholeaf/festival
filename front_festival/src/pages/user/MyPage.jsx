@@ -48,10 +48,13 @@ const MyPage = () => {
     const [activeModal, setActiveModal] = useState('');
 
     const [emailCode, setEmailCode] = useState("");
+    let codeFlag = false;
 
     const [isAllBoard, setIsAllBoard] = useState(false);
 
-    let codeFlag = false;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(isAllBoard ? 9 : 3);
+
 
 
     const openModal1 = () => {
@@ -388,13 +391,50 @@ const MyPage = () => {
         }
     }
 
-    const showCommunity = () => {
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = list.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(list.length / itemsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+    // 현재 페이지가 속한 페이지 그룹 (1-10, 11-20 등)
+    const currentGroupStart = Math.floor((currentPage - 1) / 10) * 10 + 1;
+    const currentGroupEnd = Math.min(currentGroupStart + 9, pageNumbers.length);
+
+    // 페이지 그룹의 페이지 번호
+    const pageNumbersToShow = pageNumbers.slice(currentGroupStart - 1, currentGroupEnd);
+
+    const nextGroupStart = currentGroupEnd + 1;
+    const prevGroupEnd = currentGroupStart - 1;
+
+
+    const boardList = currentItems.map((board) => (
+        <div key={board.boardnum} className='board' onClick={() => navigate(`/board/${board.boardnum}`)}>
+            {board.titleImage ?
+                <img src={`/api/file/thumbnail?systemname=${board.titleImage}`} alt="" /> :
+                <img src={noimage} alt="" />
+            }
+            <span>{board.boardtitle}</span>
+        </div>
+    ));
+
+    const handleShowMore = () => {
+        setItemsPerPage(9); // 9개로 설정
+        setCurrentPage(1); // 첫 페이지로 설정
         document.getElementById("openCommunity").style.display = 'none';
         document.getElementById("closeCommunity").style.display = 'inline-block';
         document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
     };
+
     const closeCommunity = () => {
+        setItemsPerPage(3); // 9개로 설정
+        setCurrentPage(1);
         document.getElementById("openCommunity").style.display = 'inline-block';
         document.getElementById("closeCommunity").style.display = 'none';
         document.getElementsByClassName("bookmark")[0].style.display = 'block';
@@ -412,20 +452,6 @@ const MyPage = () => {
         document.getElementsByClassName("community")[0].style.display = 'block';
         setIsAllBoard(false);
     };
-
-    const boardList = [];
-    if (list && list.length > 0) {
-        list.slice(0, isAllBoard ? list.length : 3).map((board) => {
-            boardList.push(
-                <div key={board.boardnum} className='board' onClick={() => {
-                    navigate(`/board/${board.boardnum}`)
-                }}>
-                    <img src={`/api/file/thumbnail?systemname=${board.titleImage}`} alt="" />
-                    <span>{board.boardtitle}</span>
-                </div>
-            )
-        })
-    }
 
     // festivalList에 html 정보 담기
     const festivalList = [];
@@ -456,21 +482,21 @@ const MyPage = () => {
         const orgEmail = userInfo.emailinfo;
         const orgGender = userInfo.genderinfo;
 
-        if(orgName == name && orgEmail == email && orgGender == gender){
+        if (orgName == name && orgEmail == email && orgGender == gender) {
             alert("변경사항이 없습니다.");
             return;
         }
 
         const updateUserInfo = {
-            userid : loginUser,
-            nameinfo : name,
-            emailinfo : email,
-            genderinfo : gender
+            userid: loginUser,
+            nameinfo: name,
+            emailinfo: email,
+            genderinfo: gender
         }
 
         axios.put('/api/user/infoModify', updateUserInfo)
-            .then(resp=>{
-                if(resp.data.trim() == "O"){
+            .then(resp => {
+                if (resp.data.trim() == "O") {
                     alert("정보 공개 여부가 변경되었습니다.");
                     setIsModalOpen(false);
                 }
@@ -548,30 +574,31 @@ const MyPage = () => {
 
     // 즐겨찾기 리스트로 디테일 정보 가져오기
     useEffect(() => {
+        console.log(bookmarks)
         if (bookmarks.length != 0) {
             for (let i = 0; i < bookmarks.length; i++) {
-                axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${bookmarks[i]}`)
-                    .then((resp) => {
+                // axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${bookmarks[i]}`)
+                //     .then((resp) => {
+                //         console.log(resp.data.response)
+                //         const item = resp.data.response.body.items.item[0];
 
-                        const item = resp.data.response.body.items.item[0];
+                //         const newFestival = {
+                //             contentid: item.contentid,
+                //             firstimage: item.firstimage,
+                //             title: item.title
+                //         };
+                //         if (festival.length == 0) {
+                //             setFestival(item => [
+                //                 ...item,
+                //                 newFestival
+                //             ]);
 
-                        const newFestival = {
-                            contentid: item.contentid,
-                            firstimage: item.firstimage,
-                            title: item.title
-                        };
-                        if (festival.length == 0) {
-                            setFestival(item => [
-                                ...item,
-                                newFestival
-                            ]);
+                //         }
 
-                        }
-
-                    })
-                    .catch((error) => {
-                        console.error("API 호출 오류:", error);
-                    });
+                //     })
+                //     .catch((error) => {
+                //         console.error("API 호출 오류:", error);
+                //     });
             }
         }
     }, [bookmarks])
@@ -618,15 +645,41 @@ const MyPage = () => {
                             </div>
                             <div className="community">
                                 <p>후기 목록</p>
-                                {
-                                    list.length > 3 ? (<span onClick={showCommunity} id='openCommunity'>더 보기...</span>)
-                                        :
-                                        (<></>)
-                                }
+                                {list.length > itemsPerPage && (
+                                    <span onClick={handleShowMore} id='openCommunity'>
+                                        더 보기...
+                                    </span>
+                                )}
                                 <span onClick={closeCommunity} id='closeCommunity'>돌아가기</span>
                                 <div className='list'>
                                     {boardList}
                                 </div>
+
+                                {/* 페이징 버튼 */}
+                                {isAllBoard && (
+                                    <div className="pagination">
+                                        {/* "<" 버튼 - 이전 그룹으로 이동 */}
+                                        {currentGroupStart > 1 && (
+                                            <span onClick={() => paginate(prevGroupEnd)}>&lt;</span>
+                                        )}
+
+                                        {/* 페이지 번호 버튼 */}
+                                        {pageNumbersToShow.map(number => (
+                                            <span
+                                                key={number}
+                                                onClick={() => paginate(number)}
+                                                className={currentPage === number ? 'active' : ''}
+                                            >
+                                                {number}
+                                            </span>
+                                        ))}
+
+                                        {/* ">" 버튼 - 다음 그룹으로 이동 */}
+                                        {currentGroupEnd < pageNumbers.length && (
+                                            <span onClick={() => paginate(nextGroupStart)}>&gt;</span>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                             <Modal isOpen={isModalOpen} closeModal={closeModal}>
                                 {activeModal === 'userModify' && (
@@ -704,46 +757,46 @@ const MyPage = () => {
                                                 <tr>
                                                     <td>이름</td>
                                                     <td>
-                                                        {userInfo.nameinfo == "T"? <input type="radio" name="name" id="name1" value="T" checked/>
-                                                        :
-                                                        <input type="radio" name="name" id="name1" value="T"/>
+                                                        {userInfo.nameinfo == "T" ? <input type="radio" name="name" id="name1" value="T" checked />
+                                                            :
+                                                            <input type="radio" name="name" id="name1" value="T" />
                                                         }
                                                     </td>
                                                     <td>
-                                                        {userInfo.nameinfo == "F"? <input type="radio" name="name" id="name2" value="F" checked/>
-                                                        :
-                                                        <input type="radio" name="name" id="name2" value="F"/>
+                                                        {userInfo.nameinfo == "F" ? <input type="radio" name="name" id="name2" value="F" checked />
+                                                            :
+                                                            <input type="radio" name="name" id="name2" value="F" />
                                                         }
-                                                        
+
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>이메일</td>
                                                     <td>
-                                                        {userInfo.emailinfo == "T"? <input type="radio" name="email" id="email1" value="T" checked/>
-                                                        :
-                                                        <input type="radio" name="email" id="email1" value="T"/>
+                                                        {userInfo.emailinfo == "T" ? <input type="radio" name="email" id="email1" value="T" checked />
+                                                            :
+                                                            <input type="radio" name="email" id="email1" value="T" />
                                                         }
                                                     </td>
                                                     <td>
-                                                        {userInfo.emailinfo == "F"? <input type="radio" name="email" id="email2" value="F" checked/>
-                                                        :
-                                                        <input type="radio" name="email" id="email2" value="F"/>
+                                                        {userInfo.emailinfo == "F" ? <input type="radio" name="email" id="email2" value="F" checked />
+                                                            :
+                                                            <input type="radio" name="email" id="email2" value="F" />
                                                         }
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>성별</td>
                                                     <td>
-                                                        {userInfo.genderinfo == "T"? <input type="radio" name="gender" id="gender1" value="T" checked/>
-                                                        :
-                                                        <input type="radio" name="gender" id="gender1" value="T"/>
+                                                        {userInfo.genderinfo == "T" ? <input type="radio" name="gender" id="gender1" value="T" checked />
+                                                            :
+                                                            <input type="radio" name="gender" id="gender1" value="T" />
                                                         }
                                                     </td>
                                                     <td>
-                                                        {userInfo.genderinfo == "F"? <input type="radio" name="gender" id="gender2" value="F" checked/>
-                                                        :
-                                                        <input type="radio" name="gender" id="gender2" value="F"/>
+                                                        {userInfo.genderinfo == "F" ? <input type="radio" name="gender" id="gender2" value="F" checked />
+                                                            :
+                                                            <input type="radio" name="gender" id="gender2" value="F" />
                                                         }
                                                     </td>
                                                 </tr>
@@ -769,9 +822,9 @@ const MyPage = () => {
                                     </div>
                                 )}
                             </Modal>
-                            <div>
+                            {/* <div>
                                 <Note loginUser={loginUser} />
-                            </div>
+                            </div> */}
                         </div>
                     )}
                 </>

@@ -493,6 +493,19 @@ header {
     cursor: pointer;
 }
 
+.mypage .community .pagination span{
+    font-size: 20px;
+    margin: 0 10px;
+    background-color: white;
+    width: 24px;
+    height: 28px;
+    text-align: center;
+    border-radius: 10px;
+}
+.mypage .community .pagination .active{
+    background-color: lightblue;
+}
+
 
 
 /* 보드 쪽지 및 회원 정보 팝업 / 모달 */

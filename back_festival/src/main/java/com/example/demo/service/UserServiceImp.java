@@ -191,7 +191,9 @@ public class UserServiceImp implements UserService{
 	@Override
 	public int deleteUser(String userid) {
 		if(fmapper.deleteFileByUserid(userid) == 1) {
-			return umapper.deleteUser(userid);
+			if(uimapper.deleteUserInfo(userid) == 1) {
+				return umapper.deleteUser(userid);				
+			}
 		}
 		return -1;
 	}
