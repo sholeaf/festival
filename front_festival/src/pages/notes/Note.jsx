@@ -4,18 +4,18 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../components/Paginstion";
 import Modal from "../../components/Modal";
 
-const Note = ({ loginUser }) => {
+const Note = ({ loginUser , cri, setCri}) => {
     const navigate = useNavigate();
     const location = useLocation();
     const sendedCri = location.state;
     const [isReplyMode, setIsReplyMode] = useState(false); // 답장 모드 상태
-    const [cri, setCri] = useState(sendedCri || {
-        pagenum: 1,
-        amount: 10,
-        startrow: 0,
-        keyword: '',
-        type: 'a'
-    });
+    // const [cri, setCri] = useState(sendedCri || {
+    //     pagenum: 1,
+    //     amount: 5,
+    //     startrow: 0,
+    //     keyword: '',
+    //     type: 'a'
+    // });
     const [content, setContent] = useState(''); // 답장 내용
     const [note, setNote] = useState();
     const [pageMaker, setPageMaker] = useState({
@@ -27,7 +27,7 @@ const Note = ({ loginUser }) => {
         next: false,
         cri: null
     });
-
+    useEffect(() => {}, [cri]);
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal 열림 상태
     const [modalData, setModalData] = useState(null); // Modal에 표시할 데이터
 
@@ -98,6 +98,7 @@ const Note = ({ loginUser }) => {
 
     // 페이지 로드 시 API 호출
     useEffect(() => {
+        console.log("Cri changed:", cri);
         const temp = {
             pagenum: cri.pagenum,
             amount: cri.amount,
@@ -226,6 +227,7 @@ const Note = ({ loginUser }) => {
 
     return (
         <>
+        
             <div className="notewrap notelist" id="rpwrap">
                 <div className="notetitle">쪽지리스트</div>
                 <div className="notelist notetable">
@@ -246,7 +248,7 @@ const Note = ({ loginUser }) => {
                     <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
                 </div>
             </div>
-
+            
             {/* Modal 창 */}
             {isModalOpen && modalData && (
                 <Modal isOpen={isModalOpen} closeModal={closeModal}  >
@@ -335,8 +337,10 @@ const Note = ({ loginUser }) => {
                     </div>
                 </Modal>
             )}
+            
         </>
     );
+
 };
 
 export default Note;
