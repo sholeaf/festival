@@ -136,7 +136,106 @@ img {
     vertical-align: middle;
 }
 
+.pagination .nowPage {
+    margin-right: 5px;
+}
 
+.pagination a {
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    margin-right: 5px;
+}
+
+.nowPage {
+    padding: 5px;
+    width: 30px;
+    height: 30px;
+    display: inline-block;
+    border-radius: 3px;
+    /* background-color: #fff; */
+    color: black;
+    font-weight: bold;
+}
+
+.cols-1 {
+    width: 10%;
+}
+.cols-2 {
+    width: 20%;
+}
+.cols-3 {
+    width: 30%;
+}
+.cols-4 {
+    width: 40%;
+}
+.cols-5 {
+    width: 50%;
+}
+.cols-6 {
+    width: 60%;
+}
+.cols-7 {
+    width: 70%;
+}
+.cols-8 {
+    width: 80%;
+}
+.cols-9 {
+    width: 90%;
+}
+.cols-10 {
+    width: 100%;
+}
+.tar {
+    text-align: right !important;
+}
+.tac {
+    text-align: center !important;
+}
+.tal {
+    text-align: left !important;
+}
+.w100 {
+    width: 100px !important;
+}
+.w200 {
+    width: 200px !important;
+}
+.w300 {
+    width: 300px !important;
+}
+.w400 {
+    width: 400px !important;
+}
+.w500 {
+    width: 500px !important;
+}
+.w600 {
+    width: 600px !important;
+}
+.w700 {
+    width: 700px !important;
+}
+.w800 {
+    width: 800px !important;
+}
+.w900 {
+    width: 900px !important;
+}
+.w1000 {
+    max-width: 1000px !important;
+}
+.w100p {
+    width: 100% !important;
+}
+
+/* HOT , NEW 디자인 */
+.ntable.nlist .noticehot,
+.ntable.nlist .noticenew {
+    margin-right: 5px;
+}
 .navigate {
     display: flex;
 }
@@ -220,16 +319,20 @@ img {
 }
 
 
-
+/* 김영민 파트 시작 */
 /* notice area 공지페이지 시작 */
+.noticeWrap{
+    padding-top: 70px;
+    margin: 0 auto;
+    width: 1000px;
+}
 #nwrap {
     width: 1000px;
     margin: 0 20px;
     padding: 0;
     position: relative;
 }
-
-/* Title */
+/* NOTICE Title */
 .notice-title {
     display: flex;
     justify-content: center;
@@ -237,163 +340,50 @@ img {
     font-family: 'EBSJSKMedium';
     font-size: 80px;
 }
-
-
-.nlist, .rplist, .replyrplist {
-
+.nlist,
+.rplist,
+.replyrplist {
     font-family: 'GowunDodum-Regular';
     text-align: center;
 }
-
-.pagination {
-    max-width: 840px;
-}
-
 .nlist.ntable>.ntbody>.row:nth-child(2n+1) {
     background-color: #fff;
 }
-
 .nlist.ntable>.ntbody>.row:hover {
     background-color: #fff;
 }
-
 .nlist.ntable>.ntbody>.row:last-child {
     border-bottom: 1px solid #ccc;
 }
-
 .nlist.ntable>.ntbody>.row>div {
     padding: 5px;
 }
-
-/* 리스트 배치 */
+/* 공지사항 리스트 배치 */
 .nlist.ntable .row div:nth-child(1) {
     width: 8%;
 }
-
 .nlist.ntable .row div:nth-child(2) {
     width: 45%;
 }
-
 .nlist.ntable .row div:nth-child(3) {
     width: 15%;
 }
-
 .nlist.ntable .row div:nth-child(4) {
     width: 22%;
 }
-
 .nlist.ntable .row div:nth-child(5) {
     width: 10%;
 }
-
 .no-list div {
     width: 100% !important;
     padding: 10px !important;
     text-align: center;
 }
-
 .no-report div,
 no-post {
     width: 100% !important;
     padding: 10px !important;
 }
-
-.cols-1 {
-    width: 10%;
-}
-
-.cols-2 {
-    width: 20%;
-}
-
-.cols-3 {
-    width: 30%;
-}
-
-.cols-4 {
-    width: 40%;
-}
-
-.cols-5 {
-    width: 50%;
-}
-
-.cols-6 {
-    width: 60%;
-}
-
-.cols-7 {
-    width: 70%;
-}
-
-.cols-8 {
-    width: 80%;
-}
-
-.cols-9 {
-    width: 90%;
-}
-
-.cols-10 {
-    width: 100%;
-}
-
-.tar {
-    text-align: right !important;
-}
-
-.tac {
-    text-align: center !important;
-}
-
-.tal {
-    text-align: left !important;
-}
-
-.w100 {
-    width: 100px !important;
-}
-
-.w200 {
-    width: 200px !important;
-}
-
-.w300 {
-    width: 300px !important;
-}
-
-.w400 {
-    width: 400px !important;
-}
-
-.w500 {
-    width: 500px !important;
-}
-
-.w600 {
-    width: 600px !important;
-}
-
-.w700 {
-    width: 700px !important;
-}
-
-.w800 {
-    width: 800px !important;
-}
-
-.w900 {
-    width: 900px !important;
-}
-
-.w1000 {
-    max-width: 1000px !important;
-}
-
-.w100p {
-    width: 100% !important;
-}
-
 .nlist .row {
     display: flex;
     vertical-align: middle;
@@ -405,30 +395,28 @@ no-post {
     vertical-align: middle;
     align-items: center;
 }
-
-.ntable>.row>*:nth-child(n+2) {
-    border: none;
-}
-
-.ntable>.row:nth-child(n+2)>* {
-    border: none;
-}
-
+/* 공지사항 글쓰기버튼  */
 .nbtn_table {
     text-align: right;
     margin: 10px auto;
     position: relative;
     float: right;
-    bottom: 50px;
+    bottom: 120px;
     right: 100px;
     display: none;
-
 }
 
 .nbtn_table.show {
     display: block;
 }
-
+a.nwrite {
+    padding: 5px;
+    width: 60px;
+    height: 30px;
+    text-align: center;
+    cursor: pointer;
+    position: absolute;
+}
 /* 로딩 텍스트 애니메이션 */
 /* 1. 깜빡이는 애니메이션 */
 @keyframes nblink {
@@ -461,7 +449,6 @@ no-post {
     /* 세로 중앙 정렬 */
     z-index: 9999;
 }
-
 .loading-text span {
     display: inline-block;
     /* 안의 글자 나눠주기 */
@@ -515,13 +502,13 @@ no-post {
 .loading-text span:nth-child(3) {
     animation: nblink 1.5s infinite, ncolorChange 2s infinite alternate, nscaleText 1.5s infinite alternate;
 }
+
 .no-files {
     padding: 50px;
     text-align: center;
 }
 
-
-/* board 공통 */
+/* notic,Adminpage 공통 */
 .nlist,
 .nwrite,
 .nget,
@@ -535,7 +522,7 @@ no-post {
     left: 0;
     width: 100%;
     height: 100%;
-    z-index: 200;
+    z-index: 5;
 }
 
 @keyframes nlistWrap {
@@ -548,7 +535,7 @@ no-post {
 
 .nlist .ntable,
 .nwrite .ntable,
-.nget .ntable,
+.nget .ngettable,
 .nmodify .ntable {
     border: 0px;
     width: 1000px;
@@ -604,6 +591,9 @@ no-post {
     max-height: 500px;
     transition: max-height 0.3s ease-in-out;
 }
+.searchrow:last-child {
+    border-bottom: none !important;
+}
 
 /* Notice list css */
 
@@ -625,12 +615,6 @@ no-post {
     box-shadow: 1px 1px 2px #444;
     transition: transform linear 0.1s;
     cursor: auto;
-}
-
-/* HOT , NEW 디자인 */
-.ntable.nlist .noticehot,
-.ntable.nlist .noticenew {
-    margin-right: 5px;
 }
 
 .ntable.nlist .noticehot {
@@ -673,53 +657,7 @@ no-post {
     }
 }
 
-/* Pagination 페이지 버튼 디자인 */
-.pagination {
-    margin-top: 20px;
-    display: flex;
-    justify-content: center;
-}
 
-.pagination tr {
-    text-align: center;
-    vertical-align: middle;
-}
-
-.pagination .nowPage {
-    margin-right: 5px;
-}
-
-.pagination a {
-    padding: 5px;
-    width: 30px;
-    height: 30px;
-    margin-right: 5px;
-}
-
-/* .pagination a:hover {
-    background-color: #ccc;
-    } */
-
-.nowPage {
-    padding: 5px;
-    width: 30px;
-    height: 30px;
-    display: inline-block;
-    border-radius: 3px;
-    /* background-color: #fff; */
-    color: black;
-    font-weight: bold;
-}
-
-/* 글쓰기버튼 */
-a.nwrite {
-    padding: 5px;
-    width: 60px;
-    height: 30px;
-    text-align: center;
-    cursor: pointer;
-    position: absolute;
-}
 
 /* nwrite, nmodify, nget css */
 #noticeForm {
@@ -729,27 +667,34 @@ a.nwrite {
 #noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
-    background-color: #92B4EC;
+    margin:10px;
+    /* border: 1px solid #000; */
 }
 
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
+    
 }
 
 #noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
+    
 
 }
 
 #noticeForm>.ntable>.row>div:nth-child(2) {
     vertical-align: middle;
     width: 80%;
+    border: 1px solid #000;
 }
 
 #noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
+}
+#noticeForm{
+    border: 1px solid #000;
 }
 
 .nwrite input[type="text"],
@@ -790,11 +735,21 @@ a.nwrite {
     text-align: center;
     width: 100%;
     min-height: 10px;
+    margin-left: 30px;
 }
-
+.nwritethumbnail_area{
+    margin-left: 30px;
+}
+.ngetthumbnail_area{
+    margin-top: 50px;
+}
 /* 게시판 썸네일애니메이션 thumbnail animation*/
 img.nthumbnail {
-    max-width: 70%;
+    max-width: 50%;
+    transition: all 0.2s linear;
+}
+img.nwritethumbnail {
+    max-width: 40%;
     transition: all 0.2s linear;
 }
 
@@ -872,7 +827,8 @@ input.nrremove.btn {
 }
 
 
-/* noticecontents css */
+/* nget css */
+
 .nget #noticecontents {
     width: 700px;
     height: 290px;
@@ -940,6 +896,9 @@ input.nrremove.btn {
     margin-top: 20px;
     border-top: 1px solid grey;
     position: relative;
+}
+.replycontent{
+    margin-left: 30px;
 }
 
 .nreply_line>.nregist {
@@ -1055,21 +1014,16 @@ input.nrremove.btn {
 
 .nbtn-group {
     display: flex;
-    /* 버튼들을 한 줄로 배치 */
     flex-direction: column;
     gap: 2px;
-    /* 버튼 간의 간격을 조정 */
     align-items: center;
     float: right;
 }
 
 .nreplies li div {
     display: flex;
-    /* 내부 요소들을 가로로 배치 */
     align-items: center;
-    /* 세로 중앙 정렬 */
     gap: 4px;
-    /* 아이템 간의 간격 */
 }
 
 .nreplies li div:nth-child(1) [class*='nreply'] {
@@ -1202,8 +1156,9 @@ a#nsearch-btn {
     align-items: center;
     font-family: 'EBSJSKMedium';
     font-size: 18px;
+    margin: 20px;
 }
-
+/* 게시판신고부분 */
 .rplist .row {
     display: flex;
     vertical-align: middle;
@@ -1232,7 +1187,7 @@ a#nsearch-btn {
     background-color: #fff;
 }
 
-.rptable>.rptbody>.row:last-child {
+.row:last-child {
     border-bottom: 1px solid #ccc;
 }
 
@@ -1240,7 +1195,7 @@ a#nsearch-btn {
     padding: 5px;
 }
 
-/* 리스트 배치 */
+/* 게시판신고 리스트 배치 */
 .rplist.rptable .row div:nth-child(1) {
     width: 8%;
 }
@@ -1264,11 +1219,13 @@ a#nsearch-btn {
 .rplist.rptable .row div:nth-child(6) {
     width: 20%;
 }
-/* 댓글신고리스트 */
-.replyrptable > a{
+
+/* 댓글신고 css */
+.replyrptable>a {
     cursor: pointer;
 }
-.replyrplist .row{
+
+.replyrplist .row {
     display: flex;
     vertical-align: middle;
     align-items: center;
@@ -1287,6 +1244,7 @@ a#nsearch-btn {
 .replyrptable>.row:nth-child(n+2)>* {
     border: none;
 }
+
 .replyrptable>.rptbody>.row:nth-child(2n+1) {
     background-color: #fff;
 }
@@ -1303,7 +1261,7 @@ a#nsearch-btn {
     padding: 5px;
 }
 
-/* 리스트 배치 */
+/* 댓글신고리스트 배치 */
 .replyrplist.replyrptable .row div:nth-child(1) {
     width: 13%;
 }
@@ -1323,14 +1281,19 @@ a#nsearch-btn {
 .replyrplist.replyrptable .row div:nth-child(5) {
     width: 20%;
 }
+
 .replyrptable>.replyrptbody>.row>div {
     padding: 5px;
 }
+
 .replylimited-text {
-    white-space: nowrap;       /* 텍스트가 한 줄로 유지되도록 설정 */
-    overflow: hidden;          /* 텍스트가 넘칠 경우 숨김 처리 */
-    text-overflow: ellipsis;   /* 넘친 텍스트는 '...'으로 표시 */
-    width: 80%;              /* 글자수 제한을 위한 너비 설정 */
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    width: 80%;
+}
+.adminsearch_area{
+    margin-left: 10%;
 }
 
 .replymodal {
@@ -1351,15 +1314,10 @@ a#nsearch-btn {
 
 }
 /* adminpage area end 관리자페이지 종료 */
-/* note area start 쪽지 시작 */
+/* 쪽지리스트 부분 note area start 쪽지 시작 */
 .notewrap {
     position: relative;
     max-width: 1000px;
-}
-
-.notewrap div {
-    margin: 0 auto;
-    border: 1px solid #000;
 }
 
 .notetitle {
@@ -1413,44 +1371,6 @@ a#nsearch-btn {
 }
 
 /* noteget area 모달쪽지보내기 */
-.noteget {
-    width: 500px;
-    height: 400px;
-    position: relative;
-}
-
-.notegetbtn_area {
-    display: inline;
-    vertical-align: middle;
-}
-
-.notegetrow div:nth-child(1) {
-    width: 120px;
-    padding: 5px;
-}
-
-.notegetrow div:nth-child(n+1) {
-    width: 120px;
-    padding: 5px;
-}
-
-.notegetrow div:nth-child(2) {
-    width: 300px;
-    padding: 5px;
-    text-align: left;
-}
-
-.notegetrow input {
-    width: 230px !important;
-    border: 1px solid #000 !important;
-}
-
-.notegetrow textarea {
-    width: 340px;
-    height: 220px !important;
-    border: 1px solid #000;
-    resize: none;
-}
 
 .sendms {
     width: 100px !important;
@@ -1458,15 +1378,119 @@ a#nsearch-btn {
     position: fixed;
 }
 
-.msbtn {
-    margin-left: 20px;
-}
 
 .noteget {
     margin-top: 20px;
 }
+/* 전체 wrapper 스타일 */
+#wrap.noteget {
+    width: 500px;
+    margin: 0 auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    padding: 20px;
+    font-family: Arial, sans-serif;
+    background-color: #f9f9f9;
+}
+
+/* 테이블 영역 */
+.ntable.notegettable {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+/* 각 row (입력 필드 및 레이블) */
+.notegetrow {
+    display: flex;
+    margin-bottom: 15px;
+    align-items: center;
+}
+
+/* 레이블 (제목, To, From, 내용) */
+.notegetrow > div:first-child {
+    font-weight: bold;
+    color: #333;
+    width: 100px;
+    text-align: left;
+}
+
+/* 입력 필드 스타일 */
+.notegetrow input, .notegetrow textarea {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    background-color: #fff;
+    transition: border-color 0.3s ease;
+}
+
+.notegetrow input:focus, .notegetrow textarea:focus {
+    border-color: #007BFF;
+    outline: none;
+}
+
+/* 텍스트 영역 */
+.notegetrow textarea {
+    height: 150px;
+    width: 400px;
+    resize: none;
+}
+
+/* 버튼 영역 */
+.notegetbtn_area {
+    width: 100%;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* 버튼 스타일 */
+.notegetbtn_area .btn.msbtn {
+    padding: 10px 20px;
+    font-size: 16px;
+    background-color: #007BFF;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.notegetbtn_area .btn.msbtn:hover {
+    background-color: #0056b3;
+}
+
+/* 답장 버튼 */
+.sendms button {
+    padding: 10px 10px;
+    font-size: 16px;
+    background-color: #28a745;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.sendms button:hover {
+    background-color: #218838;
+}
+
+/* 읽기 전용 input 스타일 */
+.notegetrow input[readonly] {
+    background-color: #f1f1f1;
+    border: 1px solid #ccc;
+    color: #777;
+}
+.notegetrow input{
+    border: 1px solid #ccc !important;
+}
+
 /* noteModal send 부분 디자인 */
 /* Modal overlay style */
+.notesend-row{
+    padding-top: 0;
+}
 .notesend-modal-overlay {
     display: block;
     position: fixed;
@@ -1492,12 +1516,19 @@ a#nsearch-btn {
     background-color: rgba(0, 0, 0, 0.35);
     z-index: 10;
 }
+
 .notesend-modal-content .notesend-row div:nth-child(1) {
     width: 80px !important;
+    border-bottom: none;
 }
-.notesend-modal-content .notesend-row input:nth-child(2){
+
+.notesend-modal-content .notesend-row input:nth-child(2) {
     width: 300px !important;
 }
+.notesend-row:last-child{
+    border-bottom: none;
+}
+
 /* Modal content style */
 .notesend-modal-content {
     position: absolute;
@@ -1506,13 +1537,16 @@ a#nsearch-btn {
     transform: translate(-50%, -50%);
     max-height: 120%;
     overflow-y: auto;
-    background-color: white;
+    background-color: #f9f9f9;
     z-index: 11;
     border-radius: 30px;
     text-align: center;
     padding: 20px;
     width: 500px;
     height: 700px;
+}
+.notesend-modal-content th, .notesend-modal-content td {
+    height: 59px !important;
 }
 
 /* Input field and textarea */
@@ -1523,7 +1557,8 @@ a#nsearch-btn {
     border: 1px solid #ccc;
     border-radius: 5px;
 }
-.notesendtitle{
+
+.notesendtitle {
     width: 300px !important;
     margin-left: 18px;
 }
@@ -1542,28 +1577,33 @@ a#nsearch-btn {
 .notesend-btn {
     padding: 10px 20px;
     width: 80px;
-    background-color: #5cb5ff;
     color: white;
     border: none;
     margin: 0 0 18px 18px;
     border-radius: 5px;
     cursor: pointer;
 }
-
+/* 보내기버튼 */
 .notesend-btn-send {
-    background-color: #5cb5ff;
+    background-color: #28a745;
 }
-.notesend-notegetbtn_area{
+.notesend-btn:hover {
+    background-color: #218838;
+}
+
+.notesend-notegetbtn_area {
     vertical-align: middle;
     display: inline-block;
 }
+/* 취소버튼 */
 .notesend-msbtn {
-    background-color: #f44336;
+    background-color: #007BFF;
+}
+.notesend-msbtn:hover {
+    background-color: #0056b3;
 }
 
-.notesend-btn:hover {
-    background-color: #4024f9;
-}
+
 
 .notesend-sendms {
     margin-top: 15px;
@@ -1591,7 +1631,7 @@ a#nsearch-btn {
 
 /* note are end  쪽지 종료*/
 /* 댓글내용모달 css */
-.replycontentmodal{
+.replycontentmodal {
     position: absolute;
     top: 70%;
     left: 50%;
@@ -1611,6 +1651,58 @@ a#nsearch-btn {
 
 /* festival .css */
 
+/* festival list */
+
+.festival-list .festival-title {
+    font-size: 18px;
+    font-weight: bold;
+    overflow: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    text-align: center;
+}
+
+.festival-list-area {
+    margin-top: 10px;
+}
+
+.festival-list-area img {
+    object-fit: contain;
+    object-position: center;
+}
+
+.festival-list-area p {
+    font-size: 14px;
+    font-weight: bold;
+    display: flex;
+}
+.festival-small-info div:last-child{
+    width: 50px;
+    height: 50px;
+    display: flex;
+    margin-top: 10px;
+    margin-left: 15px;
+}
+
+.festival-list-area .festival-small-info {
+    margin-left: 35px;
+    display: flex;
+}
+
+.festival-list-area .bookmark-img {
+    margin: 0 20px 0 50px;
+    cursor: pointer;
+    object-fit: contain;
+    /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center;
+}
+
+
+.festival-list .festival-date {
+    font-size: 12px;
+}
+
+/* festival list end */
 .festival_img_area {
     position: relative;
     overflow: hidden;
@@ -1694,7 +1786,7 @@ a#nsearch-btn {
     border: 1px solid #a0a096;
     font-family: 'Arial', 'Helvetica', sans-serif;
     line-height: 1.125em;
-    margin: 0 auto;
+    margin: 50px auto;
 }
 
 .react-calendar__navigation {
@@ -1719,13 +1811,18 @@ a#nsearch-btn {
     width: 100%;
     display: flex;
     flex-wrap: wrap;
+    margin-top: 50px;
 }
 
 .festival-list li {
-    width: 21%;
-    margin: 15px;
-    border: 1px solid black;
+    width: 300px;
+    height: 300px;
+    margin: 25px;
     padding: 5px;
+    cursor: pointer;
+    background: linear-gradient(to bottom right, rgba(146, 180, 236, 0.7), rgba(146, 180, 236, 0.2));
+    border-radius: 20px;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* festival map */
@@ -2193,6 +2290,12 @@ a#nsearch-btn {
     font-size: 50px !important;
 }
 
+.festival-detail-bookmark {
+    cursor: pointer;
+    pointer-events: auto;
+    /* 클릭 가능하도록 설정 */
+}
+
 .festival-introduction {
     width: 800px;
     display: flex;
@@ -2237,13 +2340,9 @@ a#nsearch-btn {
     display: flex;
     background-color: rgba(146, 180, 236, 0.2);
     border-radius: 15px;
-    justify-content: center;
+    justify-content: space-around;
     margin: 0 176px;
     opacity: 0;
-}
-
-.festival-location div {
-    margin-left: 50px;
 }
 
 .map-img-area {
@@ -2309,17 +2408,37 @@ td {
     font-weight: bold;
 }
 
-.btn-area {
-    width: 70px;
-    height: 40px;
+.remote-area {
+    width: 100px;
     background-color: #92B4EC;
     color: white;
     font-weight: bold;
-    text-align: center;
+    position: fixed;
+    top: 500px;
+    right: 100px;
     line-height: 38px;
     border-radius: 8px;
     margin: 10px auto;
     cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.remote-area div{
+    text-align: center;
+    border-bottom: 1px solid white;
+    margin: 5px;
+}
+
+.remote-area div:last-child{
+    border: none;
+}
+
+.festival-detail-area .festival-detail-bookmark {
+    display: flex;
+    margin-top: 20px;
+    width: 50px;
+    height: 50px;
+    float: right;
 }
 
 /* fade-in 애니메이션 */
@@ -2362,8 +2481,8 @@ td {
 
 /* board css 임시 */
 
-#board_wrap{
-	margin: 0 auto;
+#board_wrap {
+    margin: 0 auto;
     margin-top: 100px;
    width: 1000px;
     /* text-align: center; */
@@ -2396,7 +2515,7 @@ td {
     top: -25px;
     right: 0;
     width: 140px;
-    height: 140px;
+    text-align: center;
 }
 .boardbox2 div:nth-child(2) img{
     max-width: 140px;
@@ -2423,55 +2542,43 @@ td {
     color: red;
     margin-left: 10px;
 }
-
 .nowPage {
-	color: #92B4EC;
+    color: #92B4EC;
 }
 
 .btn,
 .nowPage {
-	margin: 5px;
+    margin: 5px;
 }
 
-.getBoard{
+.getBoard {
     cursor: pointer;
 }
 
-.boardget_wrap{
+.boardget_wrap {
     margin: 0 auto;
     margin-top: 100px;
-	width: 1000px;
+    width: 1000px;
 }
 
-.bgContent{
-    min-height: 200px;
-}
-
-.rrow{
-	display: flex;
-}
-.reply_write{
-	display: flex;
-	flex-wrap: wrap;
-}
-.replies{
-    margin-top: 15px;
-	width: 100%;
-}
-.rpBody_wrap{
+.rrow {
     display: flex;
 }
-.rpBody{
-    width: 700px;
-    margin-left: 20px;
+
+.reply_write {
+    display: flex;
+    flex-wrap: wrap;
 }
-.page{
-	text-align: center;
+
+.replies {
+    width: 100%;
 }
-.btnArea{
-	display: flex;
+
+.page {
     text-align: center;
 }
-.reply_line{
-    margin-top: 20px;
+
+.btnArea {
+    display: flex;
+    text-align: center;
 }

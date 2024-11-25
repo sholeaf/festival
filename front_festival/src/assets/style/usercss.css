@@ -446,6 +446,7 @@ header {
 
 
 /* 보드 쪽지 및 회원 정보 팝업 / 모달 */
+.boardget_wrap .popup, 
 #board_wrap .popup {
     display: none;
     position: fixed;
@@ -453,6 +454,13 @@ header {
     color: white;
     padding: 10px;
     border-radius: 5px;
+}
+.boardget_wrap .popup a,
+#board_wrap .popup a{
+    display: block;
+    width: 80px;
+    margin: 5px;
+    text-align: center;
 }
 
 .BoardModal .img img{

@@ -108,7 +108,7 @@ const BoardWrite = () => {
     const board = {
       boardtitle: writeForm.boardtitle.value,
       boardcontent: content,
-      userid : document.writeForm.userid.value,
+      userid : loginUser,
       tag : writeForm.userhobby.value,
       titleImage: useImages[0],
     };

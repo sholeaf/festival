@@ -1,12 +1,14 @@
 import axios from "axios";
+import '../../assets/style/usercss.css';
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/Button";
 import Header from "../../layout/Header";
 import NoteModal from "../../components/NoteModal";
+import Modal from "../../components/Modal";
 
-const BoardGet = () =>{
-    const {boardnum} = useParams();
+const BoardGet = () => {
+    const { boardnum } = useParams();
     const [data, setData] = useState();
     const navigate = useNavigate();
     const cri = useLocation().state;
@@ -14,64 +16,145 @@ const BoardGet = () =>{
     const replyEndRef = useRef(null);
     const prevPageRef = useRef(1);
 
-    const [nowPage,setNowPage] = useState(1);
-    const [list,setList] = useState([]);
+    const [nowPage, setNowPage] = useState(1);
+    const [list, setList] = useState([]);
     const [replyCnt, setReplyCnt] = useState(0);
     const [loginUser, setLoginUser] = useState("");
     const [checkLike, setcheckLike] = useState();
+    // 쪽지 보내기 모달 상태
+    const [isNoteModalOpen, setIsNoteModalOpen] = useState(false);
+    // 회원 정보 모달 상태
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState('');
 
-    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
-    const [selectedUserId, setSelectedUserId] = useState(''); 
+    const [user, setUser] = useState({
+        userid: '',
+        userpw: '',
+        username: '',
+        userphone: '',
+        useremail: '',
+        usergender: '',
+        zipcode: '',
+        addr: '',
+        addrdetail: '',
+        addretc: ''
+    });
+    const [userInfo, setUserInfo] = useState({
+        userid: '',
+        nameinfo: '',
+        emailinfo: '',
+        genderinfo: ''
+    });
+    const [userFile, setUserFile] = useState();
 
-    useEffect(()=>{
+    useEffect(() => {
         getData();
-    },[])
-    
-    const openModal = (userId) => {
-        setSelectedUserId(userId);  // 클릭된 작성자의 userid를 저장
+    }, [])
+
+    // 쪽지 보내기 모달
+    const openNoteModal = () => {
+        if (loginUser == "" || loginUser == null) {
+            alert("로그인 후 이용할 수 있습니다.");
+            document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
+            return;
+        }
+        if (loginUser == selectedUserId) {
+            alert("본인에게는 쪽지를 보낼 수 없습니다.");
+            document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
+            return;
+        }
+        setIsNoteModalOpen(true);  // 모달 열기
+    };
+
+    // 모달 닫기
+    const closeNoteModal = () => {
+        setIsNoteModalOpen(false);
+    };
+
+    // 회원 정보 모달
+    const openModal = () => {
+        if (loginUser == "" || loginUser == null) {
+            alert("로그인 후 이용할 수 있습니다.");
+            document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
+            return;
+        }
         setIsModalOpen(true);  // 모달 열기
     };
 
     // 모달 닫기
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
     };
+
+    // 팝업열기
+    const openPopup = (e, userId) => {
+        setSelectedUserId(userId);
+        const rect = e.target.getBoundingClientRect()
+        console.log(rect.left)
+
+        const popup = document.getElementsByClassName('popup')[0]
+        popup.style.display = "block";
+        popup.style.left = rect.left + "px";
+        popup.style.top = (rect.top + 20) + "px";
+
+
+        const handleClickOutside = (event) => {
+            if (!popup.contains(event.target) && event.target !== e.target) {
+                popup.style.display = "none"; // 팝업 숨기기
+                document.body.removeEventListener('click', handleClickOutside); // 이벤트 리스너 제거
+            }
+        };
+        // body에 클릭 이벤트 리스너 추가
+        document.body.addEventListener('click', handleClickOutside);
+
+        axios.get('/api/user/userInfo', { params: { userid: userId } })
+            .then(resp => {
+                if (resp) {
+                    console.log(resp.data)
+                    setUser(resp.data.user)
+                    setUserInfo(resp.data.userInfo)
+                    setUserFile(resp.data.file)
+                }
+            })
+    }
 
 
     const getData = async () => {
-        await axios.get(`/api/user/loginCheck`).then(resp=>{
-            if(resp.data.trim() != ""){
+        await axios.get(`/api/user/loginCheck`).then(resp => {
+            if (resp.data.trim() != "") {
                 setLoginUser(resp.data.trim());
-                axios.get(`/api/board/like/${boardnum}?userid=${resp.data}`).then(resp=>{
-                    resp.data? setcheckLike(true) : setcheckLike(false);
+                axios.get(`/api/board/like/${boardnum}?userid=${resp.data}`).then(resp => {
+                    resp.data ? setcheckLike(true) : setcheckLike(false);
                 })
             }
         })
         const response = await axios.get(`/api/board/${boardnum}`);
         setData(response.data);
     };
-    
-    window.addEventListener('popstate', (e)=>{
+
+    window.addEventListener('popstate', (e) => {
         // navigate('/board/list');
         e.preventDefault();
     });
-    
-    useEffect(()=>{
-        
-        axios.get(`/api/reply/${boardnum}/${nowPage}`)
-        .then(resp => {
-            setList(resp.data.list);
-            setReplyCnt(resp.data.replyCnt);
-        })
-    },[nowPage])
 
-    useEffect(()=>{
-        if(prevPageRef.current != nowPage){
-            replyEndRef.current?.scrollIntoView({behavior:'smooth'});
+    useEffect(() => {
+
+        axios.get(`/api/reply/${boardnum}/${nowPage}`)
+            .then(resp => {
+                setList(resp.data.list);
+                setReplyCnt(resp.data.replyCnt);
+            })
+    }, [nowPage])
+
+    useEffect(() => {
+        if (prevPageRef.current != nowPage) {
+            replyEndRef.current?.scrollIntoView({ behavior: 'smooth' });
             prevPageRef.current = nowPage;
         }
-    },[list])
+    }, [list])
 
     const remove = async () => {
         const regex = /systemname=([a-zA-Z0-9\-]+(?:\.[a-zA-Z]{3,4})?)"/g;
@@ -80,7 +163,7 @@ const BoardGet = () =>{
 
         // `exec` 메서드를 이용해 여러번 찾을 수 있음
         while ((useImage = regex.exec(data.boardcontent)) !== null) {
-        useImages.push(useImage[1]); // targetWord 뒤의 단어를 추출
+            useImages.push(useImage[1]); // targetWord 뒤의 단어를 추출
         }
         // if (useImages.length === 0) {
         //     const response = await axios.delete(`/api/board/${boardnum}`);
@@ -89,63 +172,63 @@ const BoardGet = () =>{
         //     return; // 이후 코드 실행을 멈춤
         // }
         const queryParams = new URLSearchParams();
-            useImages.forEach((image) => {
-                queryParams.append('useImages[]', image); // useImages[]로 배열을 전달
+        useImages.forEach((image) => {
+            queryParams.append('useImages[]', image); // useImages[]로 배열을 전달
         });
         const response = await axios.delete(`/api/board/${boardnum}?${queryParams.toString()}`);
         alert(`${response.data}번 게시글 삭제!`)
-        navigate(`/board/list`,{state:cri});
+        navigate(`/board/list`, { state: cri });
     }
 
-    const clickRegist = async ()=>{
+    const clickRegist = async () => {
         const replycontents = document.getElementById("replycontents");
-        if(replycontents.value == ""){
+        if (replycontents.value == "") {
             alert("댓글 내용을 입력하세요!");
             replycontents.focus();
             return;
         }
-        const reply = {replycontent:replycontents.value, userid:loginUser, boardnum:data.boardnum};
-        axios.post(`/api/reply/regist`,reply)
-        .then(resp => {
-            alert(`댓글 등록 완료!`);
-            reply.replynum = resp.data;
+        const reply = { replycontent: replycontents.value, userid: loginUser, boardnum: data.boardnum };
+        axios.post(`/api/reply/regist`, reply)
+            .then(resp => {
+                alert(`댓글 등록 완료!`);
+                reply.replynum = resp.data;
 
-            if(list.length == 5){
-                setNowPage(Math.ceil((replyCnt+1)/5));
-            }
-            else{
-                setList([...list,resp.data]);
-            }
-            replycontents.value = "";
-        })
+                if (list.length == 5) {
+                    setNowPage(Math.ceil((replyCnt + 1) / 5));
+                }
+                else {
+                    setList([...list, resp.data]);
+                }
+                replycontents.value = "";
+            })
     }
-    
-    const like = async () =>{
+
+    const like = async () => {
         const response = await axios.post(`/api/board/like/${boardnum}?userid=${loginUser}`);
-        if(response.data){
+        if (response.data) {
             setcheckLike(true);
             alert("좋아요!");
         }
-        else{
+        else {
             setcheckLike(false);
             alert("좋아요취소");
         }
     }
-    const reportBoard = async()=>{
+    const reportBoard = async () => {
         const response = await axios.post(`/api/board/reportBoard/${boardnum}?userid=${loginUser}`);
-        if(response.data){
+        if (response.data) {
             alert("신고되었습니다!");
         }
-        else{
+        else {
             alert("이미 신고하셨습니다!");
         }
     }
-    const reportReply = async(replynum) =>{
+    const reportReply = async (replynum) => {
         const response = await axios.post(`/api/board/reportReply/${replynum}?userid=${loginUser}`);
-        if(response.data){
+        if (response.data) {
             alert("신고되었습니다!");
         }
-        else{
+        else {
             alert("이미 신고하셨습니다!");
         }
     }
@@ -153,16 +236,16 @@ const BoardGet = () =>{
     const BlindReply = ({ reply }) => {
         // `isContentVisible` 상태를 사용하여 댓글 내용이 보일지 여부를 관리
         const [isContentVisible, setIsContentVisible] = useState(false);
-      
+
         const toggleContentVisibility = () => {
-          setIsContentVisible(!isContentVisible); // 클릭 시 상태를 토글
+            setIsContentVisible(!isContentVisible); // 클릭 시 상태를 토글
         };
         return (
-            <div onClick={()=>setIsContentVisible(true)}>
+            <div onClick={() => setIsContentVisible(true)}>
                 {isContentVisible ? (
-                <div>{reply.replycontent}</div> // 내용이 보일 때
+                    <div>{reply.replycontent}</div> // 내용이 보일 때
                 ) : (
-                <div>(블라인드 처리된 댓글입니다. 클릭하시면 내용이 보입니다.)</div> // 내용이 숨겨져 있을 때
+                    <div>(블라인드 처리된 댓글입니다. 클릭하시면 내용이 보입니다.)</div> // 내용이 숨겨져 있을 때
                 )}
             </div>
         );
@@ -174,144 +257,144 @@ const BoardGet = () =>{
 
         // 수정 버튼 클릭 시 수정 모드 활성화
         const handleEditClick = () => {
-          setIsEditing(true);
+            setIsEditing(true);
         };
-      
+
         // 수정된 댓글 내용 업데이트
         const handleContentChange = (e) => {
-          setEditedContent(e.target.value);
+            setEditedContent(e.target.value);
         };
-        
+
         // 수정 완료 버튼 클릭 시 댓글 수정 완료
         const handleSaveClick = async (replynum) => {
             const replycontents = document.querySelector("#replycontents2");
-            if(editedContent == ""){
+            if (editedContent == "") {
                 alert("수정할 댓글 내용을 입력하세요!")
                 replycontents.focus();
                 return;
             }
-            const reply = {replynum:replynum, replycontent:editedContent, userid:loginUser};
+            const reply = { replynum: replynum, replycontent: editedContent, userid: loginUser };
             const response = await axios.put(`/api/reply/${replynum}`, reply);
             alert(`댓글 수정 완료!`);
             const updatedList = list.map((item) => {
-                if(item.replynum == replynum){
+                if (item.replynum == replynum) {
                     return response.data;
                 }
-                else{
+                else {
                     return item;
                 }
             })
             setList(updatedList);
-            
+
             setIsEditing(false);
         };
-      
+
         // 수정 취소 버튼 클릭 시 수정 취소
         const handleCancelClick = () => {
-          setIsEditing(false);
-          setEditedContent(reply.replycontent); // 원래 내용으로 돌아갑니다.
+            setIsEditing(false);
+            setEditedContent(reply.replycontent); // 원래 내용으로 돌아갑니다.
         };
         return (
             <div>
-              {isEditing ? (
-                // 수정 모드일 때, 댓글 내용을 텍스트 입력란으로 보여줌
-                <div className="rpBody_wrap">
-                    <div className="rpBody" >
-                        <textarea name="replycontents" id="replycontents2" value={editedContent} placeholder="Contents" onChange={handleContentChange} rows="3" cols="40" ></textarea>
+                {isEditing ? (
+                    // 수정 모드일 때, 댓글 내용을 텍스트 입력란으로 보여줌
+                    <div className="rpBody_wrap">
+                        <div className="rpBody" >
+                            <textarea name="replycontents" id="replycontents2" value={editedContent} placeholder="Contents" onChange={handleContentChange} rows="3" cols="40" ></textarea>
+                        </div>
+                        <div>
+                            <div><button onClick={() => handleSaveClick(reply.replynum)}>완료</button></div>
+                            <button onClick={handleCancelClick}>취소</button>
+                        </div>
                     </div>
-                  <div>
-                    <div><button onClick={()=>handleSaveClick(reply.replynum)}>완료</button></div>
-                    <button onClick={handleCancelClick}>취소</button>
-                  </div>
-                </div>
-              ) : (
-                // 수정 모드가 아닐 때, 댓글 내용 표시
-                <div className="rpBody_wrap">
-                  <div className="rpBody" >{reply.replycontent}</div>
-                  <div>{
-                    reply.userid == loginUser?
-                        <>
-                            <div><button onClick={handleEditClick}>수정</button></div>
-                            <button onClick={()=>removeReply(reply.replynum)}>삭제</button>
-                        </>
-                        :""
-                    }
-                  </div>
-                </div>
-              )}
+                ) : (
+                    // 수정 모드가 아닐 때, 댓글 내용 표시
+                    <div className="rpBody_wrap">
+                        <div className="rpBody" >{reply.replycontent}</div>
+                        <div>{
+                            reply.userid == loginUser ?
+                                <>
+                                    <div><button onClick={handleEditClick}>수정</button></div>
+                                    <button onClick={() => removeReply(reply.replynum)}>삭제</button>
+                                </>
+                                : ""
+                        }
+                        </div>
+                    </div>
+                )}
             </div>
         );
     };
-    const removeReply = (replynum) =>{
+    const removeReply = (replynum) => {
         axios.delete(`/api/reply/${replynum}`)
-        .then(resp => {
-            alert(`댓글 삭제 완료!`)
-            if(list.length == 1 && nowPage != 1){
-                setNowPage(nowPage-1);
-            }
-            else{
-                axios.get(`/api/reply/${boardnum}/${nowPage}`)
-                .then(resp => {
-                    setList(resp.data.list);
-                    setReplyCnt(resp.data.replyCnt);
-                })
-            }
-        })
+            .then(resp => {
+                alert(`댓글 삭제 완료!`)
+                if (list.length == 1 && nowPage != 1) {
+                    setNowPage(nowPage - 1);
+                }
+                else {
+                    axios.get(`/api/reply/${boardnum}/${nowPage}`)
+                        .then(resp => {
+                            setList(resp.data.list);
+                            setReplyCnt(resp.data.replyCnt);
+                        })
+                }
+            })
     }
 
-    if(!data){
+    if (!data) {
         return <>로딩중...</>
     }
-    else{
+    else {
         const replyList = [];
         const paging = [];
-        let endPage = Math.ceil(nowPage/5)*5;
+        let endPage = Math.ceil(nowPage / 5) * 5;
         let startPage = endPage - 4;
-        endPage = (endPage-1)*5 >= replyCnt ? 
-                Math.ceil(replyCnt/5) : endPage;
+        endPage = (endPage - 1) * 5 >= replyCnt ?
+            Math.ceil(replyCnt / 5) : endPage;
         let prev = startPage != 1;
-        let next = endPage*5 < replyCnt;
+        let next = endPage * 5 < replyCnt;
         const changePage = (e) => {
             e.preventDefault();
             const page = e.target.getAttribute("href");
             setNowPage(page);
         }
-        if(prev){
-            paging.push(<a className="changePage page-btn" href={startPage-1} key={startPage-1} onClick={changePage}>&lt;</a>)
+        if (prev) {
+            paging.push(<a className="changePage page-btn" href={startPage - 1} key={startPage - 1} onClick={changePage}>&lt;</a>)
         }
-        for(let i=startPage; i<=endPage; i++) {
-            if(i == nowPage){
+        for (let i = startPage; i <= endPage; i++) {
+            if (i == nowPage) {
                 paging.push(<span className="nowPage" key={i}>{i}</span>);
             }
-            else{
+            else {
                 paging.push(<a href={i} className="changePage page-btn" key={i} onClick={changePage}>{i}</a>)
             }
         }
-        if(next){
-            paging.push(<a href={endPage+1} className="changePage page-btn" key={endPage+1} onClick={changePage}>&gt;</a>)
+        if (next) {
+            paging.push(<a href={endPage + 1} className="changePage page-btn" key={endPage + 1} onClick={changePage}>&gt;</a>)
         }
 
-        if(list == null || list.length == 0){
+        if (list == null || list.length == 0) {
             replyList.push(<li className="no-reply" key={`li0`}>등록된 댓글이 없습니다.</li>);
         }
-        for(let i=0; i<list.length; i++){
+        for (let i = 0; i < list.length; i++) {
             const reply = list[i];
             replyList.push(
                 <li className={`li${reply.replynum} row`} key={`li${reply.replynum}`}>
                     <div className="row rrow">
-                    <a className="getBoard" onClick={() => openModal(reply.userid)}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
+                        <a className="getBoard" onClick={(e) => openPopup(e, reply.userid)}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
                         <div className={`reply${reply.replynum}`} >
-                            {reply.reportcnt < 5 ?(
+                            {reply.reportcnt < 5 ? (
                                 <NormalReply reply={reply} />
                             )
-                            :(<BlindReply reply={reply}/>)
-                        }</div>
-                            <Button className="btn" value="신고" onClick={()=> reportReply(reply.replynum)}></Button>
+                                : (<BlindReply reply={reply} />)
+                            }</div>
+                        <Button className="btn" value="신고" onClick={() => reportReply(reply.replynum)}></Button>
                         <div className={`reply${reply.replyregdate}`}>{reply.replyregdate}</div>
                     </div>
                     <div>
                         <strong></strong>
-                        
+
                     </div>
                     {/* <div>
                         {
@@ -326,84 +409,122 @@ const BoardGet = () =>{
                     </div> */}
                 </li>
             )
-            
+
         }
 
-        
 
-        return(
+
+        return (
             <>
-            <Header></Header>
-            <div className="boardget_wrap">
-                <div className="bgTitle"><strong>{data.boardtitle}</strong></div>
-                <div className="bgUserid"><a className="getBoard" onClick={() => openModal(data.userid)}><strong>{data.userid}</strong></a>
-                </div>
-                <div style={{display:"flex", justifyContent:"flex-end"}}>
-                    <div onClick={reportBoard}>신고하기</div>
-                    <div>{data.boardregdate}</div>
-                </div>
-                <div className="bgContent">
-                    <div dangerouslySetInnerHTML={{ __html: data.boardcontent }}/>
-                </div>
-                <div style={{display:"flex",justifyContent:"space-between", padding:"20px"}}>
-                    <div>{ checkLike? <Button value="좋아요취소" onClick={like}></Button>
-                        :<Button value="좋아요" onClick={like}></Button>
+                <Header></Header>
+                <div className="boardget_wrap">
+                    <div className="bgTitle"><strong>{data.boardtitle}</strong></div>
+                    <div className="bgUserid">
+                        <a className="getBoard" onClick={(e) => openPopup(e, data.userid)}><strong>{data.userid}</strong></a>
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
+                        <div onClick={reportBoard}>신고하기</div>
+                        <div>{data.boardregdate}</div>
+                    </div>
+                    <div className="bgContent">
+                        <div dangerouslySetInnerHTML={{ __html: data.boardcontent }} />
+                    </div>
+                    <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
+                        <div>{checkLike ? <Button value="좋아요취소" onClick={like}></Button>
+                            : <Button value="좋아요" onClick={like}></Button>
                         }
+                        </div>
+                        <div className="btnArea">
+                            {data.userid == loginUser ?
+                                <>
+                                    <div>
+                                        <input type="button" value="수정" onClick={() => {
+                                            navigate('/board/modify', { state: { "cri": cri, "boardnum": data.boardnum } })
+                                        }}></input>
+                                    </div>
+                                    <div>
+                                        <input type="button" value="삭제" onClick={remove}></input>
+                                    </div>
+                                    <div>
+                                        <input type="button" value="목록" onClick={() => {
+                                            navigate('/board/list', { state: cri })
+                                        }}></input>
+                                    </div>
+                                </> :
+                                <div>
+                                    <input type="button" value="목록" onClick={() => {
+                                        navigate('/board/list', { state: cri })
+                                    }}></input>
+                                </div>
+                            }
+                        </div>
                     </div>
-                    <div className="btnArea">
-                            { data.userid == loginUser?
-                            <>
-                                <div>
-                                <input type="button" value="수정" onClick={()=>{        
-                                    navigate('/board/modify',{state:{"cri":cri, "boardnum":data.boardnum}})}}></input>
-                                </div>
-                                <div>
-                                <input type="button" value="삭제" onClick={remove}></input>
-                                </div>
-                                <div>
-                                    <input type="button" value="목록" onClick={()=>{
-                                        navigate('/board/list',{ state: cri })}}></input>
-                                </div>
-                            </>:
-                                <div>
-                                    <input type="button" value="목록" onClick={()=>{
-                                        navigate('/board/list',{ state: cri })}}></input>
-                                </div>
-                            }   
+                    <div className="reply_line">
+                        <div className="reply_write rpBody_wrap">
+                            {loginUser == "" ? <div>로그인 하셔야 댓글을 등록할 수 있습니다.</div>
+                                : <>
+                                    <div>{loginUser}</div>
+                                    <div className="rpBody">
+                                        {/* <h4>내 용</h4> */}
+                                        <textarea name="replycontents" id="replycontents" placeholder="Contents"></textarea>
+                                    </div>
+                                    <div>
+                                        <input type="button" value="등록" className="btn finish" onClick={clickRegist} />
+                                    </div>
+                                </>
+                            }
+                        </div>
+                        <ul className="replies">
+                            {replyList}
+                        </ul>
+                        <div className="page">
+                            {paging}
+                        </div>
+                        <div ref={replyEndRef}></div>
+                    </div>
+                    <div className="popup">
+                        <a onClick={() => openNoteModal()}>쪽지 보내기</a>
+                        <a onClick={() => openModal()}>회원 정보</a>
                     </div>
                 </div>
-                <div className="reply_line">
-                    <div className="reply_write rpBody_wrap">
-                        { loginUser == ""? <div>로그인 하셔야 댓글을 등록할 수 있습니다.</div>
-                        :<>
-                            <div>{loginUser}</div>
-                            <div className="rpBody">
-                                {/* <h4>내 용</h4> */}
-                                <textarea name="replycontents" id="replycontents" placeholder="Contents"></textarea>
-                            </div>
-                            <div>
-                                <input type="button" value="등록" className="btn finish" onClick={clickRegist}/>
-                            </div>
-                        </>    
+                <div className="BoardModal">
+                    <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                        <p className="id">{user.userid}님의 정보</p>
+                        <div className="closeBoardModal" onClick={() => {
+                            setIsModalOpen(false);
+                        }}>x</div>
+                        <div className="img">
+                            <img src={`/api/user/file/thumbnail/${userFile}`} />
+                        </div>
+                        {
+                            userInfo.nameinfo == "T" ?
+                                <div className="name">이름 : {user.username}</div>
+                                :
+                                <div className="name">이름 : 비공개</div>
                         }
-                    </div>
-                    <ul className="replies">
-                        {replyList}
-                    </ul>
-                    <div className="page">
-                        {paging}
-                    </div>
-                    <div ref={replyEndRef}></div>
+                        {
+                            userInfo.genderinfo == "T" ?
+                                <div className="gender">성별 : {user.usergender == "M" ? "남성" : "여성"}</div>
+                                :
+                                <div className="gender">성별 : 비공개</div>
+                        }
+                        {
+                            userInfo.emailinfo == "T" ?
+                                <div className="email">이메일 : {user.useremail}</div>
+                                :
+                                <div className="email">이메일 : 비공개</div>
+                        }
+
+                    </Modal>
                 </div>
-            </div>
-            <div>
+                <div>
                     <NoteModal
-                isOpen={isModalOpen}
-                closeModal={closeModal}
-                toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
-                loginUser={loginUser}      // 로그인된 유저의 userid를 전달
-            />
-                    </div>
+                        isOpen={isNoteModalOpen}
+                        closeModal={closeNoteModal}
+                        toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
+                        loginUser={loginUser}      // 로그인된 유저의 userid를 전달
+                    />
+                </div>
             </>
         )
     }

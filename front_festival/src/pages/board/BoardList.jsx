@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import '../../assets/style/usercss.css';
 import Dropdown from "../../components/Dropdown";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
@@ -291,7 +292,6 @@ const BoardList = () => {
                             <p className="id">{user.userid}님의 정보</p>
                             <div className="closeBoardModal" onClick={() => {
                                 setIsModalOpen(false);
-                                setSelectedUserId('');
                             }}>x</div>
                             <div className="img">
                                 <img src={`/api/user/file/thumbnail/${userFile}`} />
