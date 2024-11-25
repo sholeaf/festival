@@ -93,7 +93,7 @@ const Notice = () => {
         console.log("cri전송:", cri);
         axios.get(`/api/notice/list/${cri.pagenum}`, { params: cri })
             .then((resp) => {
-                console.log("응답 데이터:", resp.data);
+                console.log("공지응답 데이터:", resp.data);
                 setData(resp.data);
                 setPageMaker(resp.data.pageMaker);
                 console.log("공지게시판페이지메이커상태:",pageMaker);
