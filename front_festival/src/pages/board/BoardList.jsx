@@ -81,6 +81,7 @@ const BoardList = () => {
             }
         })
     }, [cri])
+
     useEffect(() => {
         //만약 이전 페이지에서 cri를 받아온것이 있다면
         if (location.state) {
@@ -238,8 +239,9 @@ const BoardList = () => {
                     </div>
                     <div style={{ height: "30px" }}>
                     </div>
-                    <div>
-                        {elList}
+                    <div>{data.list == null || data.list == ""?<div>등록된 글이 없습니다!</div>
+                        :elList
+                        }
                     </div>
                     <Pagination pageMaker={pageMaker}></Pagination>
                     <div className="search_area">
@@ -255,46 +257,45 @@ const BoardList = () => {
                         <a onClick={() => openNoteModal()}>쪽지 보내기</a>
                         <a onClick={() => openModal()}>회원 정보</a>
                     </div>
+                </div>
+                <div className="BoardModal">
+                    <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                        <p className="id">{user.userid}님의 정보</p>
+                        <div className="closeBoardModal" onClick={()=>{
+                            setIsModalOpen(false);
+                            setSelectedUserId('');
+                        }}>x</div>
+                        <div className="img">
+                            <img src={`/api/user/file/thumbnail/${userFile}`} />
+                        </div>
+                        {
+                            userInfo.nameinfo == "T" ?
+                                <div className="name">이름 : {user.username}</div>
+                                :
+                                <div className="name">이름 : 비공개</div>
+                        }
+                        {
+                            userInfo.genderinfo == "T" ?
+                                <div className="gender">성별 : {user.usergender}</div>
+                                :
+                                <div className="gender">성별 : 비공개</div>
+                        }
+                        {
+                            userInfo.emailinfo == "T" ?
+                                <div className="email">이메일 : {user.useremail}</div>
+                                :
+                                <div className="email">이메일 : 비공개</div>
+                        }
 
-
-                    <div className="BoardModal">
-                        <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                            <p className="id">{user.userid}님의 정보</p>
-                            <div className="closeBoardModal" onClick={() => {
-                                setIsModalOpen(false);
-                            }}>x</div>
-                            <div className="img">
-                                <img src={`/api/user/file/thumbnail/${userFile}`} />
-                            </div>
-                            {
-                                userInfo.nameinfo == "T" ?
-                                    <div className="name">이름 : {user.username}</div>
-                                    :
-                                    <div className="name">이름 : 비공개</div>
-                            }
-                            {
-                                userInfo.genderinfo == "T" ?
-                                    <div className="gender">성별 : {user.usergender == "M" ? "남성" : "여성"}</div>
-                                    :
-                                    <div className="gender">성별 : 비공개</div>
-                            }
-                            {
-                                userInfo.emailinfo == "T" ?
-                                    <div className="email">이메일 : {user.useremail}</div>
-                                    :
-                                    <div className="email">이메일 : 비공개</div>
-                            }
-
-                        </Modal>
-                    </div>
-                    <div>
-                        <NoteModal
-                            isOpen={isNoteModalOpen}
-                            closeModal={closeNoteModal}
-                            toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
-                            loginUser={loginUser}      // 로그인된 유저의 userid를 전달
-                        />
-                    </div>
+                    </Modal>
+                </div>
+                <div>
+                    <NoteModal
+                        isOpen={isNoteModalOpen}
+                        closeModal={closeNoteModal}
+                        toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
+                        loginUser={loginUser}      // 로그인된 유저의 userid를 전달
+                    />
                 </div>
             </>
         )

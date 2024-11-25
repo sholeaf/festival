@@ -243,9 +243,9 @@ const BoardGet = () => {
         return (
             <div onClick={() => setIsContentVisible(true)}>
                 {isContentVisible ? (
-                    <div>{reply.replycontent}</div> // 내용이 보일 때
+                <div className="rpBody">{reply.replycontent}</div> // 내용이 보일 때
                 ) : (
-                    <div>(블라인드 처리된 댓글입니다. 클릭하시면 내용이 보입니다.)</div> // 내용이 숨겨져 있을 때
+                <div className="rpBody">(블라인드 처리된 댓글입니다. 클릭하시면 내용이 보입니다.)</div> // 내용이 숨겨져 있을 때
                 )}
             </div>
         );
