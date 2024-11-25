@@ -56,4 +56,8 @@
 	<select id="getLastNum">
 		select max(noticenum) from notice where userid=#{userid}
 	</select>
+	
+	<select id="getNotice">
+		select * from notice order by noticenum desc limit 4;
+	</select>
 </mapper>

@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -19,5 +20,5 @@ public interface NoticeMapper {
 	void updateReadCount(long noticenum, int readcount);
 	int updateNotice(NoticeDTO notice);
 	int deleteNotice(long noticenum);
-	
+	ArrayList<NoticeDTO> getNotice();
 }

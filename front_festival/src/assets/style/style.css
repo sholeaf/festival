@@ -82,6 +82,10 @@ img {
     -user-drag: none;
 }
 
+.btn{
+    
+}
+
 /* main */
 .main-back-img {
     width: 100%;
@@ -122,18 +126,21 @@ img {
     z-index: 1000;
 }
 
-.more-btn {
+.btn {
     border: 1px solid #92B4EC;
     background-color: #92B4EC;
     border-radius: 5px;
     color: white;
     font-weight: bold;
-    width: 60px;
-    height: 30px;
     text-align: center;
-    margin: 0 20px 0 auto;
     cursor: pointer;
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.more-btn{
+    width: 60px;
+    height: 30px;
+    margin: 0 20px 0 auto !important;
 }
 
 /* main끝 */
