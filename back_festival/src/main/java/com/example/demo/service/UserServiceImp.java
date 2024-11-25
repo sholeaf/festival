@@ -16,9 +16,11 @@ import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.BoardDTO;
 import com.example.demo.domain.UserDTO;
+import com.example.demo.domain.UserInfoDTO;
 import com.example.demo.mapper.BoardMapper;
 import com.example.demo.mapper.BookmarkMapper;
 import com.example.demo.mapper.UserFileMapper;
+import com.example.demo.mapper.UserInfoMapper;
 import com.example.demo.mapper.UserMapper;
 
 @Service
@@ -31,6 +33,9 @@ public class UserServiceImp implements UserService{
 	private UserMapper umapper;
 	
 	@Autowired
+	private UserInfoMapper uimapper;
+	
+	@Autowired
 	private UserFileMapper fmapper;
 	
 	@Autowired
@@ -40,9 +45,13 @@ public class UserServiceImp implements UserService{
 	private BookmarkMapper bmmapper;
 	
 	@Override
-	public boolean join(UserDTO user) {
+	public boolean join(UserDTO user, UserInfoDTO userInfo) {
 		if(fmapper.firstInsert(user.getUserid())) {
-			return umapper.insertUser(user) == 1;			
+			int userSuccess = umapper.insertUser(user);
+			int infoSuccess = uimapper.insertUserInfo(userInfo);
+			if(userSuccess == 1 && userSuccess == infoSuccess) {
+				return true;							
+			}
 		}
 		return false;
 	}
@@ -75,9 +84,11 @@ public class UserServiceImp implements UserService{
 		HashMap<String, Object> result = new HashMap<>();
 		
 		UserDTO user = umapper.getUserByUserid(userid);
+		UserInfoDTO userInfo = uimapper.getUserInfoByUserid(userid);
 		String file = fmapper.getFile(userid);
 		
 		result.put("user", user);
+		result.put("userInfo", userInfo);
 		result.put("file", file);
 		
 		return result;
@@ -179,15 +190,8 @@ public class UserServiceImp implements UserService{
 	
 	@Override
 	public int deleteUser(String userid) {
-		String file = fmapper.getFile(userid);
-		if(file.equals("test.png")) {
-			return umapper.deleteUser(userid);			
-		}
-		else {
-			if(fmapper.deleteFileByUserid(userid) == 1) {
-				return umapper.deleteUser(userid);
-			}
-			
+		if(fmapper.deleteFileByUserid(userid) == 1) {
+			return umapper.deleteUser(userid);
 		}
 		return -1;
 	}
@@ -202,5 +206,10 @@ public class UserServiceImp implements UserService{
 		result.put("list", list);
 		result.put("bookmarks", bookmarks);
 		return result;
+	}
+	
+	@Override
+	public int updateInfo(UserInfoDTO userInfo) {
+		return uimapper.updateUserInfo(userInfo);
 	}
 }

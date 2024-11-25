@@ -14,7 +14,7 @@ public class PageDTO {
 	public PageDTO(long total,Criteria cri) {
 		this.cri = cri;
 		this.total = total;
-		
+		System.out.println("pageDTO쪽"+total);
 		this.endPage = (int)Math.ceil(cri.getPagenum()/(double)cri.getAmount())*cri.getAmount();
 		this.startPage = this.endPage - (cri.getAmount()-1);
 		this.realEnd = (int)Math.ceil(total/(double)cri.getAmount());

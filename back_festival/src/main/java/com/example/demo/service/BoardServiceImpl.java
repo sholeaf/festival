@@ -78,6 +78,7 @@ public class BoardServiceImpl implements BoardService {
 
 	@Override
 	public long remove(long boardnum) {
+		rmapper.deleteAllReplyByBoardnum(boardnum);
 		if(bmapper.deleteBoard(boardnum) == 1) {
 			return boardnum;
 		}

@@ -18,4 +18,5 @@ public interface ReplyMapper {
 	int updateReply(ReplyDTO reply);
 	void removeInBoard(long boardnum);
 	ReplyDTO getReplyByNum(long replynum);
+	void deleteAllReplyByBoardnum(long boardnum);
 }

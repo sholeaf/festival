@@ -243,7 +243,7 @@ const Note = ({ loginUser }) => {
                     <div className="noteselectbtn">
                         <button onClick={handleDeleteSelected}>선택삭제</button>
                     </div>
-                    <Pagination pageMaker={pageMaker} />
+                    <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
                 </div>
             </div>
 

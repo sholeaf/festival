@@ -44,7 +44,7 @@ public class AdminPageServiceImpl implements AdminPageService {
 		HashMap<String, Object> result = new HashMap<>();
         List<BoardDTO> list = apmapper.getList(cri);
 
-        long total = apmapper.getTotal(cri);
+        long total = apmapper.getListReporoTotal(cri);
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
@@ -56,7 +56,7 @@ public class AdminPageServiceImpl implements AdminPageService {
         }
         result.put("board", list);
         result.put("pageMaker", new PageDTO(total, cri));
-
+        System.out.println("신고게시글토탈"+total);
         return result;
 	}
 
@@ -115,11 +115,11 @@ int deletedreply = apmapper.deleteReply(replynum);
 		HashMap<String, Object> result = new HashMap<>();
         List<ReplyDTO> list = apmapper.getReplyList(cri);
 
-        long total = apmapper.getTotal(cri);
+        long total = apmapper.getReplyReportTotal(cri);
         
         result.put("board", list);
         result.put("pageMaker", new PageDTO(total, cri));
-
+        System.out.println("댓글신고게시글토탈"+total);
         return result;
 	}
 

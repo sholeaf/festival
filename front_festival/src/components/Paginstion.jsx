@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 
-const Pagination = ({ pageMaker }) => {
+const Pagination = ({ pageMaker, url }) => {
     const navigate = useNavigate();
     const startPage = pageMaker.startPage;
     const endPage = pageMaker.endPage;
@@ -9,25 +9,23 @@ const Pagination = ({ pageMaker }) => {
     const pagenum = cri.pagenum;
     const location = useLocation();
     const [stateCri, setStateCri] = useState(cri);
-    useEffect(() => {
-        if (location.state) {
-            setStateCri(location.state);  // location.state가 바뀌면 cri 상태 업데이트
-        }
-    }, [location.state]);
+    
     const elList = [];
 
-    const clickBtn = (e) => {
+    const clickBtn = (e, pageNumber) => {
         e.preventDefault();
 
         const target = e.target.getAttribute("href");
+        console.log(target);
         const temp = {
             pagenum: target,
             amount: cri.amount,
             type: cri.type,
             keyword: cri.keyword,
-            startrow: (target - 1) * cri.amount // startrow 계산
+            startrow: cri.startrow
         };
-        navigate(`/notice/list`, { state:temp });
+        
+        navigate(`${url}?pagenum=${pageNumber}`, { state:temp });
     };
 
     for (let i = startPage; i <= endPage; i++) {
