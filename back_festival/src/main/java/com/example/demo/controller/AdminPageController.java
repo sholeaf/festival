@@ -75,7 +75,7 @@ public class AdminPageController {
             cri.setPagenum(boardnum);
             cri.setStartrow((cri.getPagenum() - 1) * cri.getAmount());
             cri.setExistsCondition(true);
-            System.out.println("Criteria: " + cri);
+            System.out.println("댓글Criteria: " + cri);
 
             // 서비스 메소드 호출하여 결과 가져오기
             HashMap<String, Object> result = apservice.getReplyReportList(cri);

@@ -769,9 +769,9 @@ const MyPage = () => {
                                     </div>
                                 )}
                             </Modal>
-                            <div>
+                            {/* <div>
                                 <Note loginUser={loginUser} />
-                            </div>
+                            </div> */}
                         </div>
                     )}
                 </>

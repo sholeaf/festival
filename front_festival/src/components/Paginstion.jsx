@@ -23,7 +23,6 @@ const Pagination = ({ pageMaker, url, setCri }) => {
             keyword: cri.keyword,
             startrow: cri.startrow
         };
-        
         navigate(`${url}?pagenum=${pageNumber}`, { state:temp });
     };
 
