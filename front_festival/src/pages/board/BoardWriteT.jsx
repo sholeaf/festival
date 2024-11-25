@@ -121,7 +121,7 @@ const BoardWriteT = () => {
         }
         let index = 0;
     // content 상태에서 img 태그의 src 속성을 순차적으로 수정
-        const updatedContent = content.replace(/src="data:image\/png;base64,[^"]+"/g, (match) => {
+        const updatedContent = content.replace(/src="data:image\/[^;]+;base64,[^"]+"/g, (match) => {
             const newUrl = useImg[index];
             index = (index + 1) % useImg.length; // 배열을 순차적으로 반복
             return `src="${newUrl}"`; // 새로운 URL로 교체
