@@ -44,8 +44,8 @@ const Adminpage = (props) => {
     const [replyCri, setReplyCri] = useState({
         pagenum: 1,
         amount: 5,
-        type: "a",
-        keyword: "",
+        replytype: "a",
+        replykeyword: "",
         startrow: 0
     });
 
@@ -57,6 +57,7 @@ const Adminpage = (props) => {
         total: 0,
         prev: false,
         next: false,
+        pagenum:1,
         cri: null
     });
     const [replyPageMaker, setReplyPageMaker] = useState({
@@ -66,8 +67,28 @@ const Adminpage = (props) => {
         total: 0,
         prev: false,
         next: false,
+        pagenum:1,
         cri: null
     });
+
+
+    useEffect(() => {
+        // 게시글 페이지네이션 데이터가 로딩되었을 때 댓글 데이터를 불러옵니다.
+        if (pageMaker.total > 0) {  // 페이지네이션 데이터가 있으면 댓글 데이터를 로딩
+            fetchReplies(replyPageMaker.pagenum); // replyPageMaker의 pagenum을 기준으로 데이터를 불러옴
+        }
+    }, [pageMaker.total]);  // pageMaker.total이 변경될 때마다 실행됩니다.
+    
+    useEffect(() => {
+        // replyPageMaker가 변경될 때마다 댓글 데이터를 불러옵니다.
+        if (replyPageMaker.pagenum) {
+            fetchReplies(replyPageMaker.pagenum);
+        }
+    }, [replyPageMaker.pagenum]);
+    const handlePageChange = (newPageNum) => {
+        // 페이지 변경 시 댓글 데이터를 갱신
+        fetchReplies(newPageNum);
+    };
     //탑버튼 눌렀을때
     const [key, setKey] = useState(0);
     const topButtonClick = (viewMode) => {
@@ -151,54 +172,35 @@ const Adminpage = (props) => {
         }
     };
 
-    // 게시글 신고 목록
     useEffect(() => {
-        const temp = {
-            pagenum: cri.pagenum,
-            amount: cri.amount,
-            type: cri.type,
-            keyword: cri.keyword,
-            startrow: cri.startrow
-        };
+        // 게시글 API 호출
         axios.get(`/api/adminpage/${cri.pagenum}`, { params: cri })
             .then((resp) => {
-
                 setData(resp.data);
                 setPageMaker(resp.data.pageMaker);
-                console.log("게시글 pageMaker 데이터:", resp.data.pageMaker);
                 setInputs(resp.data.pageMaker.cri.keyword);
             })
             .catch((error) => {
                 console.error('게시글 API 호출 오류:', error);
             });
-    }, [cri, boardList]);  // cri만 의존성 배열에 넣어서 cri 변경 시만 호출
+    }, [cri]);  // cri 상태만 의존성 배열에 넣어 cri가 변경될 때만 호출
+    
+    // 댓글 데이터를 가져오는 함수 fetchReplies 정의
+    const fetchReplies = async (pagenum) => {
+        try {
+            const response = await axios.get(`/api/adminpage/replyreportlist/${pagenum}`, { params: replyCri });
+            setTest(response.data);
+            setReplyPageMaker(response.data.pageMaker); // 페이지네이션 정보 업데이트
+            setModalData(Array.isArray(response.data.board) ? response.data.board : []); // 모달 데이터 업데이트
+        } catch (error) {
+            console.error("댓글 데이터를 불러오는 중 오류 발생:", error);
+        }
+    };
 
-
-    // 댓글 신고 목록
+    // useEffect 안에서 댓글 데이터를 불러오기 위해 호출
     useEffect(() => {
-        const temp = {
-            pagenum: replyCri.pagenum,
-            amount: replyCri.amount,
-            type: replyCri.type,
-            keyword: replyCri.keyword,
-            startrow: replyCri.startrow
-        };
-        console.log("댓글cri전송:", replyCri);
-        axios.get(`/api/adminpage/replyreportlist/${replyCri.pagenum}`, { params: replyCri })
-            .then((resp) => {
-                console.log("페이지넘 확인 : ",replyCri.pagenum);
-                setTest(resp.data);
-                console.log("댓글데이터내용", resp.data);
-                setReplyPageMaker(resp.data.pageMaker);
-                console.log("댓글 신고 pageMaker 데이터:", resp.data.pageMaker);
-                console.log("댓글페이지메이커셋팅:", replyPageMaker);
-                setInputs(resp.data.pageMaker.cri.keyword);
-                setModalData(Array.isArray(resp.data.board) ? resp.data.board : []);
-            })
-            .catch((error) => {
-                console.log("댓글 신고 목록 오류:", error);
-            });
-    }, [replyCri, replyReportList]);
+        fetchReplies(replyCri.pagenum); // 댓글을 불러옵니다.
+    }, [replyCri.pagenum]);  // 페이지 번호가 바뀔 때마다 호출됩니다.// replyCri가 변경될 때마다 댓글 데이터를 불러옴
 
     useEffect(() => {
         if (location.state) {
@@ -440,7 +442,7 @@ const Adminpage = (props) => {
                                     <div className="replyrptbody">
                                         {reply_reportList}
                                     </div>
-                                    <Pagination pageMaker={replyPageMaker} url="/notice/adminpage" />
+                                    <Pagination replyPageMaker={replyPageMaker} url="/notice/adminpage"  fetchReplies={fetchReplies} />
                                 </div>
                                 <div className="nsearch_area adminsearch_area">
                                     <form name="searchForm" action="/notice/adminpage" className="row searchrow">
