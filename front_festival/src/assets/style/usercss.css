@@ -230,14 +230,14 @@ header {
     text-align: center;
 }
 
-#codeGet,
-#codeCheck {
+.codeGet,
+.codeCheck {
     display: inline-block;
     width: 300px;
     margin: 5px 0;
 }
 
-#codeGet {
+.codeGet {
     margin-left: 5px;
 }
 
@@ -265,7 +265,7 @@ header {
 
 /* joinpage end */
 
-/* modal */
+/* login modal */
 .login_wrap .main .findId,
 .login_wrap .main .findPw {
     width: 400px;
@@ -284,7 +284,6 @@ header {
 
 /* modal end */
 
-/* 임시 테스트용 */
 .login_btn {
     width: 150px;
 }
@@ -360,18 +359,44 @@ header {
     cursor: pointer;
 }
 
-/* 모달 프로필 변경 */
-#profileModify .img img {
-    width: 400px;
-    height: 400px;
-}
 
 #closeCommunity,
 #closeBookmark {
     display: none;
 }
 
-/* 후기 */
+/* 모달 개인정보 변경 */
+#userModify, #pwModify{
+    width: 400px;
+    padding-bottom: 15px;
+}
+.modifyForm{
+    padding: 0px 50px 15px 50px;
+}
+.pwBox{
+    padding: 0 50px 15px 50px;
+}
+.modifyForm input,
+.pwBox input {
+    width: 190px;
+    height: 30px;
+    text-align: center;
+    margin: 1px;
+}
+
+/* 모달 프로필 변경 */
+#profileModify{
+    padding-bottom: 15px;
+}
+#profileModify .img img {
+    width: 400px;
+    height: 400px;
+    padding: 0 25px 15px 25px;
+}
+/* 모달 정보공개 변경 */
+
+
+/* 후기 및 즐겨찾기 */
 .mypage .community p,
 .mypage .bookmark p {
     font-size: 18px;

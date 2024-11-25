@@ -9,8 +9,10 @@ import axios from "axios";
 import Button from "../../components/Button";
 import Modal from "../../components/Modal";
 
+const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
 
 const Login = () => {
+    
     const navigate = useNavigate();
     const location = useLocation();
     const [inputs, setInputs] = useState({ userid: "", userpw: "" })
@@ -51,6 +53,7 @@ const Login = () => {
     }
 
     const login = () => {
+        const from = location.state.state.from;
         if (!userid) {
             alert("아이디를 입력해주세요!");
             inputRef.current[0].focus();
@@ -67,7 +70,7 @@ const Login = () => {
         axios.get('/api/user/login', { params: user }).then((resp) => {
             if (resp.data.trim() == "O") {
                 alert(`${userid}님 환영합니다!`);
-                navigate(location.state?.from || '/');
+                navigate(location.state? `${from}` : '/', { state: { API_KEY } });
                 setLoginUser(userid);
             }
             else {

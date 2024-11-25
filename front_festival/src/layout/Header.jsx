@@ -7,7 +7,7 @@ const Header = () => {
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
     const handleNavigation = (path, state) => {
-        navigate(path,{state});
+        navigate(path, { state });
     };
     const logoutClick = () => {
         if (window.confirm("로그아웃하시겠습니까?")) {
@@ -54,9 +54,9 @@ const Header = () => {
             <div className="header_area">
                 <div className="navigate">
                     <div className="logo" onClick={() =>
-                        loginUser === "" ? handleNavigation("/"):
-                        handleNavigation("/home")
-                        }>
+                        loginUser === "" ? handleNavigation("/") :
+                            handleNavigation("/home")
+                    }>
                         <a>모두의 축제</a>
                     </div>
                     <div className="schedule_btn">
