@@ -514,6 +514,7 @@ const MyPage = () => {
     // 유저 정보 가져오기
     useEffect(() => {
         if (loginUser) {
+            console.log(loginUser);
             axios.get(`/api/user/userInfo`, { params: { userid: loginUser } })
                 .then((resp) => {
                     setUser(resp.data.user);
@@ -769,9 +770,15 @@ const MyPage = () => {
                                     </div>
                                 )}
                             </Modal>
+<<<<<<< HEAD
                             {/* <div>
                                 <Note loginUser={loginUser} />
                             </div> */}
+=======
+                            <div>
+                                {/* <Note loginUser={loginUser} /> */}
+                            </div>
+>>>>>>> 374c8c30d0ce81cabe5f6ffd881c4a6ce5e77710
                         </div>
                     )}
                 </>

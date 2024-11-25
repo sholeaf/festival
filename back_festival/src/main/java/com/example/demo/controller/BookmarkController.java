@@ -23,7 +23,7 @@ public class BookmarkController {
 	private BookmarkService bmservice;
 	
 	@GetMapping("checkBookmark")
-	public ResponseEntity<ArrayList<String>> checBookmark(String userid) {
+	public ResponseEntity<ArrayList<String>> checkBookmark(String userid) {
 		System.out.println(" 요청 들어옴 !");
 		ArrayList<String> list = bmservice.getBookmark(userid);
 		System.out.println(list);

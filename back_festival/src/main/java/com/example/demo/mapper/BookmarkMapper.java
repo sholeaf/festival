@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import com.example.demo.domain.BookmarkDTO;
+
 @Mapper
 public interface BookmarkMapper {
 
@@ -12,4 +14,6 @@ public interface BookmarkMapper {
 	boolean addBookmark(String userid, String contentid);
 
 	boolean removeBookmark(String userid, String contentid);
+
+	ArrayList<BookmarkDTO> getBookmarkbyMain(String loginUser);
 }
