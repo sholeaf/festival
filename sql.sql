@@ -33,10 +33,10 @@ create table user_photo(
 	userid varchar(50),
     systemname varchar(300)
 );
-insert into user_photo value("banana", "test.png");
+insert into user_photo value("apple", "test.png");
 select * from user_photo;
 drop table user_photo;
-delete from user_photo where userid = "banana";
+delete from user_photo where userid = "apple";
 
 create table user_info(
 	userid varchar(50),
@@ -59,6 +59,29 @@ create table board(
     tag varchar(300),
     titleImage varchar(300)
 );
+
+delete from user where userid="apple";
+
+SELECT 
+    b.boardnum, 
+    b.boardtitle, 
+    b.boardcontent, 
+    b.userid, 
+    b.boardregdate, 
+    b.boardreadcnt, 
+    b.tag, 
+    b.titleImage, 
+    COUNT(bl.userid) AS like_count
+FROM 
+    board b
+LEFT JOIN 
+    board_like bl ON b.boardnum = bl.boardnum
+GROUP BY 
+    b.boardnum
+ORDER BY 
+    like_count DESC limit 4;
+
+insert into board (boardtitle,boardcontent,userid,boardregdate) value('test','test','test','2024-10-21 11:50:57');
 select * from board;
 insert into board (boardtitle, boardcontent, userid, boardregdate, boardreadcnt) values ('신고테스트','테스트중입니다','apple',now(),'1');
 insert into board (boardtitle, boardcontent, userid, boardregdate, boardreadcnt) values ('신고테스트','테스트중입니다','apple',now(),'6');
@@ -79,7 +102,7 @@ create table reply(
 
 
 select * from reply where replynum = 1;
-
+insert into board_like(boardnum,userid) value(1,'test');
 create table board_like(
 	boardnum bigint,
     userid varchar(50)

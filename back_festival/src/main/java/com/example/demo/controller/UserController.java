@@ -49,6 +49,7 @@ public class UserController {
 	
 	@GetMapping("userInfo")
 	public ResponseEntity<HashMap<String, Object>> userInfo(@RequestParam String userid) {
+		System.out.println(userid);
 		HashMap<String, Object> result = service.getUser(userid);
 		if(result != null) {
 			return new ResponseEntity<HashMap<String, Object>>(result ,HttpStatus.OK);
