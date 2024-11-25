@@ -58,9 +58,12 @@ a {
     background-color: transparent;
     font-family: 'EBSJSKMedium';
 }
-body{
+
+body {
     margin: 0;
+    overflow: auto;
 }
+
 p,
 span,
 div {
@@ -78,50 +81,65 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 }
+
 /* main */
-.main-title {
-    font-size: 250px;
-    font-family: 'EBSJSKMedium';
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    opacity: 0; /* 처음에는 보이지 않도록 설정 */
-    visibility: visible; /* 보이게 설정 */
-    animation: fadeInOut 5s forwards; /* 2초 동안 애니메이션 진행 */
-}
-
-@keyframes fadeInOut {
-    0% {
-        opacity: 0; /* 처음에는 보이지 않음 */
-        visibility: visible; /* 애니메이션 시작 시 보이도록 설정 */
-    }
-    50% {
-        opacity: 1; /* 중간에서 완전히 보이도록 */
-        visibility: visible; /* 중간에는 여전히 보이도록 */
-    }
-    100% {
-        opacity: 0; /* 마지막에는 다시 사라짐 */
-        visibility: hidden; /* 애니메이션 후 숨겨짐 */
-    }
-}
-
-.main-title.hide {
-    display: none; /* hide 클래스가 추가되면 요소를 숨깁니다 */
-}
-.main-logout{
-    margin-top: 50px;
-    background-color: rgba(146, 180, 236, 0.6);
-}
-
-.main-section{
+.main-back-img {
     width: 100%;
-    height: 700px;
-    margin: 50px 0;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    position: absolute;
+    top: 500px;
+}
 
-    
+.main-area{
+    z-index: 10;
+}
+
+.main-festival-list {
+    margin: 100px auto;
+}
+
+.main-festival {
+    position: relative;
+    height: 350px;
+    cursor: pointer;
+}
+
+.main-festival-info {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    /* 부모 요소의 50% 지점 */
+    transform: translateX(-50%);
+
+    text-align: center;
+    color: white;
+    background-color: rgba(146, 180, 236, 0.6);
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.more-btn {
+    border: 1px solid #92B4EC;
+    background-color: #92B4EC;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    width: 60px;
+    height: 30px;
+    text-align: center;
+    margin: 0 20px 0 auto;
+    cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 /* main끝 */
+
+
+
 /* Pagination 페이지 버튼 디자인 */
 .pagination {
     max-width: 840px;
@@ -161,72 +179,95 @@ img {
 .cols-1 {
     width: 10%;
 }
+
 .cols-2 {
     width: 20%;
 }
+
 .cols-3 {
     width: 30%;
 }
+
 .cols-4 {
     width: 40%;
 }
+
 .cols-5 {
     width: 50%;
 }
+
 .cols-6 {
     width: 60%;
 }
+
 .cols-7 {
     width: 70%;
 }
+
 .cols-8 {
     width: 80%;
 }
+
 .cols-9 {
     width: 90%;
 }
+
 .cols-10 {
     width: 100%;
 }
+
 .tar {
     text-align: right !important;
 }
+
 .tac {
     text-align: center !important;
 }
+
 .tal {
     text-align: left !important;
 }
+
 .w100 {
     width: 100px !important;
 }
+
 .w200 {
     width: 200px !important;
 }
+
 .w300 {
     width: 300px !important;
 }
+
 .w400 {
     width: 400px !important;
 }
+
 .w500 {
     width: 500px !important;
 }
+
 .w600 {
     width: 600px !important;
 }
+
 .w700 {
     width: 700px !important;
 }
+
 .w800 {
     width: 800px !important;
 }
+
 .w900 {
     width: 900px !important;
 }
+
 .w1000 {
     max-width: 1000px !important;
 }
+
 .w100p {
     width: 100% !important;
 }
@@ -236,6 +277,7 @@ img {
 .ntable.nlist .noticenew {
     margin-right: 5px;
 }
+
 .navigate {
     display: flex;
 }
@@ -321,17 +363,19 @@ img {
 
 /* 김영민 파트 시작 */
 /* notice area 공지페이지 시작 */
-.noticeWrap{
+.noticeWrap {
     padding-top: 70px;
     margin: 0 auto;
     width: 1000px;
 }
+
 #nwrap {
     width: 1000px;
     margin: 0 20px;
     padding: 0;
     position: relative;
 }
+
 /* NOTICE Title */
 .notice-title {
     display: flex;
@@ -340,50 +384,63 @@ img {
     font-family: 'EBSJSKMedium';
     font-size: 80px;
 }
+
 .nlist,
 .rplist,
 .replyrplist {
     font-family: 'GowunDodum-Regular';
     text-align: center;
 }
+
 .nlist.ntable>.ntbody>.row:nth-child(2n+1) {
     background-color: #fff;
 }
+
 .nlist.ntable>.ntbody>.row:hover {
     background-color: #fff;
 }
+
 .nlist.ntable>.ntbody>.row:last-child {
     border-bottom: 1px solid #ccc;
 }
+
 .nlist.ntable>.ntbody>.row>div {
     padding: 5px;
 }
+
 /* 공지사항 리스트 배치 */
 .nlist.ntable .row div:nth-child(1) {
     width: 8%;
 }
+
 .nlist.ntable .row div:nth-child(2) {
     width: 45%;
 }
+
 .nlist.ntable .row div:nth-child(3) {
     width: 15%;
 }
+
 .nlist.ntable .row div:nth-child(4) {
     width: 22%;
 }
+
 .nlist.ntable .row div:nth-child(5) {
     width: 10%;
 }
+
 .no-list div {
     width: 100% !important;
     padding: 10px !important;
     text-align: center;
 }
+
 .no-report div,
 no-post {
     width: 100% !important;
     padding: 10px !important;
 }
+
 .nlist .row {
     display: flex;
     vertical-align: middle;
@@ -395,6 +452,7 @@ no-post {
     vertical-align: middle;
     align-items: center;
 }
+
 /* 공지사항 글쓰기버튼  */
 .nbtn_table {
     text-align: right;
@@ -409,6 +467,7 @@ no-post {
 .nbtn_table.show {
     display: block;
 }
+
 a.nwrite {
     padding: 5px;
     width: 60px;
@@ -417,6 +476,7 @@ a.nwrite {
     cursor: pointer;
     position: absolute;
 }
+
 /* 로딩 텍스트 애니메이션 */
 /* 1. 깜빡이는 애니메이션 */
 @keyframes nblink {
@@ -449,6 +509,7 @@ a.nwrite {
     /* 세로 중앙 정렬 */
     z-index: 9999;
 }
+
 .loading-text span {
     display: inline-block;
     /* 안의 글자 나눠주기 */
@@ -591,6 +652,7 @@ a.nwrite {
     max-height: 500px;
     transition: max-height 0.3s ease-in-out;
 }
+
 .searchrow:last-child {
     border-bottom: none !important;
 }
@@ -667,20 +729,20 @@ a.nwrite {
 #noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
-    margin:10px;
+    margin: 10px;
     /* border: 1px solid #000; */
 }
 
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
-    
+
 }
 
 #noticeForm>.ntable>.row>div:nth-child(1) {
     text-align: center;
     vertical-align: middle;
     width: 20%;
-    
+
 
 }
 
@@ -693,7 +755,8 @@ a.nwrite {
 #noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
 }
-#noticeForm{
+
+#noticeForm {
     border: 1px solid #000;
 }
 
@@ -737,17 +800,21 @@ a.nwrite {
     min-height: 10px;
     margin-left: 30px;
 }
-.nwritethumbnail_area{
+
+.nwritethumbnail_area {
     margin-left: 30px;
 }
-.ngetthumbnail_area{
+
+.ngetthumbnail_area {
     margin-top: 50px;
 }
+
 /* 게시판 썸네일애니메이션 thumbnail animation*/
 img.nthumbnail {
     max-width: 50%;
     transition: all 0.2s linear;
 }
+
 img.nwritethumbnail {
     max-width: 40%;
     transition: all 0.2s linear;
@@ -834,28 +901,35 @@ input.nrremove.btn {
     height: 290px;
     vertical-align: top;
 }
-.getNoticeForm{
+
+.getNoticeForm {
     border: none;
 }
-.ngettitle{
+
+.ngettitle {
     position: relative;
     display: flex;
     text-align: center;
     background-color: #d0eefa;
 }
-.ngettitle div:nth-child(1){
+
+.ngettitle div:nth-child(1) {
     width: 10%;
 }
-.ngettitle div:nth-child(2){
+
+.ngettitle div:nth-child(2) {
     width: 60%;
 }
-.ngettitle div:nth-child(3){
+
+.ngettitle div:nth-child(3) {
     width: 20%;
 }
-.ngettitle div:nth-child(4){
+
+.ngettitle div:nth-child(4) {
     width: 10%;
 }
-.ngetrow{
+
+.ngetrow {
     text-align: center;
 }
 
@@ -864,11 +938,13 @@ input.nrremove.btn {
     height: 300px !important;
     margin-left: 80px;
     margin-top: 40px;
-    
+
 }
-.ngetdownload{
+
+.ngetdownload {
     width: 300px;
 }
+
 .ndownload-btn {
     display: flex;
     justify-content: flex-start;
@@ -897,7 +973,8 @@ input.nrremove.btn {
     border-top: 1px solid grey;
     position: relative;
 }
-.replycontent{
+
+.replycontent {
     margin-left: 30px;
 }
 
@@ -1089,28 +1166,30 @@ a#nsearch-btn {
     padding-top: 7px;
     padding-left: 15px;
 }
+
 /* 파일첨부 글자 css */
 .filetextcontainer {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
-  }
-  
-  .filetext {
+}
+
+.filetext {
     position: relative;
-    font-weight: bold; 
+    font-weight: bold;
     font-size: 18px;
-    color: #ccc; 
+    color: #ccc;
     padding: 0 15px;
-  }
-  .filetextcontainer > hr {
+}
+
+.filetextcontainer>hr {
     border: 0;
-    border-top: 1px solid #ccc; 
-    width: 45%; 
+    border-top: 1px solid #ccc;
+    width: 45%;
     margin: 0;
-  }
-  
+}
+
 /* notice area end 공지페이지 종료 */
 /* adminpage area start 관리자페이지 시작 */
 #rpwrap {
@@ -1119,31 +1198,33 @@ a#nsearch-btn {
     padding: 0;
     position: relative;
 }
+
 /* 상단 버튼 3개 */
 .admin-top {
     display: flex;
-    justify-content: flex-end; 
-    gap: 10px;  
+    justify-content: flex-end;
+    gap: 10px;
     padding: 10px 20px;
 }
 
 .admin-top button {
-    background-color: #4CAF50;  
-    border: none;  
-    color: white;  
-    padding: 10px 20px;  
-    text-align: center;  
-    text-decoration: none;  
-    display: inline-block;  
-    font-size: 16px;  
-    cursor: pointer; 
-    border-radius: 5px;  
-    transition: background-color 0.3s ease;  
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .admin-top button:hover {
-    background-color: #45a049;  
+    background-color: #45a049;
 }
+
 .rptable>a {
     cursor: pointer;
 }
@@ -1158,6 +1239,7 @@ a#nsearch-btn {
     font-size: 18px;
     margin: 20px;
 }
+
 /* 게시판신고부분 */
 .rplist .row {
     display: flex;
@@ -1292,7 +1374,8 @@ a#nsearch-btn {
     text-overflow: ellipsis;
     width: 80%;
 }
-.adminsearch_area{
+
+.adminsearch_area {
     margin-left: 10%;
 }
 
@@ -1313,6 +1396,7 @@ a#nsearch-btn {
     text-align: center;
 
 }
+
 /* adminpage area end 관리자페이지 종료 */
 /* 쪽지리스트 부분 note area start 쪽지 시작 */
 .notewrap {
@@ -1382,6 +1466,7 @@ a#nsearch-btn {
 .noteget {
     margin-top: 20px;
 }
+
 /* 전체 wrapper 스타일 */
 #wrap.noteget {
     width: 500px;
@@ -1407,7 +1492,7 @@ a#nsearch-btn {
 }
 
 /* 레이블 (제목, To, From, 내용) */
-.notegetrow > div:first-child {
+.notegetrow>div:first-child {
     font-weight: bold;
     color: #333;
     width: 100px;
@@ -1415,7 +1500,8 @@ a#nsearch-btn {
 }
 
 /* 입력 필드 스타일 */
-.notegetrow input, .notegetrow textarea {
+.notegetrow input,
+.notegetrow textarea {
     width: 100%;
     padding: 10px;
     font-size: 14px;
@@ -1425,7 +1511,8 @@ a#nsearch-btn {
     transition: border-color 0.3s ease;
 }
 
-.notegetrow input:focus, .notegetrow textarea:focus {
+.notegetrow input:focus,
+.notegetrow textarea:focus {
     border-color: #007BFF;
     outline: none;
 }
@@ -1482,15 +1569,17 @@ a#nsearch-btn {
     border: 1px solid #ccc;
     color: #777;
 }
-.notegetrow input{
+
+.notegetrow input {
     border: 1px solid #ccc !important;
 }
 
 /* noteModal send 부분 디자인 */
 /* Modal overlay style */
-.notesend-row{
+.notesend-row {
     padding-top: 0;
 }
+
 .notesend-modal-overlay {
     display: block;
     position: fixed;
@@ -1525,7 +1614,8 @@ a#nsearch-btn {
 .notesend-modal-content .notesend-row input:nth-child(2) {
     width: 300px !important;
 }
-.notesend-row:last-child{
+
+.notesend-row:last-child {
     border-bottom: none;
 }
 
@@ -1545,7 +1635,9 @@ a#nsearch-btn {
     width: 500px;
     height: 700px;
 }
-.notesend-modal-content th, .notesend-modal-content td {
+
+.notesend-modal-content th,
+.notesend-modal-content td {
     height: 59px !important;
 }
 
@@ -1583,10 +1675,12 @@ a#nsearch-btn {
     border-radius: 5px;
     cursor: pointer;
 }
+
 /* 보내기버튼 */
 .notesend-btn-send {
     background-color: #28a745;
 }
+
 .notesend-btn:hover {
     background-color: #218838;
 }
@@ -1595,10 +1689,12 @@ a#nsearch-btn {
     vertical-align: middle;
     display: inline-block;
 }
+
 /* 취소버튼 */
 .notesend-msbtn {
     background-color: #007BFF;
 }
+
 .notesend-msbtn:hover {
     background-color: #0056b3;
 }
@@ -1676,7 +1772,8 @@ a#nsearch-btn {
     font-weight: bold;
     display: flex;
 }
-.festival-small-info div:last-child{
+
+.festival-small-info div:last-child {
     width: 50px;
     height: 50px;
     display: flex;
@@ -2423,13 +2520,13 @@ td {
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.remote-area div{
+.remote-area div {
     text-align: center;
     border-bottom: 1px solid white;
     margin: 5px;
 }
 
-.remote-area div:last-child{
+.remote-area div:last-child {
     border: none;
 }
 
@@ -2484,25 +2581,28 @@ td {
 #board_wrap {
     margin: 0 auto;
     margin-top: 100px;
-   width: 1000px;
+    width: 1000px;
     /* text-align: center; */
 }
-.board_obj{
+
+.board_obj {
     margin: 10px;
     width: 950px;
     min-height: 130px;
     margin-bottom: 60px;
 }
 
-.boardbox{
+.boardbox {
     display: flex;
     position: relative;
 }
-.board_title{
+
+.board_title {
     font-size: 21px;
     max-width: 80%;
 }
-.boardbox2 div:nth-child(1){
+
+.boardbox2 div:nth-child(1) {
     color: rgb(143, 143, 143);
     width: 85%;
     min-height: 70px;
@@ -2510,38 +2610,44 @@ td {
     font-size: 15px;
 }
 
-.boardbox2 div:nth-child(2){
+.boardbox2 div:nth-child(2) {
     position: absolute;
     top: -25px;
     right: 0;
     width: 140px;
     text-align: center;
 }
-.boardbox2 div:nth-child(2) img{
+
+.boardbox2 div:nth-child(2) img {
     max-width: 140px;
     max-height: 140px;
 }
-.boardbox4 div:nth-child(1){
+
+.boardbox4 div:nth-child(1) {
     color: rgb(79, 73, 134);
     font-size: 18px;
     margin-right: 15px;
     padding-left: 5px;
     width: 70px;
 }
-.boardbox4 div:nth-child(2){
+
+.boardbox4 div:nth-child(2) {
     color: rgb(121, 121, 121);
     font-size: 14px;
     margin-top: 7px;
     width: 200px;
 }
-.boardbox5{
+
+.boardbox5 {
     position: absolute;
     right: 160px;
 }
-.boardbox5 div{
+
+.boardbox5 div {
     color: red;
     margin-left: 10px;
 }
+
 .nowPage {
     color: #92B4EC;
 }

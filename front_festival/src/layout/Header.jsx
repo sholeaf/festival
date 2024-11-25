@@ -54,8 +54,7 @@ const Header = () => {
             <div className="header_area">
                 <div className="navigate">
                     <div className="logo" onClick={() =>
-                        loginUser === "" ? handleNavigation("/"):
-                        handleNavigation("/home")
+                        handleNavigation("/")
                         }>
                         <a>모두의 축제</a>
                     </div>

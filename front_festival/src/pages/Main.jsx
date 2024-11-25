@@ -1,57 +1,98 @@
+import { useEffect, useState } from "react";
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
 import Header from "../layout/Header";
+import Slider from "react-slick";
+import TodayDate from "../hooks/TodayDate";
 import { useNavigate } from "react-router-dom";
+import noimage from "../assets/images/no-image.jpg";
+import backimg from "../assets/images/main-section.webp";
 
 const Main = () => {
-    const [showTitle, setShowTitle] = useState(true);
+    const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
 
+    const [loginUser, setLoginUser] = useState([]);
+    const [festivals, setFestivals] = useState([]);
+    const [bmlist, setBmlist] = useState([]);
+    const { noHyphen } = TodayDate();
     const navigate = useNavigate();
+    const activeTab = 'calendar';
 
-    const textRef1 = useRef(null);
-    const textRef2 = useRef(null);
-    const textRef3 = useRef(null);
-    const textRef4 = useRef(null);
-    const textRef5 = useRef(null);
+    const settings = {
+        dots: false,
+        infinite: true,
+        speed: 1100,
+        slidesToShow: 1,
+        slidesToScroll: 1,
+        autoplay: true,
+        autoplaySpeed: 5000,
+    };
 
-
-    // 페이지가 로드되면 애니메이션 후 main-title을 숨기기
     useEffect(() => {
-        const timer = setTimeout(() => {
-            setShowTitle(false);  // 2초 후에 main-title을 숨깁니다.
-        }, 5000);  // 애니메이션 지속 시간과 동일한 시간 (2초)
-
-        return () => clearTimeout(timer); // cleanup
+        axios.get(`/api/user/loginCheck`)
+            .then((resp) => {
+                setLoginUser(resp.data);
+                console.log("yes");
+            })
+            .catch((error) => {
+                console.error("로그인 상태 확인 오류: ", error);
+            });
     }, []);
+
+    useEffect(() => {
+        if (loginUser == '' || loginUser == null) {
+            return;
+        }
+
+        axios.get(`/api/bookmark/checkBookmark`, { params: { userid: loginUser } })
+            .then((resp) => {
+                setBmlist(resp.data);
+                console.log("요청 하기! : ", resp.data);
+            })
+            .catch((error) => {
+                console.log("bmlist 오류", error);
+            })
+    }, [loginUser]);
+
+    useEffect(() => {
+        axios.get(`https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&serviceKey=${API_KEY}&numOfRows=12&pageNo=1&arrange=A&eventStartDate=${noHyphen}`)
+            .then((resp) => {
+                const data = resp.data.response.body.items.item || [];
+                setFestivals(data);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, [noHyphen]);
 
     return (
         <>
             <Header></Header>
-            <div className="main-logout">
-                {showTitle && (
-                    <div className="main-title">모두의 축제</div>
-                )}
-                <div className="main-section">
-                    <img className="main-text-img" src="" />
-                    <div className="main-text1">국내 모든 축제들을 찾아보세요!</div>
-                    <div className="main-text2">다양한 축제들이 준비되어있어요!</div>
-                    <div className="go-page-btn">바로가기</div>
+            <div className="main-area" id="wrap">
+                <div className="main-festival-list">
+                    <h2>현재 진행중인 축제</h2>
+                    <div className="more-btn" onClick={() => {
+                        navigate('/festival');
+                    }}>more+</div>
+                    <Slider {...settings}>
+                        {festivals.map((festival, index) => {
+                            return (
+                                <div className="main-festival detail-img" key={index}>
+                                    <img src={festival.firstimage || noimage} alt={`Slide ${index + 1}`} onClick={() => {
+                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist } })
+                                    }} />
+                                    <div>
+                                        <div className="main-festival-info">
+                                            {festival.title}
+                                        </div>
+                                    </div>
+                                </div>
+                            );
+                        })}
+                    </Slider>
                 </div>
-                <div className="main-section">
-                    <img className="main-text-img" src="" />
-                    <div className="main-text1">축제를 다녀온 많은 사람들의 후기!</div>
-                    <div className="main-text2">축제 후기를 작성해서 사람들에게 알려주세요!</div>
-                    <div className="go-page-btn">바로가기</div>
-                </div>
-                <div className="main-section">
-                    <img className="main-text-img" src="" />
-                    <div className="main-text1">축제 내용 변경 등 중요사항을 공지해드립니다!</div>
-                    <div className="go-page-btn">바로가기</div>
-                </div>
-
             </div>
         </>
     );
-}
+};
 
 export default Main;
