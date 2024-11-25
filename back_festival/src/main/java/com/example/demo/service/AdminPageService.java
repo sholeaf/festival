@@ -2,6 +2,7 @@ package com.example.demo.service;
 
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
@@ -18,5 +19,6 @@ public interface AdminPageService {
 	int deletereply(long boardnum);
 	HashMap<String, Object> getReplyReportList(Criteria cri);
 	int boardreset(long boardnum);
+
 	
 }

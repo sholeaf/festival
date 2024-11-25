@@ -9,6 +9,7 @@ public class Criteria {
 	private String type;
 	private String keyword;
 	private int startrow;
+	private boolean existsCondition;
 	
 	public Criteria() {
 		this(1,10);

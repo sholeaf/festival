@@ -230,14 +230,14 @@ header {
     text-align: center;
 }
 
-#codeGet,
-#codeCheck {
+.codeGet,
+.codeCheck {
     display: inline-block;
     width: 300px;
     margin: 5px 0;
 }
 
-#codeGet {
+.codeGet {
     margin-left: 5px;
 }
 
@@ -265,7 +265,7 @@ header {
 
 /* joinpage end */
 
-/* modal */
+/* login modal */
 .login_wrap .main .findId,
 .login_wrap .main .findPw {
     width: 400px;
@@ -284,7 +284,6 @@ header {
 
 /* modal end */
 
-/* 임시 테스트용 */
 .login_btn {
     width: 150px;
 }
@@ -360,18 +359,69 @@ header {
     cursor: pointer;
 }
 
-/* 모달 프로필 변경 */
-#profileModify .img img {
-    width: 400px;
-    height: 400px;
-}
 
 #closeCommunity,
 #closeBookmark {
     display: none;
 }
 
-/* 후기 */
+/* 모달 개인정보 변경 */
+#userModify, #pwModify{
+    width: 300px;
+    padding-bottom: 15px;
+}
+.modifyForm{
+    padding: 0px 50px 15px 50px;
+}
+.pwBox{
+    padding: 0 50px 15px 50px;
+}
+.modifyForm input,
+.pwBox input {
+    width: 190px;
+    height: 30px;
+    text-align: center;
+    margin: 1px;
+}
+
+/* 모달 프로필 변경 */
+#profileModify{
+    padding-bottom: 20px;
+}
+#profileModify .img img {
+    width: 300px;
+    height: 300px;
+    padding: 0 25px 15px 25px;
+}
+/* 모달 정보공개 변경 */
+#infoModify{
+    padding-bottom: 15px;
+}
+#infoModify table{
+    width: 400px;
+}
+#infoModify table thead tr th,
+#infoModify table tbody tr td{
+    font-size: 20px;
+    width: 150px;
+}
+#infoModify table tbody tr td input{
+    width: 30px;
+    height: 30px;
+    margin: 0;
+}
+
+/* 모달 회원탈퇴 */
+#userDelete{
+    width: 250px;
+    height: 200px;
+    padding: 15px;
+}
+#userDelete div{
+    padding-bottom: 15px;
+}
+
+/* 후기 및 즐겨찾기 */
 .mypage .community p,
 .mypage .bookmark p {
     font-size: 18px;
@@ -446,6 +496,7 @@ header {
 
 
 /* 보드 쪽지 및 회원 정보 팝업 / 모달 */
+.boardget_wrap .popup, 
 #board_wrap .popup {
     display: none;
     position: fixed;
@@ -453,6 +504,13 @@ header {
     color: white;
     padding: 10px;
     border-radius: 5px;
+}
+.boardget_wrap .popup a,
+#board_wrap .popup a{
+    display: block;
+    width: 80px;
+    margin: 5px;
+    text-align: center;
 }
 
 .BoardModal .img img{

@@ -15,13 +15,14 @@ public class BookmarkServiceImpl implements BookmarkService {
 	
 	@Override
 	public ArrayList<String> getBookmark(String userid) {
+		System.out.println("DD"+userid);
+		System.out.println("dd" +bmmapper.getBookmark(userid));
 		return bmmapper.getBookmark(userid);
 	}
 	@Override
 	public boolean addBookmark(String userid, String contentid) {
 		return bmmapper.addBookmark(userid,contentid);
 	}
-
 
 	@Override
 	public boolean removeBookmark(String userid, String contentid) {

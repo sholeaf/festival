@@ -117,11 +117,13 @@ const BoardList = () => {
         if (loginUser == "" || loginUser == null) {
             alert("로그인 후 이용할 수 있습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
-        if(loginUser == selectedUserId){
+        if (loginUser == selectedUserId) {
             alert("본인에게는 쪽지를 보낼 수 없습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
         setIsNoteModalOpen(true);  // 모달 열기
@@ -130,7 +132,6 @@ const BoardList = () => {
     // 모달 닫기
     const closeNoteModal = () => {
         setIsNoteModalOpen(false);
-        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
     };
 
     // 회원 정보 모달
@@ -138,6 +139,7 @@ const BoardList = () => {
         if (loginUser == "" || loginUser == null) {
             alert("로그인 후 이용할 수 있습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
         setIsModalOpen(true);  // 모달 열기
@@ -146,7 +148,6 @@ const BoardList = () => {
     // 모달 닫기
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
     };
 
     // 팝업열기
@@ -197,7 +198,7 @@ const BoardList = () => {
                         <div className="board_title getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{board.boardtitle}</div>
                         <div className="boardbox2 boardbox">
                             <div className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{extractTextFromHTML(board.boardcontent, 203)}</div>
-                            <div ><img src={board.titleImage ? `/api/file/thumbnail?systemname=` + board.titleImage : ""} className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}></img></div>
+                            <div><img src={board.titleImage ? `/api/file/thumbnail?systemname=` + board.titleImage : ""} className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}></img></div>
                         </div>
                         <div className="boardbox3 boardbox">
                             <div className="boardbox4 boardbox">

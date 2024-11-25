@@ -31,4 +31,5 @@ public interface AdminPageMapper {
 	void deleteReportList(long boardnum);
 	int deleteReply(long replynum);
 	long getReplyReportTotal(Criteria cri);
+
 }

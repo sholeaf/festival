@@ -87,7 +87,7 @@ const MyPage = () => {
         const formData = new FormData();
 
         const codeCheck = document.modifyForm.codeCheck;
-        codeCheck.style.display = "block";
+        codeCheck.style.display = "inline-block";
         if (codeFlag) {
             codeCheck.style.display = "none";
         }
@@ -514,6 +514,7 @@ const MyPage = () => {
     // 유저 정보 가져오기
     useEffect(() => {
         if (loginUser) {
+            console.log(loginUser);
             axios.get(`/api/user/userInfo`, { params: { userid: loginUser } })
                 .then((resp) => {
                     setUser(resp.data.user);
@@ -632,7 +633,7 @@ const MyPage = () => {
                                 {activeModal === 'userModify' && (
                                     <div id='userModify'>
                                         <h3>개인정보 변경</h3>
-                                        <form action="/user/modify" method="post" name="modifyForm">
+                                        <form action="/user/modify" method="post" name="modifyForm" className='modifyForm'>
                                             <div>전화번호</div><input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" defaultValue={user.userphone} />
                                             <div>이메일</div>
                                             <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" defaultValue={user.useremail} />
@@ -658,7 +659,7 @@ const MyPage = () => {
                                 {activeModal === 'pwModify' && (
                                     <div id='pwModify'>
                                         <h3>비밀번호 변경</h3>
-                                        <div onKeyDown={(e) => {
+                                        <div className='pwBox' onKeyDown={(e) => {
                                             if (e.key == 'Enter') {
                                                 e.preventDefault();
                                                 pwModify();
@@ -770,7 +771,7 @@ const MyPage = () => {
                                 )}
                             </Modal>
                             <div>
-                                <Note loginUser={loginUser} />
+                                {/* <Note loginUser={loginUser} /> */}
                             </div>
                         </div>
                     )}

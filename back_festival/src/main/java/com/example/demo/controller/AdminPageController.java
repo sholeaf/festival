@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -21,6 +22,7 @@ import com.example.demo.domain.Criteria;
 import com.example.demo.domain.ReplyDTO;
 import com.example.demo.service.AdminPageService;
 
+
 @RestController
 @RequestMapping("/api/adminpage/*")
 public class AdminPageController {
@@ -31,7 +33,12 @@ public class AdminPageController {
 	public ResponseEntity<HashMap<String, Object>> list(Criteria cri, @PathVariable("boardnum")int boardnum) {
 		cri.setPagenum(boardnum);
 		cri.setStartrow((cri.getPagenum() - 1) * cri.getAmount());  // 페이지 번호에 맞는 startrow 계산
-	    System.out.println("Criteria: " + cri);
+	   
+		// 여기에서 existsCondition을 설정
+	    cri.setExistsCondition(true);  // existsCondition을 true로 설정 (조건에 맞게 수정)
+	    
+	    
+		System.out.println("Criteria: " + cri);
 		
 		HashMap<String, Object> result = apservice.getList(cri);
 		if(result != null && !result.isEmpty()) {
@@ -41,17 +48,6 @@ public class AdminPageController {
 		else {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
-	}
-	@GetMapping("/reported")
-	public ResponseEntity<?> getReportedBoards() {
-	    try {
-	        List<BoardDTO> boards = apservice.getReportedBoards();
-	        return ResponseEntity.ok(boards);
-	    } catch (Exception e) {
-	        // 예외 발생 시 에러 메시지와 상태 코드 반환
-	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR)
-	                .body("서버 오류 발생: " + e.getMessage());
-	    }
 	}
 	// 신고 횟수 초기화 API
     @DeleteMapping("/boardReportreset/{boardnum}")
@@ -78,7 +74,7 @@ public class AdminPageController {
             // 페이지 번호에 맞는 startrow 계산
             cri.setPagenum(boardnum);
             cri.setStartrow((cri.getPagenum() - 1) * cri.getAmount());
-            
+            cri.setExistsCondition(true);
             System.out.println("Criteria: " + cri);
 
             // 서비스 메소드 호출하여 결과 가져오기
@@ -118,5 +114,5 @@ public class AdminPageController {
 			return new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR);
 		}
     }
-    
+
 }

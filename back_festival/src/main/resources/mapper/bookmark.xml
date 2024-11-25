@@ -11,4 +11,7 @@
 	<delete id="removeBookmark">
 		delete from bookmark where userid=#{userid} and contentid=#{contentid}
 	</delete>
+	<select id="getBookmarkbyMain">
+		select * from bookmark where userid=#{loginUser}
+	</select>
 </mapper>

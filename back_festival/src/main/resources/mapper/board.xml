@@ -1,13 +1,9 @@
-<!DOCTYPE mapper
-  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-  "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.BoardMapper">
 	<sql id="cri">
 		<if test="keyword != '' and keyword != null and type != 'a'.toString()">
 			<trim prefixOverrides="or" prefix="(" suffix=") and">
-				<foreach collection="typeArr" item="t">
-					or
-					<choose>
+				<foreach collection="typeArr" item="t"> or <choose>
 						<when test="t == 'T'.toString()">
 							boardtitle like ('%${keyword}%')
 						</when>
@@ -27,7 +23,8 @@
 	</sql>
 
 	<insert id="insertBoard">
-		insert into board(boardtitle, boardcontent, userid, tag, titleImage) values(#{boardtitle}, 
+		insert into board(boardtitle, boardcontent, userid, tag, titleImage)
+		values(#{boardtitle},
 		#{boardcontent}, #{userid}, #{tag}, #{titleImage})
 	</insert>
 	<select id="getLastNum">
@@ -36,29 +33,20 @@
 	<select id="getBoardbyBoardnum">
 		select * from board where boardnum = #{boardnum}
 	</select>
-	
-	<select id="getList">
-		SELECT * 
-		FROM board b
-		WHERE 
-		<include refid="cri"></include>
-		NOT EXISTS (
-		   SELECT 1 
-		   FROM board_report c
-		   WHERE b.boardnum = c.boardnum
-		   GROUP BY c.boardnum
-		   HAVING COUNT(*) > 4
-		) AND boardnum > 0 order by boardnum desc limit #{startrow}, #{amount}
-	</select>
+
+	<select id="getList"> SELECT * FROM board b WHERE <include refid="cri"></include>
+		NOT EXISTS ( SELECT 1 FROM board_report c WHERE b.boardnum = c.boardnum
+		GROUP BY c.boardnum HAVING COUNT(*) > 4 ) AND boardnum > 0 order by
+		boardnum desc limit #{startrow}, #{amount} </select>
 	<select id="getTotal">
 		select count(*) from board b
 		where
 		NOT EXISTS (
-		   SELECT 1 
-		   FROM board_report c
-		   WHERE b.boardnum = c.boardnum
-		   GROUP BY c.boardnum
-		   HAVING COUNT(*) > 4
+		SELECT 1
+		FROM board_report c
+		WHERE b.boardnum = c.boardnum
+		GROUP BY c.boardnum
+		HAVING COUNT(*) > 4
 		) AND boardnum > 0
 	</select>
 	<select id="getListByUserid">
@@ -66,7 +54,8 @@
 	</select>
 	<update id="updateBoard">
 		update board
-		set boardtitle = #{boardtitle}, boardcontent = #{boardcontent}, tag = #{tag}, titleImage = #{titleImage}
+		set boardtitle = #{boardtitle}, boardcontent = #{boardcontent}, tag =
+		#{tag}, titleImage = #{titleImage}
 		where boardnum = #{boardnum}
 	</update>
 	<delete id="deleteBoard">
@@ -79,25 +68,49 @@
 		insert into board_report value(#{boardnum}, #{userid})
 	</insert>
 	<select id="searchBoardReport">
-		select count(*) from board_report where boardnum = #{boardnum} AND userid = #{userid}
+		select count(*) from board_report where boardnum = #{boardnum} AND
+		userid = #{userid}
 	</select>
 	<select id="searchReplyReport">
-		select count(*) from reply_report where replynum = #{replynum} AND userid = #{userid}
+		select count(*) from reply_report where replynum = #{replynum} AND
+		userid = #{userid}
 	</select>
-	
+
 	<insert id="like">
 		insert into board_like value(#{boardnum}, #{userid})
 	</insert>
 	<select id="searchLike">
-		select count(*) from board_like where boardnum = #{boardnum} AND userid = #{userid}
+		select count(*) from board_like where boardnum = #{boardnum} AND userid
+		= #{userid}
 	</select>
 	<delete id="deleteLike">
-		delete from board_like where boardnum = #{boardnum} AND userid = #{userid}
+		delete from board_like where boardnum = #{boardnum} AND userid =
+		#{userid}
 	</delete>
 	<select id="likeCnt">
 		select count(*) from board_like where boardnum = #{boardnum}
 	</select>
 	<select id="replyCnt">
 		select count(*) from reply where boardnum = #{boardnum};
+	</select>
+	<select id="getBestBoard">
+		select
+			b.boardnum,
+			b.boardtitle,
+			b.boardcontent,
+			b.userid,
+			b.boardregdate,
+			b.boardreadcnt,
+			b.tag,
+			b.titleImage,
+			count(bl.userid) as like_count
+		from
+			board b
+		left join
+			board_like bl on b.boardnum = bl.boardnum
+		group by
+			b.boardnum
+		order by
+			like_count desc limit 4;
 	</select>
 </mapper>

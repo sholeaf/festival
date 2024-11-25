@@ -58,9 +58,12 @@ a {
     background-color: transparent;
     font-family: 'EBSJSKMedium';
 }
-body{
+
+body {
     margin: 0;
+    overflow: auto;
 }
+
 p,
 span,
 div {
@@ -78,50 +81,72 @@ img {
     -o-user-drag: none;
     -user-drag: none;
 }
-/* main */
-.main-title {
-    font-size: 250px;
-    font-family: 'EBSJSKMedium';
-    font-weight: bold;
-    color: white;
-    text-align: center;
-    opacity: 0; /* 처음에는 보이지 않도록 설정 */
-    visibility: visible; /* 보이게 설정 */
-    animation: fadeInOut 5s forwards; /* 2초 동안 애니메이션 진행 */
-}
 
-@keyframes fadeInOut {
-    0% {
-        opacity: 0; /* 처음에는 보이지 않음 */
-        visibility: visible; /* 애니메이션 시작 시 보이도록 설정 */
-    }
-    50% {
-        opacity: 1; /* 중간에서 완전히 보이도록 */
-        visibility: visible; /* 중간에는 여전히 보이도록 */
-    }
-    100% {
-        opacity: 0; /* 마지막에는 다시 사라짐 */
-        visibility: hidden; /* 애니메이션 후 숨겨짐 */
-    }
-}
-
-.main-title.hide {
-    display: none; /* hide 클래스가 추가되면 요소를 숨깁니다 */
-}
-.main-logout{
-    margin-top: 50px;
-    background-color: rgba(146, 180, 236, 0.6);
-}
-
-.main-section{
-    width: 100%;
-    height: 700px;
-    margin: 50px 0;
-
+.btn{
     
 }
 
+/* main */
+.main-back-img {
+    width: 100%;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    height: 100vh;
+    position: absolute;
+    top: 500px;
+}
+
+.main-area{
+    z-index: 10;
+}
+
+.main-festival-list {
+    margin: 100px auto;
+}
+
+.main-festival {
+    position: relative;
+    height: 350px;
+    cursor: pointer;
+}
+
+.main-festival-info {
+    position: absolute;
+    bottom: 0px;
+    left: 50%;
+    /* 부모 요소의 50% 지점 */
+    transform: translateX(-50%);
+
+    text-align: center;
+    color: white;
+    background-color: rgba(146, 180, 236, 0.6);
+    padding: 5px 10px;
+    border-radius: 5px;
+    z-index: 1000;
+}
+
+.btn {
+    border: 1px solid #92B4EC;
+    background-color: #92B4EC;
+    border-radius: 5px;
+    color: white;
+    font-weight: bold;
+    text-align: center;
+    cursor: pointer;
+    box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+.more-btn{
+    width: 60px;
+    height: 30px;
+    margin: 0 20px 0 auto !important;
+}
+
 /* main끝 */
+
+
+
 /* Pagination 페이지 버튼 디자인 */
 .pagination {
     max-width: 840px;
@@ -161,72 +186,95 @@ img {
 .cols-1 {
     width: 10%;
 }
+
 .cols-2 {
     width: 20%;
 }
+
 .cols-3 {
     width: 30%;
 }
+
 .cols-4 {
     width: 40%;
 }
+
 .cols-5 {
     width: 50%;
 }
+
 .cols-6 {
     width: 60%;
 }
+
 .cols-7 {
     width: 70%;
 }
+
 .cols-8 {
     width: 80%;
 }
+
 .cols-9 {
     width: 90%;
 }
+
 .cols-10 {
     width: 100%;
 }
+
 .tar {
     text-align: right !important;
 }
+
 .tac {
     text-align: center !important;
 }
+
 .tal {
     text-align: left !important;
 }
+
 .w100 {
     width: 100px !important;
 }
+
 .w200 {
     width: 200px !important;
 }
+
 .w300 {
     width: 300px !important;
 }
+
 .w400 {
     width: 400px !important;
 }
+
 .w500 {
     width: 500px !important;
 }
+
 .w600 {
     width: 600px !important;
 }
+
 .w700 {
     width: 700px !important;
 }
+
 .w800 {
     width: 800px !important;
 }
+
 .w900 {
     width: 900px !important;
 }
+
 .w1000 {
     max-width: 1000px !important;
 }
+
 .w100p {
     width: 100% !important;
 }
@@ -236,6 +284,7 @@ img {
 .ntable.nlist .noticenew {
     margin-right: 5px;
 }
+
 .navigate {
     display: flex;
 }
@@ -321,17 +370,19 @@ img {
 
 /* 김영민 파트 시작 */
 /* notice area 공지페이지 시작 */
-.noticeWrap{
+.noticeWrap {
     padding-top: 70px;
     margin: 0 auto;
     width: 1000px;
 }
+
 #nwrap {
     width: 1000px;
     margin: 0 20px;
     padding: 0;
     position: relative;
 }
+
 /* NOTICE Title */
 .notice-title {
     display: flex;
@@ -340,50 +391,63 @@ img {
     font-family: 'EBSJSKMedium';
     font-size: 80px;
 }
+
 .nlist,
 .rplist,
 .replyrplist {
     font-family: 'GowunDodum-Regular';
     text-align: center;
 }
+
 .nlist.ntable>.ntbody>.row:nth-child(2n+1) {
     background-color: #fff;
 }
+
 .nlist.ntable>.ntbody>.row:hover {
     background-color: #fff;
 }
+
 .nlist.ntable>.ntbody>.row:last-child {
     border-bottom: 1px solid #ccc;
 }
+
 .nlist.ntable>.ntbody>.row>div {
     padding: 5px;
 }
+
 /* 공지사항 리스트 배치 */
 .nlist.ntable .row div:nth-child(1) {
     width: 8%;
 }
+
 .nlist.ntable .row div:nth-child(2) {
     width: 45%;
 }
+
 .nlist.ntable .row div:nth-child(3) {
     width: 15%;
 }
+
 .nlist.ntable .row div:nth-child(4) {
     width: 22%;
 }
+
 .nlist.ntable .row div:nth-child(5) {
     width: 10%;
 }
+
 .no-list div {
     width: 100% !important;
     padding: 10px !important;
     text-align: center;
 }
+
 .no-report div,
 no-post {
     width: 100% !important;
     padding: 10px !important;
 }
+
 .nlist .row {
     display: flex;
     vertical-align: middle;
@@ -595,6 +659,10 @@ a.nwrite {
     border-bottom: none !important;
 }
 
+.searchrow:last-child {
+    border-bottom: none !important;
+}
+
 /* Notice list css */
 
 .notice-cnt {
@@ -667,13 +735,12 @@ a.nwrite {
 #noticeForm>.ntable>.row {
     height: 40px;
     line-height: 40px;
-    margin:10px;
+    margin: 10px;
     /* border: 1px solid #000; */
 }
 
 #noticeForm>.ntable>.row:nth-child(3) {
     height: 300px;
-    
 }
 
 #noticeForm>.ntable>.row>div:nth-child(1) {
@@ -681,6 +748,7 @@ a.nwrite {
     vertical-align: middle;
     width: 20%;
     
+
 
 }
 
@@ -694,6 +762,10 @@ a.nwrite {
     height: auto;
 }
 #noticeForm{
+    border: 1px solid #000;
+}
+
+#noticeForm {
     border: 1px solid #000;
 }
 
@@ -737,10 +809,12 @@ a.nwrite {
     min-height: 10px;
     margin-left: 30px;
 }
-.nwritethumbnail_area{
+
+.nwritethumbnail_area {
     margin-left: 30px;
 }
-.ngetthumbnail_area{
+
+.ngetthumbnail_area {
     margin-top: 50px;
 }
 /* 게시판 썸네일애니메이션 thumbnail animation*/
@@ -834,28 +908,35 @@ input.nrremove.btn {
     height: 290px;
     vertical-align: top;
 }
-.getNoticeForm{
+
+.getNoticeForm {
     border: none;
 }
-.ngettitle{
+
+.ngettitle {
     position: relative;
     display: flex;
     text-align: center;
     background-color: #d0eefa;
 }
-.ngettitle div:nth-child(1){
+
+.ngettitle div:nth-child(1) {
     width: 10%;
 }
-.ngettitle div:nth-child(2){
+
+.ngettitle div:nth-child(2) {
     width: 60%;
 }
-.ngettitle div:nth-child(3){
+
+.ngettitle div:nth-child(3) {
     width: 20%;
 }
-.ngettitle div:nth-child(4){
+
+.ngettitle div:nth-child(4) {
     width: 10%;
 }
-.ngetrow{
+
+.ngetrow {
     text-align: center;
 }
 
@@ -864,11 +945,13 @@ input.nrremove.btn {
     height: 300px !important;
     margin-left: 80px;
     margin-top: 40px;
-    
+
 }
-.ngetdownload{
+
+.ngetdownload {
     width: 300px;
 }
+
 .ndownload-btn {
     display: flex;
     justify-content: flex-start;
@@ -898,6 +981,10 @@ input.nrremove.btn {
     position: relative;
 }
 .replycontent{
+    margin-left: 30px;
+}
+
+.replycontent {
     margin-left: 30px;
 }
 
@@ -1089,28 +1176,30 @@ a#nsearch-btn {
     padding-top: 7px;
     padding-left: 15px;
 }
+
 /* 파일첨부 글자 css */
 .filetextcontainer {
     display: flex;
     justify-content: center;
     align-items: center;
     padding: 10px;
-  }
-  
-  .filetext {
+}
+
+.filetext {
     position: relative;
-    font-weight: bold; 
+    font-weight: bold;
     font-size: 18px;
-    color: #ccc; 
+    color: #ccc;
     padding: 0 15px;
-  }
-  .filetextcontainer > hr {
+}
+
+.filetextcontainer>hr {
     border: 0;
-    border-top: 1px solid #ccc; 
-    width: 45%; 
+    border-top: 1px solid #ccc;
+    width: 45%;
     margin: 0;
-  }
-  
+}
+
 /* notice area end 공지페이지 종료 */
 /* adminpage area start 관리자페이지 시작 */
 #rpwrap {
@@ -1119,31 +1208,33 @@ a#nsearch-btn {
     padding: 0;
     position: relative;
 }
+
 /* 상단 버튼 3개 */
 .admin-top {
     display: flex;
-    justify-content: flex-end; 
-    gap: 10px;  
+    justify-content: flex-end;
+    gap: 10px;
     padding: 10px 20px;
 }
 
 .admin-top button {
-    background-color: #4CAF50;  
-    border: none;  
-    color: white;  
-    padding: 10px 20px;  
-    text-align: center;  
-    text-decoration: none;  
-    display: inline-block;  
-    font-size: 16px;  
-    cursor: pointer; 
-    border-radius: 5px;  
-    transition: background-color 0.3s ease;  
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
 }
 
 .admin-top button:hover {
-    background-color: #45a049;  
+    background-color: #45a049;
 }
+
 .rptable>a {
     cursor: pointer;
 }
@@ -1292,7 +1383,8 @@ a#nsearch-btn {
     text-overflow: ellipsis;
     width: 80%;
 }
-.adminsearch_area{
+
+.adminsearch_area {
     margin-left: 10%;
 }
 
@@ -1407,7 +1499,7 @@ a#nsearch-btn {
 }
 
 /* 레이블 (제목, To, From, 내용) */
-.notegetrow > div:first-child {
+.notegetrow>div:first-child {
     font-weight: bold;
     color: #333;
     width: 100px;
@@ -1415,7 +1507,8 @@ a#nsearch-btn {
 }
 
 /* 입력 필드 스타일 */
-.notegetrow input, .notegetrow textarea {
+.notegetrow input,
+.notegetrow textarea {
     width: 100%;
     padding: 10px;
     font-size: 14px;
@@ -1425,7 +1518,8 @@ a#nsearch-btn {
     transition: border-color 0.3s ease;
 }
 
-.notegetrow input:focus, .notegetrow textarea:focus {
+.notegetrow input:focus,
+.notegetrow textarea:focus {
     border-color: #007BFF;
     outline: none;
 }
@@ -1482,15 +1576,17 @@ a#nsearch-btn {
     border: 1px solid #ccc;
     color: #777;
 }
-.notegetrow input{
+
+.notegetrow input {
     border: 1px solid #ccc !important;
 }
 
 /* noteModal send 부분 디자인 */
 /* Modal overlay style */
-.notesend-row{
+.notesend-row {
     padding-top: 0;
 }
+
 .notesend-modal-overlay {
     display: block;
     position: fixed;
@@ -1525,7 +1621,8 @@ a#nsearch-btn {
 .notesend-modal-content .notesend-row input:nth-child(2) {
     width: 300px !important;
 }
-.notesend-row:last-child{
+
+.notesend-row:last-child {
     border-bottom: none;
 }
 
@@ -1546,6 +1643,11 @@ a#nsearch-btn {
     height: 700px;
 }
 .notesend-modal-content th, .notesend-modal-content td {
+    height: 59px !important;
+}
+
+.notesend-modal-content th,
+.notesend-modal-content td {
     height: 59px !important;
 }
 
@@ -1583,10 +1685,12 @@ a#nsearch-btn {
     border-radius: 5px;
     cursor: pointer;
 }
+
 /* 보내기버튼 */
 .notesend-btn-send {
     background-color: #28a745;
 }
+
 .notesend-btn:hover {
     background-color: #218838;
 }
@@ -1595,10 +1699,12 @@ a#nsearch-btn {
     vertical-align: middle;
     display: inline-block;
 }
+
 /* 취소버튼 */
 .notesend-msbtn {
     background-color: #007BFF;
 }
+
 .notesend-msbtn:hover {
     background-color: #0056b3;
 }
@@ -1676,7 +1782,8 @@ a#nsearch-btn {
     font-weight: bold;
     display: flex;
 }
-.festival-small-info div:last-child{
+
+.festival-small-info div:last-child {
     width: 50px;
     height: 50px;
     display: flex;
@@ -2423,13 +2530,13 @@ td {
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
 }
 
-.remote-area div{
+.remote-area div {
     text-align: center;
     border-bottom: 1px solid white;
     margin: 5px;
 }
 
-.remote-area div:last-child{
+.remote-area div:last-child {
     border: none;
 }
 
