@@ -14,32 +14,29 @@ import com.example.demo.mapper.NoticeMapper;
 
 @Service
 public class MainServiceImpl implements MainService {
-	
+
 	@Autowired
 	private BoardMapper bmapper;
-	
+
 	@Autowired
 	private BookmarkMapper bkmapper;
-	
+
 	@Autowired
 	private NoticeMapper nmapper;
 
 	@Override
 	public ArrayList<BoardDTO> getBestBoard() {
-		// TODO Auto-generated method stub
-		return null;
+		return bmapper.getBestBoard();
 	}
 
 	@Override
-	public ArrayList<BookmarkDTO> getBookmark() {
-		// TODO Auto-generated method stub
-		return null;
+	public ArrayList<BookmarkDTO> getBookmark(String loginUser) {
+		return bkmapper.getBookmarkbyMain(loginUser);
 	}
 
 	@Override
 	public ArrayList<NoticeDTO> getNotice() {
-		// TODO Auto-generated method stub
-		return null;
+		return nmapper.getNotice();
 	}
 
 }

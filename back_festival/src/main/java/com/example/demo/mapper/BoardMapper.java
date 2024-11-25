@@ -1,5 +1,6 @@
 package com.example.demo.mapper;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -26,4 +27,5 @@ public interface BoardMapper {
 	int likeCnt(long boardnum);
 	int replyCnt(long boardnum);
 	List<BoardDTO> getListByUserid(String userid);
+	ArrayList<BoardDTO> getBestBoard();
 }

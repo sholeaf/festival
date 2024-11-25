@@ -33,10 +33,10 @@ create table user_photo(
 	userid varchar(50),
     systemname varchar(300)
 );
-insert into user_photo value("banana", "test.png");
+insert into user_photo value("apple", "test.png");
 select * from user_photo;
 drop table user_photo;
-delete from user_photo where userid = "banana";
+delete from user_photo where userid = "apple";
 
 create table user_info(
 	userid varchar(50),
@@ -60,6 +60,7 @@ create table board(
     titleImage varchar(300)
 );
 
+delete from user where userid="apple";
 
 SELECT 
     b.boardnum, 

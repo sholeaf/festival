@@ -13,9 +13,15 @@ const Main = () => {
     const [loginUser, setLoginUser] = useState([]);
     const [festivals, setFestivals] = useState([]);
     const [bmlist, setBmlist] = useState([]);
+    const [bestReview, setBestReview] = useState([]);
+    const [bookmark, setBookmark] = useState([]);
+    const [notice, setNotice] = useState([]);
+
     const { noHyphen } = TodayDate();
     const navigate = useNavigate();
     const activeTab = 'calendar';
+
+    const reviewimg =`/api/file/thumbnail?systemname=`;
 
     const settings = {
         dots: false,
@@ -50,9 +56,35 @@ const Main = () => {
             })
             .catch((error) => {
                 console.log("bmlist 오류", error);
-            })
+            });
     }, [loginUser]);
 
+    useEffect(() => {
+        axios.get('/api/main/bestboard')
+            .then((resp) => {
+                setBestReview(resp.data);
+                console.log(resp.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+
+    useEffect(()=>{
+        
+    })
+
+    useEffect(() => {
+        axios.get('/api/main/notice')
+            .then((resp) => {
+                setNotice(resp.data);
+                console.log(resp.data)
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    }, []);
+    console.log(bmlist)
     useEffect(() => {
         axios.get(`https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&serviceKey=${API_KEY}&numOfRows=12&pageNo=1&arrange=A&eventStartDate=${noHyphen}`)
             .then((resp) => {
@@ -70,7 +102,7 @@ const Main = () => {
             <div className="main-area" id="wrap">
                 <div className="main-festival-list">
                     <h2>현재 진행중인 축제</h2>
-                    <div className="more-btn" onClick={() => {
+                    <div className="more-btn btn" onClick={() => {
                         navigate('/festival');
                     }}>more+</div>
                     <Slider {...settings}>
@@ -89,6 +121,53 @@ const Main = () => {
                             );
                         })}
                     </Slider>
+                </div>
+
+                <div className="main-festival-review">
+                    <h2>Best 후기</h2>
+                    {bestReview.length > 0 ? (
+                        bestReview.map((review, index) => (
+                            <div className="review-item" key={index}>
+                                <h3>{review.boardtitle}</h3>
+                                {review.titleImage == null ? <img src={noimage} />  : <img src={reviewimg + review.titleImage} />}
+                                <span>작성자: {review.userid}</span>
+                            </div>
+                        ))
+                    ) : (
+                        <p>Best 후기가 없습니다.</p>
+                    )}
+                </div>
+
+                <div className="main-festival-bookmark">
+                    <h2>즐겨찾기</h2>
+                    {loginUser == null || loginUser === "" ? (
+                        <p>로그인 후 즐겨찾기를 확인할 수 있습니다.</p>
+                    ) : (
+                        bmlist.length > 0 ? (
+                            bmlist.map((item, index) => (
+                                <div key={index} className="bookmark-item">
+                                    <h3>{item.userid}</h3>
+                                    <p>{item.contentid}</p>
+                                </div>
+                            ))
+                        ) : (
+                            <p>즐겨찾기가 없습니다.</p>
+                        )
+                    )}
+                </div>
+
+                <div className="main-festival-notice">
+                    <h2>공지사항</h2>
+                    {notice.length > 0 ? (
+                        notice.map((noticeItem, index) => (
+                            <div className="notice-item" key={index}>
+                                <h3>{noticeItem.noticetitle}</h3>
+                                <p>{noticeItem.userid}</p>
+                            </div>
+                        ))
+                    ) : (
+                        <p>공지사항이 없습니다.</p>
+                    )}
                 </div>
             </div>
         </>
