@@ -40,4 +40,7 @@
 	<select id="getReplyByNum">
 		select * from reply where replynum = #{replynum}
 	</select>
+	<delete id="deleteAllReplyByBoardnum">
+		delete from reply where boardnum =#{boardnum}
+	</delete>
 </mapper>

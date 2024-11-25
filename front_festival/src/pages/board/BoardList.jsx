@@ -81,6 +81,7 @@ const BoardList = () => {
             }
         })
     }, [cri])
+
     useEffect(() => {
         //만약 이전 페이지에서 cri를 받아온것이 있다면
         if (location.state) {
@@ -237,94 +238,64 @@ const BoardList = () => {
                         }}>글쓰기</a>
                     </div>
                     <div style={{ height: "30px" }}>
-                        <div id="board_wrap" className="list">
-                            <div>
-                                <a className="btn" onClick={() => {
-                                    if (loginUser == null || loginUser == "") {
-                                        alert("로그인해야 글을 쓰실 수 있습니다!");
-                                        return;
-                                    }
-                                    navigate("/board/write", { state: cri })
-                                }}>글쓰기</a>
-                            </div>
-                            <div className="tbody">
-                                <div className="board_obj">
-                                    <div className="board_title">제목</div>
-                                    <div className="boardbox2 boardbox">
-                                        <div>내용</div>
-                                        <div>이미지</div>
-                                    </div>
-                                    <div className="boardbox3 boardbox">
-                                        <div className="boardbox4 boardbox">
-                                            <div>아이디</div>
-                                            <div>등록시간</div>
-                                        </div>
-                                        <div className="boardbox5 boardbox">
-                                            <div>좋아요</div>
-                                            <div>댓글</div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div style={{ height: "30px" }}>
-                            </div>
-                            <div>
-                                {elList}
-                            </div>
-                            <Pagination pageMaker={pageMaker}></Pagination>
-                            <div className="search_area">
-                                <form name="searchForm" id="searchForm" action="/board/list" className="row">
-                                    <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
-                                    <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} />
-                                    <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
-                                    <input type="hidden" name="pagenum" />
-                                    <input type="hidden" name="amount" />
-                                </form>
-                            </div>
-                            <div className="popup">
-                                <a onClick={() => openNoteModal()}>쪽지 보내기</a>
-                                <a onClick={() => openModal()}>회원 정보</a>
-                            </div>
+                    </div>
+                    <div>{data.list == null || data.list == ""?<div>등록된 글이 없습니다!</div>
+                        :elList
+                        }
+                    </div>
+                    <Pagination pageMaker={pageMaker}></Pagination>
+                    <div className="search_area">
+                        <form name="searchForm" id="searchForm" action="/board/list" className="row">
+                            <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
+                            <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} />
+                            <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
+                            <input type="hidden" name="pagenum" />
+                            <input type="hidden" name="amount" />
+                        </form>
+                    </div>
+                    <div className="popup">
+                        <a onClick={() => openNoteModal()}>쪽지 보내기</a>
+                        <a onClick={() => openModal()}>회원 정보</a>
+                    </div>
+                </div>
+                <div className="BoardModal">
+                    <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                        <p className="id">{user.userid}님의 정보</p>
+                        <div className="closeBoardModal" onClick={()=>{
+                            setIsModalOpen(false);
+                            setSelectedUserId('');
+                        }}>x</div>
+                        <div className="img">
+                            <img src={`/api/user/file/thumbnail/${userFile}`} />
                         </div>
-                    </div>
-                    <div className="BoardModal">
-                        <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                            <p className="id">{user.userid}님의 정보</p>
-                            <div className="closeBoardModal" onClick={() => {
-                                setIsModalOpen(false);
-                            }}>x</div>
-                            <div className="img">
-                                <img src={`/api/user/file/thumbnail/${userFile}`} />
-                            </div>
-                            {
-                                userInfo.nameinfo == "T" ?
-                                    <div className="name">이름 : {user.username}</div>
-                                    :
-                                    <div className="name">이름 : 비공개</div>
-                            }
-                            {
-                                userInfo.genderinfo == "T" ?
-                                    <div className="gender">성별 : {user.usergender == "M" ? "남성" : "여성"}</div>
-                                    :
-                                    <div className="gender">성별 : 비공개</div>
-                            }
-                            {
-                                userInfo.emailinfo == "T" ?
-                                    <div className="email">이메일 : {user.useremail}</div>
-                                    :
-                                    <div className="email">이메일 : 비공개</div>
-                            }
+                        {
+                            userInfo.nameinfo == "T" ?
+                                <div className="name">이름 : {user.username}</div>
+                                :
+                                <div className="name">이름 : 비공개</div>
+                        }
+                        {
+                            userInfo.genderinfo == "T" ?
+                                <div className="gender">성별 : {user.usergender}</div>
+                                :
+                                <div className="gender">성별 : 비공개</div>
+                        }
+                        {
+                            userInfo.emailinfo == "T" ?
+                                <div className="email">이메일 : {user.useremail}</div>
+                                :
+                                <div className="email">이메일 : 비공개</div>
+                        }
 
-                        </Modal>
-                    </div>
-                    <div>
-                        <NoteModal
-                            isOpen={isNoteModalOpen}
-                            closeModal={closeNoteModal}
-                            toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
-                            loginUser={loginUser}      // 로그인된 유저의 userid를 전달
-                        />
-                    </div>
+                    </Modal>
+                </div>
+                <div>
+                    <NoteModal
+                        isOpen={isNoteModalOpen}
+                        closeModal={closeNoteModal}
+                        toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
+                        loginUser={loginUser}      // 로그인된 유저의 userid를 전달
+                    />
                 </div>
             </>
         )

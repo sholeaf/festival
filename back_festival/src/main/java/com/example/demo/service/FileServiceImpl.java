@@ -42,14 +42,8 @@ public class FileServiceImpl implements FileService {
 		if(file == null) {
 			return "null";
 		}
-		
-		int lastIdx = file.getOriginalFilename().lastIndexOf(".");
-		String ext = file.getOriginalFilename().substring(lastIdx);
-
-		LocalDateTime now = LocalDateTime.now();
-		String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
-		String systemname = time + UUID.randomUUID().toString() + ext;
-		String path = saveFolder + systemname;
+		String path = saveFolder + file.getOriginalFilename();
+		System.out.println(path);
 		try {
 			file.transferTo(new File(path));
 		} catch (IllegalStateException e) {
@@ -57,7 +51,29 @@ public class FileServiceImpl implements FileService {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		return systemname;
+		return file.getOriginalFilename();
 	}
+//	@Override
+//	public String saveImage(MultipartFile file) {
+//		if(file == null) {
+//			return "null";
+//		}
+//		
+//		int lastIdx = file.getOriginalFilename().lastIndexOf(".");
+//		String ext = file.getOriginalFilename().substring(lastIdx);
+//		
+//		LocalDateTime now = LocalDateTime.now();
+//		String time = now.format(DateTimeFormatter.ofPattern("yyyyMMddHHmmssSSS"));
+//		String systemname = time + UUID.randomUUID().toString() + ext;
+//		String path = saveFolder + systemname;
+//		try {
+//			file.transferTo(new File(path));
+//		} catch (IllegalStateException e) {
+//			e.printStackTrace();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
+//		return systemname;
+//	}
 
 }

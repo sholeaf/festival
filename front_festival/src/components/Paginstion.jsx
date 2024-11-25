@@ -16,6 +16,7 @@ const Pagination = ({ pageMaker, url, setCri }) => {
         e.preventDefault();
         
         const target = e.target.getAttribute("href");
+        console.log(target);
         const temp = {
             pagenum: target,
             amount: cri.amount,
