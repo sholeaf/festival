@@ -116,11 +116,13 @@ const BoardList = () => {
         if (loginUser == "" || loginUser == null) {
             alert("로그인 후 이용할 수 있습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
-        if(loginUser == selectedUserId){
+        if (loginUser == selectedUserId) {
             alert("본인에게는 쪽지를 보낼 수 없습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
         setIsNoteModalOpen(true);  // 모달 열기
@@ -129,7 +131,6 @@ const BoardList = () => {
     // 모달 닫기
     const closeNoteModal = () => {
         setIsNoteModalOpen(false);
-        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
     };
 
     // 회원 정보 모달
@@ -137,6 +138,7 @@ const BoardList = () => {
         if (loginUser == "" || loginUser == null) {
             alert("로그인 후 이용할 수 있습니다.");
             document.getElementsByClassName('popup')[0].style.display = "none";
+            setSelectedUserId('');
             return;
         }
         setIsModalOpen(true);  // 모달 열기
@@ -145,7 +147,6 @@ const BoardList = () => {
     // 모달 닫기
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
     };
 
     // 팝업열기
@@ -196,7 +197,7 @@ const BoardList = () => {
                         <div className="board_title getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{board.boardtitle}</div>
                         <div className="boardbox2 boardbox">
                             <div className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{extractTextFromHTML(board.boardcontent, 203)}</div>
-                            <div ><img src={board.titleImage ? `/api/file/thumbnail?systemname=` + board.titleImage : ""} className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}></img></div>
+                            <div><img src={board.titleImage ? `/api/file/thumbnail?systemname=` + board.titleImage : ""} className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}></img></div>
                         </div>
                         <div className="boardbox3 boardbox">
                             <div className="boardbox4 boardbox">
@@ -235,83 +236,95 @@ const BoardList = () => {
                             navigate("/board/write", { state: cri })
                         }}>글쓰기</a>
                     </div>
-                    <div className="tbody">
-                        <div className="board_obj">
-                            <div className="board_title">제목</div>
-                            <div className="boardbox2 boardbox">
-                                <div>내용</div>
-                                <div>이미지</div>
+                    <div style={{ height: "30px" }}>
+                        <div id="board_wrap" className="list">
+                            <div>
+                                <a className="btn" onClick={() => {
+                                    if (loginUser == null || loginUser == "") {
+                                        alert("로그인해야 글을 쓰실 수 있습니다!");
+                                        return;
+                                    }
+                                    navigate("/board/write", { state: cri })
+                                }}>글쓰기</a>
                             </div>
-                            <div className="boardbox3 boardbox">
-                                <div className="boardbox4 boardbox">
-                                    <div>아이디</div>
-                                    <div>등록시간</div>
+                            <div className="tbody">
+                                <div className="board_obj">
+                                    <div className="board_title">제목</div>
+                                    <div className="boardbox2 boardbox">
+                                        <div>내용</div>
+                                        <div>이미지</div>
+                                    </div>
+                                    <div className="boardbox3 boardbox">
+                                        <div className="boardbox4 boardbox">
+                                            <div>아이디</div>
+                                            <div>등록시간</div>
+                                        </div>
+                                        <div className="boardbox5 boardbox">
+                                            <div>좋아요</div>
+                                            <div>댓글</div>
+                                        </div>
+                                    </div>
                                 </div>
-                                <div className="boardbox5 boardbox">
-                                    <div>좋아요</div>
-                                    <div>댓글</div>
-                                </div>
+                            </div>
+                            <div style={{ height: "30px" }}>
+                            </div>
+                            <div>
+                                {elList}
+                            </div>
+                            <Pagination pageMaker={pageMaker}></Pagination>
+                            <div className="search_area">
+                                <form name="searchForm" id="searchForm" action="/board/list" className="row">
+                                    <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
+                                    <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} />
+                                    <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
+                                    <input type="hidden" name="pagenum" />
+                                    <input type="hidden" name="amount" />
+                                </form>
+                            </div>
+                            <div className="popup">
+                                <a onClick={() => openNoteModal()}>쪽지 보내기</a>
+                                <a onClick={() => openModal()}>회원 정보</a>
                             </div>
                         </div>
                     </div>
-                    <div style={{ height: "30px" }}>
+                    <div className="BoardModal">
+                        <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                            <p className="id">{user.userid}님의 정보</p>
+                            <div className="closeBoardModal" onClick={() => {
+                                setIsModalOpen(false);
+                            }}>x</div>
+                            <div className="img">
+                                <img src={`/api/user/file/thumbnail/${userFile}`} />
+                            </div>
+                            {
+                                userInfo.nameinfo == "T" ?
+                                    <div className="name">이름 : {user.username}</div>
+                                    :
+                                    <div className="name">이름 : 비공개</div>
+                            }
+                            {
+                                userInfo.genderinfo == "T" ?
+                                    <div className="gender">성별 : {user.usergender == "M" ? "남성" : "여성"}</div>
+                                    :
+                                    <div className="gender">성별 : 비공개</div>
+                            }
+                            {
+                                userInfo.emailinfo == "T" ?
+                                    <div className="email">이메일 : {user.useremail}</div>
+                                    :
+                                    <div className="email">이메일 : 비공개</div>
+                            }
+
+                        </Modal>
                     </div>
                     <div>
-                        {elList}
+                        <NoteModal
+                            isOpen={isNoteModalOpen}
+                            closeModal={closeNoteModal}
+                            toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
+                            loginUser={loginUser}      // 로그인된 유저의 userid를 전달
+                        />
                     </div>
-                    <Pagination pageMaker={pageMaker}></Pagination>
-                    <div className="search_area">
-                        <form name="searchForm" id="searchForm" action="/board/list" className="row">
-                            <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
-                            <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} />
-                            <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
-                            <input type="hidden" name="pagenum" />
-                            <input type="hidden" name="amount" />
-                        </form>
-                    </div>
-                    <div className="popup">
-                        <a onClick={() => openNoteModal()}>쪽지 보내기</a>
-                        <a onClick={() => openModal()}>회원 정보</a>
-                    </div>
-                </div>
-                <div className="BoardModal">
-                    <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                        <p className="id">{user.userid}님의 정보</p>
-                        <div className="closeBoardModal" onClick={()=>{
-                            setIsModalOpen(false);
-                            setSelectedUserId('');
-                        }}>x</div>
-                        <div className="img">
-                            <img src={`/api/user/file/thumbnail/${userFile}`} />
-                        </div>
-                        {
-                            userInfo.nameinfo == "T" ?
-                                <div className="name">이름 : {user.username}</div>
-                                :
-                                <div className="name">이름 : 비공개</div>
-                        }
-                        {
-                            userInfo.genderinfo == "T" ?
-                                <div className="gender">성별 : {user.usergender}</div>
-                                :
-                                <div className="gender">성별 : 비공개</div>
-                        }
-                        {
-                            userInfo.emailinfo == "T" ?
-                                <div className="email">이메일 : {user.useremail}</div>
-                                :
-                                <div className="email">이메일 : 비공개</div>
-                        }
-
-                    </Modal>
-                </div>
-                <div>
-                    <NoteModal
-                        isOpen={isNoteModalOpen}
-                        closeModal={closeNoteModal}
-                        toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
-                        loginUser={loginUser}      // 로그인된 유저의 userid를 전달
-                    />
                 </div>
             </>
         )

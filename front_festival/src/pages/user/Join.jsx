@@ -11,7 +11,6 @@ const Join = () => {
     let codeFlag = false;
 
     const idCheck = (e) => {
-        console.log(e.target.value)
         const result = document.getElementById(`id_result`);
         const user = document.joinForm.userid;
         let userid = user.value;
@@ -91,7 +90,6 @@ const Join = () => {
 
         formData.append('email', email);
 
-        console.log(email)
         axios.post('/api/mail/confirm.json', formData)
             .then((resp) => {
                 alert("인증번호 : " + resp.data);
@@ -298,8 +296,8 @@ const Join = () => {
                             <label htmlFor="email2">비공개</label>
                         </div>
                     </div>
-                    <input type="button" value="인증번호 받기" id='codeGet' onClick={getCode} />
-                    <input type="text" name="codeCheck" id="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e) => {
+                    <input type="button" value="인증번호 받기" className='codeGet' onClick={getCode} />
+                    <input type="text" name="codeCheck" className="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e) => {
                         codeCheck(e)
                     }} />
                     <div className='radioBox'>

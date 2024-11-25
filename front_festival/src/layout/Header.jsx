@@ -6,8 +6,8 @@ import axios from "axios";
 const Header = () => {
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
-    const handleNavigation = (path) => {
-        navigate(path);
+    const handleNavigation = (path, state) => {
+        navigate(path, { state });
     };
     const logoutClick = () => {
         if (window.confirm("로그아웃하시겠습니까?")) {
@@ -37,7 +37,7 @@ const Header = () => {
         if (loginUser == "") {
             return (
                 <div className="login_btn">
-                    <a onClick={() => handleNavigation("/user/login")}>로그인</a>
+                    <a onClick={() => handleNavigation("/user/login", { state: { from: window.location.pathname } })}>로그인</a>
                 </div>
             );
         } else {
