@@ -367,7 +367,7 @@ header {
 
 /* 모달 개인정보 변경 */
 #userModify, #pwModify{
-    width: 400px;
+    width: 300px;
     padding-bottom: 15px;
 }
 .modifyForm{
@@ -386,15 +386,40 @@ header {
 
 /* 모달 프로필 변경 */
 #profileModify{
-    padding-bottom: 15px;
+    padding-bottom: 20px;
 }
 #profileModify .img img {
-    width: 400px;
-    height: 400px;
+    width: 300px;
+    height: 300px;
     padding: 0 25px 15px 25px;
 }
 /* 모달 정보공개 변경 */
+#infoModify{
+    padding-bottom: 15px;
+}
+#infoModify table{
+    width: 400px;
+}
+#infoModify table thead tr th,
+#infoModify table tbody tr td{
+    font-size: 20px;
+    width: 150px;
+}
+#infoModify table tbody tr td input{
+    width: 30px;
+    height: 30px;
+    margin: 0;
+}
 
+/* 모달 회원탈퇴 */
+#userDelete{
+    width: 250px;
+    height: 200px;
+    padding: 15px;
+}
+#userDelete div{
+    padding-bottom: 15px;
+}
 
 /* 후기 및 즐겨찾기 */
 .mypage .community p,
