@@ -449,6 +449,12 @@ header {
     font-weight: bold;
     margin: 0px 0 15px 0;
 }
+.mypage .community .no_list,
+.mypage .bookmark .no_list {
+    font-size: 18px;
+    font-weight: bold;
+    margin: 0 auto;
+}
 
 .mypage .community #openCommunity,
 .mypage .community #closeCommunity,

@@ -607,7 +607,7 @@ const MyPage = () => {
                                 }
                                 <span onClick={closeBookmark} id='closeBookmark'>돌아가기</span>
                                 <div className='list'>
-                                    {festivalList}
+                                    {bookmarks.length > 0?{festivalList} : <p className='no_list'>목록이 존재하지 않습니다.</p>}
                                 </div>
                             </div>
                             <div className="community">
@@ -619,7 +619,7 @@ const MyPage = () => {
                                 )}
                                 <span onClick={closeCommunity} id='closeCommunity'>돌아가기</span>
                                 <div className='list'>
-                                    {boardList}
+                                    {list.length > 0?{boardList} : <p className='no_list'>목록이 존재하지 않습니다.</p>}
                                 </div>
 
                                 {/* 페이징 버튼 */}
