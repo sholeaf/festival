@@ -156,8 +156,15 @@ const DetailFestival = () => {
     const isBookmarked = list.includes(contentid);  // bmlist 대신 list를 사용
 
     const scrollToSection = (ref) => {
-        ref.current?.scrollIntoView({ behavior: 'smooth' });
+        if (ref.current) {
+            const offset = ref.current.offsetTop + 250; // 예시로 80px을 빼서 위치를 조정
+            window.scrollTo({
+                top: offset,
+                behavior: 'smooth',
+            });
+        }
     };
+    
 
     return (
         <>
