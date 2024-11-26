@@ -106,7 +106,7 @@
 			b.boardreadcnt,
 			b.tag,
 			b.titleImage,
-			count(bl.userid) as like_count
+			count(bl.userid) as likeCnt
 		from
 			board b
 		left join
@@ -116,7 +116,7 @@
 		group by
 			b.boardnum
 		order by
-			like_count desc limit 4;
+			likeCnt desc limit 4;
 	</select>
 	<select id="getBoardnumByUserid">
 		select boardnum from board where userid = #{userid}
