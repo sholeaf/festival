@@ -37,15 +37,15 @@ const Adminpage = (props) => {
     const [cri, setCri] = useState({
         pagenum: 1,
         amount: 5,
-        type: "a", 
+        type: "a",
         keyword: "",
         startrow: 0
     });
     const [replyCri, setReplyCri] = useState({
         pagenum: 1,
         amount: 5,
-        type: "a", 
-        keyword: "",
+        replytype: "a",
+        replykeyword: "",
         startrow: 0
     });
 
@@ -57,6 +57,7 @@ const Adminpage = (props) => {
         total: 0,
         prev: false,
         next: false,
+        pagenum:1,
         cri: null
     });
     const [replyPageMaker, setReplyPageMaker] = useState({
@@ -66,22 +67,42 @@ const Adminpage = (props) => {
         total: 0,
         prev: false,
         next: false,
+        pagenum:1,
         cri: null
-      });
-      //탑버튼 눌렀을때
-      const [key, setKey] = useState(0);
-    const topButtonClick =(viewMode) =>{
+    });
+
+
+    useEffect(() => {
+        // 게시글 페이지네이션 데이터가 로딩되었을 때 댓글 데이터를 불러옵니다.
+        if (pageMaker.total > 0) {  // 페이지네이션 데이터가 있으면 댓글 데이터를 로딩
+            fetchReplies(replyPageMaker.pagenum); // replyPageMaker의 pagenum을 기준으로 데이터를 불러옴
+        }
+    }, [pageMaker.total]);  // pageMaker.total이 변경될 때마다 실행됩니다.
+    
+    useEffect(() => {
+        // replyPageMaker가 변경될 때마다 댓글 데이터를 불러옵니다.
+        if (replyPageMaker.pagenum) {
+            fetchReplies(replyPageMaker.pagenum);
+        }
+    }, [replyPageMaker.pagenum]);
+    const handlePageChange = (newPageNum) => {
+        // 페이지 변경 시 댓글 데이터를 갱신
+        fetchReplies(newPageNum);
+    };
+    //탑버튼 눌렀을때
+    const [key, setKey] = useState(0);
+    const topButtonClick = (viewMode) => {
         setViewMode(viewMode);
         setCri(
-            prevCri =>({
+            prevCri => ({
                 ...prevCri,
-                pagenum:1
+                pagenum: 1
             })
-            
+
         )
         setKey(prevKey => prevKey + 1);
     }
-    
+
     // 모달창
     const [modalData, setModalData] = useState(null);
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -91,10 +112,10 @@ const Adminpage = (props) => {
             console.error("modalData가 비어있거나 null입니다.");
             return;
         }
-    
+
         const selectedReply = modalData.find(reply => reply.replynum === replynum);
         console.log("모달창에 신고내용 띄우기:", selectedReply);
-    
+
         if (selectedReply) {
             setSelectedReplyData(selectedReply);
             setIsModalOpen(true);
@@ -124,9 +145,10 @@ const Adminpage = (props) => {
             keyword: inputs,
             pagenum: 1
         };
+        console.log("검색시 게시글 넘어가는 cri", replyCri);
         setCri(changedCri);  // board에 대한 상태만 업데이트
     };
-    
+
     const replySearch = (e) => {
         e.preventDefault();
         const changedCri = {
@@ -135,9 +157,10 @@ const Adminpage = (props) => {
             keyword: replyInputs,
             pagenum: 1
         };
+        console.log("검색시 댓글 넘어가는 cri", replyCri);
         setReplyCri(changedCri);  // reply에 대한 상태만 업데이트
     };
-    
+
     const searchenter = (e, type) => {
         if (e.key === 'Enter') {
             e.preventDefault();
@@ -149,60 +172,42 @@ const Adminpage = (props) => {
         }
     };
 
-    // 게시글 신고 목록
-useEffect(() => {
-    const temp = {
-        pagenum: cri.pagenum,
-        amount: cri.amount,
-        type: cri.type,
-        keyword: cri.keyword,
-        startrow: cri.startrow
+    useEffect(() => {
+        // 게시글 API 호출
+        axios.get(`/api/adminpage/${cri.pagenum}`, { params: cri })
+            .then((resp) => {
+                setData(resp.data);
+                setPageMaker(resp.data.pageMaker);
+                setInputs(resp.data.pageMaker.cri.keyword);
+            })
+            .catch((error) => {
+                console.error('게시글 API 호출 오류:', error);
+            });
+    }, [cri]);  // cri 상태만 의존성 배열에 넣어 cri가 변경될 때만 호출
+    
+    // 댓글 데이터를 가져오는 함수 fetchReplies 정의
+    const fetchReplies = async (pagenum) => {
+        try {
+            const response = await axios.get(`/api/adminpage/replyreportlist/${pagenum}`, { params: replyCri });
+            setTest(response.data);
+            setReplyPageMaker(response.data.pageMaker); // 페이지네이션 정보 업데이트
+            setModalData(Array.isArray(response.data.board) ? response.data.board : []); // 모달 데이터 업데이트
+        } catch (error) {
+            console.error("댓글 데이터를 불러오는 중 오류 발생:", error);
+        }
     };
-    axios.get(`/api/adminpage/${cri.pagenum}`, { params: cri })
-    .then((resp) => {
 
-            setData(resp.data);
-            setPageMaker(resp.data.pageMaker);
-            console.log("게시글 pageMaker 데이터:", resp.data.pageMaker);
-            setInputs(resp.data.pageMaker.cri.keyword);
-        })
-        .catch((error) => {
-            console.error('게시글 API 호출 오류:', error);
-        });
-}, [cri, boardList]);  // cri만 의존성 배열에 넣어서 cri 변경 시만 호출
-
-
-    // 댓글 신고 목록
-useEffect(() => {
-    const temp = {
-        pagenum: replyCri.pagenum,
-        amount: replyCri.amount,
-        type: replyCri.type,
-        keyword: replyCri.keyword,
-        startrow: replyCri.startrow
-    };
-    console.log("댓글cri전송:", replyCri);
-    axios.get(`/api/adminpage/replyreportlist/${replyCri.pagenum}`, { params: replyCri })
-    .then((resp) => {
-            setReplyReportList(resp.data);
-            console.log("댓글데이터내용",resp.data);
-            setReplyPageMaker(resp.data.pageMaker);
-            console.log("댓글 신고 pageMaker 데이터:", resp.data.pageMaker);
-            console.log("댓글페이지메이커셋팅:",replyPageMaker);
-            setInputs(resp.data.pageMaker.cri.keyword);
-            setModalData(Array.isArray(resp.data.board) ? resp.data.board : []);
-        })
-        .catch((error) => {
-            console.log("댓글 신고 목록 오류:", error);
-        });
-}, [replyCri, test]); 
+    // useEffect 안에서 댓글 데이터를 불러오기 위해 호출
+    useEffect(() => {
+        fetchReplies(replyCri.pagenum); // 댓글을 불러옵니다.
+    }, [replyCri.pagenum]);  // 페이지 번호가 바뀔 때마다 호출됩니다.// replyCri가 변경될 때마다 댓글 데이터를 불러옴
 
     useEffect(() => {
         if (location.state) {
             setCri(location.state);
         }
     }, [location.state]);
-// 로딩 화면 텍스트 애니메이션
+    // 로딩 화면 텍스트 애니메이션
     const [chars, setChars] = useState([]);
     useEffect(() => {
         if (!data) {
@@ -248,7 +253,7 @@ useEffect(() => {
             console.log("신고 횟수 리셋이 취소되었습니다.");
         }
     };
-    
+
     const deleteList = (boardnum) => {
         if (window.confirm('정말로 삭제하시겠습니까?')) {
             axios.delete(`/api/adminpage/boardremove/${boardnum}`)
@@ -334,7 +339,7 @@ useEffect(() => {
         }
     };
 
-    const replyList = replyReportList.board;
+    const replyList = test.board;
     const reply_reportList = [];
     if (replyList && replyList.length > 0) {
         for (const reply of replyList) {
@@ -359,115 +364,115 @@ useEffect(() => {
             </div>
         );
     }
-// 검색 타입
-const searchType = {
-    "전체": "a", "제목": "T", "내용": "C", "작성자": "W", "제목 또는 작성자": "TW", "제목 또는 내용": "TC", "제목 또는 작성자 또는 내용": "TCW"
-};
+    // 검색 타입
+    const searchType = {
+        "전체": "a", "제목": "T", "내용": "C", "작성자": "W", "제목 또는 작성자": "TW", "제목 또는 내용": "TC", "제목 또는 작성자 또는 내용": "TCW"
+    };
 
-const changeType = (value) => {
-    const changedCri = { ...cri, type: value };
-    setCri(changedCri);
-};
+    const changeType = (value) => {
+        const changedCri = { ...cri, type: value };
+        setCri(changedCri);
+    };
 
     return (
         <>
-        <Header />
-        <div className="noticeWrap">
-            <div className="admin-top">
-                <button onClick={() => topButtonClick('쪽지리스트')}>쪽지리스트</button>
-                <button onClick={() => topButtonClick('게시글리스트')}>게시글리스트</button>
-                <button onClick={() => topButtonClick('댓글리스트')}>댓글리스트</button>
-            </div>
+            <Header />
+            <div className="noticeWrap">
+                <div className="admin-top">
+                    <button onClick={() => topButtonClick('쪽지리스트')}>쪽지리스트</button>
+                    <button onClick={() => topButtonClick('게시글리스트')}>게시글리스트</button>
+                    <button onClick={() => topButtonClick('댓글리스트')}>댓글리스트</button>
+                </div>
 
-            <div className="content">
-                {viewMode === '쪽지리스트' && (
-                    <div className="noteList">
-                         <Note loginUser={loginUser} viewMode={viewMode} cri={cri} setCri={setCri} key={key}/>
-                    </div>
-                )}
+                <div className="content">
+                    {viewMode === '쪽지리스트' && (
+                        <div className="noteList">
+                            <Note loginUser={loginUser} viewMode={viewMode} cri={cri} setCri={setCri} key={key} />
+                        </div>
+                    )}
 
-                {viewMode === '게시글리스트' && (
-                    <div className="boardlist">
-                       <div className="nwrap rplist" id="rpwrap">
-                <div className="reporttitle">신고리스트</div>
-                <div className="rplist rptable">
-                    <div className="rpthead tac">
-                        <div className="row">
-                            <div>번호</div>
-                            <div>제목</div>
-                            <div>작성자</div>
-                            <div>날짜</div>
-                            <div>신고횟수</div>
-                            <div>처리</div>
+                    {viewMode === '게시글리스트' && (
+                        <div className="boardlist">
+                            <div className="nwrap rplist" id="rpwrap">
+                                <div className="reporttitle">신고리스트</div>
+                                <div className="rplist rptable">
+                                    <div className="rpthead tac">
+                                        <div className="row">
+                                            <div>번호</div>
+                                            <div>제목</div>
+                                            <div>작성자</div>
+                                            <div>날짜</div>
+                                            <div>신고횟수</div>
+                                            <div>처리</div>
+                                        </div>
+                                    </div>
+                                    <div className="rptbody">
+                                        {elList}
+                                    </div>
+                                    <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
+                                </div>
+                                <div className="nsearch_area adminsearch_area">
+                                    <form name="searchForm" action="/notice/adminpage" className="row searchrow">
+                                        <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
+                                        <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={(e) => searchenter(e, 'board')} />
+                                        <a id="nsearch-btn" className="btn" onClick={(e) => boardSearch(e)}>검색</a>
+                                        <input type="hidden" name="pagenum" />
+                                        <input type="hidden" name="amount" />
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    )}
+
+                    {viewMode === '댓글리스트' && (
+                        <div className="replylist">
+                            <div className="nwrap replyrplist" id="rpwrap">
+                                <div className="reporttitle">댓글신고리스트</div>
+                                <div className="replyrplist replyrptable">
+                                    <div className="replyrpthead tac">
+                                        <div className="row">
+                                            <div>게시글번호</div>
+                                            <div>댓글번호</div>
+                                            <div>댓글내용</div>
+                                            <div>작성자</div>
+                                            <div>처리</div>
+                                        </div>
+                                    </div>
+                                    <div className="replyrptbody">
+                                        {reply_reportList}
+                                    </div>
+                                    <Pagination replyPageMaker={replyPageMaker} url="/notice/adminpage"  fetchReplies={fetchReplies} />
+                                </div>
+                                <div className="nsearch_area adminsearch_area">
+                                    <form name="searchForm" action="/notice/adminpage" className="row searchrow">
+                                        <Dropdown list={searchType} name={"type"} width={250} value={replyCri.type} onChange={changeType}></Dropdown>
+                                        <input type="search" id="nkeyword" name="keyword" onChange={inputreplyKeyword} value={replyInputs} onKeyDown={(e) => searchenter(e, 'reply')} />
+                                        <a id="nsearch-btn" className="btn" onClick={(e) => replySearch(e)}>검색</a>
+                                        <input type="hidden" name="pagenum" />
+                                        <input type="hidden" name="amount" />
+                                    </form>
+                                </div>
+                            </div>
+
+                        </div>
+                    )}
+
+                </div>
+
+                {isModalOpen && modalData && (
+                    <div className="notesend-modal-overlay" onClick={closeModal}>
+                        <div className="replymodaloverlay"></div>
+                        <div className="replymodal" onClick={(e) => e.stopPropagation()}>
+                            <h2>댓글 내용</h2>
+                            <p>{selectedReplyData.replycontent}</p>
+                            <p><strong>작성자:</strong> {selectedReplyData.userid}</p>
+                            <p><strong>등록일:</strong> {selectedReplyData.replyregdate}</p>
+                            <button onClick={closeModal}>닫기</button>
                         </div>
                     </div>
-                    <div className="rptbody">
-                        {elList}
-                    </div>
-                    <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
-                </div>
-                <div className="nsearch_area adminsearch_area">
-                <form name="searchForm" action="/notice/adminpage" className="row searchrow">
-                    <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
-                    <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={(e) => searchenter(e, 'board')} />
-                    <a id="nsearch-btn" className="btn" onClick={(e) => boardSearch(e)}>검색</a>
-                    <input type="hidden" name="pagenum" />
-                    <input type="hidden" name="amount" />
-                </form>
-            </div>
-            </div>
-
-                    </div>
                 )}
 
-                {viewMode === '댓글리스트' && (
-                    <div className="replylist">
-                        <div className="nwrap replyrplist" id="rpwrap">
-                <div className="reporttitle">댓글신고리스트</div>
-                <div className="replyrplist replyrptable">
-                    <div className="replyrpthead tac">
-                        <div className="row">
-                            <div>게시글번호</div>
-                            <div>댓글번호</div>
-                            <div>댓글내용</div>
-                            <div>작성자</div>
-                            <div>처리</div>
-                        </div>
-                    </div>
-                    <div className="replyrptbody">
-                        {reply_reportList}
-                    </div>
-                    <Pagination pageMaker={replyPageMaker} url="/notice/adminpage" />
-                </div>
-                <div className="nsearch_area adminsearch_area">
-                <form name="searchForm" action="/notice/adminpage" className="row searchrow">
-                    <Dropdown list={searchType} name={"type"} width={250} value={replyCri.type} onChange={changeType}></Dropdown>
-                    <input type="search" id="nkeyword" name="keyword" onChange={inputreplyKeyword} value={replyInputs} onKeyDown={(e) => searchenter(e, 'reply')} />
-                    <a id="nsearch-btn" className="btn" onClick={(e) => replySearch(e)}>검색</a>
-                    <input type="hidden" name="pagenum" />
-                    <input type="hidden" name="amount" />
-                </form>
-            </div>
-            </div>
-
-                    </div>
-                )}
-                
-            </div>
-
-            {isModalOpen && modalData && (
-                <div className="notesend-modal-overlay" onClick={closeModal}>
-                <div className="replymodaloverlay"></div>
-                <div className="replymodal"onClick={(e) => e.stopPropagation()}>
-                  <h2>댓글 내용</h2>
-                  <p>{selectedReplyData.replycontent}</p>
-                  <p><strong>작성자:</strong> {selectedReplyData.userid}</p>
-                  <p><strong>등록일:</strong> {selectedReplyData.replyregdate}</p>
-                  <button onClick={closeModal}>닫기</button>
-                </div>
-              </div>
-            )}
-            
             </div>
         </>
     );
