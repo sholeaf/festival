@@ -21,7 +21,7 @@ const Main = () => {
     const navigate = useNavigate();
     const activeTab = 'calendar';
 
-    const reviewimg =`/api/file/thumbnail?systemname=`;
+    const reviewimg = `/api/file/thumbnail?systemname=`;
 
     const settings = {
         dots: false,
@@ -70,9 +70,16 @@ const Main = () => {
             });
     }, []);
 
-    useEffect(()=>{
-        
-    })
+    useEffect(() => {
+        axios.get('/api/main/bookmark', {params: { loginUser }})
+            .then((resp) => {
+                setBookmark(resp.data);
+                console.log(resp.data);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
+    },[loginUser])
 
     useEffect(() => {
         axios.get('/api/main/notice')
@@ -129,7 +136,7 @@ const Main = () => {
                         bestReview.map((review, index) => (
                             <div className="review-item" key={index}>
                                 <h3>{review.boardtitle}</h3>
-                                {review.titleImage == null ? <img src={noimage} />  : <img src={reviewimg + review.titleImage} />}
+                                {review.titleImage == null ? <img src={noimage} /> : <img src={reviewimg + review.titleImage} />}
                                 <span>작성자: {review.userid}</span>
                             </div>
                         ))
@@ -143,11 +150,11 @@ const Main = () => {
                     {loginUser == null || loginUser === "" ? (
                         <p>로그인 후 즐겨찾기를 확인할 수 있습니다.</p>
                     ) : (
-                        bmlist.length > 0 ? (
-                            bmlist.map((item, index) => (
+                        bookmark.length > 0 ? (
+                            bookmark.map((item, index) => (
                                 <div key={index} className="bookmark-item">
-                                    <h3>{item.userid}</h3>
-                                    <p>{item.contentid}</p>
+                                    <h3>{item.title}</h3>
+                                    <img src={item.image} />
                                 </div>
                             ))
                         ) : (

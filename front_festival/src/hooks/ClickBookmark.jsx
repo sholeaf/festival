@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const ClickBookmark = (contentid, bmlist, setBmlist, userid, setSampleData) => {
+const ClickBookmark = (contentid, title, image, bmlist, setBmlist, userid, setSampleData) => {
     if (userid == '' || userid == null) {
         alert("로그인을 해야 즐겨찾기가 가능합니다.");
         return;
@@ -22,10 +22,10 @@ const ClickBookmark = (contentid, bmlist, setBmlist, userid, setSampleData) => {
             }))
     }
     else {
-        axios.post(`/api/bookmark/addBookmark`, {contentid: contentid, userid: userid })
+        axios.post(`/api/bookmark/addBookmark`, { contentid: contentid, userid: userid, title: title, image : image })
             .then((resp) => {
-                console.log("contentid 추가 : ",contentid);
-                console.log("userid 추가 : ",userid);
+                console.log("contentid 추가 : ", contentid);
+                console.log("userid 추가 : ", userid);
                 if (resp.data == "o") {
                     setBmlist([...bmlist, contentid]);
                     alert("즐겨찾기가 추가되었습니다.");

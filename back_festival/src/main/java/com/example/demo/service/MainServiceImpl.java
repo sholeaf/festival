@@ -30,8 +30,8 @@ public class MainServiceImpl implements MainService {
 	}
 
 	@Override
-	public ArrayList<BookmarkDTO> getBookmark(String loginUser) {
-		return bkmapper.getBookmarkbyMain(loginUser);
+	public ArrayList<BookmarkDTO> getBookmarkList(String loginUser) {
+		return bkmapper.getBookmarkList(loginUser);
 	}
 
 	@Override

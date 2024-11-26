@@ -22,11 +22,16 @@ public class MainController {
 	@Autowired
 	private MainService mservice;
 	
+	@GetMapping("bestboard")
+	public ResponseEntity<ArrayList<BoardDTO>> getBestBoard(){
+		ArrayList<BoardDTO> list = mservice.getBestBoard();
+		return new ResponseEntity<ArrayList<BoardDTO>>(list,HttpStatus.OK);
+	}
 	
 	@GetMapping("bookmark")
 	public ResponseEntity<ArrayList<BookmarkDTO>> getBookmark(String loginUser){
 		System.out.println(loginUser);
-		ArrayList<BookmarkDTO> list =  mservice.getBookmark(loginUser);
+		ArrayList<BookmarkDTO> list =  mservice.getBookmarkList(loginUser);
 		System.out.println("bookmark : "+list);
 		return new ResponseEntity<ArrayList<BookmarkDTO>>(list,HttpStatus.OK);
 	}
