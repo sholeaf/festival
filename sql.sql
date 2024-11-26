@@ -91,6 +91,7 @@ create table board_photo(
 	boardnum bigint,
     systemname varchar(300)
 );
+select * from board_photo;
 
 create table reply(
 	replynum bigint primary key auto_increment,

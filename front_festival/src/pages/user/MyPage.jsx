@@ -423,19 +423,17 @@ const MyPage = () => {
         </div>
     ));
 
-    const handleShowMore = () => {
+    const openCommunity = () => {
         setItemsPerPage(9); // 9개로 설정
         setCurrentPage(1); // 첫 페이지로 설정
-        document.getElementById("openCommunity").style.display = 'none';
         document.getElementById("closeCommunity").style.display = 'inline-block';
         document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
     };
 
     const closeCommunity = () => {
-        setItemsPerPage(3); // 9개로 설정
+        setItemsPerPage(3); // 3개로 설정
         setCurrentPage(1);
-        document.getElementById("openCommunity").style.display = 'inline-block';
         document.getElementById("closeCommunity").style.display = 'none';
         document.getElementsByClassName("bookmark")[0].style.display = 'block';
         setIsAllBoard(false);
@@ -540,7 +538,6 @@ const MyPage = () => {
     // 유저 정보 가져오기
     useEffect(() => {
         if (loginUser) {
-            console.log(loginUser);
             axios.get(`/api/user/userInfo`, { params: { userid: loginUser } })
                 .then((resp) => {
                     setUser(resp.data.user);
@@ -575,7 +572,6 @@ const MyPage = () => {
 
     // 즐겨찾기 리스트로 디테일 정보 가져오기
     useEffect(() => {
-        console.log(bookmarks)
         if (bookmarks.length != 0) {
             for (let i = 0; i < bookmarks.length; i++) {
                 // axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${bookmarks[i]}`)
@@ -647,7 +643,7 @@ const MyPage = () => {
                             <div className="community">
                                 <p>후기 목록</p>
                                 {list.length > itemsPerPage && (
-                                    <span onClick={handleShowMore} id='openCommunity'>
+                                    <span onClick={openCommunity} id='openCommunity'>
                                         더 보기...
                                     </span>
                                 )}

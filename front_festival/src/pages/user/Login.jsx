@@ -257,8 +257,8 @@ const Login = () => {
                                             navigate("/user/join")
                                         }}>회원가입</p>
                                     </div>
-                                    <div className="login btn">
-                                        <Button value="로그인" onClick={login}></Button>
+                                    <div className="login">
+                                        <Button value="로그인" className={"btn"} onClick={login}></Button>
                                     </div>
                                 </div>
                                 <div className="sns_login">

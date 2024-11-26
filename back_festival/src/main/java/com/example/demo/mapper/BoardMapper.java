@@ -28,4 +28,8 @@ public interface BoardMapper {
 	int replyCnt(long boardnum);
 	List<BoardDTO> getListByUserid(String userid);
 	ArrayList<BoardDTO> getBestBoard();
+	int deleteBoardByUserid(String userid);
+	long[] getBoardnumByUserid(String userid);
+	void deleteReportByBoardnum(long boardnum);
+	void deleteLikeByBoardnum(long boardnum);
 }
