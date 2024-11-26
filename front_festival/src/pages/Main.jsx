@@ -71,7 +71,7 @@ const Main = () => {
     }, []);
 
     useEffect(() => {
-        axios.get('/api/main/bookmark', {params: { loginUser }})
+        axios.get('/api/main/bookmark', { params: { loginUser } })
             .then((resp) => {
                 setBookmark(resp.data);
                 console.log(resp.data);
@@ -79,7 +79,7 @@ const Main = () => {
             .catch((error) => {
                 console.log(error);
             });
-    },[loginUser])
+    }, [loginUser])
 
     useEffect(() => {
         axios.get('/api/main/notice')
@@ -112,7 +112,7 @@ const Main = () => {
                     <div className="more-btn btn" onClick={() => {
                         navigate('/festival');
                     }}>more+</div>
-                    <Slider {...settings}>
+                    <Slider className="main-slide" {...settings}>
                         {festivals.map((festival, index) => {
                             return (
                                 <div className="main-festival detail-img" key={index}>
@@ -146,21 +146,32 @@ const Main = () => {
                 </div>
 
                 <div className="main-festival-bookmark">
-                    <h2>즐겨찾기</h2>
-                    {loginUser == null || loginUser === "" ? (
-                        <p>로그인 후 즐겨찾기를 확인할 수 있습니다.</p>
-                    ) : (
-                        bookmark.length > 0 ? (
-                            bookmark.map((item, index) => (
-                                <div key={index} className="bookmark-item">
-                                    <h3>{item.title}</h3>
-                                    <img src={item.image} />
-                                </div>
-                            ))
+                    <h2>즐겨찾기 목록</h2>
+                    <div className="more-btn btn" onClick={() => {
+                        navigate('/user/mypage');
+                    }}>more+</div>
+                    <ul className="festival-list">
+                        {loginUser == null || loginUser === "" ? (
+                            <p>로그인 후 즐겨찾기를 확인할 수 있습니다.</p>
                         ) : (
-                            <p>즐겨찾기가 없습니다.</p>
-                        )
-                    )}
+                            bookmark.length > 0 ? (
+                                bookmark.slice(0, 4).map((item, index) => (
+                                    <li key={index} className="bookmark-item" onClick={() => {
+                                        navigate(`/festival/${item.contentid}`, { state: { API_KEY, activeTab, bmlist } })
+                                    }}>
+                                        <p className="festival-title">{item.title}</p>
+                                        {item.image ? (
+                                            <img className="festival-img bookmark-img" src={item.image} alt={item.title} style={{ width: "100%", height: "200px" }} />
+                                        ) : (
+                                            <img className="festival-img bookmar-img" src={noimage} alt="no-image" style={{ width: "100%", height: "200px" }} />
+                                        )}
+                                    </li>
+                                ))
+                            ) : (
+                                <p>즐겨찾기가 없습니다.</p>
+                            )
+                        )}
+                    </ul>
                 </div>
 
                 <div className="main-festival-notice">
