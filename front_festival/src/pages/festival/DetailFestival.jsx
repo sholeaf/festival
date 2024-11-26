@@ -47,8 +47,8 @@ const DetailFestival = () => {
         return `${year}.${month}.${day}`;
     };
 
-    const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
+    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
+        ClickBookmark(festivalContentid,festivalTitle,festivalImage, list, setList, userid, setSampleData);
     };
 
     useEffect(() => {
@@ -65,6 +65,7 @@ const DetailFestival = () => {
             behavior: 'smooth'
         });
     }, []);
+    console.log("loginuser : ",userid);
 
     useEffect(() => {
         axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${contentid}`)
@@ -187,7 +188,7 @@ const DetailFestival = () => {
                         }
                     </div>
 
-                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid)}>
+                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid,data.title,data.firstimage)}>
                         <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="Bookmark" />
                     </div>
 
