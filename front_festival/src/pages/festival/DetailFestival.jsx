@@ -47,12 +47,8 @@ const DetailFestival = () => {
         return `${year}.${month}.${day}`;
     };
 
-    // const handleBookmarkClick = (festivalContentid) => {
-    //     ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
-    // };
-
-    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
-        ClickBookmark(festivalContentid, festivalTitle, festivalImage, list, setList, userid, setSampleData);
+    const handleBookmarkClick = (festivalContentid) => {
+        ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
     };
 
     useEffect(() => {
@@ -117,8 +113,7 @@ const DetailFestival = () => {
             if (locationRef.current) observer.unobserve(locationRef.current);
         };
     }, [data]);
-
-    // 지도 로딩
+      // 지도 로딩
     useEffect(() => {
         if (data.mapx && data.mapy) {
             const script = document.createElement('script');
@@ -161,8 +156,15 @@ const DetailFestival = () => {
     const isBookmarked = list.includes(contentid);  // bmlist 대신 list를 사용
 
     const scrollToSection = (ref) => {
-        ref.current?.scrollIntoView({ behavior: 'smooth' });
+        if (ref.current) {
+            const offset = ref.current.offsetTop + 250; // 예시로 80px을 빼서 위치를 조정
+            window.scrollTo({
+                top: offset,
+                behavior: 'smooth',
+            });
+        }
     };
+    
 
     return (
         <>
@@ -185,7 +187,7 @@ const DetailFestival = () => {
                         }
                     </div>
 
-                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid,data.title,data.firstimage)}>
+                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid)}>
                         <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="Bookmark" />
                     </div>
 

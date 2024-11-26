@@ -141,6 +141,7 @@ const Main = () => {
                                 <h3>{review.boardtitle}</h3>
                                 {review.titleImage == null ? <img src={noimage} /> : <img src={reviewimg + review.titleImage} />}
                                 <span>작성자: {review.userid}</span>
+                                <div>{review.likeCnt}</div>
                             </div>
                         ))
                     ) : (
