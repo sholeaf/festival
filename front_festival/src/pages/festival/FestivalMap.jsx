@@ -98,8 +98,8 @@ const FestivalMap = (props) => {
         }
     };
 
-    const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setSampleData);
+    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
+        ClickBookmark(festivalContentid, festivalTitle, festivalImage, bmlist, setBmlist, userid, setSampleData);
     };
 
     // 스크롤 이벤트 리스너를 등록하는 effect
@@ -160,7 +160,7 @@ const FestivalMap = (props) => {
                                             </div>
                                             <div onClick={(e) => {
                                                 e.stopPropagation();  
-                                                handleBookmarkClick(festival.contentid);
+                                                handleBookmarkClick(festival.contentid,festival.title,festival.firstimage);
                                             }}>
                                                 <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
                                             </div>

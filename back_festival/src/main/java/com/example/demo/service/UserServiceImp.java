@@ -19,6 +19,7 @@ import com.example.demo.domain.UserDTO;
 import com.example.demo.domain.UserInfoDTO;
 import com.example.demo.mapper.BoardMapper;
 import com.example.demo.mapper.BookmarkMapper;
+import com.example.demo.mapper.NoteMapper;
 import com.example.demo.mapper.ReplyMapper;
 import com.example.demo.mapper.UserFileMapper;
 import com.example.demo.mapper.UserInfoMapper;
@@ -47,6 +48,9 @@ public class UserServiceImp implements UserService{
 	
 	@Autowired
 	private ReplyMapper rmapper;
+	
+	@Autowired
+	private NoteMapper nmapper;
 	
 	@Override
 	public boolean join(UserDTO user, UserInfoDTO userInfo) {
@@ -205,21 +209,14 @@ public class UserServiceImp implements UserService{
 		//		->	userid로 삭제 가능
 		// 5. user가 작성한 board에 작성되어 있는 reply (O)
 		//		->	userid로 boardnum을 가져와서 삭제 
-		// 6. user가 작성한 board의 board_like (O)
-		//		->	userid로 boardnum을 가져와서 삭제 
-		// 7. user가 작성한 board의 board_report (O)
-		//		->	userid로 boardnum을 가져와서 삭제 
-		// 8. user가 신고한 board의 board_report
-		//		->	userid로 삭제 가능
-		// 9. user가 작성한 reply
-		//		->	userid로 삭제 가능
-		// 10. user가 신고한 reply의 reply_report
-		//		-> userid로 삭제 가능
-		// 11. user가 받은 note
-		//		-> userid로 삭제 가능
-		// 12. user가 누른 board_like
-		//		-> userid로 삭제 가능
-		// 13. user가 작성한 board에 작성되어 있는 reply의 reply_report
+		// 6. user가 작성한 board의 board_like (O)	->	userid로 boardnum을 가져와서 삭제 
+		// 7. user가 작성한 board의 board_report (O)	->	userid로 boardnum을 가져와서 삭제 
+		// 8. user가 신고한 board의 board_report (O)	->	userid로 삭제 가능
+		// 9. user가 작성한 reply	->	userid로 삭제 가능
+		// 10. user가 신고한 reply의 reply_report (O)	-> userid로 삭제 가능
+		// 11. user가 받은 note (O)	-> userid로 삭제 가능
+		// 12. user가 누른 board_like	-> userid로 삭제 가능
+		// 13. user가 작성한 board에 작성되어 있는 reply의 reply_report (O)
 		//		-> userid로 boardnum을 가져와서 작성된 
 		//			reply의 replynum을 가져와서 reply_report 삭제
 		//
@@ -231,14 +228,22 @@ public class UserServiceImp implements UserService{
 		if(boardnum != null && boardnum.length != 0) {
 			for(int i = 0; i < boardnum.length; i++) {
 				long[] replynum = rmapper.getReplynumByBoardnum(boardnum[i]);
+				if(replynum != null && replynum.length != 0) {
+					for(int j = 0; j < replynum.length; j++) {
+						rmapper.deleteReportByReplynum(replynum[j]);						
+					}
+				}
 				rmapper.deleteAllReplyByBoardnum(boardnum[i]);
 				bmapper.deleteReportByBoardnum(boardnum[i]);
 				bmapper.deleteLikeByBoardnum(boardnum[i]);
 				
 			}
 		}
+		bmapper.deleteReportByUserid(userid);
+		rmapper.deleteReportByUserid(userid);
+		nmapper.deleteByReceiveuser(userid);
 		int board = bmapper.deleteBoardByUserid(userid);
-				return umapper.deleteUser(userid);
+		return umapper.deleteUser(userid);
 	}
 
 	@Override

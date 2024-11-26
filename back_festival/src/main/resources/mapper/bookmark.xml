@@ -6,12 +6,16 @@
 		select contentid from bookmark where userid=#{userid}
 	</select>
 	<insert id="addBookmark">
-		insert into bookmark(userid, contentid) value(#{userid},#{contentid})
+		insert into bookmark(userid, contentid, title, image) value(#{userid},#{contentid},#{title},#{image})
 	</insert>
 	<delete id="removeBookmark">
 		delete from bookmark where userid=#{userid} and contentid=#{contentid}
 	</delete>
-	<select id="getBookmarkbyMain">
-		select * from bookmark where userid=#{loginUser}
+	<select id="getBookmarkList">
+		select * from bookmark where userid=#{loginUser} order by num desc
 	</select>
+	
+	<delete id="removeAllBookmark">
+		delete from bookmark where userid=#{userid}
+	</delete>
 </mapper>

@@ -37,7 +37,16 @@
 	<select id="getReplyByNum">
 		select * from reply where replynum = #{replynum}
 	</select>
+		<select id="getReplynumByBoardnum">
+		select replynum from reply where boardnum = #{boardnum}
+	</select>
 	<delete id="deleteAllReplyByBoardnum">
 		delete from reply where boardnum =#{boardnum}
+	</delete>
+	<delete id="deleteReportByReplynum">
+		delete from reply_report where replynum = #{replynum}
+	</delete>
+	<delete id="deleteReportByUserid">
+		delete from reply_report where userid = #{userid}
 	</delete>
 </mapper>

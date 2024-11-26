@@ -32,4 +32,5 @@ public interface BoardMapper {
 	long[] getBoardnumByUserid(String userid);
 	void deleteReportByBoardnum(long boardnum);
 	void deleteLikeByBoardnum(long boardnum);
+	void deleteReportByUserid(String userid);
 }

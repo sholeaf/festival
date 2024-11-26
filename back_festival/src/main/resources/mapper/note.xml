@@ -47,7 +47,10 @@
 		delete from note where notenum = #{notenum}
 	</delete>
 	<delete id="deleteById">
-    delete from note
-    where notenum = #{notenum}
-</delete>
+    	delete from note
+    	where notenum = #{notenum}
+	</delete>
+	<delete id="deleteByReceiveuser">
+    	delete from note where receiveuser = #{userid}
+	</delete>
 </mapper>

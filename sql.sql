@@ -19,13 +19,15 @@ select * from user;
 insert into user(userid, userpw, username,addrdetail) values ("admin","1234","관리자","korea");
 
 create table bookmark(
+	num bigint primary key auto_increment,
 	userid varchar(50),
-    contentid varchar(50)
+    contentid varchar(50),
+    title varchar(500),
+    image text
 );
 
 drop table bookmark;
 
-select * from bookmark where userid="apple";
 insert into bookmark(userid,contentid) value("apple","3392074");
 
 
@@ -52,7 +54,7 @@ drop table user_info;
 create table board(
 	boardnum bigint primary key auto_increment,
     boardtitle varchar(300),
-    boardcontent varchar(1000),
+    boardcontent text,
     userid varchar(50),
     boardregdate datetime default now(),
     boardreadcnt bigint default 0,
@@ -129,6 +131,7 @@ create table board_report(
 	boardnum bigint,
     userid varchar(50)
 );
+
 
 drop table board_report;
 insert into board_report values(7, "banana");
