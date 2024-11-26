@@ -17,7 +17,7 @@ const Main = () => {
     const [bookmark, setBookmark] = useState([]);
     const [notice, setNotice] = useState([]);
 
-    const { noHyphen } = TodayDate();
+    const { noHyphen, hyphen, lastMonth } = TodayDate();
     const navigate = useNavigate();
     const activeTab = 'calendar';
 
@@ -60,7 +60,7 @@ const Main = () => {
     }, [loginUser]);
 
     useEffect(() => {
-        axios.get('/api/main/bestboard')
+        axios.get('/api/main/bestboard',{params: {lastMonth: lastMonth, toDay: hyphen}})
             .then((resp) => {
                 setBestReview(resp.data);
                 console.log(resp.data);
@@ -69,7 +69,7 @@ const Main = () => {
                 console.log(error);
             });
     }, []);
-
+    console.log(hyphen)
     useEffect(() => {
         axios.get('/api/main/bookmark', { params: { loginUser } })
             .then((resp) => {
@@ -132,6 +132,9 @@ const Main = () => {
 
                 <div className="main-festival-review">
                     <h2>Best 후기</h2>
+                    <div className="more-btn btn" onClick={() => {
+                        navigate('/board/list');
+                    }}>more+</div>
                     {bestReview.length > 0 ? (
                         bestReview.map((review, index) => (
                             <div className="review-item" key={index}>

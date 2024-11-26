@@ -23,8 +23,8 @@ public class MainController {
 	private MainService mservice;
 	
 	@GetMapping("bestboard")
-	public ResponseEntity<ArrayList<BoardDTO>> getBestBoard(){
-		ArrayList<BoardDTO> list = mservice.getBestBoard();
+	public ResponseEntity<ArrayList<BoardDTO>> getBestBoard(String lastMonth, String toDay){
+		ArrayList<BoardDTO> list = mservice.getBestBoard(lastMonth, toDay);
 		return new ResponseEntity<ArrayList<BoardDTO>>(list,HttpStatus.OK);
 	}
 	

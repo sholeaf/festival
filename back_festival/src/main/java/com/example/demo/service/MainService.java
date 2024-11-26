@@ -8,7 +8,7 @@ import com.example.demo.domain.NoticeDTO;
 
 public interface MainService {
 
-	ArrayList<BoardDTO> getBestBoard();
+	ArrayList<BoardDTO> getBestBoard(String lastMonth, String toDay);
 
 	ArrayList<NoticeDTO> getNotice();
 
