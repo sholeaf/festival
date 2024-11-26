@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.BoardDTO;
+import com.example.demo.domain.BookmarkDTO;
 import com.example.demo.domain.UserDTO;
 import com.example.demo.domain.UserInfoDTO;
 import com.example.demo.mapper.BoardMapper;
@@ -198,32 +199,6 @@ public class UserServiceImp implements UserService{
 	
 	@Override
 	public int deleteUser(String userid) {
-		// deleteUser를 통해 삭제 해야하는 것들
-		// 1. user			(O)
-		//		->	userid로 삭제 가능
-		// 2. user_info		(O)
-		//		->	userid로 삭제 가능
-		// 3. user_photo	(O)
-		//		->	userid로 삭제 가능
-		// 4. user가 작성한 board	(O)
-		//		->	userid로 삭제 가능
-		// 5. user가 작성한 board에 작성되어 있는 reply (O)
-		//		->	userid로 boardnum을 가져와서 삭제 
-		// 6. user가 작성한 board의 board_like (O)	->	userid로 boardnum을 가져와서 삭제 
-		// 7. user가 작성한 board의 board_report (O)	->	userid로 boardnum을 가져와서 삭제 
-		// 8. user가 신고한 board의 board_report (O)	->	userid로 삭제 가능
-		// 9. user가 작성한 reply	->	userid로 삭제 가능
-		// 10. user가 신고한 reply의 reply_report (O)	-> userid로 삭제 가능
-		// 11. user가 받은 note (O)	-> userid로 삭제 가능
-		// 12. user가 누른 board_like	-> userid로 삭제 가능
-		// 13. user가 작성한 board에 작성되어 있는 reply의 reply_report (O)
-		//		-> userid로 boardnum을 가져와서 작성된 
-		//			reply의 replynum을 가져와서 reply_report 삭제
-		//
-		// 
-		// 
-		int userinfo = uimapper.deleteUserInfo(userid);
-		int file = fmapper.deleteFileByUserid(userid);
 		long[] boardnum = bmapper.getBoardnumByUserid(userid);
 		if(boardnum != null && boardnum.length != 0) {
 			for(int i = 0; i < boardnum.length; i++) {
@@ -239,10 +214,24 @@ public class UserServiceImp implements UserService{
 				
 			}
 		}
+		String systemname = fmapper.getFile(userid);
+		if(systemname.equals("test.png")) {
+		}
+		else {
+			File file = new File(saveFolder+"user/",systemname);
+			if(file.exists()) {
+				file.delete();
+			}				
+		}
+		bmapper.deleteLikeByUserid(userid);
 		bmapper.deleteReportByUserid(userid);
 		rmapper.deleteReportByUserid(userid);
 		nmapper.deleteByReceiveuser(userid);
-		int board = bmapper.deleteBoardByUserid(userid);
+		rmapper.deleteReplyByUserid(userid);
+		fmapper.deleteFileByUserid(userid);
+		uimapper.deleteUserInfo(userid);
+		bmapper.deleteBoardByUserid(userid);
+		bmmapper.removeAllBookmark(userid);
 		return umapper.deleteUser(userid);
 	}
 
@@ -251,7 +240,7 @@ public class UserServiceImp implements UserService{
 		HashMap<String, Object> result = new HashMap<>();
 		
 		List<BoardDTO> list = bmapper.getListByUserid(userid);
-		List<String> bookmarks = bmmapper.getBookmark(userid);
+		List<BookmarkDTO> bookmarks = bmmapper.getBookmarkList(userid);
 		
 		result.put("list", list);
 		result.put("bookmarks", bookmarks);

@@ -453,15 +453,15 @@ const MyPage = () => {
 
     // festivalList에 html 정보 담기
     const festivalList = [];
-    if (festival && festival.length > 0) {
-        festival.slice(0, isAllBoard ? festival.length : 3).map((festival) => {
+    if (bookmarks && bookmarks.length > 0) {
+        bookmarks.slice(0, isAllBoard ? bookmarks.length : 3).map((festival) => {
             festivalList.push(
                 <div key={festival.contentid} className='board' onClick={() => {
                     navigate(`/festival/${festival.contentid}`, { state: { API_KEY } })
                 }}>
                     {
-                        festival.firstimage ?
-                            <img src={festival.firstimage} alt="" />
+                        festival.image ?
+                            <img src={festival.image} alt="" />
                             :
                             <img src={noimage} alt="" />
                     }
@@ -570,36 +570,6 @@ const MyPage = () => {
         }
     }, [user])
 
-    // 즐겨찾기 리스트로 디테일 정보 가져오기
-    useEffect(() => {
-        if (bookmarks.length != 0) {
-            for (let i = 0; i < bookmarks.length; i++) {
-                // axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${bookmarks[i]}`)
-                //     .then((resp) => {
-                //         console.log(resp.data.response)
-                //         const item = resp.data.response.body.items.item[0];
-
-                //         const newFestival = {
-                //             contentid: item.contentid,
-                //             firstimage: item.firstimage,
-                //             title: item.title
-                //         };
-                //         if (festival.length == 0) {
-                //             setFestival(item => [
-                //                 ...item,
-                //                 newFestival
-                //             ]);
-
-                //         }
-
-                //     })
-                //     .catch((error) => {
-                //         console.error("API 호출 오류:", error);
-                //     });
-            }
-        }
-    }, [bookmarks])
-
     return (
         <>
             {loginUser ? (
@@ -686,7 +656,7 @@ const MyPage = () => {
                                             <div>전화번호</div><input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" defaultValue={user.userphone} />
                                             <div>이메일</div>
                                             <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" defaultValue={user.useremail} />
-                                            <input type="button" value="인증번호 받기" onClick={getCode} />
+                                            <input type="button" className='btn code_btn' value="인증번호 받기" onClick={getCode} />
                                             <input type="text" name="codeCheck" id="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e) => {
                                                 codeCheck(e)
                                             }} style={{ display: 'none' }} />
@@ -699,10 +669,10 @@ const MyPage = () => {
                                                 <input type="hidden" name="orgZipcode" id="orgZipcode" readOnly value={user.zipcode} />
                                             </div>
                                         </form>
-                                        <Button value="변경" onClick={userModify}></Button>
+                                        <Button value="변경" onClick={userModify} className={"btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'pwModify' && (
@@ -718,10 +688,10 @@ const MyPage = () => {
                                             <input type="password" name="newPw" id="newPw" placeholder='새 비밀번호' />
                                             <input type="password" name="newPw_re" id="newPw_re" placeholder='새 비밀번호 확인' />
                                         </div>
-                                        <Button value="변경" onClick={pwModify}></Button>
+                                        <Button value="변경" onClick={pwModify} className={"btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'profileModify' && (
@@ -730,12 +700,12 @@ const MyPage = () => {
                                         <div className='img'>
                                             <img src={profileImg} alt="" id='profileImg' />
                                         </div>
-                                        <Button onClick={openFile} value="프로필 변경"></Button>
-                                        <Button value="기본 프로필 변경" onClick={returnProfile}></Button>
-                                        <Button value="적용" onClick={profileModify}></Button>
+                                        <Button onClick={openFile} value="프로필 변경" className={"btn"}></Button>
+                                        <Button value="기본 프로필 변경" onClick={returnProfile} className={"btn"}></Button>
+                                        <Button value="적용" onClick={profileModify} className={"btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                         <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
                                     </div>
                                 )}
@@ -799,10 +769,10 @@ const MyPage = () => {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <Button value={"변경"} onClick={infoModify}></Button>
+                                        <Button value={"변경"} onClick={infoModify} className={"btn"}></Button>
                                         <Button value={"취소"} onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (
@@ -812,10 +782,10 @@ const MyPage = () => {
                                             <p>비밀번호 확인</p>
                                             <input type="password" name="userpw" id="userpw" placeholder='비밀번호' />
                                         </div>
-                                        <Button value="탈퇴" onClick={deleteUser}></Button>
+                                        <Button value="탈퇴" onClick={deleteUser} className={"btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                     </div>
                                 )}
                             </Modal>

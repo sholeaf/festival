@@ -92,8 +92,9 @@ header {
     padding: 25px;
 }
 
-.login_area .text {
+.login_area .text  p span{
     cursor: pointer;
+    font-size: 16px;
 }
 
 .login_area .sns_login img {
@@ -103,18 +104,38 @@ header {
     margin: 0 20px;
 }
 
+.login_area #userid,
+.login_area #userpw{
+    width: 250px;
+    height: 50px;
+    margin: 15px 0;
+    outline: none;
+    border-radius: 15px;
+    border: none;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.5);
+    padding-left: 20px;
+    font-size: 16px;
+}
+
+.login_area .wrap{
+    width: 300px;
+    margin: 0 auto;
+    padding: 50px 0;
+}
+
+
 /* Join page */
 .joinpage {
-    width: 99%;
+    width: 100%;
     background: no-repeat url(../images/회원가입바탕.png);
     background-size: cover;
-    height: 99%;
+    height: 100%;
     position: absolute;
 }
 
-.wrap {
+.joinpage .wrap {
     width: 1000px;
-    margin: 0 auto;
+    margin: -25px auto;
 }
 
 .joinpage .wrap .logo p {

@@ -111,6 +111,8 @@
 			board b
 		left join
 			board_like bl on b.boardnum = bl.boardnum
+		where
+			date(boardregdate) between #{lastMonth} and #{toDay}
 		group by
 			b.boardnum
 		order by
@@ -127,5 +129,8 @@
 	</delete>
 	<delete id="deleteReportByUserid">
 		delete from board_report where userid = #{userid}
+	</delete>
+	<delete id="deleteLikeByUserid">
+		delete from board_like where userid = #{userid}
 	</delete>
 </mapper>

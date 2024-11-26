@@ -24,10 +24,6 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	private NoticeMapper nmapper;
 
-	@Override
-	public ArrayList<BoardDTO> getBestBoard() {
-		return bmapper.getBestBoard();
-	}
 
 	@Override
 	public ArrayList<BookmarkDTO> getBookmarkList(String loginUser) {
@@ -37,6 +33,11 @@ public class MainServiceImpl implements MainService {
 	@Override
 	public ArrayList<NoticeDTO> getNotice() {
 		return nmapper.getNotice();
+	}
+
+	@Override
+	public ArrayList<BoardDTO> getBestBoard(String lastMonth, String toDay) {
+		return bmapper.getBestBoard(lastMonth, toDay);
 	}
 
 }

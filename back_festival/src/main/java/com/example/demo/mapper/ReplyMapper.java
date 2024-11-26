@@ -22,4 +22,5 @@ public interface ReplyMapper {
 	long[] getReplynumByBoardnum(long boardnum);
 	void deleteReportByReplynum(long replynum);
 	void deleteReportByUserid(String userid);
+	void deleteReplyByUserid(String userid);
 }

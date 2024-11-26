@@ -1,9 +1,6 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import '../../assets/style/usercss.css';
 import loginImg from '../../assets/images/로그인바탕.png'
-import naverImg from '../../assets/images/네이버.png'
-import googleImg from '../../assets/images/구글.png'
-import kakaoImg from '../../assets/images/카카오.png'
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Button from "../../components/Button";
@@ -12,7 +9,7 @@ import Modal from "../../components/Modal";
 const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
 
 const Login = () => {
-    
+
     const navigate = useNavigate();
     const location = useLocation();
     const [inputs, setInputs] = useState({ userid: "", userpw: "" })
@@ -53,8 +50,20 @@ const Login = () => {
     }
 
     const login = () => {
-        const from = location.state.state.from;
-        console.log(from)
+        let from = "";
+        let detailFestival = false;
+        if(location.state != null){
+            from = location.state.state.from;
+            const txt = from.split('/');
+            console.log(txt)
+            if(txt[1] == "festival" && txt.length >= 3){
+                detailFestival = true;
+            }
+        }
+        else{
+            from = '/';
+        }
+
         if (!userid) {
             alert("아이디를 입력해주세요!");
             inputRef.current[0].focus();
@@ -71,7 +80,13 @@ const Login = () => {
         axios.get('/api/user/login', { params: user }).then((resp) => {
             if (resp.data.trim() == "O") {
                 alert(`${userid}님 환영합니다!`);
-                navigate(location.state? `${from}` : '/', { state: { API_KEY } });
+                if(detailFestival){
+                    navigate(`${from}`, { state: { API_KEY }});
+                }
+                else{
+                    navigate(`${from}`);
+                }
+
                 setLoginUser(userid);
             }
             else {
@@ -235,37 +250,27 @@ const Login = () => {
                         <img src={loginImg} alt="" />
                     </div>
                     <div className="login_area">
-                        <div>
-                            <div>
-                                <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요." value={inputs.userid} ref={addInputRef} onChange={change} onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        e.preventDefault();
-                                        login();
-                                    }
-                                }} />
-                                <br />
-                                <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력하세요." value={inputs.userpw} ref={addInputRef} onChange={change} onKeyDown={(e) => {
-                                    if (e.key === 'Enter') {
-                                        e.preventDefault();
-                                        login();
-                                    }
-                                }} />
-                                <div>
-                                    <div className="text">
-                                        <p><span onClick={openModal1}>아이디 찾기</span> / <span onClick={openModal2}>비밀번호 찾기</span></p>
-                                        <p onClick={() => {
-                                            navigate("/user/join")
-                                        }}>회원가입</p>
-                                    </div>
-                                    <div className="login">
-                                        <Button value="로그인" className={"btn"} onClick={login}></Button>
-                                    </div>
-                                </div>
-                                <div className="sns_login">
-                                    <img src={naverImg} alt="" />
-                                    <img src={kakaoImg} alt="" />
-                                    <img src={googleImg} alt="" />
-                                </div>
+                        <div className="wrap">
+                            <input type="text" name="userid" id="userid" placeholder="아이디를 입력하세요." value={inputs.userid} ref={addInputRef} onChange={change} onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    login();
+                                }
+                            }} />
+                            <input type="password" name="userpw" id="userpw" placeholder="비밀번호를 입력하세요." value={inputs.userpw} ref={addInputRef} onChange={change} onKeyDown={(e) => {
+                                if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    login();
+                                }
+                            }} />
+                            <div className="text">
+                                <p><span onClick={openModal1}>아이디 찾기</span> / <span onClick={openModal2}>비밀번호 찾기</span></p>
+                                <p>
+                                    <span onClick={() => { navigate("/user/join") }}>회원가입</span>
+                                </p>
+                            </div>
+                            <div className="login">
+                                <Button value="로그인" className={"btn"} onClick={login}></Button>
                             </div>
                         </div>
                     </div>
@@ -302,7 +307,7 @@ const Login = () => {
                         )}
                 </Modal>
             </div>
-        </div>
+        </div >
     )
 }
 export default Login;

@@ -49,4 +49,7 @@
 	<delete id="deleteReportByUserid">
 		delete from reply_report where userid = #{userid}
 	</delete>
+	<delete id="deleteReplyByUserid">
+		delete from reply where userid = #{userid}
+	</delete>
 </mapper>
