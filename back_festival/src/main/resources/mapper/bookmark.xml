@@ -15,4 +15,7 @@
 		select * from bookmark where userid=#{loginUser} order by num desc
 	</select>
 	
+	<delete id="removeAllBookmark">
+		delete from bookmark where userid=#{userid}
+	</delete>
 </mapper>
