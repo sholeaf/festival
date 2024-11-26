@@ -10,8 +10,8 @@ public interface MainService {
 
 	ArrayList<BoardDTO> getBestBoard();
 
-	ArrayList<BookmarkDTO> getBookmark(String loginUser);
-
 	ArrayList<NoticeDTO> getNotice();
+
+	ArrayList<BookmarkDTO> getBookmarkList(String loginUser);
 	
 }

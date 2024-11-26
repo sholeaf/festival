@@ -88,8 +88,8 @@ const FestivalCalendar = (props) => {
     }, [hasMore, isLoading]);
 
 
-    const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setSampleData);
+    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
+        ClickBookmark(festivalContentid, festivalTitle, festivalImage, bmlist, setBmlist, userid, setSampleData);
     };
 
     return (
@@ -122,7 +122,7 @@ const FestivalCalendar = (props) => {
                                             </div>
                                             <div onClick={(e) => {
                                                 e.stopPropagation();  // 클릭 이벤트가 목록 아이템에 전파되지 않도록 방지
-                                                handleBookmarkClick(festival.contentid); // 북마크 클릭 처리
+                                                handleBookmarkClick(festival.contentid,festival.title,festival.firstimage); // 북마크 클릭 처리
                                             }}>
                                                 <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
                                             </div>

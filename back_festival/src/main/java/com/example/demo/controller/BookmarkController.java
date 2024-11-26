@@ -33,9 +33,8 @@ public class BookmarkController {
 	@PostMapping("addBookmark")
 	public ResponseEntity<String> addBookmark(@RequestBody BookmarkDTO bmDto){
 		System.out.println("추가 요청 들어옴 !");
-		System.out.println("content id : "+bmDto.getContentid());
-		System.out.println("user id : "+bmDto.getUserid());
-		if(bmservice.addBookmark(bmDto.getUserid(), bmDto.getContentid())) {
+		System.out.println("BookmarkDTO : "+bmDto);
+		if(bmservice.addBookmark(bmDto)) {
 			return new ResponseEntity<String>("o",HttpStatus.OK);
 		}
 		else {

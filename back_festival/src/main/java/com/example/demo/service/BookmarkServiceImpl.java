@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.domain.BookmarkDTO;
 import com.example.demo.mapper.BookmarkMapper;
 
 @Service
@@ -15,13 +16,11 @@ public class BookmarkServiceImpl implements BookmarkService {
 	
 	@Override
 	public ArrayList<String> getBookmark(String userid) {
-		System.out.println("DD"+userid);
-		System.out.println("dd" +bmmapper.getBookmark(userid));
 		return bmmapper.getBookmark(userid);
 	}
 	@Override
-	public boolean addBookmark(String userid, String contentid) {
-		return bmmapper.addBookmark(userid,contentid);
+	public boolean addBookmark(BookmarkDTO bmDto) {
+		return bmmapper.addBookmark(bmDto);
 	}
 
 	@Override

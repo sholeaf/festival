@@ -6,4 +6,6 @@ import lombok.Data;
 public class BookmarkDTO {
 	private String userid;
 	private String contentid;
+	private String title;
+	private String image;
 }

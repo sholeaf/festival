@@ -47,8 +47,12 @@ const DetailFestival = () => {
         return `${year}.${month}.${day}`;
     };
 
-    const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
+    // const handleBookmarkClick = (festivalContentid) => {
+    //     ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
+    // };
+
+    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
+        ClickBookmark(festivalContentid, festivalTitle, festivalImage, list, setList, userid, setSampleData);
     };
 
     useEffect(() => {
@@ -160,7 +164,7 @@ const DetailFestival = () => {
                         }
                     </div>
 
-                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid)}>
+                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid,data.title,data.firstimage)}>
                         <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="Bookmark" />
                     </div>
 

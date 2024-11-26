@@ -25,7 +25,6 @@ const Pagination = ({ pageMaker, url, replyPageMaker, fetchReplies  }) => {
         e.preventDefault();
         const target = e.target.getAttribute("href");
 
-
       const pageNum = Number(target);
 
         const temp = isReplyPage ? {
@@ -36,11 +35,6 @@ const Pagination = ({ pageMaker, url, replyPageMaker, fetchReplies  }) => {
             startrow: replyCri.startrow,
         } : {
             pagenum: pageNum, 
-
-        console.log(target);
-        const temp = {
-            pagenum: target,
-
             amount: cri.amount,
             type: cri.type,
             keyword: cri.keyword,
