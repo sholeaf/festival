@@ -27,5 +27,5 @@ public interface BoardMapper {
 	int likeCnt(long boardnum);
 	int replyCnt(long boardnum);
 	List<BoardDTO> getListByUserid(String userid);
-	ArrayList<BoardDTO> getBestBoard();
+	ArrayList<BoardDTO> getBestBoard(String lastMonth, String toDay);
 }

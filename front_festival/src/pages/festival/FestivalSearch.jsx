@@ -104,8 +104,8 @@ const FestivalSearch = (props) => {
         }
     };
 
-    const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, bmlist, setBmlist, userid, setSampleData);
+    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
+        ClickBookmark(festivalContentid, festivalTitle, festivalImage, bmlist, setBmlist, userid, setSampleData);
     };
 
     useEffect(() => {
@@ -158,7 +158,7 @@ const FestivalSearch = (props) => {
                                             </div>
                                             <div onClick={(e) => {
                                                 e.stopPropagation();  // 클릭 이벤트 전파 방지
-                                                handleBookmarkClick(festival.contentid);  // 즐겨찾기 추가/삭제
+                                                handleBookmarkClick(festival.contentid,festival.title,festival.firstimage);  // 즐겨찾기 추가/삭제
                                             }}>
                                                 <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
                                             </div>

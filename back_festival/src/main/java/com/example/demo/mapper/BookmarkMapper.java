@@ -11,9 +11,9 @@ public interface BookmarkMapper {
 
 	ArrayList<String> getBookmark(String userid);
 
-	boolean addBookmark(String userid, String contentid);
-
 	boolean removeBookmark(String userid, String contentid);
 
-	ArrayList<BookmarkDTO> getBookmarkbyMain(String loginUser);
+	boolean addBookmark(BookmarkDTO bmDto);
+
+	ArrayList<BookmarkDTO> getBookmarkList(String loginUser);
 }

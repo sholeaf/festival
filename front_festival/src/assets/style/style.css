@@ -87,6 +87,14 @@ img {
 }
 
 /* main */
+.main-slide{
+    margin-top: 50px;
+}
+.bookmark-img{
+    object-fit: contain;
+    /* 비율을 유지하며 요소 내부에 맞게 조정 */
+    object-position: center;
+}
 .main-back-img {
     width: 100%;
     background-size: cover;
@@ -1799,9 +1807,7 @@ a#nsearch-btn {
 .festival-list-area .bookmark-img {
     margin: 0 20px 0 50px;
     cursor: pointer;
-    object-fit: contain;
-    /* 비율을 유지하며 요소 내부에 맞게 조정 */
-    object-position: center;
+    
 }
 
 
@@ -2480,8 +2486,7 @@ a#nsearch-btn {
     opacity: 0;
 }
 
-.festival-intro2 th,
-td {
+.festival-intro2 th, .festival-intro2 td {
     height: 120px;
     border-bottom: 1px solid white;
     line-height: 35px;

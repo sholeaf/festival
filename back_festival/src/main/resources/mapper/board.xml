@@ -108,6 +108,8 @@
 			board b
 		left join
 			board_like bl on b.boardnum = bl.boardnum
+		where
+			date(boardregdate) between #{lastMonth} and #{toDay}
 		group by
 			b.boardnum
 		order by

@@ -24,19 +24,20 @@ public class MainServiceImpl implements MainService {
 	@Autowired
 	private NoticeMapper nmapper;
 
-	@Override
-	public ArrayList<BoardDTO> getBestBoard() {
-		return bmapper.getBestBoard();
-	}
 
 	@Override
-	public ArrayList<BookmarkDTO> getBookmark(String loginUser) {
-		return bkmapper.getBookmarkbyMain(loginUser);
+	public ArrayList<BookmarkDTO> getBookmarkList(String loginUser) {
+		return bkmapper.getBookmarkList(loginUser);
 	}
 
 	@Override
 	public ArrayList<NoticeDTO> getNotice() {
 		return nmapper.getNotice();
+	}
+
+	@Override
+	public ArrayList<BoardDTO> getBestBoard(String lastMonth, String toDay) {
+		return bmapper.getBestBoard(lastMonth, toDay);
 	}
 
 }

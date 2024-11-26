@@ -47,8 +47,12 @@ const DetailFestival = () => {
         return `${year}.${month}.${day}`;
     };
 
-    const handleBookmarkClick = (festivalContentid) => {
-        ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
+    // const handleBookmarkClick = (festivalContentid) => {
+    //     ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
+    // };
+
+    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
+        ClickBookmark(festivalContentid, festivalTitle, festivalImage, list, setList, userid, setSampleData);
     };
 
     useEffect(() => {
@@ -114,6 +118,27 @@ const DetailFestival = () => {
         };
     }, [data]);
 
+    // 지도 로딩
+    useEffect(() => {
+        if (data.mapx && data.mapy) {
+            const script = document.createElement('script');
+            script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=db24bdb6dad4a16a8feeb6f6ef35d0e7&libraries=services,clusterer`;
+            script.onload = () => {
+                const container = document.getElementById("map");
+                const options = {
+                    center: new window.kakao.maps.LatLng(data.mapy, data.mapx),
+                    level: 3, // 지도 확대 레벨
+                };
+                const map = new window.kakao.maps.Map(container, options);
+                const marker = new window.kakao.maps.Marker({
+                    position: new window.kakao.maps.LatLng(data.mapy, data.mapx)
+                });
+                marker.setMap(map);
+            };
+            document.body.appendChild(script);
+        }
+    }, [data]);
+
     useEffect(() => {
         if (userid == '' || userid == null) {
             return;
@@ -160,7 +185,7 @@ const DetailFestival = () => {
                         }
                     </div>
 
-                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid)}>
+                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid,data.title,data.firstimage)}>
                         <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="Bookmark" />
                     </div>
 
