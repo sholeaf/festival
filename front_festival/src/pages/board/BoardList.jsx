@@ -229,7 +229,7 @@ const BoardList = () => {
                 <Header></Header>
                 <div id="board_wrap" className="list">
                     <div>
-                        <a className="btn" onClick={() => {
+                        <a className="btn writeBoard" onClick={() => {
                             if (loginUser == null || loginUser == "") {
                                 alert("로그인해야 글을 쓰실 수 있습니다!");
                                 return;
@@ -248,7 +248,7 @@ const BoardList = () => {
                         <form name="searchForm" id="searchForm" action="/board/list" className="row">
                             <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
                             <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} />
-                            <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
+                            <a id="search-btn" className="btn searchBtn" onClick={clickSearch}>검색</a>
                             <input type="hidden" name="pagenum" />
                             <input type="hidden" name="amount" />
                         </form>

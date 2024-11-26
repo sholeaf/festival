@@ -295,23 +295,23 @@ const BoardGet = () => {
             setEditedContent(reply.replycontent); // 원래 내용으로 돌아갑니다.
         };
         return (
-            <div>
+            <div  className="rpBody" style={{display:"flex"}}>
                 {isEditing ? (
                     // 수정 모드일 때, 댓글 내용을 텍스트 입력란으로 보여줌
-                    <div className="rpBody_wrap">
-                        <div className="rpBody" >
-                            <textarea name="replycontents" id="replycontents2" value={editedContent} placeholder="Contents" onChange={handleContentChange} rows="3" cols="40" ></textarea>
-                        </div>
+                    <>
                         <div>
+                            <textarea name="replycontents" id="replycontents2" className="replycontents" value={editedContent} placeholder="Contents" onChange={handleContentChange} rows="3" cols="40" ></textarea>
+                        </div>
+                        <div className="rpBtn" >
                             <div><button onClick={() => handleSaveClick(reply.replynum)}>완료</button></div>
                             <button onClick={handleCancelClick}>취소</button>
                         </div>
-                    </div>
+                    </>
                 ) : (
                     // 수정 모드가 아닐 때, 댓글 내용 표시
-                    <div className="rpBody_wrap">
-                        <div className="rpBody" >{reply.replycontent}</div>
-                        <div>{
+                    <>
+                        <div style={{width:"650px"}}>{reply.replycontent}</div>
+                        <div className="rpBtn" >{
                             reply.userid == loginUser ?
                                 <>
                                     <div><button onClick={handleEditClick}>수정</button></div>
@@ -320,7 +320,7 @@ const BoardGet = () => {
                                 : ""
                         }
                         </div>
-                    </div>
+                    </>
                 )}
             </div>
         );
@@ -381,8 +381,8 @@ const BoardGet = () => {
             const reply = list[i];
             replyList.push(
                 <li className={`li${reply.replynum} row`} key={`li${reply.replynum}`}>
-                    <div className="row rrow">
-                        <a className="getBoard" onClick={(e) => openPopup(e, reply.userid)}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
+                    <div className=" rrow rpBody_wrap">
+                        <a className="getBoard" onClick={(e) => openPopup(e, reply.userid)} style={{width:"40px"}}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
                         <div className={`reply${reply.replynum}`} >
                             {reply.reportcnt < 5 ? (
                                 <NormalReply reply={reply} />
@@ -422,8 +422,8 @@ const BoardGet = () => {
                     <div className="bgUserid">
                         <a className="getBoard" onClick={(e) => openPopup(e, data.userid)}><strong>{data.userid}</strong></a>
                     </div>
-                    <div style={{ display: "flex", justifyContent: "flex-end" }}>
-                        <div onClick={reportBoard}>신고하기</div>
+                    <div className="bgDate" style={{ display: "flex", justifyContent: "flex-end" }}>
+                        <div className="getBoard" onClick={reportBoard}>신고하기</div>
                         <div>{data.boardregdate}</div>
                     </div>
                     <div className="bgContent">
@@ -463,13 +463,12 @@ const BoardGet = () => {
                         <div className="reply_write rpBody_wrap">
                             {loginUser == "" ? <div>로그인 하셔야 댓글을 등록할 수 있습니다.</div>
                                 : <>
-                                    <div>{loginUser}</div>
+                                    <div style={{width:"40px"}}>{loginUser}</div>
                                     <div className="rpBody">
-                                        {/* <h4>내 용</h4> */}
-                                        <textarea name="replycontents" id="replycontents" placeholder="Contents"></textarea>
-                                    </div>
-                                    <div>
-                                        <input type="button" value="등록" className="btn finish" onClick={clickRegist} />
+                                        <textarea name="replycontents" id="replycontents"  className="replycontents" placeholder="댓글 입력"></textarea>
+                                        <div className="rpBtn">
+                                            <input type="button" value="등록" className="btn finish" onClick={clickRegist} />
+                                        </div>
                                     </div>
                                 </>
                             }
