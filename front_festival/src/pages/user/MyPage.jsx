@@ -48,10 +48,13 @@ const MyPage = () => {
     const [activeModal, setActiveModal] = useState('');
 
     const [emailCode, setEmailCode] = useState("");
+    let codeFlag = false;
 
     const [isAllBoard, setIsAllBoard] = useState(false);
 
-    let codeFlag = false;
+    const [currentPage, setCurrentPage] = useState(1);
+    const [itemsPerPage, setItemsPerPage] = useState(isAllBoard ? 9 : 3);
+
 
 
     const openModal1 = () => {
@@ -388,14 +391,49 @@ const MyPage = () => {
         }
     }
 
-    const showCommunity = () => {
-        document.getElementById("openCommunity").style.display = 'none';
+    const indexOfLastItem = currentPage * itemsPerPage;
+    const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+    const currentItems = list.slice(indexOfFirstItem, indexOfLastItem);
+
+    const paginate = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    };
+    const pageNumbers = [];
+    for (let i = 1; i <= Math.ceil(list.length / itemsPerPage); i++) {
+        pageNumbers.push(i);
+    }
+    // 현재 페이지가 속한 페이지 그룹 (1-10, 11-20 등)
+    const currentGroupStart = Math.floor((currentPage - 1) / 10) * 10 + 1;
+    const currentGroupEnd = Math.min(currentGroupStart + 9, pageNumbers.length);
+
+    // 페이지 그룹의 페이지 번호
+    const pageNumbersToShow = pageNumbers.slice(currentGroupStart - 1, currentGroupEnd);
+
+    const nextGroupStart = currentGroupEnd + 1;
+    const prevGroupEnd = currentGroupStart - 1;
+
+
+    const boardList = currentItems.map((board) => (
+        <div key={board.boardnum} className='board' onClick={() => navigate(`/board/${board.boardnum}`)}>
+            {board.titleImage ?
+                <img src={`/api/file/thumbnail?systemname=${board.titleImage}`} alt="" /> :
+                <img src={noimage} alt="" />
+            }
+            <span>{board.boardtitle}</span>
+        </div>
+    ));
+
+    const openCommunity = () => {
+        setItemsPerPage(9); // 9개로 설정
+        setCurrentPage(1); // 첫 페이지로 설정
         document.getElementById("closeCommunity").style.display = 'inline-block';
         document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
     };
+
     const closeCommunity = () => {
-        document.getElementById("openCommunity").style.display = 'inline-block';
+        setItemsPerPage(3); // 3개로 설정
+        setCurrentPage(1);
         document.getElementById("closeCommunity").style.display = 'none';
         document.getElementsByClassName("bookmark")[0].style.display = 'block';
         setIsAllBoard(false);
@@ -413,31 +451,17 @@ const MyPage = () => {
         setIsAllBoard(false);
     };
 
-    const boardList = [];
-    if (list && list.length > 0) {
-        list.slice(0, isAllBoard ? list.length : 3).map((board) => {
-            boardList.push(
-                <div key={board.boardnum} className='board' onClick={() => {
-                    navigate(`/board/${board.boardnum}`)
-                }}>
-                    <img src={`/api/file/thumbnail?systemname=${board.titleImage}`} alt="" />
-                    <span>{board.boardtitle}</span>
-                </div>
-            )
-        })
-    }
-
     // festivalList에 html 정보 담기
     const festivalList = [];
-    if (festival && festival.length > 0) {
-        festival.slice(0, isAllBoard ? festival.length : 3).map((festival) => {
+    if (bookmarks && bookmarks.length > 0) {
+        bookmarks.slice(0, isAllBoard ? bookmarks.length : 3).map((festival) => {
             festivalList.push(
                 <div key={festival.contentid} className='board' onClick={() => {
                     navigate(`/festival/${festival.contentid}`, { state: { API_KEY } })
                 }}>
                     {
-                        festival.firstimage ?
-                            <img src={festival.firstimage} alt="" />
+                        festival.image ?
+                            <img src={festival.image} alt="" />
                             :
                             <img src={noimage} alt="" />
                     }
@@ -456,21 +480,21 @@ const MyPage = () => {
         const orgEmail = userInfo.emailinfo;
         const orgGender = userInfo.genderinfo;
 
-        if(orgName == name && orgEmail == email && orgGender == gender){
+        if (orgName == name && orgEmail == email && orgGender == gender) {
             alert("변경사항이 없습니다.");
             return;
         }
 
         const updateUserInfo = {
-            userid : loginUser,
-            nameinfo : name,
-            emailinfo : email,
-            genderinfo : gender
+            userid: loginUser,
+            nameinfo: name,
+            emailinfo: email,
+            genderinfo: gender
         }
 
         axios.put('/api/user/infoModify', updateUserInfo)
-            .then(resp=>{
-                if(resp.data.trim() == "O"){
+            .then(resp => {
+                if (resp.data.trim() == "O") {
                     alert("정보 공개 여부가 변경되었습니다.");
                     setIsModalOpen(false);
                 }
@@ -514,7 +538,6 @@ const MyPage = () => {
     // 유저 정보 가져오기
     useEffect(() => {
         if (loginUser) {
-            console.log(loginUser);
             axios.get(`/api/user/userInfo`, { params: { userid: loginUser } })
                 .then((resp) => {
                     setUser(resp.data.user);
@@ -546,36 +569,6 @@ const MyPage = () => {
                 })
         }
     }, [user])
-
-    // 즐겨찾기 리스트로 디테일 정보 가져오기
-    useEffect(() => {
-        if (bookmarks.length != 0) {
-            for (let i = 0; i < bookmarks.length; i++) {
-                axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${bookmarks[i]}`)
-                    .then((resp) => {
-
-                        const item = resp.data.response.body.items.item[0];
-
-                        const newFestival = {
-                            contentid: item.contentid,
-                            firstimage: item.firstimage,
-                            title: item.title
-                        };
-                        if (festival.length == 0) {
-                            setFestival(item => [
-                                ...item,
-                                newFestival
-                            ]);
-
-                        }
-
-                    })
-                    .catch((error) => {
-                        console.error("API 호출 오류:", error);
-                    });
-            }
-        }
-    }, [bookmarks])
 
     return (
         <>
@@ -619,15 +612,41 @@ const MyPage = () => {
                             </div>
                             <div className="community">
                                 <p>후기 목록</p>
-                                {
-                                    list.length > 3 ? (<span onClick={showCommunity} id='openCommunity'>더 보기...</span>)
-                                        :
-                                        (<></>)
-                                }
+                                {list.length > itemsPerPage && (
+                                    <span onClick={openCommunity} id='openCommunity'>
+                                        더 보기...
+                                    </span>
+                                )}
                                 <span onClick={closeCommunity} id='closeCommunity'>돌아가기</span>
                                 <div className='list'>
                                     {boardList}
                                 </div>
+
+                                {/* 페이징 버튼 */}
+                                {isAllBoard && (
+                                    <div className="pagination">
+                                        {/* "<" 버튼 - 이전 그룹으로 이동 */}
+                                        {currentGroupStart > 1 && (
+                                            <span onClick={() => paginate(prevGroupEnd)}>&lt;</span>
+                                        )}
+
+                                        {/* 페이지 번호 버튼 */}
+                                        {pageNumbersToShow.map(number => (
+                                            <span
+                                                key={number}
+                                                onClick={() => paginate(number)}
+                                                className={currentPage === number ? 'active' : ''}
+                                            >
+                                                {number}
+                                            </span>
+                                        ))}
+
+                                        {/* ">" 버튼 - 다음 그룹으로 이동 */}
+                                        {currentGroupEnd < pageNumbers.length && (
+                                            <span onClick={() => paginate(nextGroupStart)}>&gt;</span>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                             <Modal isOpen={isModalOpen} closeModal={closeModal}>
                                 {activeModal === 'userModify' && (
@@ -637,7 +656,7 @@ const MyPage = () => {
                                             <div>전화번호</div><input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" defaultValue={user.userphone} />
                                             <div>이메일</div>
                                             <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" defaultValue={user.useremail} />
-                                            <input type="button" value="인증번호 받기" onClick={getCode} />
+                                            <input type="button" className='btn code_btn' value="인증번호 받기" onClick={getCode} />
                                             <input type="text" name="codeCheck" id="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e) => {
                                                 codeCheck(e)
                                             }} style={{ display: 'none' }} />
@@ -650,10 +669,10 @@ const MyPage = () => {
                                                 <input type="hidden" name="orgZipcode" id="orgZipcode" readOnly value={user.zipcode} />
                                             </div>
                                         </form>
-                                        <Button value="변경" onClick={userModify}></Button>
+                                        <Button value="변경" onClick={userModify} className={"btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'pwModify' && (
@@ -669,10 +688,10 @@ const MyPage = () => {
                                             <input type="password" name="newPw" id="newPw" placeholder='새 비밀번호' />
                                             <input type="password" name="newPw_re" id="newPw_re" placeholder='새 비밀번호 확인' />
                                         </div>
-                                        <Button value="변경" onClick={pwModify}></Button>
+                                        <Button value="변경" onClick={pwModify} className={"btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'profileModify' && (
@@ -681,12 +700,12 @@ const MyPage = () => {
                                         <div className='img'>
                                             <img src={profileImg} alt="" id='profileImg' />
                                         </div>
-                                        <Button onClick={openFile} value="프로필 변경"></Button>
-                                        <Button value="기본 프로필 변경" onClick={returnProfile}></Button>
-                                        <Button value="적용" onClick={profileModify}></Button>
+                                        <Button onClick={openFile} value="프로필 변경" className={"btn"}></Button>
+                                        <Button value="기본 프로필 변경" onClick={returnProfile} className={"btn"}></Button>
+                                        <Button value="적용" onClick={profileModify} className={"btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                         <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
                                     </div>
                                 )}
@@ -705,55 +724,55 @@ const MyPage = () => {
                                                 <tr>
                                                     <td>이름</td>
                                                     <td>
-                                                        {userInfo.nameinfo == "T"? <input type="radio" name="name" id="name1" value="T" checked/>
-                                                        :
-                                                        <input type="radio" name="name" id="name1" value="T"/>
+                                                        {userInfo.nameinfo == "T" ? <input type="radio" name="name" id="name1" value="T" checked />
+                                                            :
+                                                            <input type="radio" name="name" id="name1" value="T" />
                                                         }
                                                     </td>
                                                     <td>
-                                                        {userInfo.nameinfo == "F"? <input type="radio" name="name" id="name2" value="F" checked/>
-                                                        :
-                                                        <input type="radio" name="name" id="name2" value="F"/>
+                                                        {userInfo.nameinfo == "F" ? <input type="radio" name="name" id="name2" value="F" checked />
+                                                            :
+                                                            <input type="radio" name="name" id="name2" value="F" />
                                                         }
-                                                        
+
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>이메일</td>
                                                     <td>
-                                                        {userInfo.emailinfo == "T"? <input type="radio" name="email" id="email1" value="T" checked/>
-                                                        :
-                                                        <input type="radio" name="email" id="email1" value="T"/>
+                                                        {userInfo.emailinfo == "T" ? <input type="radio" name="email" id="email1" value="T" checked />
+                                                            :
+                                                            <input type="radio" name="email" id="email1" value="T" />
                                                         }
                                                     </td>
                                                     <td>
-                                                        {userInfo.emailinfo == "F"? <input type="radio" name="email" id="email2" value="F" checked/>
-                                                        :
-                                                        <input type="radio" name="email" id="email2" value="F"/>
+                                                        {userInfo.emailinfo == "F" ? <input type="radio" name="email" id="email2" value="F" checked />
+                                                            :
+                                                            <input type="radio" name="email" id="email2" value="F" />
                                                         }
                                                     </td>
                                                 </tr>
                                                 <tr>
                                                     <td>성별</td>
                                                     <td>
-                                                        {userInfo.genderinfo == "T"? <input type="radio" name="gender" id="gender1" value="T" checked/>
-                                                        :
-                                                        <input type="radio" name="gender" id="gender1" value="T"/>
+                                                        {userInfo.genderinfo == "T" ? <input type="radio" name="gender" id="gender1" value="T" checked />
+                                                            :
+                                                            <input type="radio" name="gender" id="gender1" value="T" />
                                                         }
                                                     </td>
                                                     <td>
-                                                        {userInfo.genderinfo == "F"? <input type="radio" name="gender" id="gender2" value="F" checked/>
-                                                        :
-                                                        <input type="radio" name="gender" id="gender2" value="F"/>
+                                                        {userInfo.genderinfo == "F" ? <input type="radio" name="gender" id="gender2" value="F" checked />
+                                                            :
+                                                            <input type="radio" name="gender" id="gender2" value="F" />
                                                         }
                                                     </td>
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <Button value={"변경"} onClick={infoModify}></Button>
+                                        <Button value={"변경"} onClick={infoModify} className={"btn"}></Button>
                                         <Button value={"취소"} onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (
@@ -763,10 +782,10 @@ const MyPage = () => {
                                             <p>비밀번호 확인</p>
                                             <input type="password" name="userpw" id="userpw" placeholder='비밀번호' />
                                         </div>
-                                        <Button value="탈퇴" onClick={deleteUser}></Button>
+                                        <Button value="탈퇴" onClick={deleteUser} className={"btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }}></Button>
+                                        }} className={"btn"}></Button>
                                     </div>
                                 )}
                             </Modal>
