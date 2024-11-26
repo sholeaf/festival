@@ -31,9 +31,6 @@
 		set replycontent = #{replycontent}
 		where replynum = #{replynum}
 	</update>
-	<delete id="removeInBoard">
-		delete from reply where boardnum = #{boardnum}
-	</delete>
 	<select id="checkreport">
 		select count(*) from reply_report where replynum = #{replynum}
 	</select>
