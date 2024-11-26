@@ -2486,8 +2486,7 @@ a#nsearch-btn {
     opacity: 0;
 }
 
-.festival-intro2 th,
-td {
+.festival-intro2 th, .festival-intro2 td {
     height: 120px;
     border-bottom: 1px solid white;
     line-height: 35px;
