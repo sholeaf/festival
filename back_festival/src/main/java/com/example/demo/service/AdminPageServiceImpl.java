@@ -113,9 +113,10 @@ int deletedreply = apmapper.deleteReply(replynum);
 
 	@Override
 	public HashMap<String, Object> getReplyReportList(Criteria cri) {
-		System.out.println("cri : "+cri);
+		System.out.println("서비스에서 받은 댓글 cri : "+cri);
 		HashMap<String, Object> result = new HashMap<>();
         List<ReplyDTO> list = apmapper.getReplyList(cri);
+        System.out.println("검색으로 줘야되는 리스트"+list);
 
         long total = apmapper.getReplyReportTotal(cri);
         
