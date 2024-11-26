@@ -243,7 +243,7 @@ const BoardList = () => {
                         :elList
                         }
                     </div>
-                    <Pagination pageMaker={pageMaker}></Pagination>
+                    <Pagination pageMaker={pageMaker} url="/board/list/"></Pagination>
                     <div className="search_area">
                         <form name="searchForm" id="searchForm" action="/board/list" className="row">
                             <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
