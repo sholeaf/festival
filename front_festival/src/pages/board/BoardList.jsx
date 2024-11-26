@@ -170,16 +170,16 @@ const BoardList = () => {
         };
         // body에 클릭 이벤트 리스너 추가
         document.body.addEventListener('click', handleClickOutside);
-
-        axios.get('/api/user/userInfo', { params: { userid: userId } })
-            .then(resp => {
-                if (resp) {
-                    console.log(resp.data)
-                    setUser(resp.data.user)
-                    setUserInfo(resp.data.userInfo)
-                    setUserFile(resp.data.file)
-                }
-            })
+        
+        // axios.get('/api/user/userInfo', { params: { userid: userId } })
+        //     .then(resp => {
+        //         if (resp) {
+        //             console.log(resp.data)
+        //             setUser(resp.data.user)
+        //             setUserInfo(resp.data.userInfo)
+        //             setUserFile(resp.data.file)
+        //         }
+        //     })
     }
 
 
@@ -239,9 +239,9 @@ const BoardList = () => {
                     </div>
                     <div style={{ height: "30px" }}>
                     </div>
-                    <div>{data.list == null || data.list == ""?<div>등록된 글이 없습니다!</div>
-                        :elList
-                        }
+                    <div>{data.list == null || data.list == "" ? <div>등록된 글이 없습니다!</div>
+                        : elList
+                    }
                     </div>
                     <Pagination pageMaker={pageMaker} url="/board/list/"></Pagination>
                     <div className="search_area">
@@ -261,7 +261,7 @@ const BoardList = () => {
                 <div className="BoardModal">
                     <Modal isOpen={isModalOpen} closeModal={closeModal}>
                         <p className="id">{user.userid}님의 정보</p>
-                        <div className="closeBoardModal" onClick={()=>{
+                        <div className="closeBoardModal" onClick={() => {
                             setIsModalOpen(false);
                             setSelectedUserId('');
                         }}>x</div>
@@ -286,7 +286,6 @@ const BoardList = () => {
                                 :
                                 <div className="email">이메일 : 비공개</div>
                         }
-
                     </Modal>
                 </div>
                 <div>

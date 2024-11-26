@@ -19,4 +19,8 @@ public interface ReplyMapper {
 	void removeInBoard(long boardnum);
 	ReplyDTO getReplyByNum(long replynum);
 	void deleteAllReplyByBoardnum(long boardnum);
+	long[] getReplynumByBoardnum(long boardnum);
+	void deleteReportByReplynum(long replynum);
+	void deleteReportByUserid(String userid);
+	void deleteReplyByUserid(String userid);
 }
