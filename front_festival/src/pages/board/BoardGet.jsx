@@ -332,7 +332,7 @@ const BoardGet = () => {
                 ) : (
                     // 수정 모드가 아닐 때, 댓글 내용 표시
                     <>
-                        <div style={{width:"650px"}}>{reply.replycontent}</div>
+                        <div style={{width:"680px"}}>{reply.replycontent}</div>
                         <div className="rpBtn" >{
                             reply.userid == loginUser ?
                                 <>
@@ -442,8 +442,10 @@ const BoardGet = () => {
                     </div>
                     <div className="boardTag">{data.tag.replace(/\\/g, ' ')}</div>
                     <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
-                        <div>{checkLike ? <Button value="좋아요취소" onClick={like}></Button>
-                            : <Button value="좋아요" onClick={like}></Button>
+                        <div>{checkLike ?
+                             <div className="getBoard" onClick={like}><img src="/api/file/thumbnail?systemname=likeA.png" style={{width: "30px"}}></img></div>
+                            : 
+                            <div className="getBoard" onClick={like}><img src="/api/file/thumbnail?systemname=likeN.png" style={{width: "30px"}}></img></div>
                         }
                         </div>
                         <div className="btnArea">
