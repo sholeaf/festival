@@ -17,6 +17,25 @@ back_festival/*.classpath    # Eclipse 클래스패스 파일
 back_festival/*.project      # Eclipse 프로젝트 파일
 back_festival/.settings/     # Eclipse 설정 폴더
 
+# ================================
+# Spring (백엔드) 관련 .gitignore
+# ================================
+
+# Spring 프로젝트 빌드 파일
+back_festival/target/        # Maven / Gradle 빌드 폴더
+back_festival/*.jar          # JAR 파일
+back_festival/*.war          # WAR 파일
+back_festival/*.ear          # EAR 파일
+back_festival/*.class        # 컴파일된 클래스 파일
+
+# Spring IDE 관련 설정 파일들
+back_festival/.idea/         # IntelliJ IDEA 프로젝트 설정
+back_festival/.vscode/       # Visual Studio Code 설정
+back_festival/*.iml          # IntelliJ IDEA 모듈 파일
+back_festival/*.classpath    # Eclipse 클래스패스 파일
+back_festival/*.project      # Eclipse 프로젝트 파일
+back_festival/.settings/     # Eclipse 설정 폴더
+
 # Spring 환경 설정 파일들
 back_festival/.env           # 환경설정 파일
 back_festival/*.log          # 로그 파일

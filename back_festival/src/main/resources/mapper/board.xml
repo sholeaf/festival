@@ -61,6 +61,9 @@
 	<delete id="deleteBoard">
 		delete from board where boardnum=#{boardnum}
 	</delete>
+	<delete id="deleteBoardByUserid">
+		delete from board where userid=#{userid}
+	</delete>
 	<insert id="reportReply">
 		insert into reply_report value(#{replynum}, #{userid})
 	</insert>
@@ -103,7 +106,7 @@
 			b.boardreadcnt,
 			b.tag,
 			b.titleImage,
-			count(bl.userid) as like_count
+			count(bl.userid) as likeCnt
 		from
 			board b
 		left join
@@ -113,6 +116,21 @@
 		group by
 			b.boardnum
 		order by
-			like_count desc limit 4;
+			likeCnt desc limit 4;
 	</select>
+	<select id="getBoardnumByUserid">
+		select boardnum from board where userid = #{userid}
+	</select>
+	<delete id="deleteReportByBoardnum">
+		delete from board_report where boardnum = #{boardnum}
+	</delete>
+	<delete id="deleteLikeByBoardnum">
+		delete from board_like where boardnum = #{boardnum}
+	</delete>
+	<delete id="deleteReportByUserid">
+		delete from board_report where userid = #{userid}
+	</delete>
+	<delete id="deleteLikeByUserid">
+		delete from board_like where userid = #{userid}
+	</delete>
 </mapper>

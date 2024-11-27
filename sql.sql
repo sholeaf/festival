@@ -28,7 +28,6 @@ create table bookmark(
 
 drop table bookmark;
 
-select * from bookmark where userid="apple" order by desc;
 insert into bookmark(userid,contentid) value("apple","3392074");
 
 
@@ -55,7 +54,7 @@ drop table user_info;
 create table board(
 	boardnum bigint primary key auto_increment,
     boardtitle varchar(300),
-    boardcontent varchar(1000),
+    boardcontent text,
     userid varchar(50),
     boardregdate datetime default now(),
     boardreadcnt bigint default 0,
@@ -86,14 +85,15 @@ ORDER BY
 
 insert into board (boardtitle,boardcontent,userid,boardregdate) value('test','test','test','2024-10-21 11:50:57');
 select * from board;
-insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('1','신고테스트','테스트중입니다','apple','1',now(),'1');
-insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('2','신고테스트','테스트중입니다','apple','1',now(),'6');
+insert into board (boardtitle, boardcontent, userid, boardregdate, boardreadcnt) values ('신고테스트','테스트중입니다','apple',now(),'1');
+insert into board (boardtitle, boardcontent, userid, boardregdate, boardreadcnt) values ('신고테스트','테스트중입니다','apple',now(),'6');
 drop table board;
 
 create table board_photo(
 	boardnum bigint,
     systemname varchar(300)
 );
+select * from board_photo;
 
 create table reply(
 	replynum bigint primary key auto_increment,

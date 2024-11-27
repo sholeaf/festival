@@ -16,4 +16,6 @@ public interface BookmarkMapper {
 	boolean addBookmark(BookmarkDTO bmDto);
 
 	ArrayList<BookmarkDTO> getBookmarkList(String loginUser);
+
+	void removeAllBookmark(String userid);
 }
