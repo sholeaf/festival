@@ -50,7 +50,6 @@ const Festival = () => {
 
     const [loginUser, setLoginUser] = useState("");
     const [bmlist, setBmlist] = useState([]);
-    console.log(location.state);
 
 
     // 탭 선택 상태 관리
