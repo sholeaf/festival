@@ -181,6 +181,10 @@ const BoardGet = () => {
     }
 
     const clickRegist = async () => {
+        let flag = false;
+        if (list == null || list.length == 0){
+            flag = true;
+        }
         const replycontents = document.getElementById("replycontents");
         if (replycontents.value == "") {
             alert("댓글 내용을 입력하세요!");
@@ -192,13 +196,14 @@ const BoardGet = () => {
             .then(resp => {
                 alert(`댓글 등록 완료!`);
                 reply.replynum = resp.data;
-
                 if (list.length == 5) {
                     setNowPage(Math.ceil((replyCnt + 1) / 5));
                 }
                 else {
+                    
                     setList([...list, resp.data]);
                 }
+                
                 replycontents.value = "";
             })
     }
@@ -303,8 +308,8 @@ const BoardGet = () => {
                             <textarea name="replycontents" id="replycontents2" className="replycontents" value={editedContent} placeholder="Contents" onChange={handleContentChange} rows="3" cols="40" ></textarea>
                         </div>
                         <div className="rpBtn" >
-                            <div><button onClick={() => handleSaveClick(reply.replynum)}>완료</button></div>
-                            <button onClick={handleCancelClick}>취소</button>
+                            <div onClick={() => handleSaveClick(reply.replynum)}>완료</div>
+                            <div onClick={handleCancelClick}>취소</div>
                         </div>
                     </>
                 ) : (
@@ -314,8 +319,8 @@ const BoardGet = () => {
                         <div className="rpBtn" >{
                             reply.userid == loginUser ?
                                 <>
-                                    <div><button onClick={handleEditClick}>수정</button></div>
-                                    <button onClick={() => removeReply(reply.replynum)}>삭제</button>
+                                    <div onClick={handleEditClick}>수정</div>
+                                    <div onClick={() => removeReply(reply.replynum)}>삭제</div>
                                 </>
                                 : ""
                         }
@@ -354,6 +359,7 @@ const BoardGet = () => {
             Math.ceil(replyCnt / 5) : endPage;
         let prev = startPage != 1;
         let next = endPage * 5 < replyCnt;
+
         const changePage = (e) => {
             e.preventDefault();
             const page = e.target.getAttribute("href");
@@ -389,8 +395,8 @@ const BoardGet = () => {
                             )
                                 : (<BlindReply reply={reply} />)
                             }</div>
+                        <div className={`reply${reply.replyregdate} rpDate`}>{reply.replyregdate}</div>
                         <Button className="btn" value="신고" onClick={() => reportReply(reply.replynum)}></Button>
-                        <div className={`reply${reply.replyregdate}`}>{reply.replyregdate}</div>
                     </div>
                     <div>
                         <strong></strong>
@@ -423,12 +429,13 @@ const BoardGet = () => {
                         <a className="getBoard" onClick={(e) => openPopup(e, data.userid)}><strong>{data.userid}</strong></a>
                     </div>
                     <div className="bgDate" style={{ display: "flex", justifyContent: "flex-end" }}>
-                        <div className="getBoard" onClick={reportBoard}>신고하기</div>
                         <div>{data.boardregdate}</div>
+                        <div className="getBoard" onClick={reportBoard}>신고하기</div>
                     </div>
                     <div className="bgContent">
                         <div dangerouslySetInnerHTML={{ __html: data.boardcontent }} />
                     </div>
+                    <div className="boardTag">{data.tag.replace(/\\/g, ' ')}</div>
                     <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
                         <div>{checkLike ? <Button value="좋아요취소" onClick={like}></Button>
                             : <Button value="좋아요" onClick={like}></Button>
@@ -438,21 +445,21 @@ const BoardGet = () => {
                             {data.userid == loginUser ?
                                 <>
                                     <div>
-                                        <input type="button" value="수정" onClick={() => {
+                                        <input className="btn" type="button" value="수정" onClick={() => {
                                             navigate('/board/modify', { state: { "cri": cri, "boardnum": data.boardnum } })
                                         }}></input>
                                     </div>
                                     <div>
-                                        <input type="button" value="삭제" onClick={remove}></input>
+                                        <input className="btn" type="button" value="삭제" onClick={remove}></input>
                                     </div>
                                     <div>
-                                        <input type="button" value="목록" onClick={() => {
+                                        <input className="btn" type="button" value="목록" onClick={() => {
                                             navigate('/board/list', { state: cri })
                                         }}></input>
                                     </div>
                                 </> :
                                 <div>
-                                    <input type="button" value="목록" onClick={() => {
+                                    <input className="btn" type="button" value="목록" onClick={() => {
                                         navigate('/board/list', { state: cri })
                                     }}></input>
                                 </div>

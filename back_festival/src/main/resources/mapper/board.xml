@@ -40,11 +40,11 @@
 		boardnum desc limit #{startrow}, #{amount} </select>
 	<select id="getTotal">
 		select count(*) from board b
-		where
+		where <include refid="cri"></include>
 		NOT EXISTS (
 		SELECT 1
 		FROM board_report c
-		WHERE b.boardnum = c.boardnum
+		WHERE  b.boardnum = c.boardnum
 		GROUP BY c.boardnum
 		HAVING COUNT(*) > 4
 		) AND boardnum > 0

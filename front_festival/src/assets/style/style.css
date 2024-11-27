@@ -2707,11 +2707,11 @@ a#nsearch-btn {
     color: rgb(79, 73, 134);
 }
 .bgDate{
-    color: rgb(121, 121, 121);;
+    color:red;
 }
 .bgDate div:nth-child(1){
+    color: rgb(121, 121, 121);
     margin-right: 20px;
-    color:red;
 }
 
 .bgContent{
@@ -2758,8 +2758,16 @@ a#nsearch-btn {
 .rpBtn{
     margin-left: 10px;
 }
+.rpDate{
+    color: rgb(121, 121, 121);
+}
+
 .page{
 	text-align: center;
+}
+.boardTag{
+    margin-left: 30px;
+    color: rgb(148, 148, 148);
 }
 .btnArea{
 	display: flex;
