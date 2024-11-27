@@ -152,7 +152,7 @@ const Main = () => {
                         bestReview.map((review, index) => (
                             <div className="review-item" key={index} onClick={() => { navigate(`/board/${review.boardnum}`) }}>
                                 <div>제목 :{review.boardtitle}</div>
-                                <div>내용 :{extractTextFromHTML(review.boardcontent, 103) == ""|| null ? "글이 없는 게시판입니다." :extractTextFromHTML(review.boardcontent, 103) }</div>
+                                <div>내용 :{extractTextFromHTML(review.boardcontent, 103) == ""|| null ? "글이 없는 게시글" :extractTextFromHTML(review.boardcontent, 103) }</div>
                                 <div>{review.userid}</div>
                                 <div>좋아요 {review.likeCnt}</div>
                                 {review.titleImage == null ? <img src={noimage} style={{ width: "90px", height: "90px" }} /> : <img src={reviewimg + review.titleImage} style={{ width: "90px", height: "90px" }} />}

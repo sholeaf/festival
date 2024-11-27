@@ -19,7 +19,6 @@ import BoardModify from './pages/board/BoardModify';
 import BoardWriteT from './pages/board/BoardWriteT';
 
 
-
 function App() {
   return (
     <>
