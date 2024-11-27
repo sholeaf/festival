@@ -11,7 +11,6 @@ const Hobby = ({name,data}) => {
             addData();
         }
     }
-    
     const addData = () => {
         if(inputRef.current.value == ""){
             alert(`${name}를(을) 입력해 주세요.`);
@@ -61,7 +60,7 @@ const Hobby = ({name,data}) => {
     return (
         <div>
             <div className="hobby_input">
-                <input type="text"  name="hobby" ref={inputRef} onKeyDown={handleKeyDown}/><Button value="추가"  onClick={addData}/>
+                <input type="text"  name="hobby" ref={inputRef} onKeyDown={handleKeyDown}/><Button className="btn" value="추가"  onClick={addData}/>
             </div>
             <div className="hobby_list">
                 {

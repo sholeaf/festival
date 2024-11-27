@@ -160,7 +160,7 @@ const BoardWrite = () => {
           </tr>
           <tr>
               <th>아이디</th>
-              <td>{loginUser == ""?"":loginUser}</td>
+              <td>{loginUser === ""? "":loginUser}</td>
               {/* <td><div>
                   <input type="text" name="userid" maxLength={50} readOnly />
               </div>
