@@ -33,6 +33,18 @@ const Main = () => {
         autoplaySpeed: 5000,
     };
 
+    const extractTextFromHTML = (htmlString, maxLength) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, 'text/html');
+        const textContent = doc.body.textContent || doc.body.innerText;
+
+        // 텍스트 길이를 maxLength로 제한
+        if (textContent.length > maxLength) {
+            return textContent.slice(0, maxLength) + '...'; // 길이를 넘으면 '...'을 추가
+        }
+        return textContent;
+    };
+
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
             .then((resp) => {
@@ -140,6 +152,7 @@ const Main = () => {
                         bestReview.map((review, index) => (
                             <div className="review-item" key={index} onClick={() => { navigate(`/board/${review.boardnum}`) }}>
                                 <div>제목 :{review.boardtitle}</div>
+                                <div>내용 :{extractTextFromHTML(review.boardcontent, 103) == ""|| null ? "글이 없는 게시판입니다." :extractTextFromHTML(review.boardcontent, 103) }</div>
                                 <div>{review.userid}</div>
                                 <div>좋아요 {review.likeCnt}</div>
                                 {review.titleImage == null ? <img src={noimage} style={{ width: "90px", height: "90px" }} /> : <img src={reviewimg + review.titleImage} style={{ width: "90px", height: "90px" }} />}

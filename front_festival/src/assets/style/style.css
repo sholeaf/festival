@@ -113,6 +113,9 @@ img {
 .review-item:last-child{
     margin-bottom: 100px;
 }
+.review-item div:nth-child(3), .review-item div:nth-child(4){
+    text-align: center;
+}
 .review-item div {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -120,8 +123,10 @@ img {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 200px; /* 원하는 너비로 설정 */
-    margin: 20px;
+    margin-right: 20px;
     font-weight: bold;
+    border-right: 1px solid white;
+    padding-right: 10px;
   }
 .main-slide{
     margin-top: 50px;
@@ -2727,6 +2732,9 @@ a#nsearch-btn {
      color: red;
      margin-left: 10px;
  }
+ .boardbox5 div:last-child{
+    color: rgb(27, 27, 27);
+ }
  
  .nowPage {
     color: #92B4EC;
@@ -2744,7 +2752,8 @@ a#nsearch-btn {
  .searchBtn{
      display: inline-block;
      width: 50px;
-     height: 20px;
+     height: 30px;
+     line-height: 30px;
  }
  
  .getBoard{
@@ -2784,64 +2793,93 @@ a#nsearch-btn {
      max-height: 800px;
      margin: 10px;
  }
- 
+ .boardTag{
+    margin-left: 17px;
+    color: rgb(148, 148, 148);
+}
+.bgBtn{
+    display: inline-block;
+    width: 60px;
+    height: 30px;
+}
+
  .rrow{
     display: flex;
- }
- .reply_write{
+    background-color: #e6f5ff;
+    padding: 10px;
+    padding-left: 45px;
+    align-items: center;
+    border-bottom: 1px solid white;
+}
+.rpBody_wrap{
     display: flex;
-    flex-wrap: wrap;
- }
- .replies{
-     margin-top: 15px;
-    width: 100%;
- }
- .rpBody_wrap{
-     display: flex;
-     background-color: #e6f5ff;
-     padding: 10px;
-     padding-left: 20px;
-     align-items: center;
- }
- .rpBody_wrap textarea{
-     background-color: #f2f8ff;
-     resize: none;
-     width: 650px;
-     height: 40px;
-     padding: 5px;
-     border: 1px solid rgb(108, 157, 177);
-     border-radius: 5px;
- }
- .rpBody{
-     width: 710px;
-     margin-left: 20px;
-     display: flex;
-     align-items: center;
- }
- .rpBtn{
-     margin-left: 10px;
- }
- .rpDate{
-     color: rgb(121, 121, 121);
-     display: flex;
-     align-items: center;
- }
- 
- .page{
+    background-color: #e6f5ff;
+    padding: 10px;
+    padding-left: 45px;
+    align-items: center;
+}
+
+.rpBody_wrap textarea{
+    background-color: #f2f8ff;
+    resize: none;
+    width: 680px;
+    height: 40px;
+    padding: 5px;
+    border: 1px solid rgb(108, 157, 177);
+    border-radius: 5px;
+}
+.rpBody{
+    width: 741px;
+    margin-left: 20px;
+    display: flex;
+    align-items: center;
+}
+.rpBtn{
+    margin-left: 10px;
+    color: rgb(66, 66, 66);
+}
+.rpDate{
+    color: rgb(121, 121, 121);
+    display: flex;
+    align-items: center;
+}
+.rpDate div:nth-child(1){
+    width: 80px;
+    font-size: 15px;
+    text-align: center;
+}
+.rpreg{
+    display: inline-block;
+    height: 26px;
+    margin-left: -5px;
+}
+
+.page{
+	text-align: center;
+}
+
+.bwBtn{
+    display: inline-block;
+    height: 32px;
+    width: 74px;
+}
+
+.userhobby{
+    color: rgb(148, 148, 148);
+    margin-right: 5px;
+    cursor: pointer;
+}
+.btnArea{
+	display: flex;
     text-align: center;
  }
- .boardTag{
-     margin-left: 30px;
-     color: rgb(148, 148, 148);
+ .hbBtn{
+    display: inline-block;
+    height: 27px;
+    line-height: 25px;
  }
- .userhobby{
-     color: rgb(148, 148, 148);
-     margin-right: 5px;
-     cursor: pointer;
- }
- .btnArea{
-    display: flex;
-     text-align: center;
+ .replies{
+    margin-top: 15px;
  }
  .reply_line{
      margin-top: 20px;
@@ -2854,3 +2892,6 @@ a#nsearch-btn {
      font-family: 'EBSJSKMedium';
      color: rgb(79, 73, 134);
  }
+ 
+
+ 
