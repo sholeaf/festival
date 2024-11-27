@@ -449,11 +449,11 @@ header {
     font-weight: bold;
     margin: 0px 0 15px 0;
 }
-.mypage .community .no_list,
-.mypage .bookmark .no_list {
+.mypage .community .list .no_list,
+.mypage .bookmark .list .no_list {
     font-size: 18px;
     font-weight: bold;
-    margin: 0 auto;
+    justify-content: center;
 }
 
 .mypage .community #openCommunity,
@@ -465,8 +465,8 @@ header {
     position: absolute;
 }
 
-.mypage .community .list,
-.mypage .bookmark .list {
+.mypage .community .list div,
+.mypage .bookmark .list div{
     display: flex;
     flex-wrap: wrap;
     width: 100%;

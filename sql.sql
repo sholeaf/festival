@@ -46,7 +46,8 @@ create table user_info(
     emailinfo char(3),
     genderinfo char(3)
 ); 
-insert into user_info value("apple", "T", "T", "T");
+insert into user_info value("apple", "T", "T", "
+T");
 select * from user_info;
 drop table user_info;
 
@@ -110,6 +111,17 @@ create table board_like(
 	boardnum bigint,
     userid varchar(50)
 );
+
+select * from board_like;
+
+create table board_report(
+	boardnum bigint,
+    userid varchar(50)
+);
+select * from board_report;
+drop table board_report;
+
+
 create table reply_report(
     replynum bigint,
     userid varchar(50)
@@ -127,13 +139,7 @@ delete from reply_report where replynum = 1;
 drop table reply_report;
 select * from reply_report;
 
-create table board_report(
-	boardnum bigint,
-    userid varchar(50)
-);
 
-
-drop table board_report;
 insert into board_report values(7, "banana");
 insert into board_report values(8, "banana");
 insert into board_report values(9, "banana");
