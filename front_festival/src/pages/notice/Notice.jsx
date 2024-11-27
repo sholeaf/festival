@@ -53,9 +53,6 @@ const Notice = () => {
         keyword: "",
         startrow: 0
     });
-    // useEffect(() => {
-    //     console.log("공지 컴포넌트가 리렌더링되었습니다. cri:", cri);
-    // }, [cri]); 
     const [data, setData] = useState();
     const [pageMaker, setPageMaker] = useState({
         startpage: 1,
@@ -119,7 +116,7 @@ const Notice = () => {
             setCri(location.state);
         }
         console.log("공지 로케이션 상태",location.state)
-    }, [location.state])
+    }, [location.state, cri])
     
     // 데이터가 없을 때 로딩 텍스트 표시
     const [chars, setChars] = useState([]);

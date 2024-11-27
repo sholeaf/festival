@@ -91,7 +91,7 @@ const Header = () => {
                     {/* 관리자인 경우에만 '관리자페이지' 버튼을 보여주고, '마이페이지'는 감춤 */}
                     {isAdmin && (
                         <div className="mypage_btn">
-                            <a onClick={() => handleNavigation("/notice/adminpage")}>관리자페이지</a>
+                            <a onClick={() => navigate("/notice/adminpage")}>관리자페이지</a>
                         </div>
                     )}
 
