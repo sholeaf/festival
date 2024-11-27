@@ -12,8 +12,7 @@ import com.example.demo.domain.ReplyCriteria;
 import com.example.demo.domain.ReplyDTO;
 
 public interface AdminPageService {
-	List<BoardDTO> findByReportcntGreaterThanEqual(int reportCount);
-	List<BoardDTO> getReportedBoards();
+
 	HashMap<String, Object> getList(Criteria cri);
 	int deleteList(long boardnum);
 	int replyreset(long replynum);

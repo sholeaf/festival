@@ -9,22 +9,10 @@ import NoteModal from "../../components/NoteModal";
 const Notice = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const sendedCri = location.state;
-    //모달테스트
-    const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
-    const [selectedUserId, setSelectedUserId] = useState(''); 
-    const [loginUser, setLoginUser] = useState(null);
-    // 모달 열기
-    const openModal = (userId) => {
-        setSelectedUserId(userId);  // 클릭된 작성자의 userid를 저장
-        setIsModalOpen(true);  // 모달 열기
-    };
-
-    // 모달 닫기
-    const closeModal = () => {
-        setIsModalOpen(false);
-        setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
-    };
+    const {sendedCri} = location.state;
+    const [loginUser, setLoginUser] = useState("");
+    const [isAdmin, setIsAdmin] = useState(false);
+    // 로그인 체크
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
             .then((resp) => {
@@ -34,18 +22,41 @@ const Notice = () => {
                 console.error("로그인 상태 확인 오류: ", error);
             });
     }, []);
-//모달부분 끗
-    const [cri, setCri] = useState(sendedCri || {
+    useEffect(() => {
+        // 페이지 로드 시 관리자 여부를 확인
+        axios.get('/api/notice/checkadmin')
+            .then(response => {
+                setIsAdmin(response.data.admin);
+            })
+            .catch(error => {
+                setIsAdmin(false); 
+            });
+    }, []);
+    //모달테스트
+    const [isModalOpen, setIsModalOpen] = useState(false);  
+    const [selectedUserId, setSelectedUserId] = useState(''); 
+    
+    // 모달 열기
+    const openModal = (userId) => {
+        setSelectedUserId(userId); 
+        setIsModalOpen(true);  
+    };
+
+    // 모달 닫기
+    const closeModal = () => {
+        setIsModalOpen(false);
+        setSelectedUserId('');  
+    };
+    const [cri, setCri] = useState({
         pagenum: 1,
         amount: 10,
         type: "a",
         keyword: "",
         startrow: 0
     });
-    useEffect(() => {
-        console.log("location.state:", location.state);
-        console.log("sendedCri 상태:", sendedCri);
-    }, [sendedCri, location.state]);
+    // useEffect(() => {
+    //     console.log("공지 컴포넌트가 리렌더링되었습니다. cri:", cri);
+    // }, [cri]); 
     const [data, setData] = useState();
     const [pageMaker, setPageMaker] = useState({
         startpage: 1,
@@ -58,9 +69,6 @@ const Notice = () => {
     });
 
     const [inputs, setInputs] = useState("");
-    // 관리자 여부 설정
-    const [isAdmin, setIsAdmin] = useState(false);
-
     const inputkeyword = (e) => {
         setInputs(e.target.value);
     };
@@ -74,6 +82,8 @@ const Notice = () => {
             pagenum: 1
         };
         setCri(changedCri);
+        setInputs(""); 
+        document.getElementById("type").value = "";
     };
     const searchenter = (e) => {
         if (e.key === 'Enter') {
@@ -90,13 +100,11 @@ const Notice = () => {
             keyword: cri.keyword,
             startrow: cri.startrow
         };
-        console.log("cri전송:", cri);
+        
         axios.get(`/api/notice/list/${cri.pagenum}`, { params: cri })
             .then((resp) => {
-                console.log("공지응답 데이터:", resp.data);
                 setData(resp.data);
                 setPageMaker(resp.data.pageMaker);
-                console.log("공지게시판페이지메이커상태:",pageMaker);
                 setInputs(resp.data.pageMaker.cri.keyword);
             })
             .catch((error) => {
@@ -111,20 +119,9 @@ const Notice = () => {
         if (location.state) {
             setCri(location.state);
         }
+        console.log("공지 로케이션 상태",location.state)
     }, [location.state])
-    useEffect(() => {
-        // 페이지 로드 시 관리자 여부를 확인
-        axios.get('/api/notice/checkadmin')
-            .then(response => {
-                console.log("응답 데이터:", response.data.admin)
-                setIsAdmin(response.data.admin);  // 서버에서 받은 isAdmin 값으로 상태 업데이트
-                console.log("isAdmin 상태:", response.data.admin);
-            })
-            .catch(error => {
-                console.error('관리자 여부 확인 실패:', error);
-                setIsAdmin(false);  // 에러 발생 시 기본값으로 관리자가 아니라고 설정
-            });
-    }, []);
+    
     // 데이터가 없을 때 로딩 텍스트 표시
     const [chars, setChars] = useState([]);
     useEffect(() => {
@@ -158,11 +155,9 @@ const Notice = () => {
 
     // 실제 데이터가 있을 경우 리스트 처리
     const list = data?.notice;
-    console.log(list);
     const noticeList = [];
     if (list && list.length > 0) {
         for (const notice of list) {
-            console.log("notice데이터new확인:", notice);
             noticeList.push(
                 <div className="row" key={notice.noticenum} onClick={() => {
                     navigate(`/notice/${notice.noticenum}`, { state: cri });

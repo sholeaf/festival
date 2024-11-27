@@ -14,22 +14,13 @@ import com.example.demo.domain.ReplyReportDTO;
 
 @Mapper
 public interface AdminPageMapper {
-	List<BoardDTO> findReportedBoards();
-	List<BoardDTO> findByReportcntGreaterThanEqual(int i);
 	List<BoardDTO> getList(Criteria cri);
 	long getListReporoTotal(Criteria cri);
 	Optional<BoardDTO> findById(long boardnum);
 	void deleteList(BoardDTO boardDTO);
-	int getReportList(Long boardnum);
-	List<ReplyDTO> getReplyList(Criteria cri);
 	void deleteReplyList(ReplyDTO replyDTO);
-	Optional<ReplyDTO> findReplyById(long replynum);
 	List<ReplyDTO> findRepliesByBoardnum(long boardnum);
-	Optional<ReplyReportDTO> findByreplynum(long replynum);
-	int deleteReplyReport(long replynum);
 	int findBoardByReport(long boardnum);
 	void deleteReportList(long boardnum);
-	int deleteReply(long replynum);
-	long getReplyReportTotal(Criteria cri);
 
 }
