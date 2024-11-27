@@ -72,10 +72,10 @@ const Header = () => {
                         <a>모두의 축제</a>
                     </div>
                     <div className="schedule_btn">
-                        <a onClick={() => handleNavigation("/festival")}>축제 일정</a>
+                        <a onClick={() => navigate("/festival")}>축제 일정</a>
                     </div>
                     <div className="review_btn">
-                        <a onClick={() => handleNavigation("/board/list")}>축제 후기</a>
+                        <a onClick={() => navigate("/board/list")}>축제 후기</a>
                     </div>
                     <div className="notice_btn">
                         <a onClick={() => handleNavigation("/notice/list")}>공지사항</a>

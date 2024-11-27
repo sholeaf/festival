@@ -218,7 +218,7 @@ const Festival = () => {
         }
         return () => clearInterval(interval); // cleanup on tab change
     }, [activeTab]);
-
+    console.log("active tab : ", activeTab)
     return (
         <>
             <Header />
