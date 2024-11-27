@@ -790,7 +790,7 @@ const MyPage = () => {
                                 )}
                             </Modal>
                             <div>
-                                {/* <Note loginUser={loginUser} /> */}
+                                <Note loginUser={loginUser} />
                             </div>
                         </div>
                     )}
