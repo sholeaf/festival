@@ -2675,6 +2675,22 @@ a#nsearch-btn {
 	width: 1000px;
 }
 
+.bgTitle{
+    font-size: 20px;
+}
+.bgUserid{
+    font-size: 18px;
+    padding-left: 5px;
+    color: rgb(79, 73, 134);
+}
+.bgDate{
+    color:red;
+}
+.bgDate div:nth-child(1){
+    color: rgb(121, 121, 121);
+    margin-right: 20px;
+}
+
 .bgContent{
     min-height: 200px;
 }
@@ -2697,8 +2713,16 @@ a#nsearch-btn {
     width: 700px;
     margin-left: 20px;
 }
+.rpDate{
+    color: rgb(121, 121, 121);
+}
+
 .page{
 	text-align: center;
+}
+.boardTag{
+    margin-left: 30px;
+    color: rgb(148, 148, 148);
 }
 .btnArea{
 	display: flex;
