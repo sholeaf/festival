@@ -152,7 +152,7 @@ const Main = () => {
                         bestReview.map((review, index) => (
                             <div className="review-item" key={index} onClick={() => { navigate(`/board/${review.boardnum}`) }}>
                                 <div>제목 :{review.boardtitle}</div>
-                                <div>내용 :{extractTextFromHTML(review.boardcontent, 103) == ""|| null ? "글이 없는 게시글" :extractTextFromHTML(review.boardcontent, 103) }</div>
+                                <div>내용 :{extractTextFromHTML(review.boardcontent, 103) == "" || null ? "글이 없는 게시글" : extractTextFromHTML(review.boardcontent, 103)}</div>
                                 <div>{review.userid}</div>
                                 <div>좋아요 {review.likeCnt}</div>
                                 {review.titleImage == null ? <img src={noimage} style={{ width: "90px", height: "90px" }} /> : <img src={reviewimg + review.titleImage} style={{ width: "90px", height: "90px" }} />}
@@ -194,17 +194,19 @@ const Main = () => {
 
                 <div className="main-festival-notice">
                     <h2>공지사항</h2>
-                    {notice.length > 0 ? (
-                        notice.map((noticeItem, index) => (
-                            <div className="notice-item" key={index}>
-                                <h3>{noticeItem.noticetitle}</h3>
-                                <p>{noticeItem.userid}</p>
-                                <p>{noticeItem.noticeregdate}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <p className="waring-text">공지사항이 없습니다.</p>
-                    )}
+                    <ul>
+                        {notice.length > 0 ? (
+                            notice.map((noticeItem, index) => (
+                                <li className="notice-item" key={index}>
+                                    <h4>{noticeItem.noticetitle}</h4>
+                                    <p>{noticeItem.userid}</p>
+                                    <p>{noticeItem.noticeregdate}</p>
+                                </li>
+                            ))
+                        ) : (
+                            <p className="waring-text">공지사항이 없습니다.</p>
+                        )}
+                    </ul>
                 </div>
             </div>
         </>

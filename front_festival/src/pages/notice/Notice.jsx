@@ -9,7 +9,6 @@ import NoteModal from "../../components/NoteModal";
 const Notice = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {sendedCri} = location.state;
     const [loginUser, setLoginUser] = useState("");
     const [isAdmin, setIsAdmin] = useState(false);
     // 로그인 체크
