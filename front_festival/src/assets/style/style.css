@@ -2481,7 +2481,7 @@ a#nsearch-btn {
     font-size: 20px;
     line-height: 34px;
     letter-spacing: 2px;
-    margin: 150px auto;
+    margin: 100px auto;
     opacity: 0;
 }
 
@@ -2535,10 +2535,13 @@ a#nsearch-btn {
 }
 
 .festival-intro1,
-.festival-intro2,
 .festival-intro3 {
     height: 600px;
     margin-top: 150px;
+}
+
+.festival-intro2{
+    margin-top: 300px;
 }
 
 .festival-intro3 {
