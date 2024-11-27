@@ -4,18 +4,10 @@ import { useLocation, useNavigate } from "react-router-dom";
 import Pagination from "../../components/Paginstion";
 import Modal from "../../components/Modal";
 
-const Note = ({ loginUser , cri, setCri}) => {
+const Note = ({ loginUser , cri, setCri, key}) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const sendedCri = location.state;
     const [isReplyMode, setIsReplyMode] = useState(false); // 답장 모드 상태
-    // const [cri, setCri] = useState(sendedCri || {
-    //     pagenum: 1,
-    //     amount: 5,
-    //     startrow: 0,
-    //     keyword: '',
-    //     type: 'a'
-    // });
     const [content, setContent] = useState(''); // 답장 내용
     const [note, setNote] = useState();
     const [pageMaker, setPageMaker] = useState({
@@ -27,7 +19,17 @@ const Note = ({ loginUser , cri, setCri}) => {
         next: false,
         cri: null
     });
-    useEffect(() => {}, [cri]);
+    useEffect(() => {
+        setCri((prevCri) => ({
+            ...prevCri,
+            pagenum: 1 // key 변경 시 pagenum을 1로 설정
+        }));
+    }, [key]);
+    useEffect(() => {
+        // cri나 다른 props가 변경될 때마다 다시 데이터를 로딩하는 로직을 넣을 수 있습니다.
+        console.log("Note 컴포넌트가 리렌더링되었습니다. cri:", cri);
+        // 데이터를 새로 가져오는 API 호출 등을 수행할 수 있습니다.
+    }, [cri]); 
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal 열림 상태
     const [modalData, setModalData] = useState(null); // Modal에 표시할 데이터
 
@@ -98,15 +100,13 @@ const Note = ({ loginUser , cri, setCri}) => {
 
     // 페이지 로드 시 API 호출
     useEffect(() => {
-        console.log("Cri changed:", cri);
         const temp = {
             pagenum: cri.pagenum,
-            amount: cri.amount,
+            amount: 5,
             startrow: cri.startrow,
-            type: cri.type,
-            keyword: cri.keyword
+            
         };
-        axios.get(`/api/note/list/${cri.pagenum}`, { params: cri })
+        axios.get(`/api/note/list/${cri.pagenum}`, { params: temp })
             .then((resp) => {
                 setNote(resp.data);
                 setPageMaker(resp.data.pageMaker);
