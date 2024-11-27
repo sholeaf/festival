@@ -197,10 +197,11 @@ const BoardGet = () => {
                 alert(`댓글 등록 완료!`);
                 reply.replynum = resp.data;
                 if (list.length == 5) {
+                    setReplyCnt(replyCnt+1);
                     setNowPage(Math.ceil((replyCnt + 1) / 5));
                 }
                 else {
-                    
+                    setReplyCnt(replyCnt+1);
                     setList([...list, resp.data]);
                 }
                 
@@ -220,6 +221,14 @@ const BoardGet = () => {
         }
     }
     const reportBoard = async () => {
+        if(loginUser == null || loginUser == ""){
+            alert("로그인 후 신고 가능합니다!");
+            return;
+        }
+        if(loginUser == data.userid){
+            alert("자신의 게시물은 신고 할 수 없습니다!");
+            return;
+        }
         const response = await axios.post(`/api/board/reportBoard/${boardnum}?userid=${loginUser}`);
         if (response.data) {
             alert("신고되었습니다!");
@@ -229,6 +238,14 @@ const BoardGet = () => {
         }
     }
     const reportReply = async (replynum) => {
+        if(loginUser == null || loginUser == ""){
+            alert("로그인 후 신고 가능합니다!");
+            return;
+        }
+        if(loginUser == data.userid){
+            alert("자신의 댓글은 신고 할 수 없습니다!");
+            return;
+        }
         const response = await axios.post(`/api/board/reportReply/${replynum}?userid=${loginUser}`);
         if (response.data) {
             alert("신고되었습니다!");
@@ -250,7 +267,7 @@ const BoardGet = () => {
                 {isContentVisible ? (
                 <div className="rpBody">{reply.replycontent}</div> // 내용이 보일 때
                 ) : (
-                <div className="rpBody">(블라인드 처리된 댓글입니다. 클릭하시면 내용이 보입니다.)</div> // 내용이 숨겨져 있을 때
+                <div className="rpBody getBoard">(블라인드 처리된 댓글입니다. 클릭하시면 내용이 보입니다.)</div> // 내용이 숨겨져 있을 때
                 )}
             </div>
         );
@@ -395,30 +412,18 @@ const BoardGet = () => {
                             )
                                 : (<BlindReply reply={reply} />)
                             }</div>
-                        <div className={`reply${reply.replyregdate} rpDate`}>{reply.replyregdate}</div>
-                        <Button className="btn" value="신고" onClick={() => reportReply(reply.replynum)}></Button>
+                        <div className="rpDate">
+                            <div className={`reply${reply.replyregdate} rpDate`}>{reply.replyregdate}</div>
+                            <div className="getBoard" onClick={() => reportReply(reply.replynum)}><img src="/api/file/thumbnail?systemname=report1.png" style={{width: "18px", marginLeft:"10px", marginTop:"5px"}}></img></div>
+                        </div>
                     </div>
                     <div>
                         <strong></strong>
 
                     </div>
-                    {/* <div>
-                        {
-                            reply.userid == loginUser?
-                            <>
-                                <Button value="수정" className={"modify btn"} onClick={(e)=>{ modifyReply(e,reply.replynum) }}></Button>
-                                <Button value="수정 완료" className={"mfinish btn hdd"} onClick={(e)=>{ modifyReplyOk(e,reply.replynum) }}></Button>
-                                <Button value="삭제" className={"remove btn"} onClick={(e)=>{ removeReply(e,reply.replynum) }}></Button>
-                            </>
-                            :""
-                        }
-                    </div> */}
                 </li>
             )
-
         }
-
-
 
         return (
             <>
@@ -430,7 +435,7 @@ const BoardGet = () => {
                     </div>
                     <div className="bgDate" style={{ display: "flex", justifyContent: "flex-end" }}>
                         <div>{data.boardregdate}</div>
-                        <div className="getBoard" onClick={reportBoard}>신고하기</div>
+                        <div className="getBoard" onClick={reportBoard}><img src="/api/file/thumbnail?systemname=report1.png" style={{width: "25px"}}></img></div>
                     </div>
                     <div className="bgContent">
                         <div dangerouslySetInnerHTML={{ __html: data.boardcontent }} />

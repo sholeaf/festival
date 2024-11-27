@@ -2708,10 +2708,11 @@ a#nsearch-btn {
 }
 .bgDate{
     color:red;
+    margin-right: 10px;
 }
 .bgDate div:nth-child(1){
     color: rgb(121, 121, 121);
-    margin-right: 20px;
+    margin-right: 10px;
 }
 
 .bgContent{
@@ -2740,6 +2741,8 @@ a#nsearch-btn {
     display: flex;
     background-color: #e6f5ff;
     padding: 10px;
+    padding-left: 20px;
+    align-items: center;
 }
 .rpBody_wrap textarea{
     background-color: #f2f8ff;
@@ -2754,12 +2757,15 @@ a#nsearch-btn {
     width: 710px;
     margin-left: 20px;
     display: flex;
+    align-items: center;
 }
 .rpBtn{
     margin-left: 10px;
 }
 .rpDate{
     color: rgb(121, 121, 121);
+    display: flex;
+    align-items: center;
 }
 
 .page{
@@ -2769,11 +2775,24 @@ a#nsearch-btn {
     margin-left: 30px;
     color: rgb(148, 148, 148);
 }
+.userhobby{
+    color: rgb(148, 148, 148);
+    margin-right: 5px;
+    cursor: pointer;
+}
 .btnArea{
 	display: flex;
     text-align: center;
 }
 .reply_line{
     margin-top: 20px;
+}
+
+.boardWrite tr th{
+    width: 60px;
+}
+.bwUserid{
+    font-family: 'EBSJSKMedium';
+    color: rgb(79, 73, 134);
 }
 

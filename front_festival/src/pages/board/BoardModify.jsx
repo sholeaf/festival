@@ -220,14 +220,14 @@ const BoardModify = () =>{
             <Header></Header>
             <div id="board_wrap">
                 <form name="writeForm" onSubmit={modify}>
-                    <table>
+                    <table className="boardWrite">
                         <tr>
                             <th>제목</th>
                             <td><input name="boardtitle" type="text" onChange={change} value={data.boardtitle}></input></td>
                         </tr>
                         <tr>
                             <th>아이디</th>
-                            <td>apple</td>
+                            <td className="bwUserid">apple</td>
                         </tr>
                         <tr>
                             <th>태그</th>
@@ -238,9 +238,9 @@ const BoardModify = () =>{
                         {/* <CustomToolbar/> */}
                         <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"600px"}}/>
                         </div>
-                        <div>
-                        <input type="button" value="수정" onClick={modify}></input>
-                        <input type="button" value="취소" onClick={()=>{
+                        <div style={{textAlign:"center"}}>
+                        <input className="btn" type="button" value="수정" onClick={modify}></input>
+                        <input className="btn" type="button" value="취소" onClick={()=>{
                             canselModify();
                             navigate(`/board/${boardnum}`, { state: cri })}}></input>
                     </div>
