@@ -40,9 +40,6 @@ const MyPage = () => {
 
     // 즐겨찾기 목록, contentid를 담은 배열
     const [bookmarks, setBookmarks] = useState([]);
-    // api로 가져온 축제 디테일 정보를 담은 배열
-    const [festival, setFestival] = useState([]);
-
 
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [activeModal, setActiveModal] = useState('');
@@ -87,6 +84,12 @@ const MyPage = () => {
     }
 
     const getCode = () => {
+        const email = document.modifyForm.useremail.value;
+        if(user.useremail == email){
+            alert("동일한 이메일 입니다.");
+            return;
+        }
+
         const formData = new FormData();
 
         const codeCheck = document.modifyForm.codeCheck;
@@ -95,7 +98,6 @@ const MyPage = () => {
             codeCheck.style.display = "none";
         }
 
-        const email = document.modifyForm.useremail.value;
 
         formData.append('email', email);
 
@@ -393,27 +395,38 @@ const MyPage = () => {
 
     const indexOfLastItem = currentPage * itemsPerPage;
     const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-    const currentItems = list.slice(indexOfFirstItem, indexOfLastItem);
+    const boardItems = list.slice(indexOfFirstItem, indexOfLastItem);
+    const bookmarkItems = bookmarks.slice(indexOfFirstItem, indexOfLastItem);
 
     const paginate = (pageNumber) => {
         setCurrentPage(pageNumber);
     };
-    const pageNumbers = [];
+    const boardPageNumbers = [];
     for (let i = 1; i <= Math.ceil(list.length / itemsPerPage); i++) {
-        pageNumbers.push(i);
+        boardPageNumbers.push(i);
+    }
+    const bookmarkPageNumbers = [];
+    for (let i = 1; i <= Math.ceil(bookmarks.length / itemsPerPage); i++) {
+        bookmarkPageNumbers.push(i);
     }
     // 현재 페이지가 속한 페이지 그룹 (1-10, 11-20 등)
     const currentGroupStart = Math.floor((currentPage - 1) / 10) * 10 + 1;
-    const currentGroupEnd = Math.min(currentGroupStart + 9, pageNumbers.length);
+    const boardCurrentGroupEnd = Math.min(currentGroupStart + 9, boardPageNumbers.length);
+    const bookmarkCurrentGroupEnd = Math.min(currentGroupStart + 9, bookmarkPageNumbers.length);
 
-    // 페이지 그룹의 페이지 번호
-    const pageNumbersToShow = pageNumbers.slice(currentGroupStart - 1, currentGroupEnd);
+    // board 페이지 그룹의 페이지 번호
+    const boardToShow = boardPageNumbers.slice(currentGroupStart - 1, boardCurrentGroupEnd);
 
-    const nextGroupStart = currentGroupEnd + 1;
-    const prevGroupEnd = currentGroupStart - 1;
+    const boardNext = boardCurrentGroupEnd + 1;
+    const boardPrev = currentGroupStart - 1;
+    // bookmark 페이지 그룹의 페이지 번호
+    const bookmarkToShow = bookmarkPageNumbers.slice(currentGroupStart - 1, bookmarkCurrentGroupEnd);
+
+    const bookmarkNext = bookmarkCurrentGroupEnd + 1;
+    const bookmarkPrev = currentGroupStart - 1;
 
 
-    const boardList = currentItems.map((board) => (
+    const boardList = boardItems.map((board) => (
         <div key={board.boardnum} className='board' onClick={() => navigate(`/board/${board.boardnum}`)}>
             {board.titleImage ?
                 <img src={`/api/file/thumbnail?systemname=${board.titleImage}`} alt="" /> :
@@ -423,9 +436,26 @@ const MyPage = () => {
         </div>
     ));
 
-    const openCommunity = () => {
+    // festivalList에 html 정보 담기
+    const festivalList = bookmarkItems.map((festival) => (
+        <div key={festival.contentid} className='board' onClick={() => {
+            navigate(`/festival/${festival.contentid}`, { state: { API_KEY } })
+        }}>
+            {
+                festival.image ?
+                    <img src={festival.image} alt="" />
+                    :
+                    <img src={noimage} alt="" />
+            }
+            <span>{festival.title}</span>
+        </div>
+
+    ));
+
+    const showCommunity = () => {
         setItemsPerPage(9); // 9개로 설정
         setCurrentPage(1); // 첫 페이지로 설정
+        document.getElementById("openCommunity").style.display = 'none';
         document.getElementById("closeCommunity").style.display = 'inline-block';
         document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
@@ -434,42 +464,28 @@ const MyPage = () => {
     const closeCommunity = () => {
         setItemsPerPage(3); // 3개로 설정
         setCurrentPage(1);
+        document.getElementById("openCommunity").style.display = 'inline-block';
         document.getElementById("closeCommunity").style.display = 'none';
         document.getElementsByClassName("bookmark")[0].style.display = 'block';
         setIsAllBoard(false);
     };
     const showBookmark = () => {
+        setItemsPerPage(9); // 9개로 설정
+        setCurrentPage(1); // 첫 페이지로 설정
         document.getElementById("openBookmark").style.display = 'none';
         document.getElementById("closeBookmark").style.display = 'inline-block';
         document.getElementsByClassName("community")[0].style.display = 'none';
         setIsAllBoard(true);
     };
     const closeBookmark = () => {
+        setItemsPerPage(3); // 3개로 설정
+        setCurrentPage(1);
         document.getElementById("openBookmark").style.display = 'inline-block';
         document.getElementById("closeBookmark").style.display = 'none';
         document.getElementsByClassName("community")[0].style.display = 'block';
         setIsAllBoard(false);
     };
 
-    // festivalList에 html 정보 담기
-    const festivalList = [];
-    if (bookmarks && bookmarks.length > 0) {
-        bookmarks.slice(0, isAllBoard ? bookmarks.length : 3).map((festival) => {
-            festivalList.push(
-                <div key={festival.contentid} className='board' onClick={() => {
-                    navigate(`/festival/${festival.contentid}`, { state: { API_KEY } })
-                }}>
-                    {
-                        festival.image ?
-                            <img src={festival.image} alt="" />
-                            :
-                            <img src={noimage} alt="" />
-                    }
-                    <span>{festival.title}</span>
-                </div>
-            )
-        })
-    }
 
     const infoModify = () => {
         const name = document.querySelector('input[name="name"]:checked').value;
@@ -600,26 +616,11 @@ const MyPage = () => {
                             </div>
                             <div className="bookmark">
                                 <p>즐겨찾기 목록</p>
-                                {
-                                    festival.length > 3 ? (<span onClick={showBookmark} id='openBookmark'>더 보기...</span>)
-                                        :
-                                        (<></>)
-                                }
-                                <span onClick={closeBookmark} id='closeBookmark'>돌아가기</span>
-                                <div className='list'>
-                                    {festivalList}
-                                </div>
-                            </div>
-                            <div className="community">
-                                <p>후기 목록</p>
-                                {list.length > itemsPerPage && (
-                                    <span onClick={openCommunity} id='openCommunity'>
-                                        더 보기...
-                                    </span>
+                                {bookmarks.length > itemsPerPage && (<span onClick={showBookmark} id='openBookmark' className='btn'>더 보기...</span>
                                 )}
-                                <span onClick={closeCommunity} id='closeCommunity'>돌아가기</span>
+                                <span onClick={closeBookmark} id='closeBookmark' className='btn'>돌아가기</span>
                                 <div className='list'>
-                                    {boardList}
+                                    {bookmarks.length > 0 ? <div>{festivalList}</div> : <div className='no_list'>목록이 존재하지 않습니다.</div>}
                                 </div>
 
                                 {/* 페이징 버튼 */}
@@ -627,11 +628,11 @@ const MyPage = () => {
                                     <div className="pagination">
                                         {/* "<" 버튼 - 이전 그룹으로 이동 */}
                                         {currentGroupStart > 1 && (
-                                            <span onClick={() => paginate(prevGroupEnd)}>&lt;</span>
+                                            <span onClick={() => paginate(bookmarkPrev)}>&lt;</span>
                                         )}
 
                                         {/* 페이지 번호 버튼 */}
-                                        {pageNumbersToShow.map(number => (
+                                        {bookmarkToShow.map(number => (
                                             <span
                                                 key={number}
                                                 onClick={() => paginate(number)}
@@ -642,8 +643,46 @@ const MyPage = () => {
                                         ))}
 
                                         {/* ">" 버튼 - 다음 그룹으로 이동 */}
-                                        {currentGroupEnd < pageNumbers.length && (
-                                            <span onClick={() => paginate(nextGroupStart)}>&gt;</span>
+                                        {bookmarkCurrentGroupEnd < bookmarkPageNumbers.length && (
+                                            <span onClick={() => paginate(bookmarkNext)}>&gt;</span>
+                                        )}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="community">
+                                <p>후기 목록</p>
+                                {list.length > itemsPerPage && (
+                                    <span onClick={showCommunity} id='openCommunity' className='btn'>
+                                        더 보기...
+                                    </span>
+                                )}
+                                <span onClick={closeCommunity} id='closeCommunity' className='btn'>돌아가기</span>
+                                <div className='list'>
+                                    {list.length > 0 ? <div>{boardList}</div> : <div className='no_list'>목록이 존재하지 않습니다.</div>}
+                                </div>
+
+                                {/* 페이징 버튼 */}
+                                {isAllBoard && (
+                                    <div className="pagination">
+                                        {/* "<" 버튼 - 이전 그룹으로 이동 */}
+                                        {currentGroupStart > 1 && (
+                                            <span onClick={() => paginate(boardPrev)}>&lt;</span>
+                                        )}
+
+                                        {/* 페이지 번호 버튼 */}
+                                        {boardToShow.map(number => (
+                                            <span
+                                                key={number}
+                                                onClick={() => paginate(number)}
+                                                className={currentPage === number ? 'active' : ''}
+                                            >
+                                                {number}
+                                            </span>
+                                        ))}
+
+                                        {/* ">" 버튼 - 다음 그룹으로 이동 */}
+                                        {boardCurrentGroupEnd < boardPageNumbers.length && (
+                                            <span onClick={() => paginate(boardNext)}>&gt;</span>
                                         )}
                                     </div>
                                 )}
@@ -669,10 +708,10 @@ const MyPage = () => {
                                                 <input type="hidden" name="orgZipcode" id="orgZipcode" readOnly value={user.zipcode} />
                                             </div>
                                         </form>
-                                        <Button value="변경" onClick={userModify} className={"btn"}></Button>
+                                        <Button value="변경" onClick={userModify} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'pwModify' && (
@@ -688,10 +727,10 @@ const MyPage = () => {
                                             <input type="password" name="newPw" id="newPw" placeholder='새 비밀번호' />
                                             <input type="password" name="newPw_re" id="newPw_re" placeholder='새 비밀번호 확인' />
                                         </div>
-                                        <Button value="변경" onClick={pwModify} className={"btn"}></Button>
+                                        <Button value="변경" onClick={pwModify} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'profileModify' && (
@@ -702,10 +741,10 @@ const MyPage = () => {
                                         </div>
                                         <Button onClick={openFile} value="프로필 변경" className={"btn"}></Button>
                                         <Button value="기본 프로필 변경" onClick={returnProfile} className={"btn"}></Button>
-                                        <Button value="적용" onClick={profileModify} className={"btn"}></Button>
+                                        <Button value="적용" onClick={profileModify} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                         <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
                                     </div>
                                 )}
@@ -769,10 +808,10 @@ const MyPage = () => {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <Button value={"변경"} onClick={infoModify} className={"btn"}></Button>
+                                        <Button value={"변경"} onClick={infoModify} className={"btn modal_btn"}></Button>
                                         <Button value={"취소"} onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (
@@ -782,10 +821,10 @@ const MyPage = () => {
                                             <p>비밀번호 확인</p>
                                             <input type="password" name="userpw" id="userpw" placeholder='비밀번호' />
                                         </div>
-                                        <Button value="탈퇴" onClick={deleteUser} className={"btn"}></Button>
+                                        <Button value="탈퇴" onClick={deleteUser} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                     </div>
                                 )}
                             </Modal>
