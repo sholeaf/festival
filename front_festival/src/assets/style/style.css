@@ -113,6 +113,9 @@ img {
 .review-item:last-child{
     margin-bottom: 100px;
 }
+.review-item div:nth-child(3), .review-item div:nth-child(4){
+    text-align: center;
+}
 .review-item div {
     display: -webkit-box;
     -webkit-box-orient: vertical;
@@ -120,8 +123,10 @@ img {
     overflow: hidden;
     text-overflow: ellipsis;
     width: 200px; /* 원하는 너비로 설정 */
-    margin: 20px;
+    margin-right: 20px;
     font-weight: bold;
+    border-right: 1px solid white;
+    padding-right: 10px;
   }
 .main-slide{
     margin-top: 50px;
