@@ -170,7 +170,6 @@ const BoardList = () => {
         };
         // body에 클릭 이벤트 리스너 추가
         document.body.addEventListener('click', handleClickOutside);
-
         axios.get('/api/user/userInfo', { params: { userid: userId } })
             .then(resp => {
                 if (resp) {
