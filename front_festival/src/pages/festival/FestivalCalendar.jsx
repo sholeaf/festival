@@ -136,13 +136,13 @@ const FestivalCalendar = (props) => {
             )}
 
             {/* 축제 목록이 없을 때 */}
-            {festivals.length === 0 && <p>해당 날짜에 대한 축제가 없습니다.</p>}
+            {festivals.length === 0 && <p className="waring-text">해당 날짜에 대한 축제가 없습니다.</p>}
 
             {/* 로딩 상태 */}
             {isLoading && <p>Loading...</p>}
 
             {/* 더 이상 데이터가 없을 때 */}
-            {!hasMore && <p>더 이상 축제가 없습니다.</p>}
+            {!hasMore && <p className="waring-text">더 이상 축제가 없습니다.</p>}
         </div>
     );
 };

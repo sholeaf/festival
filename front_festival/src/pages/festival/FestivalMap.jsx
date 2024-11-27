@@ -131,7 +131,7 @@ const FestivalMap = (props) => {
             </div>
 
             {/* 지역이 선택되지 않은 경우 */}
-            {!selectedArea && <p>지역을 선택해주세요</p>}
+            {!selectedArea && <p className="waring-text">지역을 선택해주세요</p>}
 
             {festivals.length > 0 && (
                 <div>
@@ -174,13 +174,13 @@ const FestivalMap = (props) => {
             )}
 
             {/* 축제 목록이 없을 때 */}
-            {festivals.length === 0 && selectedArea && !isLoading && <p>해당 지역에 축제가 없습니다.</p>}
+            {festivals.length === 0 && selectedArea && !isLoading && <p className="waring-text">해당 지역에 축제가 없습니다.</p>}
 
             {/* 로딩 상태 */}
             {isLoading && <p>Loading...</p>}
 
             {/* 더 이상 데이터가 없을 때 */}
-            {!hasMore && <p>더 이상 축제가 없습니다.</p>}
+            {!hasMore && <p className="waring-text">더 이상 축제가 없습니다.</p>}
         </>
     );
 };
