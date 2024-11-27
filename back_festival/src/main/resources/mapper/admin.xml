@@ -3,55 +3,37 @@
 	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.AdminPageMapper">
 	<sql id="cri">
-		<if test="keyword != '' and keyword != null and type != 'a'.toString()">
-			<trim prefixOverrides="or" prefix="(" suffix=") and">
-				<foreach collection="typeArr" item="t">
-					or
-					<choose>
-						<when test="t == 'T'.toString()">
-							boardtitle like ('%${keyword}%')
-						</when>
-						<when test="t == 'C'.toString()">
-							boardcontent like ('%${keyword}%')
-						</when>
-						<when test="t == 'W'.toString()">
-							userid like ('%${keyword}%')
-						</when>
-					</choose>
-				</foreach>
-			</trim>
-		</if>
-	</sql>
-	<sql id="replyCri">
-    <if test="replyKeyword != '' and replyKeyword != null and replyType != 'a'">
+    <if test="keyword != '' and keyword != null and type != 'a'.toString()">
         <trim prefixOverrides="or" prefix="(" suffix=") and">
-            <foreach collection="replyTypeArr" item="t">
-                or
+            <foreach collection="typeArr" item="t">
                 <choose>
-                    <when test="t == 'T'">
-                        replycontent like concat('%', #{replyKeyword}, '%')
+                    <when test="t == 'T'.toString()">
+                        boardtitle like ('%${keyword}%')
                     </when>
-                    <when test="t == 'W'">
-                        replyuserid like concat('%', #{replyKeyword}, '%')
+                    <when test="t == 'C'.toString()">
+                        boardcontent like ('%${keyword}%')
+                    </when>
+                    <when test="t == 'W'.toString()">
+                        b.userid like ('%${keyword}%')
                     </when>
                 </choose>
             </foreach>
         </trim>
     </if>
 </sql>
+
 	<select id="getList">
-    select b.*
+    select b.*, br.userid
     from board b
     join board_report br on b.boardnum = br.boardnum
+    
     <where>
         <!-- cri SQL 포함, AND가 중복되지 않도록 처리 -->
         <include refid="cri" />
         <!-- cri 조건이 없다면 추가되지 않도록 "AND"를 추가하지 않음 -->
-        <if test="keyword != null and keyword != ''">
-            b.boardnum > 0
-        </if>
+	    b.boardnum > 0
     </where>
-    group by b.boardnum
+    group by b.boardnum, br.userid
     having count(br.boardnum) >= 5
     order by b.boardnum desc
     limit #{startrow}, #{amount}
@@ -69,40 +51,6 @@
         having count(br.boardnum) > 4
     )
 </select>
-<select id="getReplyList">
-    select r.* 
-    from reply r
-    join reply_report rr on r.replynum = rr.replynum
-    <where>
-        <include refid="cri" />
-        <if test="keyword != null and keyword != ''">
-            and r.replynum > 0
-        </if>
-    </where>
-    group by r.replynum
-    having count(rr.replynum) >= 5
-    order by r.replynum desc
-    limit #{startrow}, #{amount}
-</select>
-<select id="getReplyReportTotal">
-    select count(*) 
-    from reply r
-    <where>
-        r.replynum > 0
-        <include refid="cri"></include>
-        
-        <!-- existsCondition이 true일 경우에만 EXISTS 조건 추가 -->
-        <if test="existsCondition">
-            and exists (
-                select 1
-                from reply_report rr
-                where rr.replynum = r.replynum
-                group by rr.replynum
-                having count(rr.replynum) > 4
-            )
-        </if>
-    </where>
-</select>
 <select id="findById">
 	select * from board where boardnum =#{boardnum}
 </select>
@@ -115,26 +63,10 @@ delete from board where boardnum = #{boardnum}
 <delete id="deleteReportList">
 delete from board_report where boardnum = #{boardnum}
 </delete>
-<select id="getReportList">
-select count(*) from board_report where boardnum = #{boardnum};
-</select>
-
-<select id="findReplyById">
-	select * from reply where replynum =#{replynum}
-</select>
-<select id="findByreplynum">
-	select * from reply_report where replynum =#{replynum}
-</select>
 <delete id="deleteReplyList">
 	delete from reply where boardnum = #{boardnum}
-</delete>
-<delete id="deleteReplyReport">
-delete from reply_report where replynum = #{replynum}
 </delete>
 <select id="findRepliesByBoardnum">
 	select * from reply where boardnum = #{boardnum}
 </select>
-<delete id="deleteReply">
-	delete from reply where replynum = #{replynum}
-</delete>
 </mapper>

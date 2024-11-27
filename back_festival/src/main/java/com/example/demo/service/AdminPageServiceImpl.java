@@ -20,31 +20,21 @@ import com.example.demo.domain.PageDTO;
 import com.example.demo.domain.ReplyDTO;
 import com.example.demo.domain.ReplyReportDTO;
 import com.example.demo.mapper.AdminPageMapper;
+import com.example.demo.mapper.ReplyReportMapper;
 
 @Service
 public class AdminPageServiceImpl implements AdminPageService {
 	@Autowired
 	private AdminPageMapper apmapper;
+	@Autowired
+	private ReplyReportMapper rrmapper;
 	
-	 @Override
-	    public List<BoardDTO> getReportedBoards() {
-	        try {
-	            return apmapper.findByReportcntGreaterThanEqual(5);
-	        } catch (Exception e) {
-	            throw new RuntimeException("게시글 조회 중 오류 발생", e);
-	        }
-	    }
-
-	@Override
-	public List<BoardDTO> findByReportcntGreaterThanEqual(int reportCount) {
-		return apmapper.findReportedBoards();
-	}
-
 	@Override
 	public HashMap<String, Object> getList(Criteria cri) {
 		HashMap<String, Object> result = new HashMap<>();
         List<BoardDTO> list = apmapper.getList(cri);
-
+        System.out.println("List Service cri : "+cri);
+        
         long total = apmapper.getListReporoTotal(cri);
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -56,12 +46,23 @@ public class AdminPageServiceImpl implements AdminPageService {
             
         }
         result.put("board", list);
+        System.out.println("List service board list :"+list);
         result.put("pageMaker", new PageDTO(total, cri));
-        System.out.println("신고게시글토탈"+total);
+        System.out.println("List Service Total : "+total);
         return result;
 	}
 
-
+	@Override
+	public int boardreset(long boardnum) {
+	    int reportCount = apmapper.findBoardByReport(boardnum); // 신고 횟수 카운트
+	    // 신고 내역이 있다면 삭제
+	    if (reportCount > 0) {
+	        apmapper.deleteReportList(boardnum);  // 해당 boardnum에 대한 신고 내역 삭제
+	        return 1;  // 삭제 성공
+	    } else {
+	        return -1;  // 신고 내역이 없으면 실패
+	    }
+	}
 	@Override
 	public int deleteList(long boardnum) {
 	    // 게시글 찾기
@@ -83,11 +84,25 @@ public class AdminPageServiceImpl implements AdminPageService {
 	        return -1;  
 	    }
 	}
+	@Override
+	public HashMap<String, Object> getReplyReportList(Criteria cri) {
+		HashMap<String, Object> result = new HashMap<>();
+		System.out.println("Report List Service cri : "+cri);
+        List<ReplyDTO> list = rrmapper.getReplyList(cri);
+        System.out.println("검색으로 줘야되는 리스트"+list);
+
+        long total = rrmapper.getReplyReportTotal(cri);
+        
+        result.put("board", list);
+        result.put("pageMaker", new PageDTO(total, cri));
+        System.out.println("Report Service Total : "+total);
+        return result;
+	}
 
 	@Override
 	public int replyreset(long replynum) {
 	    // 해당 replynum에 관련된 모든 레코드를 삭제하는 메서드 호출
-	    int deletedCount = apmapper.deleteReplyReport(replynum);
+	    int deletedCount = rrmapper.ReplyReportReset(replynum);
 	    
 	    // 삭제된 레코드 수가 0보다 크면 성공, 아니면 실패
 	    if (deletedCount > 0) {
@@ -101,7 +116,7 @@ public class AdminPageServiceImpl implements AdminPageService {
 	@Override
 	public int deletereply(long replynum) {
 		 System.out.println("넘어오는 replynum: " + replynum); 
-int deletedreply = apmapper.deleteReply(replynum);
+int deletedreply = rrmapper.deleteReply(replynum);
 	    
 	    // 삭제된 레코드 수가 0보다 크면 성공, 아니면 실패
 	    if (deletedreply > 0) {
@@ -111,32 +126,8 @@ int deletedreply = apmapper.deleteReply(replynum);
 	    }
 	}
 
-	@Override
-	public HashMap<String, Object> getReplyReportList(Criteria cri) {
-		System.out.println("서비스에서 받은 댓글 cri : "+cri);
-		HashMap<String, Object> result = new HashMap<>();
-        List<ReplyDTO> list = apmapper.getReplyList(cri);
-        System.out.println("검색으로 줘야되는 리스트"+list);
+	
 
-        long total = apmapper.getReplyReportTotal(cri);
-        
-        result.put("board", list);
-        result.put("pageMaker", new PageDTO(total, cri));
-        System.out.println("댓글신고게시글토탈"+total);
-        return result;
-	}
-
-	@Override
-	public int boardreset(long boardnum) {
-	    int reportCount = apmapper.findBoardByReport(boardnum); // 신고 횟수 카운트
-	    // 신고 내역이 있다면 삭제
-	    if (reportCount > 0) {
-	        apmapper.deleteReportList(boardnum);  // 해당 boardnum에 대한 신고 내역 삭제
-	        return 1;  // 삭제 성공
-	    } else {
-	        return -1;  // 신고 내역이 없으면 실패
-	    }
-	}
 
 
 	

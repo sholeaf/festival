@@ -28,7 +28,6 @@ public class PageDTO {
 		
 		this.prev = this.startPage != 1;
 		this.next = this.endPage < this.realEnd;
-		System.out.println("pageDTO쪽"+total);
 		
 	}
 	
