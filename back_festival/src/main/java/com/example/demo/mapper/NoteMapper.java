@@ -19,5 +19,6 @@ public interface NoteMapper {
 	List<NoteDTO> getList(Criteria cri);
 	long getTotal(Criteria cri);
 	void deleteById(Long notenum);
+	void deleteByReceiveuser(String userid);
 
 }

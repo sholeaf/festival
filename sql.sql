@@ -28,7 +28,7 @@ create table bookmark(
 
 drop table bookmark;
 
-select * from bookmark where userid="apple" order by desc;
+select * from bookmark where userid="apple";
 insert into bookmark(userid,contentid) value("apple","3392074");
 
 
@@ -47,7 +47,7 @@ create table user_info(
     emailinfo char(3),
     genderinfo char(3)
 ); 
-insert into user_info value("apple", "T", "T", "T");
+insert into user_info value("admin", "T", "T", "T");
 select * from user_info;
 drop table user_info;
 
@@ -55,7 +55,7 @@ drop table user_info;
 create table board(
 	boardnum bigint primary key auto_increment,
     boardtitle varchar(300),
-    boardcontent varchar(1000),
+    boardcontent text,
     userid varchar(50),
     boardregdate datetime default now(),
     boardreadcnt bigint default 0,
@@ -64,6 +64,8 @@ create table board(
 );
 
 delete from user where userid="apple";
+
+select * from board;
 
 SELECT 
     b.boardnum, 
@@ -79,6 +81,7 @@ FROM
     board b
 LEFT JOIN 
     board_like bl ON b.boardnum = bl.boardnum
+where date(boardregdate) between '2024-10-26' and '2024-11-26'
 GROUP BY 
     b.boardnum
 ORDER BY 
@@ -94,7 +97,7 @@ create table board_photo(
 	boardnum bigint,
     systemname varchar(300)
 );
-
+drop table board_photo;
 create table reply(
 	replynum bigint primary key auto_increment,
     replycontent varchar(300),
@@ -105,7 +108,7 @@ create table reply(
 
 
 select * from reply where replynum = 1;
-insert into board_like(boardnum,userid) value(1,'test');
+insert into board_like(boardnum,userid) value(28,'test');
 create table board_like(
 	boardnum bigint,
     userid varchar(50)
@@ -163,6 +166,7 @@ select * from notice;
 insert into notice (noticetitle, noticecontent, userid) values ('공지사항테스트','공지에요오수정중이에요오','admin');
 delete from notice where noticenum = 5;
 drop table notice;
+
 
 create table notice_file(
 	noticenum bigint,

@@ -47,12 +47,8 @@ const DetailFestival = () => {
         return `${year}.${month}.${day}`;
     };
 
-    // const handleBookmarkClick = (festivalContentid) => {
-    //     ClickBookmark(festivalContentid, list, setList, userid, setSampleData);
-    // };
-
     const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
-        ClickBookmark(festivalContentid, festivalTitle, festivalImage, list, setList, userid, setSampleData);
+        ClickBookmark(festivalContentid,festivalTitle,festivalImage, list, setList, userid, setSampleData);
     };
 
     useEffect(() => {
@@ -69,6 +65,7 @@ const DetailFestival = () => {
             behavior: 'smooth'
         });
     }, []);
+    console.log("loginuser : ",userid);
 
     useEffect(() => {
         axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${contentid}`)
@@ -117,8 +114,7 @@ const DetailFestival = () => {
             if (locationRef.current) observer.unobserve(locationRef.current);
         };
     }, [data]);
-
-    // 지도 로딩
+      // 지도 로딩
     useEffect(() => {
         if (data.mapx && data.mapy) {
             const script = document.createElement('script');
@@ -161,8 +157,15 @@ const DetailFestival = () => {
     const isBookmarked = list.includes(contentid);  // bmlist 대신 list를 사용
 
     const scrollToSection = (ref) => {
-        ref.current?.scrollIntoView({ behavior: 'smooth' });
+        if (ref.current) {
+            const offset = ref.current.offsetTop + 250; // 예시로 80px을 빼서 위치를 조정
+            window.scrollTo({
+                top: offset,
+                behavior: 'smooth',
+            });
+        }
     };
+    
 
     return (
         <>

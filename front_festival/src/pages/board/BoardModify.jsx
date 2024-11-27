@@ -9,6 +9,7 @@ const BoardModify = () =>{
     const location = useLocation();
     const {cri,boardnum} = location.state;
     const navigate = useNavigate();
+    const [loginUser, setLoginUser] = useState("");
 
     const quillRef = useRef(null);
     const [content, setContent] = useState("");     
@@ -20,6 +21,7 @@ const BoardModify = () =>{
     const change = (e) => {
         const {name,value} = e.target;
         setInputs({...inputs,[name]:value});
+        setData({...data,[name]:value})
     }
 
     useEffect(()=>{
@@ -184,16 +186,13 @@ const BoardModify = () =>{
         while ((useImage = regex.exec(upContent)) !== null) {
             useImages.push(useImage[1]); // targetWord 뒤의 단어를 추출
         }
-        console.log("temp: "+tempImages);
-        console.log("used:  "+useImages);
         const removeImages = tempImages.filter((name) => !useImages.includes(name));
-        console.log("remove:  "+removeImages);
 
         const board = {
             boardnum : boardnum,
             boardtitle: writeForm.boardtitle.value,
             boardcontent: upContent,
-            userid : "apple",
+            userid : loginUser,
             tag : writeForm.userhobby.value,
             titleImage: useImages[0]
         };
@@ -203,13 +202,23 @@ const BoardModify = () =>{
             removeImages : removeImages
         }
 
-        const response = await axios.put('/api/board/modify', data);
+        await axios.put('/api/board/modify', data);
         navigate(`/board/${boardnum}`,{state: cri});
     }
 
-    const canselModify = async ()=>{
-        await axios.post('/api/board/canselWrite', addImages);
-    }
+    useEffect(()=>{
+        axios.get(`/api/user/loginCheck`).then(resp=>{
+            if(resp.data.trim() != ""){
+                setLoginUser(resp.data.trim());
+            }
+            else{
+              alert("로그인 하셔야 글을 쓸 수 있습니다!");
+              navigate(`/board/list`,{state: cri});
+            }
+        })
+        // const writeForm = document.writeForm;
+        // writeForm.boardtitle.focus();
+      },[])
 
     if(!data){
         return <>로딩중...</>
@@ -223,11 +232,11 @@ const BoardModify = () =>{
                     <table className="boardWrite">
                         <tr>
                             <th>제목</th>
-                            <td><input name="boardtitle" type="text" onChange={change} value={data.boardtitle}></input></td>
+                            <td><input name="boardtitle" type="text" onChange={change} value={data.boardtitle}   maxlength="30" style={{width:"430px"}}></input></td>
                         </tr>
                         <tr>
                             <th>아이디</th>
-                            <td className="bwUserid">apple</td>
+                            <td className="bwUserid">{loginUser}</td>
                         </tr>
                         <tr>
                             <th>태그</th>
@@ -236,12 +245,11 @@ const BoardModify = () =>{
                     </table>
                     <div className="text-editor" style={{height:"650px"}}>
                         {/* <CustomToolbar/> */}
-                        <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"600px"}}/>
+                        <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"600px", borderRadius: "10px important!"}}/>
                         </div>
                         <div style={{textAlign:"center"}}>
-                        <input className="btn" type="button" value="수정" onClick={modify}></input>
-                        <input className="btn" type="button" value="취소" onClick={()=>{
-                            canselModify();
+                        <input className="btn bgBtn" type="button" value="수정" onClick={modify}></input>
+                        <input className="btn bgBtn" type="button" value="취소" onClick={()=>{
                             navigate(`/board/${boardnum}`, { state: cri })}}></input>
                     </div>
                 </form>

@@ -5,7 +5,7 @@ import Slider from "react-slick";
 import TodayDate from "../hooks/TodayDate";
 import { useNavigate } from "react-router-dom";
 import noimage from "../assets/images/no-image.jpg";
-import backimg from "../assets/images/main-section.webp";
+import mainimg from "../assets/images/mainimg.jpg"
 
 const Main = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -31,6 +31,18 @@ const Main = () => {
         slidesToScroll: 1,
         autoplay: true,
         autoplaySpeed: 5000,
+    };
+
+    const extractTextFromHTML = (htmlString, maxLength) => {
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(htmlString, 'text/html');
+        const textContent = doc.body.textContent || doc.body.innerText;
+
+        // 텍스트 길이를 maxLength로 제한
+        if (textContent.length > maxLength) {
+            return textContent.slice(0, maxLength) + '...'; // 길이를 넘으면 '...'을 추가
+        }
+        return textContent;
     };
 
     useEffect(() => {
@@ -60,7 +72,7 @@ const Main = () => {
     }, [loginUser]);
 
     useEffect(() => {
-        axios.get('/api/main/bestboard',{params: {lastMonth: lastMonth, toDay: hyphen}})
+        axios.get('/api/main/bestboard', { params: { lastMonth: lastMonth, toDay: hyphen } })
             .then((resp) => {
                 setBestReview(resp.data);
                 console.log(resp.data);
@@ -106,6 +118,7 @@ const Main = () => {
     return (
         <>
             <Header></Header>
+            <img src={mainimg} className="main-img" />
             <div className="main-area" id="wrap">
                 <div className="main-festival-list">
                     <h2>현재 진행중인 축제</h2>
@@ -137,14 +150,16 @@ const Main = () => {
                     }}>more+</div>
                     {bestReview.length > 0 ? (
                         bestReview.map((review, index) => (
-                            <div className="review-item" key={index}>
-                                <h3>{review.boardtitle}</h3>
-                                {review.titleImage == null ? <img src={noimage} /> : <img src={reviewimg + review.titleImage} />}
-                                <span>작성자: {review.userid}</span>
+                            <div className="review-item" key={index} onClick={() => { navigate(`/board/${review.boardnum}`) }}>
+                                <div>제목 :{review.boardtitle}</div>
+                                <div>내용 :{extractTextFromHTML(review.boardcontent, 103) == ""|| null ? "글이 없는 게시판입니다." :extractTextFromHTML(review.boardcontent, 103) }</div>
+                                <div>{review.userid}</div>
+                                <div>좋아요 {review.likeCnt}</div>
+                                {review.titleImage == null ? <img src={noimage} style={{ width: "90px", height: "90px" }} /> : <img src={reviewimg + review.titleImage} style={{ width: "90px", height: "90px" }} />}
                             </div>
                         ))
                     ) : (
-                        <p>Best 후기가 없습니다.</p>
+                        <p className="waring-text">Best 후기가 없습니다.</p>
                     )}
                 </div>
 
@@ -155,7 +170,7 @@ const Main = () => {
                     }}>more+</div>
                     <ul className="festival-list">
                         {loginUser == null || loginUser === "" ? (
-                            <p>로그인 후 즐겨찾기를 확인할 수 있습니다.</p>
+                            <p className="waring-text"> 로그인 후 즐겨찾기를 확인할 수 있습니다.</p>
                         ) : (
                             bookmark.length > 0 ? (
                                 bookmark.slice(0, 4).map((item, index) => (
@@ -171,7 +186,7 @@ const Main = () => {
                                     </li>
                                 ))
                             ) : (
-                                <p>즐겨찾기가 없습니다.</p>
+                                <p className="waring-text">즐겨찾기가 없습니다.</p>
                             )
                         )}
                     </ul>
@@ -184,10 +199,11 @@ const Main = () => {
                             <div className="notice-item" key={index}>
                                 <h3>{noticeItem.noticetitle}</h3>
                                 <p>{noticeItem.userid}</p>
+                                <p>{noticeItem.noticeregdate}</p>
                             </div>
                         ))
                     ) : (
-                        <p>공지사항이 없습니다.</p>
+                        <p className="waring-text">공지사항이 없습니다.</p>
                     )}
                 </div>
             </div>

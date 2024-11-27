@@ -15,10 +15,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.demo.domain.BoardDTO;
+import com.example.demo.domain.BookmarkDTO;
 import com.example.demo.domain.UserDTO;
 import com.example.demo.domain.UserInfoDTO;
 import com.example.demo.mapper.BoardMapper;
 import com.example.demo.mapper.BookmarkMapper;
+import com.example.demo.mapper.NoteMapper;
+import com.example.demo.mapper.ReplyMapper;
 import com.example.demo.mapper.UserFileMapper;
 import com.example.demo.mapper.UserInfoMapper;
 import com.example.demo.mapper.UserMapper;
@@ -43,6 +46,12 @@ public class UserServiceImp implements UserService{
 
 	@Autowired
 	private BookmarkMapper bmmapper;
+	
+	@Autowired
+	private ReplyMapper rmapper;
+	
+	@Autowired
+	private NoteMapper nmapper;
 	
 	@Override
 	public boolean join(UserDTO user, UserInfoDTO userInfo) {
@@ -190,10 +199,40 @@ public class UserServiceImp implements UserService{
 	
 	@Override
 	public int deleteUser(String userid) {
-		if(fmapper.deleteFileByUserid(userid) == 1) {
-			return umapper.deleteUser(userid);
+		long[] boardnum = bmapper.getBoardnumByUserid(userid);
+		if(boardnum != null && boardnum.length != 0) {
+			for(int i = 0; i < boardnum.length; i++) {
+				long[] replynum = rmapper.getReplynumByBoardnum(boardnum[i]);
+				if(replynum != null && replynum.length != 0) {
+					for(int j = 0; j < replynum.length; j++) {
+						rmapper.deleteReportByReplynum(replynum[j]);						
+					}
+				}
+				rmapper.deleteAllReplyByBoardnum(boardnum[i]);
+				bmapper.deleteReportByBoardnum(boardnum[i]);
+				bmapper.deleteLikeByBoardnum(boardnum[i]);
+				
+			}
 		}
-		return -1;
+		String systemname = fmapper.getFile(userid);
+		if(systemname.equals("test.png")) {
+		}
+		else {
+			File file = new File(saveFolder+"user/",systemname);
+			if(file.exists()) {
+				file.delete();
+			}				
+		}
+		bmapper.deleteLikeByUserid(userid);
+		bmapper.deleteReportByUserid(userid);
+		rmapper.deleteReportByUserid(userid);
+		nmapper.deleteByReceiveuser(userid);
+		rmapper.deleteReplyByUserid(userid);
+		fmapper.deleteFileByUserid(userid);
+		uimapper.deleteUserInfo(userid);
+		bmapper.deleteBoardByUserid(userid);
+		bmmapper.removeAllBookmark(userid);
+		return umapper.deleteUser(userid);
 	}
 
 	@Override
@@ -201,7 +240,7 @@ public class UserServiceImp implements UserService{
 		HashMap<String, Object> result = new HashMap<>();
 		
 		List<BoardDTO> list = bmapper.getListByUserid(userid);
-		List<String> bookmarks = bmmapper.getBookmark(userid);
+		List<BookmarkDTO> bookmarks = bmmapper.getBookmarkList(userid);
 		
 		result.put("list", list);
 		result.put("bookmarks", bookmarks);

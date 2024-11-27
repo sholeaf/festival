@@ -196,6 +196,7 @@ const BoardWriteT = () => {
     writeForm.boardtitle.focus();
   },[])
 
+  
   return (
     <>
     <Header></Header>
@@ -204,7 +205,7 @@ const BoardWriteT = () => {
         <table className="boardWrite">
           <tr>
               <th>제목</th>
-              <td><input name="boardtitle" type="text" onChange={change}></input></td>
+              <td><input name="boardtitle" type="text" onChange={change} maxlength="30" style={{width:"430px"}}></input></td>
           </tr>
           <tr>
               <th>아이디</th>
@@ -222,8 +223,8 @@ const BoardWriteT = () => {
           <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"600px"}}/>
         </div>
         <div style={{textAlign:"center"}}>
-          <input className="btn" type="button" value="작성완료" onClick={regist}></input>
-          <input className="btn" type="button" value="돌아가기" onClick={()=>{
+          <input className="btn bwBtn" type="button" value="작성완료" onClick={regist}></input>
+          <input className="btn bwBtn" type="button" value="돌아가기" onClick={()=>{
             // canselWrite();
             navigate('/board/list',{state: cri})}}></input>
         </div>

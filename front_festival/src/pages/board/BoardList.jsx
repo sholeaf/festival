@@ -219,6 +219,10 @@ const BoardList = () => {
             <>
                 <Header></Header>
                 <div id="board_wrap" className="list">
+                    <div style={{fontSize:"20px", paddingLeft:"160px"}}>
+                        자신의 경험과 느낌을 후기로 공유하는 공간입니다.<br></br>
+                        회원님들의 생생하고 솔직한 후기를 다른 회원님들과 나눠보세요!
+                    </div>
                     <div style={{display:"flex", justifyContent:"right", paddingRight:"20px"}}>
                         <a className="btn writeBoard" onClick={() => {
                             if (loginUser == null || loginUser == "") {
@@ -230,9 +234,9 @@ const BoardList = () => {
                     </div>
                     <div style={{ height: "30px" }}>
                     </div>
-                    <div>{data.list == null || data.list == ""?<div>등록된 글이 없습니다!</div>
-                        :elList
-                        }
+                    <div>{data.list == null || data.list == "" ? <div>등록된 글이 없습니다!</div>
+                        : elList
+                    }
                     </div>
                     <Pagination pageMaker={pageMaker} url="/board/list/"></Pagination>
                     <div className="search_area">
@@ -252,7 +256,7 @@ const BoardList = () => {
                 <div className="BoardModal">
                     <Modal isOpen={isModalOpen} closeModal={closeModal}>
                         <p className="id">{user.userid}님의 정보</p>
-                        <div className="closeBoardModal" onClick={()=>{
+                        <div className="closeBoardModal" onClick={() => {
                             setIsModalOpen(false);
                             setSelectedUserId('');
                         }}>x</div>
@@ -277,7 +281,6 @@ const BoardList = () => {
                                 :
                                 <div className="email">이메일 : 비공개</div>
                         }
-
                     </Modal>
                 </div>
                 <div>
