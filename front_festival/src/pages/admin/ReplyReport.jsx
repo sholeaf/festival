@@ -11,7 +11,7 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
     const [replyReportList, setReplyReportList] = useState([]);
     const [data, setData] = useState([]);
     const [viewMode, setViewMode] = useState('쪽지리스트');
-
+    console.log("replycri : ",cri);
     
     
     const [pageMaker, setPageMaker] = useState({
@@ -75,7 +75,8 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
     useEffect(() => {
         const temp = {
             ...cri, 
-            amount: 5
+            amount: 5,
+            type:"a"
             
         };
         axios.get(`/api/adminpage/replyreportlist/${cri.pagenum}`, { params: temp })
@@ -209,11 +210,11 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
                                     </div>
                                     <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
                                 </div>
-                                <div className="nsearch_area adminsearch_area">
+                                <div className="search_area">
                                     <form name="searchForm" action="/notice/adminpage" className="row searchrow">
-                                        <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
-                                        <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs || ""} onKeyDown={searchenter} />
-                                        <a id="nsearch-btn" className="btn" onClick={(e) => clickSearch(e)}>검색</a>
+                                        <Dropdown list={searchType} name={"type"} width={100} value={cri.type} onChange={changeType}></Dropdown>
+                                        <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs || ""} onKeyDown={searchenter} />
+                                        <a id="search-btn" className="btn" onClick={(e) => clickSearch(e)}>검색</a>
                                         <input type="hidden" name="pagenum"value={cri.pagenum} />
                                         <input type="hidden" name="amount"value={cri.amount}/>
                                     </form>

@@ -243,12 +243,12 @@ const Notice = () => {
                     </table>
                 </div>
 
-                <div className="nsearch_area">
+                <div className="search_area">
                     <form name="searchForm" action="/notice/list" className="row searchrow">
-                        <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}>
+                        <Dropdown list={searchType} name={"type"} width={100} value={cri.type} onChange={changeType}>
                         </Dropdown>
-                        <input type="search" id="nkeyword" name="keyword" onChange={inputkeyword} value={inputs} onKeyDown={searchenter} />
-                        <a id="nsearch-btn" className="btn" onClick={clickSearch}>검색</a>
+                        <input type="search" id="keyword" name="keyword" onChange={inputkeyword} value={inputs} onKeyDown={searchenter} />
+                        <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
                         <input type="hidden" name="pagenum" />
                         <input type="hidden" name="amount" />
                     </form>
