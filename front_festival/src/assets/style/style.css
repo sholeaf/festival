@@ -89,7 +89,7 @@ img {
 /* main */
 .main-img{
     width: 100%;
-    height: 500px;
+    height: 400px;
     object-fit: contain;
     /* 비율을 유지하며 요소 내부에 맞게 조정 */
     object-position: center;
