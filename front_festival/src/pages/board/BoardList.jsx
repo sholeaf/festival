@@ -205,20 +205,11 @@ const BoardList = () => {
                                 <div>{board.boardregdate}</div>
                             </div>
                             <div className="boardbox5 boardbox">
-                                <div>좋아요 {board.likeCnt}</div>
+                                <div><img src="/api/file/thumbnail?systemname=likeA.png" style={{width:"19px", marginRight:"-4px",marginTop:"3px"}}></img></div>
+                                    <div>{board.likeCnt}</div>
                                 <div>댓글 {board.replyCnt}</div>
                             </div>
                         </div>
-
-                        {/* <div>
-                            <a onClick={() => openModal(board.userid)}>{board.userid}</a>
-                            </div>
-                        <div>{board.boardregdate}</div>
-                        <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{board.boardtitle}</div>
-                        <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}>{extractTextFromHTML(board.boardcontent, 210)}</div>
-                        <div className="getBoard" onClick={()=>{navigate(`/board/${board.boardnum}`,{state:cri})}}><img src={board.titleImage? `/api/file/thumbnail?systemname=`+board.titleImage:""} ></img></div>
-                        <div>좋아요 {board.likeCnt}</div>
-                        <div>댓글 {board.replyCnt}</div> */}
                     </div>
                 )
             }
@@ -227,7 +218,11 @@ const BoardList = () => {
             <>
                 <Header></Header>
                 <div id="board_wrap" className="list">
-                    <div>
+                    <div style={{fontSize:"20px", paddingLeft:"160px"}}>
+                        자신의 경험과 느낌을 후기로 공유하는 공간입니다.<br></br>
+                        회원님들의 생생하고 솔직한 후기를 다른 회원님들과 나눠보세요!
+                    </div>
+                    <div style={{display:"flex", justifyContent:"right", paddingRight:"20px"}}>
                         <a className="btn writeBoard" onClick={() => {
                             if (loginUser == null || loginUser == "") {
                                 alert("로그인해야 글을 쓰실 수 있습니다!");

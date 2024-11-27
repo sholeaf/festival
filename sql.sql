@@ -28,6 +28,7 @@ create table bookmark(
 
 drop table bookmark;
 
+select * from bookmark where userid="apple";
 insert into bookmark(userid,contentid) value("apple","3392074");
 
 
@@ -46,8 +47,12 @@ create table user_info(
     emailinfo char(3),
     genderinfo char(3)
 ); 
+<<<<<<< HEAD
 insert into user_info value("apple", "T", "T", "
 T");
+=======
+insert into user_info value("admin", "T", "T", "T");
+>>>>>>> b7a0a858397ee27b84a17cfa48597e3466a291ff
 select * from user_info;
 drop table user_info;
 
@@ -65,6 +70,8 @@ create table board(
 
 delete from user where userid="apple";
 
+select * from board;
+
 SELECT 
     b.boardnum, 
     b.boardtitle, 
@@ -79,6 +86,7 @@ FROM
     board b
 LEFT JOIN 
     board_like bl ON b.boardnum = bl.boardnum
+where date(boardregdate) between '2024-10-26' and '2024-11-26'
 GROUP BY 
     b.boardnum
 ORDER BY 
@@ -86,16 +94,15 @@ ORDER BY
 
 insert into board (boardtitle,boardcontent,userid,boardregdate) value('test','test','test','2024-10-21 11:50:57');
 select * from board;
-insert into board (boardtitle, boardcontent, userid, boardregdate, boardreadcnt) values ('신고테스트','테스트중입니다','apple',now(),'1');
-insert into board (boardtitle, boardcontent, userid, boardregdate, boardreadcnt) values ('신고테스트','테스트중입니다','apple',now(),'6');
+insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('1','신고테스트','테스트중입니다','apple','1',now(),'1');
+insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('2','신고테스트','테스트중입니다','apple','1',now(),'6');
 drop table board;
 
 create table board_photo(
 	boardnum bigint,
     systemname varchar(300)
 );
-select * from board_photo;
-
+drop table board_photo;
 create table reply(
 	replynum bigint primary key auto_increment,
     replycontent varchar(300),
@@ -106,7 +113,7 @@ create table reply(
 
 
 select * from reply where replynum = 1;
-insert into board_like(boardnum,userid) value(1,'test');
+insert into board_like(boardnum,userid) value(28,'test');
 create table board_like(
 	boardnum bigint,
     userid varchar(50)
@@ -169,6 +176,7 @@ select * from notice;
 insert into notice (noticetitle, noticecontent, userid) values ('공지사항테스트','공지에요오수정중이에요오','admin');
 delete from notice where noticenum = 5;
 drop table notice;
+
 
 create table notice_file(
 	noticenum bigint,

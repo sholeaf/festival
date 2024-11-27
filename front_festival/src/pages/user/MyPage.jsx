@@ -84,6 +84,12 @@ const MyPage = () => {
     }
 
     const getCode = () => {
+        const email = document.modifyForm.useremail.value;
+        if(user.useremail == email){
+            alert("동일한 이메일 입니다.");
+            return;
+        }
+
         const formData = new FormData();
 
         const codeCheck = document.modifyForm.codeCheck;
@@ -92,7 +98,6 @@ const MyPage = () => {
             codeCheck.style.display = "none";
         }
 
-        const email = document.modifyForm.useremail.value;
 
         formData.append('email', email);
 
@@ -703,10 +708,10 @@ const MyPage = () => {
                                                 <input type="hidden" name="orgZipcode" id="orgZipcode" readOnly value={user.zipcode} />
                                             </div>
                                         </form>
-                                        <Button value="변경" onClick={userModify} className={"btn"}></Button>
+                                        <Button value="변경" onClick={userModify} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'pwModify' && (
@@ -722,10 +727,10 @@ const MyPage = () => {
                                             <input type="password" name="newPw" id="newPw" placeholder='새 비밀번호' />
                                             <input type="password" name="newPw_re" id="newPw_re" placeholder='새 비밀번호 확인' />
                                         </div>
-                                        <Button value="변경" onClick={pwModify} className={"btn"}></Button>
+                                        <Button value="변경" onClick={pwModify} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'profileModify' && (
@@ -736,10 +741,10 @@ const MyPage = () => {
                                         </div>
                                         <Button onClick={openFile} value="프로필 변경" className={"btn"}></Button>
                                         <Button value="기본 프로필 변경" onClick={returnProfile} className={"btn"}></Button>
-                                        <Button value="적용" onClick={profileModify} className={"btn"}></Button>
+                                        <Button value="적용" onClick={profileModify} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                         <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
                                     </div>
                                 )}
@@ -803,10 +808,10 @@ const MyPage = () => {
                                                 </tr>
                                             </tbody>
                                         </table>
-                                        <Button value={"변경"} onClick={infoModify} className={"btn"}></Button>
+                                        <Button value={"변경"} onClick={infoModify} className={"btn modal_btn"}></Button>
                                         <Button value={"취소"} onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                     </div>
                                 )}
                                 {activeModal === 'userDelete' && (
@@ -816,10 +821,10 @@ const MyPage = () => {
                                             <p>비밀번호 확인</p>
                                             <input type="password" name="userpw" id="userpw" placeholder='비밀번호' />
                                         </div>
-                                        <Button value="탈퇴" onClick={deleteUser} className={"btn"}></Button>
+                                        <Button value="탈퇴" onClick={deleteUser} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
-                                        }} className={"btn"}></Button>
+                                        }} className={"btn modal_btn"}></Button>
                                     </div>
                                 )}
                             </Modal>

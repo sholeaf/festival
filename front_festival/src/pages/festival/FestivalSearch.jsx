@@ -130,7 +130,7 @@ const FestivalSearch = (props) => {
                 <div className="search-btn" onClick={search}>검 색</div>
             </div>
 
-            {param.eventStartDate === "" && <p>날짜를 선택해주세요.</p>}
+            {param.eventStartDate === "" && <p className="waring-text">날짜를 선택해주세요.</p>}
 
             {festivals.length > 0 && (
                 <div>
@@ -171,9 +171,9 @@ const FestivalSearch = (props) => {
                 </div>
             )}
 
-            {festivals.length === 0 && param.eventStartDate !== "" && !isLoading && <p>해당 지역에 축제가 없습니다.</p>}
+            {festivals.length === 0 && param.eventStartDate !== "" && !isLoading && <p className="waring-text">해당 지역에 축제가 없습니다.</p>}
             {isLoading && <p>Loading...</p>}
-            {!hasMore && <p>더 이상 축제가 없습니다.</p>}
+            {!hasMore && <p className="waring-text">더 이상 축제가 없습니다.</p>}
         </>
     );
 };
