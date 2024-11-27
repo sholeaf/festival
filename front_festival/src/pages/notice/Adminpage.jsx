@@ -5,6 +5,8 @@ import axios from "axios";
 import Pagination from "../../components/Paginstion";
 import Header from "../../layout/Header";
 import Note from "../notes/Note";
+import ReplyReport from "../admin/ReplyReport";
+import BoardReport from "../admin/BoardReport";
 
 const Adminpage = (props) => {
     const navigate = useNavigate();
@@ -16,7 +18,12 @@ const Adminpage = (props) => {
     const [replyReportList, setReplyReportList] = useState([]);
     const [test, setTest] = useState([]);
     const [viewMode, setViewMode] = useState('쪽지리스트');  // 초기 화면을 '쪽지리스트'로 설정
+    const [trigger, setTrigger] = useState(false);
 
+    // 상태 변화를 통해 리렌더링 트리거
+    const forceRerender = () => {
+        setTrigger(prev => !prev); // 상태를 변경하여 리렌더링을 유도
+    };
     useEffect(() => {
         console.log("상태업데이트");
         console.log("location.state:", location.state);
@@ -85,11 +92,21 @@ const Adminpage = (props) => {
             fetchReplies(replyPageMaker.pagenum);
         }
     }, [replyPageMaker.pagenum]);
+
+    // cri.pagenum이 변경될 때마다 데이터를 다시 불러옵니다.
+  useEffect(() => {
+    fetchReplies(cri.pagenum); // cri.pagenum이 변경되면 데이터를 다시 가져옵니다.
+  }, [cri.pagenum]);
+
     const handlePageChange = (newPageNum) => {
-        // 페이지 변경 시 댓글 데이터를 갱신
-        fetchReplies(newPageNum);
+        setCri(prevCri => ({
+            ...prevCri,
+            pagenum: newPageNum
+          }));
     };
     //탑버튼 눌렀을때
+
+    
     const [key, setKey] = useState(0);
     const topButtonClick = (viewMode) => {
         setViewMode(viewMode);
@@ -102,6 +119,12 @@ const Adminpage = (props) => {
         )
         setKey(prevKey => prevKey + 1);
     }
+    useEffect(() => {
+        setCri(prevCri => ({
+            ...prevCri,
+            pagenum: 1  // viewMode가 변경되면 pagenum을 1로 초기화
+        }));
+    }, [viewMode]);
 
     // 모달창
     const [modalData, setModalData] = useState(null);
@@ -153,12 +176,13 @@ const Adminpage = (props) => {
         e.preventDefault();
         const changedCri = {
             ...replyCri,
-            type: document.getElementById("type").value,
-            keyword: replyInputs,
+            replytype: document.getElementById("type").value,
+            replykeyword: replyInputs,
             pagenum: 1
         };
         console.log("검색시 댓글 넘어가는 cri", replyCri);
         setReplyCri(changedCri);  // reply에 대한 상태만 업데이트
+        fetchReplies(1, changedCri);
     };
 
     const searchenter = (e, type) => {
@@ -183,13 +207,22 @@ const Adminpage = (props) => {
             .catch((error) => {
                 console.error('게시글 API 호출 오류:', error);
             });
-    }, [cri]);  // cri 상태만 의존성 배열에 넣어 cri가 변경될 때만 호출
+    }, [cri,boardList]);  // cri 상태만 의존성 배열에 넣어 cri가 변경될 때만 호출
     
     // 댓글 데이터를 가져오는 함수 fetchReplies 정의
-    const fetchReplies = async (pagenum) => {
+    const fetchReplies = async (pagenum, replyCri) => {
+        const temp = {
+            pagenum: cri.pagenum,
+            amount: cri.amount,
+            type: cri.type,
+            keyword: cri.keyword,
+            startrow: cri.startrow
+        };
+        console.log("amount:",cri.amount);
         try {
-            const response = await axios.get(`/api/adminpage/replyreportlist/${pagenum}`, { params: replyCri });
+            const response = await axios.get(`/api/adminpage/replyreportlist/${cri.pagenum}`, { params: replyCri });
             setTest(response.data);
+            console.log("댓글데이터리스트test:",setTest);
             setReplyPageMaker(response.data.pageMaker); // 페이지네이션 정보 업데이트
             setModalData(Array.isArray(response.data.board) ? response.data.board : []); // 모달 데이터 업데이트
         } catch (error) {
@@ -201,7 +234,11 @@ const Adminpage = (props) => {
     useEffect(() => {
         fetchReplies(replyCri.pagenum); // 댓글을 불러옵니다.
     }, [replyCri.pagenum]);  // 페이지 번호가 바뀔 때마다 호출됩니다.// replyCri가 변경될 때마다 댓글 데이터를 불러옴
-
+    useEffect(() => {
+        if (replyCri.pagenum) {
+            fetchReplies(replyCri.pagenum, replyCri); // replyCri 상태를 파라미터로 넘겨줍니다.
+        }
+    }, [replyCri, ]);
     useEffect(() => {
         if (location.state) {
             setCri(location.state);
@@ -243,6 +280,7 @@ const Adminpage = (props) => {
                 .then(response => {
                     console.log("신고 횟수 리셋됨:", response.data);
                     setBoardList(prevBoards => prevBoards.filter(board => board.boardnum !== boardnum));
+                    forceRerender();  // 강제 리렌더링
                     alert('신고 해제 완료.');
                 })
                 .catch(error => {
@@ -260,6 +298,7 @@ const Adminpage = (props) => {
                 .then((response) => {
                     console.log(response.data);
                     setBoardList(prevBoards => prevBoards.filter(board => board.boardnum !== boardnum));
+                    forceRerender();  // 강제 리렌더링
                     alert('게시글이 삭제되었습니다.');
                 })
                 .catch((error) => {
@@ -268,53 +307,17 @@ const Adminpage = (props) => {
                 });
         }
     };
-    const list = data.board;
-    const elList = [];
-    if (!list || list.length === 0) {
-        // list가 비어 있으면 바로 "신고된 게시글이 없습니다." 메시지를 추가
-        elList.push(
-            <div className="row no-report" key={-1}>
-                <div>신고된 게시글이 없습니다.</div>
-            </div>
-        );
-    } else {
-        // list가 비어있지 않으면 게시글 목록을 순차적으로 렌더링
-        for (const board of list) {
-            elList.push(
-                <div className="row" key={board.boardnum}>
-                    <div>{board.boardnum}</div>
-                    <div>
-                        <a
-                            className="get"
-                            onClick={() => {
-                                navigate(`/board/${board.boardnum}`, { state: cri });
-                            }}
-                        >
-                            {board.boardtitle}
-                        </a>
-                    </div>
-                    <div>{board.userid}</div>
-                    <div>{board.boardregdate}</div>
-                    <div>{board.reportcnt}</div>
-                    <div>
-                        {/* 클릭 시 신고 횟수 0으로 변경 */}
-                        <button onClick={() => handleReportReset(board.boardnum)}>신고해제</button>
-                        <button onClick={() => deleteList(board.boardnum)}>게시글삭제</button>
-                    </div>
-                </div>
-            );
-        }
-    }
-
-
+   
     // 댓글 신고 해제 함수
     const replyReset = (replynum) => {
         if (window.confirm('댓글 신고 해제를 하시겠습니까?')) {
-            axios.delete(`/api/adminpage/replyReportReset/${replynum}`)
+            axios.delete(`/api/adminpage/replyreset/${replynum}`)
                 .then(response => {
                     console.log("댓글 신고 해제됨:", response.data);
                     setReplyReportList(prevReplies => prevReplies.filter(reply => reply.replynum !== replynum));
+                    forceRerender();  // 강제 리렌더링
                     alert('댓글 신고 해제 완료.');
+                    
                 })
                 .catch(error => {
                     console.error("댓글 신고 해제 실패:", error);
@@ -326,10 +329,11 @@ const Adminpage = (props) => {
     // 댓글 삭제 함수
     const deletereply = (replynum) => {
         if (window.confirm('댓글을 삭제하시겠습니까?')) {
-            axios.delete(`/api/adminpage/replyRemove/${replynum}`)
+            axios.delete(`/api/adminpage/replyremove/${replynum}`)
                 .then(response => {
                     console.log("댓글 삭제됨:", response.data);
                     setReplyReportList(prevReplies => prevReplies.filter(reply => reply.replynum !== replynum));
+                    forceRerender();  // 강제 리렌더링
                     alert('댓글이 삭제되었습니다.');
                 })
                 .catch(error => {
@@ -369,9 +373,20 @@ const Adminpage = (props) => {
         "전체": "a", "제목": "T", "내용": "C", "작성자": "W", "제목 또는 작성자": "TW", "제목 또는 내용": "TC", "제목 또는 작성자 또는 내용": "TCW"
     };
 
-    const changeType = (value) => {
-        const changedCri = { ...cri, type: value };
-        setCri(changedCri);
+    const changeType = (value, type) => {
+        if (type === 'board') {
+            // 게시글 검색에서 사용하는 cri의 type 값만 업데이트
+            setCri(prevCri => ({
+                ...prevCri,
+                type: value
+            }));
+        } else if (type === 'reply') {
+            // 댓글 검색에서 사용하는 replyCri의 type 값만 업데이트
+            setReplyCri(prevReplyCri => ({
+                ...prevReplyCri,
+                type: value
+            }));
+        }
     };
 
     return (
@@ -393,68 +408,14 @@ const Adminpage = (props) => {
 
                     {viewMode === '게시글리스트' && (
                         <div className="boardlist">
-                            <div className="nwrap rplist" id="rpwrap">
-                                <div className="reporttitle">신고리스트</div>
-                                <div className="rplist rptable">
-                                    <div className="rpthead tac">
-                                        <div className="row">
-                                            <div>번호</div>
-                                            <div>제목</div>
-                                            <div>작성자</div>
-                                            <div>날짜</div>
-                                            <div>신고횟수</div>
-                                            <div>처리</div>
-                                        </div>
-                                    </div>
-                                    <div className="rptbody">
-                                        {elList}
-                                    </div>
-                                    <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
-                                </div>
-                                <div className="nsearch_area adminsearch_area">
-                                    <form name="searchForm" action="/notice/adminpage" className="row searchrow">
-                                        <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
-                                        <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={(e) => searchenter(e, 'board')} />
-                                        <a id="nsearch-btn" className="btn" onClick={(e) => boardSearch(e)}>검색</a>
-                                        <input type="hidden" name="pagenum" />
-                                        <input type="hidden" name="amount" />
-                                    </form>
-                                </div>
-                            </div>
+                           <BoardReport loginUser={loginUser} viewMode={viewMode} cri={cri} setCri={setCri} key={key}></BoardReport>
 
                         </div>
                     )}
 
                     {viewMode === '댓글리스트' && (
                         <div className="replylist">
-                            <div className="nwrap replyrplist" id="rpwrap">
-                                <div className="reporttitle">댓글신고리스트</div>
-                                <div className="replyrplist replyrptable">
-                                    <div className="replyrpthead tac">
-                                        <div className="row">
-                                            <div>게시글번호</div>
-                                            <div>댓글번호</div>
-                                            <div>댓글내용</div>
-                                            <div>작성자</div>
-                                            <div>처리</div>
-                                        </div>
-                                    </div>
-                                    <div className="replyrptbody">
-                                        {reply_reportList}
-                                    </div>
-                                    <Pagination replyPageMaker={replyPageMaker} url="/notice/adminpage"  fetchReplies={fetchReplies} />
-                                </div>
-                                <div className="nsearch_area adminsearch_area">
-                                    <form name="searchForm" action="/notice/adminpage" className="row searchrow">
-                                        <Dropdown list={searchType} name={"type"} width={250} value={replyCri.type} onChange={changeType}></Dropdown>
-                                        <input type="search" id="nkeyword" name="keyword" onChange={inputreplyKeyword} value={replyInputs} onKeyDown={(e) => searchenter(e, 'reply')} />
-                                        <a id="nsearch-btn" className="btn" onClick={(e) => replySearch(e)}>검색</a>
-                                        <input type="hidden" name="pagenum" />
-                                        <input type="hidden" name="amount" />
-                                    </form>
-                                </div>
-                            </div>
-
+                            <ReplyReport loginUser={loginUser} viewMode={viewMode} cri={cri} setCri={setCri} key={key}></ReplyReport>
                         </div>
                     )}
 

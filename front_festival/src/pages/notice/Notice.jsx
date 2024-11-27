@@ -9,7 +9,7 @@ import NoteModal from "../../components/NoteModal";
 const Notice = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const sendedCri = location.state;
+    const {sendedCri, from} = location.state;
     //모달테스트
     const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
     const [selectedUserId, setSelectedUserId] = useState(''); 
@@ -25,15 +25,15 @@ const Notice = () => {
         setIsModalOpen(false);
         setSelectedUserId('');  // 모달 닫을 때 selectedUserId 초기화
     };
-    useEffect(() => {
-        axios.get(`/api/user/loginCheck`)
-            .then((resp) => {
-                setLoginUser(resp.data);
-            })
-            .catch((error) => {
-                console.error("로그인 상태 확인 오류: ", error);
-            });
-    }, []);
+    // useEffect(() => {
+    //     axios.get(`/api/user/loginCheck`)
+    //         .then((resp) => {
+    //             setLoginUser(resp.data);
+    //         })
+    //         .catch((error) => {
+    //             console.error("로그인 상태 확인 오류: ", error);
+    //         });
+    // }, []);
 //모달부분 끗
     const [cri, setCri] = useState(sendedCri || {
         pagenum: 1,

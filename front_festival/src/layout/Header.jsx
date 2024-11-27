@@ -7,8 +7,11 @@ const Header = () => {
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
     const handleNavigation = (path, state) => {
-        navigate(path, { state });
+        navigate(path, { state: { ...state, loginUser } });
     };
+    // 관리자 여부 설정
+    const [isAdmin, setIsAdmin] = useState(false);
+
     const logoutClick = () => {
         if (window.confirm("로그아웃하시겠습니까?")) {
             axios.get(`/api/user/logout`)
@@ -31,6 +34,19 @@ const Header = () => {
             })
             .catch((error) => {
                 console.error("로그인 상태 확인 오류: ", error);
+            });
+    }, []);
+    useEffect(() => {
+        // 페이지 로드 시 관리자 여부를 확인
+        axios.get('/api/notice/checkadmin')
+            .then(response => {
+                console.log("응답 데이터:", response.data.admin)
+                setIsAdmin(response.data.admin);  // 서버에서 받은 isAdmin 값으로 상태 업데이트
+                console.log("isAdmin 상태:", response.data.admin);
+            })
+            .catch(error => {
+                console.error('관리자 여부 확인 실패:', error);
+                setIsAdmin(false);  // 에러 발생 시 기본값으로 관리자가 아니라고 설정
             });
     }, []);
     const renderLoginButton = () => {
@@ -65,11 +81,21 @@ const Header = () => {
                         <a onClick={() => handleNavigation("/board/list")}>축제 후기</a>
                     </div>
                     <div className="notice_btn">
-                        <a onClick={() => handleNavigation("/notice/list")}>공지사항</a>
+                        <a onClick={() => handleNavigation("/notice/list", { from: window.location.pathname })}>공지사항</a>
                     </div>
-                    <div className="mypage_btn">
-                        <a onClick={() => handleNavigation("/user/mypage")}>마이페이지</a>
-                    </div>
+                    {/* 관리자가 아닐 경우에만 '마이페이지' 버튼을 보여주고, 관리자가 아닐 경우 '관리자페이지'는 감춤 */}
+                    {!isAdmin && (
+                        <div className="mypage_btn">
+                            <a onClick={() => handleNavigation("/user/mypage")}>마이페이지</a>
+                        </div>
+                    )}
+
+                    {/* 관리자인 경우에만 '관리자페이지' 버튼을 보여주고, '마이페이지'는 감춤 */}
+                    {isAdmin && (
+                        <div className="mypage_btn">
+                            <a onClick={() => handleNavigation("/notice/adminpage")}>관리자페이지</a>
+                        </div>
+                    )}
 
                     {renderLoginButton()}
                 </div>

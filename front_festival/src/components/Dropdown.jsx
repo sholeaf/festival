@@ -49,7 +49,7 @@ const Dropdown = ({list, name, width, onChange, value}) => {
             setSelectedLavel(label);
             setSelectedValue(value);
         }
-    },[]);
+    },[value]);
 
     return(
         <div ref={dropdwonRef} className={`common-dropdown ${isOpen ? 'show':''}`} style={{width:`${width}px`}}>

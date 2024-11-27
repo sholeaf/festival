@@ -3,55 +3,40 @@
 	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.example.demo.mapper.AdminPageMapper">
 	<sql id="cri">
-		<if test="keyword != '' and keyword != null and type != 'a'.toString()">
-			<trim prefixOverrides="or" prefix="(" suffix=") and">
-				<foreach collection="typeArr" item="t">
-					or
-					<choose>
-						<when test="t == 'T'.toString()">
-							boardtitle like ('%${keyword}%')
-						</when>
-						<when test="t == 'C'.toString()">
-							boardcontent like ('%${keyword}%')
-						</when>
-						<when test="t == 'W'.toString()">
-							userid like ('%${keyword}%')
-						</when>
-					</choose>
-				</foreach>
-			</trim>
-		</if>
-	</sql>
-	<sql id="replyCri">
-    <if test="replyKeyword != '' and replyKeyword != null and replyType != 'a'">
+    <if test="keyword != '' and keyword != null and type != 'a'.toString()">
         <trim prefixOverrides="or" prefix="(" suffix=") and">
-            <foreach collection="replyTypeArr" item="t">
-                or
+            <foreach collection="typeArr" item="t">
                 <choose>
-                    <when test="t == 'T'">
-                        replycontent like concat('%', #{replyKeyword}, '%')
+                    <when test="t == 'T'.toString()">
+                        boardtitle like ('%${keyword}%')
                     </when>
-                    <when test="t == 'W'">
-                        replyuserid like concat('%', #{replyKeyword}, '%')
+                    <when test="t == 'C'.toString()">
+                        boardcontent like ('%${keyword}%')
+                    </when>
+                    <when test="t == 'W'.toString()">
+                        b.userid like ('%${keyword}%')
+                    </when>
+                    <when test="t == 'R'.toString()">
+                        r.replycontent like ('%${keyword}%')
                     </when>
                 </choose>
             </foreach>
         </trim>
     </if>
 </sql>
+
 	<select id="getList">
-    select b.*
+    select b.*, br.userid
     from board b
     join board_report br on b.boardnum = br.boardnum
+    
     <where>
         <!-- cri SQL 포함, AND가 중복되지 않도록 처리 -->
         <include refid="cri" />
         <!-- cri 조건이 없다면 추가되지 않도록 "AND"를 추가하지 않음 -->
-        <if test="keyword != null and keyword != ''">
-            b.boardnum > 0
-        </if>
+	    b.boardnum > 0
     </where>
-    group by b.boardnum
+    group by b.boardnum, br.userid
     having count(br.boardnum) >= 5
     order by b.boardnum desc
     limit #{startrow}, #{amount}
@@ -70,26 +55,25 @@
     )
 </select>
 <select id="getReplyList">
-    select r.* 
+    select r.*, r.replycontent
     from reply r
     join reply_report rr on r.replynum = rr.replynum
     <where>
         <include refid="cri" />
-        <if test="keyword != null and keyword != ''">
-            and r.replynum > 0
-        </if>
+            r.replynum > 0
     </where>
-    group by r.replynum
-    having count(rr.replynum) >= 5
+    group by r.replynum, r.replycontent
+    having count(r.replynum) >= 5
     order by r.replynum desc
     limit #{startrow}, #{amount}
 </select>
+
 <select id="getReplyReportTotal">
     select count(*) 
     from reply r
     <where>
         r.replynum > 0
-        <include refid="cri"></include>
+        <include refid="cri" />
         
         <!-- existsCondition이 true일 경우에만 EXISTS 조건 추가 -->
         <if test="existsCondition">

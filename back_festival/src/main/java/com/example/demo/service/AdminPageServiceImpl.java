@@ -44,7 +44,8 @@ public class AdminPageServiceImpl implements AdminPageService {
 	public HashMap<String, Object> getList(Criteria cri) {
 		HashMap<String, Object> result = new HashMap<>();
         List<BoardDTO> list = apmapper.getList(cri);
-
+        System.out.println("List Service cri : "+cri);
+        
         long total = apmapper.getListReporoTotal(cri);
         LocalDateTime now = LocalDateTime.now();
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -56,8 +57,9 @@ public class AdminPageServiceImpl implements AdminPageService {
             
         }
         result.put("board", list);
+        System.out.println("List service board list :"+list);
         result.put("pageMaker", new PageDTO(total, cri));
-        System.out.println("신고게시글토탈"+total);
+        System.out.println("List Service Total : "+total);
         return result;
 	}
 
@@ -113,8 +115,8 @@ int deletedreply = apmapper.deleteReply(replynum);
 
 	@Override
 	public HashMap<String, Object> getReplyReportList(Criteria cri) {
-		System.out.println("서비스에서 받은 댓글 cri : "+cri);
 		HashMap<String, Object> result = new HashMap<>();
+		System.out.println("Report List Service cri : "+cri);
         List<ReplyDTO> list = apmapper.getReplyList(cri);
         System.out.println("검색으로 줘야되는 리스트"+list);
 
@@ -122,7 +124,7 @@ int deletedreply = apmapper.deleteReply(replynum);
         
         result.put("board", list);
         result.put("pageMaker", new PageDTO(total, cri));
-        System.out.println("댓글신고게시글토탈"+total);
+        System.out.println("Report Service Total : "+total);
         return result;
 	}
 
