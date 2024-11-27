@@ -2827,6 +2827,15 @@ a#nsearch-btn {
     border: 1px solid rgb(108, 157, 177);
     border-radius: 5px;
 }
+.rpBody_wrap textarea:focus{
+    outline: none;
+    border: 1px solid rgb(43, 43, 100);
+    box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
+}
+/* input:focus{
+    outline: none;
+    border:1px solid blue;
+} */
 .rpBody{
     width: 741px;
     margin-left: 20px;
