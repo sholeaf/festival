@@ -82,10 +82,6 @@ img {
     -user-drag: none;
 }
 
-.btn{
-    
-}
-
 /* main */
 .main-slide{
     margin-top: 50px;
@@ -2595,115 +2591,204 @@ a#nsearch-btn {
 /* board css 임시 */
 
 #board_wrap{
-	margin: 0 auto;
-    margin-top: 100px;
-	width: 1000px;
-    /* text-align: center; */
-}
-.board_obj{
-    margin: 10px;
-    width: 950px;
-    min-height: 130px;
-    margin-bottom: 60px;
-}
-
-.boardbox{
-    display: flex;
-    position: relative;
-}
-.board_title{
-    font-size: 21px;
-    max-width: 80%;
-}
-.boardbox2 div:nth-child(1){
-    color: rgb(143, 143, 143);
-    width: 85%;
-    min-height: 70px;
-    padding: 20px;
-    font-size: 15px;
-}
-
-.boardbox2 div:nth-child(2){
-    position: absolute;
-    top: -25px;
-    right: 0;
-    width: 140px;
-    height: 140px;
-}
-.boardbox2 div:nth-child(2) img{
-    max-width: 140px;
-    max-height: 140px;
-}
-.boardbox4 div:nth-child(1){
-    color: rgb(79, 73, 134);
-    font-size: 18px;
-    margin-right: 15px;
-    padding-left: 5px;
-    width: 70px;
-}
-.boardbox4 div:nth-child(2){
-    color: rgb(121, 121, 121);
-    font-size: 14px;
-    margin-top: 7px;
-    width: 200px;
-}
-.boardbox5{
-    position: absolute;
-    right: 160px;
-}
-.boardbox5 div{
-    color: red;
-    margin-left: 10px;
-}
-
-.nowPage {
-	color: #92B4EC;
-}
-
-.btn,
-.nowPage {
-	margin: 5px;
-}
-
-.getBoard{
-    cursor: pointer;
-}
-
-.boardget_wrap{
     margin: 0 auto;
-    margin-top: 100px;
-	width: 1000px;
-}
-
-.bgContent{
-    min-height: 200px;
-}
-
-.rrow{
-	display: flex;
-}
-.reply_write{
-	display: flex;
-	flex-wrap: wrap;
-}
-.replies{
-    margin-top: 15px;
-	width: 100%;
-}
-.rpBody_wrap{
+     margin-top: 100px;
+    width: 1000px;
+     /* text-align: center; */
+ }
+ .writeBoard{
+     display: inline-block;
+     width: 70px;
+     height: 35px;
+     text-align: center;
+     line-height: 35px;
+ }
+ 
+ .board_obj{
+     margin: 10px;
+     width: 950px;
+     min-height: 140px;
+     margin-bottom: 60px;
+     background-color: #ebf7ff;
+     padding: 5px;
+     border-radius: 10px;
+ }
+ 
+ .boardbox{
+     display: flex;
+     position: relative;
+ }
+ .board_title{
+     font-size: 21px;
+     max-width: 80%;
+ }
+ .boardbox2 div:nth-child(1){
+     color: rgb(143, 143, 143);
+     width: 85%;
+     min-height: 70px;
+     padding: 20px;
+     font-size: 15px;
+ }
+ 
+ .boardbox2 div:nth-child(2){
+     position: absolute;
+     top: -25px;
+     right: 0;
+     width: 140px;
+     height: 120px;
+     display: grid;           /* Grid 사용 */
+     place-items: center; 
+ }
+ .boardbox2 div:nth-child(2) img{
+     max-width: 140px;
+     max-height: 120px;
+     border-radius: 10px;
+ }
+ .boardbox4 div:nth-child(1){
+     color: rgb(79, 73, 134);
+     font-size: 18px;
+     margin-right: 15px;
+     padding-left: 5px;
+     width: 70px;
+ }
+ .boardbox4 div:nth-child(2){
+     color: rgb(121, 121, 121);
+     font-size: 14px;
+     margin-top: 7px;
+     width: 200px;
+ }
+ .boardbox5{
+     position: absolute;
+     right: 160px;
+ }
+ .boardbox5 div{
+     color: red;
+     margin-left: 10px;
+ }
+ 
+ .nowPage {
+    color: #92B4EC;
+ }
+ 
+ .btn,
+ .nowPage {
+    margin: 5px;
+ }
+ .search_area{
+     display: flex;
+     justify-content: center;
+     height: 70px;
+ }
+ .searchBtn{
+     display: inline-block;
+     width: 50px;
+     height: 20px;
+ }
+ 
+ .getBoard{
+     cursor: pointer;
+ }
+ 
+ .boardget_wrap{
+     margin: 0 auto;
+     margin-top: 100px;
+    width: 1000px;
+ }
+ 
+ .bgTitle{
+     font-size: 20px;
+ }
+ .bgUserid{
+     font-size: 18px;
+     padding-left: 5px;
+     color: rgb(79, 73, 134);
+ }
+ .bgDate{
+     color:red;
+     margin-right: 10px;
+ }
+ .bgDate div:nth-child(1){
+     color: rgb(121, 121, 121);
+     margin-right: 10px;
+ }
+ 
+ .bgContent{
+     min-height: 200px;
+     padding: 20px;
+ }
+ 
+ .bgContent img{
+     max-width: 940px;
+     max-height: 800px;
+     margin: 10px;
+ }
+ 
+ .rrow{
     display: flex;
-}
-.rpBody{
-    width: 700px;
-    margin-left: 20px;
-}
-.page{
-	text-align: center;
-}
-.btnArea{
-	display: flex;
+ }
+ .reply_write{
+    display: flex;
+    flex-wrap: wrap;
+ }
+ .replies{
+     margin-top: 15px;
+    width: 100%;
+ }
+ .rpBody_wrap{
+     display: flex;
+     background-color: #e6f5ff;
+     padding: 10px;
+     padding-left: 20px;
+     align-items: center;
+ }
+ .rpBody_wrap textarea{
+     background-color: #f2f8ff;
+     resize: none;
+     width: 650px;
+     height: 40px;
+     padding: 5px;
+     border: 1px solid rgb(108, 157, 177);
+     border-radius: 5px;
+ }
+ .rpBody{
+     width: 710px;
+     margin-left: 20px;
+     display: flex;
+     align-items: center;
+ }
+ .rpBtn{
+     margin-left: 10px;
+ }
+ .rpDate{
+     color: rgb(121, 121, 121);
+     display: flex;
+     align-items: center;
+ }
+ 
+ .page{
     text-align: center;
-}
-.reply_line{
-    margin-top: 20px;
-}
+ }
+ .boardTag{
+     margin-left: 30px;
+     color: rgb(148, 148, 148);
+ }
+ .userhobby{
+     color: rgb(148, 148, 148);
+     margin-right: 5px;
+     cursor: pointer;
+ }
+ .btnArea{
+    display: flex;
+     text-align: center;
+ }
+ .reply_line{
+     margin-top: 20px;
+ }
+ 
+ .boardWrite tr th{
+     width: 60px;
+ }
+ .bwUserid{
+     font-family: 'EBSJSKMedium';
+     color: rgb(79, 73, 134);
+ }

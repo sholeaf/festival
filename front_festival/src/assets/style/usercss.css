@@ -461,8 +461,9 @@ header {
 .mypage .bookmark #openBookmark,
 .mypage .bookmark #closeBookmark {
     right: 25px;
-    top: 26px;
+    top: 14px;
     position: absolute;
+    padding: 3px;
 }
 
 .mypage .community .list div,
@@ -520,7 +521,8 @@ header {
     cursor: pointer;
 }
 
-.mypage .community .pagination span{
+.mypage .community .pagination span,
+.mypage .bookmark .pagination span{
     font-size: 20px;
     margin: 0 10px;
     background-color: white;
@@ -529,7 +531,8 @@ header {
     text-align: center;
     border-radius: 10px;
 }
-.mypage .community .pagination .active{
+.mypage .community .pagination .active,
+.mypage .bookmark .pagination .active{
     background-color: lightblue;
 }
 

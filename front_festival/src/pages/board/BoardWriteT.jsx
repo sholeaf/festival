@@ -201,18 +201,14 @@ const BoardWriteT = () => {
     <Header></Header>
     <div id="board_wrap">
       <form name="writeForm" onSubmit={regist}>
-        <table>
+        <table className="boardWrite">
           <tr>
               <th>제목</th>
               <td><input name="boardtitle" type="text" onChange={change}></input></td>
           </tr>
           <tr>
               <th>아이디</th>
-              <td>{loginUser == ""?"":loginUser}</td>
-              {/* <td><div>
-                  <input type="text" name="userid" maxLength={50} readOnly />
-              </div>
-              </td> */}
+              <td className="bwUserid">{loginUser === "" ?"":loginUser}</td>
           </tr>
           <tr>
             <th>태그</th>
@@ -221,13 +217,13 @@ const BoardWriteT = () => {
             </td>
           </tr>
         </table>
-        <div className="text-editor" style={{height:"550px"}}>
+        <div className="text-editor" style={{height:"650px"}}>
           {/* <CustomToolbar/> */}
-          <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"500px"}}/>
+          <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"600px"}}/>
         </div>
         <div style={{textAlign:"center"}}>
-          <input type="button" value="작성완료" onClick={regist}></input>
-          <input type="button" value="돌아가기" onClick={()=>{
+          <input className="btn" type="button" value="작성완료" onClick={regist}></input>
+          <input className="btn" type="button" value="돌아가기" onClick={()=>{
             // canselWrite();
             navigate('/board/list',{state: cri})}}></input>
         </div>

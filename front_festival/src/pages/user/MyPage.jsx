@@ -407,7 +407,7 @@ const MyPage = () => {
     // 현재 페이지가 속한 페이지 그룹 (1-10, 11-20 등)
     const currentGroupStart = Math.floor((currentPage - 1) / 10) * 10 + 1;
     const boardCurrentGroupEnd = Math.min(currentGroupStart + 9, boardPageNumbers.length);
-    const bookmarkCurrentGroupEnd = Math.min(currentGroupStart + 9, boardPageNumbers.length);
+    const bookmarkCurrentGroupEnd = Math.min(currentGroupStart + 9, bookmarkPageNumbers.length);
 
     // board 페이지 그룹의 페이지 번호
     const boardToShow = boardPageNumbers.slice(currentGroupStart - 1, boardCurrentGroupEnd);
@@ -418,7 +418,7 @@ const MyPage = () => {
     const bookmarkToShow = bookmarkPageNumbers.slice(currentGroupStart - 1, bookmarkCurrentGroupEnd);
 
     const bookmarkNext = bookmarkCurrentGroupEnd + 1;
-    const boomarkPrev = currentGroupStart - 1;
+    const bookmarkPrev = currentGroupStart - 1;
 
 
     const boardList = boardItems.map((board) => (
@@ -450,6 +450,7 @@ const MyPage = () => {
     const showCommunity = () => {
         setItemsPerPage(9); // 9개로 설정
         setCurrentPage(1); // 첫 페이지로 설정
+        document.getElementById("openCommunity").style.display = 'none';
         document.getElementById("closeCommunity").style.display = 'inline-block';
         document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
@@ -458,6 +459,7 @@ const MyPage = () => {
     const closeCommunity = () => {
         setItemsPerPage(3); // 3개로 설정
         setCurrentPage(1);
+        document.getElementById("openCommunity").style.display = 'inline-block';
         document.getElementById("closeCommunity").style.display = 'none';
         document.getElementsByClassName("bookmark")[0].style.display = 'block';
         setIsAllBoard(false);
@@ -465,6 +467,7 @@ const MyPage = () => {
     const showBookmark = () => {
         setItemsPerPage(9); // 9개로 설정
         setCurrentPage(1); // 첫 페이지로 설정
+        document.getElementById("openBookmark").style.display = 'none';
         document.getElementById("closeBookmark").style.display = 'inline-block';
         document.getElementsByClassName("community")[0].style.display = 'none';
         setIsAllBoard(true);
@@ -472,6 +475,7 @@ const MyPage = () => {
     const closeBookmark = () => {
         setItemsPerPage(3); // 3개로 설정
         setCurrentPage(1);
+        document.getElementById("openBookmark").style.display = 'inline-block';
         document.getElementById("closeBookmark").style.display = 'none';
         document.getElementsByClassName("community")[0].style.display = 'block';
         setIsAllBoard(false);
@@ -607,21 +611,47 @@ const MyPage = () => {
                             </div>
                             <div className="bookmark">
                                 <p>즐겨찾기 목록</p>
-                                {bookmarks.length > itemsPerPage && (<span onClick={showBookmark} id='openBookmark'>더 보기...</span>
+                                {bookmarks.length > itemsPerPage && (<span onClick={showBookmark} id='openBookmark' className='btn'>더 보기...</span>
                                 )}
-                                <span onClick={closeBookmark} id='closeBookmark'>돌아가기</span>
+                                <span onClick={closeBookmark} id='closeBookmark' className='btn'>돌아가기</span>
                                 <div className='list'>
                                     {bookmarks.length > 0 ? <div>{festivalList}</div> : <div className='no_list'>목록이 존재하지 않습니다.</div>}
                                 </div>
+
+                                {/* 페이징 버튼 */}
+                                {isAllBoard && (
+                                    <div className="pagination">
+                                        {/* "<" 버튼 - 이전 그룹으로 이동 */}
+                                        {currentGroupStart > 1 && (
+                                            <span onClick={() => paginate(bookmarkPrev)}>&lt;</span>
+                                        )}
+
+                                        {/* 페이지 번호 버튼 */}
+                                        {bookmarkToShow.map(number => (
+                                            <span
+                                                key={number}
+                                                onClick={() => paginate(number)}
+                                                className={currentPage === number ? 'active' : ''}
+                                            >
+                                                {number}
+                                            </span>
+                                        ))}
+
+                                        {/* ">" 버튼 - 다음 그룹으로 이동 */}
+                                        {bookmarkCurrentGroupEnd < bookmarkPageNumbers.length && (
+                                            <span onClick={() => paginate(bookmarkNext)}>&gt;</span>
+                                        )}
+                                    </div>
+                                )}
                             </div>
                             <div className="community">
                                 <p>후기 목록</p>
                                 {list.length > itemsPerPage && (
-                                    <span onClick={showCommunity} id='openCommunity'>
+                                    <span onClick={showCommunity} id='openCommunity' className='btn'>
                                         더 보기...
                                     </span>
                                 )}
-                                <span onClick={closeCommunity} id='closeCommunity'>돌아가기</span>
+                                <span onClick={closeCommunity} id='closeCommunity' className='btn'>돌아가기</span>
                                 <div className='list'>
                                     {list.length > 0 ? <div>{boardList}</div> : <div className='no_list'>목록이 존재하지 않습니다.</div>}
                                 </div>
