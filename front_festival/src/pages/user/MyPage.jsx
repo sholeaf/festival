@@ -37,6 +37,13 @@ const MyPage = () => {
         emailinfo: '',
         genderinfo: ''
     });
+    const [cri, setCri] = useState({
+        pagenum: 1,
+        amount: 10,
+        type: "a",
+        keyword: "",
+        startrow: 0
+    });
 
     // 즐겨찾기 목록, contentid를 담은 배열
     const [bookmarks, setBookmarks] = useState([]);
@@ -739,8 +746,8 @@ const MyPage = () => {
                                         <div className='img'>
                                             <img src={profileImg} alt="" id='profileImg' />
                                         </div>
-                                        <Button onClick={openFile} value="프로필 변경" className={"btn"}></Button>
-                                        <Button value="기본 프로필 변경" onClick={returnProfile} className={"btn"}></Button>
+                                        <Button onClick={openFile} value="프로필 변경" className={"btn profile_btn"}></Button>
+                                        <Button value="기본 프로필 변경" onClick={returnProfile} className={"btn profile_btn"}></Button>
                                         <Button value="적용" onClick={profileModify} className={"btn modal_btn"}></Button>
                                         <Button value="취소" onClick={() => {
                                             setIsModalOpen(false)
@@ -829,7 +836,7 @@ const MyPage = () => {
                                 )}
                             </Modal>
                             <div>
-                                <Note loginUser={loginUser} />
+                                <Note loginUser={loginUser} setCri={setCri} cri={cri}/>
                             </div>
                         </div>
                     )}

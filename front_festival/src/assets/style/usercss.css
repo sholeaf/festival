@@ -392,6 +392,10 @@ header {
     height: 30px;
     font-size: 16px;
 }
+.profile_btn{
+    height: 30px;
+    font-size: 16px;
+}
 
 /* 모달 개인정보 변경 */
 #userModify, #pwModify{
@@ -419,6 +423,7 @@ header {
 /* 모달 프로필 변경 */
 #profileModify{
     padding-bottom: 20px;
+    width: 430px;
 }
 #profileModify .img img {
     width: 300px;
@@ -431,6 +436,7 @@ header {
 }
 #infoModify table{
     width: 400px;
+    height: 300px;
 }
 #infoModify table thead tr th,
 #infoModify table tbody tr td{

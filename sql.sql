@@ -47,12 +47,11 @@ create table user_info(
     emailinfo char(3),
     genderinfo char(3)
 ); 
-<<<<<<< HEAD
-insert into user_info value("apple", "T", "T", "
-T");
-=======
+
+insert into user_info value("apple", "T", "T", "T");
+
 insert into user_info value("admin", "T", "T", "T");
->>>>>>> b7a0a858397ee27b84a17cfa48597e3466a291ff
+
 select * from user_info;
 drop table user_info;
 
