@@ -1,0 +1,62 @@
+<!DOCTYPE mapper
+	PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+	"https://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.example.demo.mapper.ReplyReportMapper">
+	<sql id="cri">
+    <if test="keyword != '' and keyword != null and type != 'a'.toString()">
+        <trim prefixOverrides="or" prefix="(" suffix=") and">
+            <foreach collection="typeArr" item="t">
+                <choose>
+                    <when test="t == 'C'.toString()">
+                        r.replycontent like ('%${keyword}%')
+                    </when>
+                    <when test="t == 'W'.toString()">
+                        r.userid like ('%${keyword}%')
+                    </when>
+                </choose>
+            </foreach>
+        </trim>
+    </if>
+</sql>
+
+<select id="getReplyList">
+    select r.*, r.replycontent
+    from reply r
+    join reply_report rr on r.replynum = rr.replynum
+    <where>
+        <include refid="cri" />
+            r.replynum > 0
+    </where>
+    group by r.replynum, r.replycontent
+    having count(r.replynum) >= 5
+    order by r.replynum desc
+    limit #{startrow}, #{amount}
+</select>
+
+<select id="getReplyReportTotal">
+    select count(*) 
+    from reply r
+    where
+        <include refid="cri" />
+        r.replynum > 0
+            and exists (
+                select 1
+                from reply_report rr
+                where rr.replynum = r.replynum
+                group by rr.replynum
+                having count(rr.replynum) > 4
+            )
+</select>
+<select id="findById">
+	select * from board where boardnum =#{boardnum}
+</select>
+<delete id="deleteReportList">
+delete from board_report where boardnum = #{boardnum}
+</delete>
+<delete id="ReplyReportReset">
+delete from reply_report where replynum = #{replynum}
+</delete>
+<delete id="deleteReply">
+	delete from reply where replynum = #{replynum}
+</delete>
+</mapper>

@@ -7,7 +7,7 @@ const Header = () => {
     const navigate = useNavigate();
     const [loginUser, setLoginUser] = useState("");
     const handleNavigation = (path, state) => {
-        navigate(path, { state: { ...state, loginUser } });
+        navigate(path, { state: { ...state } });
     };
         //관리자체크
     const [isAdmin, setIsAdmin] = useState(false);
@@ -40,12 +40,9 @@ const Header = () => {
     useEffect(() => {
         axios.get('/api/notice/checkadmin')
             .then(response => {
-                console.log("관리자ok:", response.data.admin)
                 setIsAdmin(response.data.admin); 
-                console.log("isAdmin 상태:", response.data.admin);
             })
             .catch(error => {
-                console.error('관리자no:', error);
                 setIsAdmin(false);  
             });
     }, []);
@@ -81,7 +78,7 @@ const Header = () => {
                         <a onClick={() => handleNavigation("/board/list")}>축제 후기</a>
                     </div>
                     <div className="notice_btn">
-                        <a onClick={() => handleNavigation("/notice/list",{ state: { loginUser } })}>공지사항</a>
+                        <a onClick={() => handleNavigation("/notice/list")}>공지사항</a>
                     </div>
 
                     {/* 관리자가 아닐 경우에만 '마이페이지' 버튼을 보여주고, 관리자가 아닐 경우 '관리자페이지'는 감춤 */}

@@ -35,7 +35,6 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
             keyword: inputs,
             pagenum: 1
         };
-        console.log("신고게시글검색 cri", cri);
         setCri(changedCri);  // reply에 대한 상태만 업데이트
     };
     const searchenter = (e) => {
@@ -44,12 +43,16 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
             clickSearch(e);
         }
     };
+    // 게시글 API 호출
     useEffect(() => {
-        // 게시글 API 호출
-        axios.get(`/api/adminpage/${cri.pagenum}`, { params: cri })
+        const temp = {
+            ...cri, 
+            amount: 5
+            
+        };
+        axios.get(`/api/adminpage/${cri.pagenum}`, { params: temp })
             .then((resp) => {
                 setData(resp.data);
-                console.log("???????",resp.data)
                 setPageMaker(resp.data.pageMaker);
                 setInputs(resp.data.pageMaker.cri.keyword);
             })
@@ -95,7 +98,6 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
         if (window.confirm('신고 해제를 하시겠습니까?')) {
             axios.delete(`/api/adminpage/boardReportreset/${boardnum}`)
                 .then(response => {
-                    console.log("신고 횟수 리셋됨:", response.data);
                     setBoardList(prevBoards => prevBoards.filter(board => board.boardnum !== boardnum));
                     alert('신고 해제 완료.');
                 })
@@ -123,7 +125,6 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
         }
     };
     const list = data.board;
-    console.log("back에서 전달된 list :",list);
     const elList = [];
     if (!list || list.length === 0) {
         // list가 비어 있으면 바로 "신고된 게시글이 없습니다." 메시지를 추가
@@ -192,7 +193,7 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
                                 <div className="nsearch_area adminsearch_area">
                                     <form name="searchForm" action="/notice/adminpage" className="row searchrow">
                                         <Dropdown list={searchType} name={"type"} width={250} value={cri.type}  onChange={changeType}></Dropdown>
-                                        <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={searchenter} />
+                                        <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs || ""} onKeyDown={searchenter} />
                                         <a id="nsearch-btn" className="btn" onClick={(e) =>clickSearch(e)}>검색</a>
                                         <input type="hidden" name="pagenum" />
                                         <input type="hidden" name="amount" />

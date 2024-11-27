@@ -35,7 +35,7 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
         }
 
         const selectedReply = modalData.find(reply => reply.replynum === replynum);
-        console.log("모달창에 신고내용 띄우기:", selectedReply);
+        
 
         if (selectedReply) {
             setSelectedReplyData(selectedReply);
@@ -60,8 +60,9 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
             keyword: inputs,
             pagenum: 1
         };
-        console.log("신고댓글검색", cri);
         setCri(changedCri);  // reply에 대한 상태만 업데이트
+        setInputs(""); 
+        document.getElementById("type").value = "";
     };
     
     const searchenter = (e) => {
@@ -70,9 +71,14 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
             clickSearch(e);
         }
     };
+    // 댓글 API 호출
     useEffect(() => {
-        // 댓글 API 호출
-        axios.get(`/api/adminpage/replyreportlist/${cri.pagenum}`, { params: cri })
+        const temp = {
+            ...cri, 
+            amount: 5
+            
+        };
+        axios.get(`/api/adminpage/replyreportlist/${cri.pagenum}`, { params: temp })
             .then((resp) => {
                 setData(resp.data);
                 setPageMaker(resp.data.pageMaker);
@@ -177,11 +183,10 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
     }
     // 검색 타입
     const searchType = {
-        "전체": "a","내용": "R", "작성자": "U"
+        "전체": "a","내용": "C", "작성자": "W"
     };
     const changeType = (value) => {
         const changedCri = { ...cri, type: value };
-        console.log('Changed criteria:', changedCri);
         setCri(changedCri);
     };
     return(
@@ -207,7 +212,7 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
                                 <div className="nsearch_area adminsearch_area">
                                     <form name="searchForm" action="/notice/adminpage" className="row searchrow">
                                         <Dropdown list={searchType} name={"type"} width={250} value={cri.type} onChange={changeType}></Dropdown>
-                                        <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={searchenter} />
+                                        <input type="search" id="nkeyword" name="keyword" onChange={inputKeyword} value={inputs || ""} onKeyDown={searchenter} />
                                         <a id="nsearch-btn" className="btn" onClick={(e) => clickSearch(e)}>검색</a>
                                         <input type="hidden" name="pagenum"value={cri.pagenum} />
                                         <input type="hidden" name="amount"value={cri.amount}/>

@@ -20,6 +20,12 @@ const Note = ({ loginUser , cri, setCri, key}) => {
         cri: null
     });
     useEffect(() => {
+        setCri((prevCri) => ({
+            ...prevCri,
+            pagenum: 1 // key 변경 시 pagenum을 1로 설정
+        }));
+    }, [key]);
+    useEffect(() => {
         // cri나 다른 props가 변경될 때마다 다시 데이터를 로딩하는 로직을 넣을 수 있습니다.
         console.log("Note 컴포넌트가 리렌더링되었습니다. cri:", cri);
         // 데이터를 새로 가져오는 API 호출 등을 수행할 수 있습니다.
@@ -94,15 +100,13 @@ const Note = ({ loginUser , cri, setCri, key}) => {
 
     // 페이지 로드 시 API 호출
     useEffect(() => {
-        console.log("Cri changed:", cri);
         const temp = {
             pagenum: cri.pagenum,
-            amount: cri.amount,
+            amount: 5,
             startrow: cri.startrow,
-            type: cri.type,
-            keyword: cri.keyword
+            
         };
-        axios.get(`/api/note/list/${cri.pagenum}`, { params: cri })
+        axios.get(`/api/note/list/${cri.pagenum}`, { params: temp })
             .then((resp) => {
                 setNote(resp.data);
                 setPageMaker(resp.data.pageMaker);

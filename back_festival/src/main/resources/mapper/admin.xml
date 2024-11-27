@@ -16,9 +16,6 @@
                     <when test="t == 'W'.toString()">
                         b.userid like ('%${keyword}%')
                     </when>
-                    <when test="t == 'R'.toString()">
-                        r.replycontent like ('%${keyword}%')
-                    </when>
                 </choose>
             </foreach>
         </trim>
@@ -54,39 +51,6 @@
         having count(br.boardnum) > 4
     )
 </select>
-<select id="getReplyList">
-    select r.*, r.replycontent
-    from reply r
-    join reply_report rr on r.replynum = rr.replynum
-    <where>
-        <include refid="cri" />
-            r.replynum > 0
-    </where>
-    group by r.replynum, r.replycontent
-    having count(r.replynum) >= 5
-    order by r.replynum desc
-    limit #{startrow}, #{amount}
-</select>
-
-<select id="getReplyReportTotal">
-    select count(*) 
-    from reply r
-    <where>
-        r.replynum > 0
-        <include refid="cri" />
-        
-        <!-- existsCondition이 true일 경우에만 EXISTS 조건 추가 -->
-        <if test="existsCondition">
-            and exists (
-                select 1
-                from reply_report rr
-                where rr.replynum = r.replynum
-                group by rr.replynum
-                having count(rr.replynum) > 4
-            )
-        </if>
-    </where>
-</select>
 <select id="findById">
 	select * from board where boardnum =#{boardnum}
 </select>
@@ -99,26 +63,10 @@ delete from board where boardnum = #{boardnum}
 <delete id="deleteReportList">
 delete from board_report where boardnum = #{boardnum}
 </delete>
-<select id="getReportList">
-select count(*) from board_report where boardnum = #{boardnum};
-</select>
-
-<select id="findReplyById">
-	select * from reply where replynum =#{replynum}
-</select>
-<select id="findByreplynum">
-	select * from reply_report where replynum =#{replynum}
-</select>
 <delete id="deleteReplyList">
 	delete from reply where boardnum = #{boardnum}
-</delete>
-<delete id="deleteReplyReport">
-delete from reply_report where replynum = #{replynum}
 </delete>
 <select id="findRepliesByBoardnum">
 	select * from reply where boardnum = #{boardnum}
 </select>
-<delete id="deleteReply">
-	delete from reply where replynum = #{replynum}
-</delete>
 </mapper>

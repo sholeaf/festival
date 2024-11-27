@@ -8,7 +8,6 @@ import BoardReport from "../admin/BoardReport";
 
 const Adminpage = () => {
     const location = useLocation();
-    const {sendedCri} = location.state;
     const [viewMode, setViewMode] = useState('쪽지리스트');  // 초기 화면을 '쪽지리스트'로 설정
     const [trigger, setTrigger] = useState(false);
     const [loginUser, setLoginUser] =useState("");
@@ -17,9 +16,7 @@ const Adminpage = () => {
         setTrigger(prev => !prev); // 상태를 변경하여 리렌더링을 유도
     };
     useEffect(() => {
-        console.log("상태업데이트");
-        console.log("location.state:", location.state);
-        console.log("sendedCri 상태:", sendedCri);
+        console.log("Adminpage location.state:", location.state);
     }, []);
 
     // 로그인 체크
