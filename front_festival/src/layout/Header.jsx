@@ -67,15 +67,15 @@ const Header = () => {
             <div className="header_area">
                 <div className="navigate">
                     <div className="logo" onClick={() =>
-                        handleNavigation("/")
+                        navigate("/")
                         }>
                         <a>모두의 축제</a>
                     </div>
                     <div className="schedule_btn">
-                        <a onClick={() => handleNavigation("/festival")}>축제 일정</a>
+                        <a onClick={() => navigate("/festival")}>축제 일정</a>
                     </div>
                     <div className="review_btn">
-                        <a onClick={() => handleNavigation("/board/list")}>축제 후기</a>
+                        <a onClick={() => navigate("/board/list")}>축제 후기</a>
                     </div>
                     <div className="notice_btn">
                         <a onClick={() => handleNavigation("/notice/list")}>공지사항</a>
@@ -84,7 +84,7 @@ const Header = () => {
                     {/* 관리자가 아닐 경우에만 '마이페이지' 버튼을 보여주고, 관리자가 아닐 경우 '관리자페이지'는 감춤 */}
                     {!isAdmin && (
                         <div className="mypage_btn">
-                            <a onClick={() => handleNavigation("/user/mypage")}>마이페이지</a>
+                            <a onClick={() => navigate("/user/mypage")}>마이페이지</a>
                         </div>
                     )}
 
