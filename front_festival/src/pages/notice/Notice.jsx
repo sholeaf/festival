@@ -9,11 +9,11 @@ import NoteModal from "../../components/NoteModal";
 const Notice = () => {
     const navigate = useNavigate();
     const location = useLocation();
-    const {sendedCri, from} = location.state;
+    const {sendedCri, loginUser} = location.state;
     //모달테스트
     const [isModalOpen, setIsModalOpen] = useState(false);  // 모달 상태
     const [selectedUserId, setSelectedUserId] = useState(''); 
-    const [loginUser, setLoginUser] = useState(null);
+    
     // 모달 열기
     const openModal = (userId) => {
         setSelectedUserId(userId);  // 클릭된 작성자의 userid를 저장

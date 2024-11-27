@@ -9,7 +9,7 @@ const Header = () => {
     const handleNavigation = (path, state) => {
         navigate(path, { state: { ...state, loginUser } });
     };
-    // 관리자 여부 설정
+        //관리자체크
     const [isAdmin, setIsAdmin] = useState(false);
 
     const logoutClick = () => {
@@ -30,23 +30,23 @@ const Header = () => {
     useEffect(() => {
         axios.get(`/api/user/loginCheck`)
             .then((resp) => {
-                setLoginUser(resp.data);
+                setLoginUser(resp.data);  // 로그인 정보로 loginUser를 설정   
             })
             .catch((error) => {
                 console.error("로그인 상태 확인 오류: ", error);
             });
     }, []);
+    // 페이지 로드 시 관리자 여부를 확인
     useEffect(() => {
-        // 페이지 로드 시 관리자 여부를 확인
         axios.get('/api/notice/checkadmin')
             .then(response => {
-                console.log("응답 데이터:", response.data.admin)
-                setIsAdmin(response.data.admin);  // 서버에서 받은 isAdmin 값으로 상태 업데이트
+                console.log("관리자ok:", response.data.admin)
+                setIsAdmin(response.data.admin); 
                 console.log("isAdmin 상태:", response.data.admin);
             })
             .catch(error => {
-                console.error('관리자 여부 확인 실패:', error);
-                setIsAdmin(false);  // 에러 발생 시 기본값으로 관리자가 아니라고 설정
+                console.error('관리자no:', error);
+                setIsAdmin(false);  
             });
     }, []);
     const renderLoginButton = () => {
@@ -81,8 +81,9 @@ const Header = () => {
                         <a onClick={() => handleNavigation("/board/list")}>축제 후기</a>
                     </div>
                     <div className="notice_btn">
-                        <a onClick={() => handleNavigation("/notice/list", { from: window.location.pathname })}>공지사항</a>
+                        <a onClick={() => handleNavigation("/notice/list",{ state: { loginUser } })}>공지사항</a>
                     </div>
+
                     {/* 관리자가 아닐 경우에만 '마이페이지' 버튼을 보여주고, 관리자가 아닐 경우 '관리자페이지'는 감춤 */}
                     {!isAdmin && (
                         <div className="mypage_btn">

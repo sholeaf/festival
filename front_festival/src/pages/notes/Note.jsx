@@ -7,7 +7,6 @@ import Modal from "../../components/Modal";
 const Note = ({ loginUser , cri, setCri, key}) => {
     const navigate = useNavigate();
     const location = useLocation();
-    const sendedCri = location.state;
     const [isReplyMode, setIsReplyMode] = useState(false); // 답장 모드 상태
     const [content, setContent] = useState(''); // 답장 내용
     const [note, setNote] = useState();
