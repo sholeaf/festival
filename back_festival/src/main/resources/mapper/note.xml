@@ -9,13 +9,13 @@
 					or
 					<choose>
 						<when test="t == 'T'.toString()">
-							noticetitle like ('%${keyword}%')
+							notetitle like ('%${keyword}%')
 						</when>
 						<when test="t == 'C'.toString()">
-							noticecontent like ('%${keyword}%')
+							 senduser like ('%${keyword}%')
 						</when>
 						<when test="t == 'W'.toString()">
-							userid like ('%${keyword}%')
+							recieveuser like ('%${keyword}%')
 						</when>
 					</choose>
 				</foreach>
@@ -28,18 +28,22 @@
 	<select id="getList">
     select * from note
     where
-    <include refid="cri"></include>
-    receiveuser = #{userid} <!-- 로그인한 사용자와 receiveuser가 일치하는 조건 추가 -->
-    and notenum > 0
+    receiveuser = #{userid}
+    and  <!-- 로그인된 사용자의 userid로 필터링 -->
+    <include refid="cri"/>
+    notenum > 0
     order by notenum desc
     limit #{startrow}, #{amount}
 </select>
-	<select id="getTotal">
-		select count(*) from note
-		where
-		<include refid="cri"></include>
-		notenum > 0
-	</select>
+
+<select id="getTotal">
+    select count(*) from note
+    where
+    receiveuser = #{userid}  <!-- 로그인된 사용자의 userid로 필터링 -->
+    and
+    <include refid="cri"/>
+    notenum > 0
+</select>
 	<select id="getLastNum">
 		select max(notenum) from note where receiveuser=#{receiveuser}
 	</select>

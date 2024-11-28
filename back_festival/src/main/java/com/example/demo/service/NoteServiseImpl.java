@@ -9,8 +9,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.bind.annotation.RequestBody;
 
 import com.example.demo.domain.Criteria;
+import com.example.demo.domain.NoteCriteria;
 import com.example.demo.domain.NoteDTO;
-import com.example.demo.domain.PageDTO;
+import com.example.demo.domain.NotePageDTO;
 import com.example.demo.mapper.NoteMapper;
 
 @Service
@@ -20,13 +21,15 @@ public class NoteServiseImpl implements NoteService {
 	private NoteMapper ntmapper;
 
 	@Override
-	public HashMap<String, Object> getList(Criteria cri) {
+	public HashMap<String, Object> getList(NoteCriteria cri) {
 		HashMap<String, Object> result = new HashMap<>();
+		System.out.println("noteService 쪽지cri : "+cri);
+		
 		List<NoteDTO> list = ntmapper.getList(cri);
 		long total = ntmapper.getTotal(cri);
 		
 		result.put("note", list);
-		result.put("pageMaker", new PageDTO(total, cri));
+		result.put("pageMaker", new NotePageDTO(total, cri));
 		return result;
 	}
 
