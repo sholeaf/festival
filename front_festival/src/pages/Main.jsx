@@ -6,6 +6,7 @@ import TodayDate from "../hooks/TodayDate";
 import { useNavigate } from "react-router-dom";
 import noimage from "../assets/images/no-image.jpg";
 import mainimg from "../assets/images/mainimg.jpg"
+import section1 from "../assets/images/section1.jpg"
 
 const Main = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -194,19 +195,33 @@ const Main = () => {
 
                 <div className="main-festival-notice">
                     <h2>공지사항</h2>
-                    <ul>
-                        {notice.length > 0 ? (
-                            notice.map((noticeItem, index) => (
-                                <li className="notice-item" key={index}>
-                                    <h4>{noticeItem.noticetitle}</h4>
-                                    <p>{noticeItem.userid}</p>
-                                    <p>{noticeItem.noticeregdate}</p>
-                                </li>
-                            ))
-                        ) : (
-                            <p className="waring-text">공지사항이 없습니다.</p>
-                        )}
-                    </ul>
+                    <div className="main-notice">
+                        <table>
+                            <thead>
+                                <tr className="notice-item">
+                                    <td>번호</td>
+                                    <td>제목</td>
+                                    <td>작성자</td>
+                                    <td>등록일</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {notice.length > 0 ? (
+                                    notice.map((noticeItem, index) => (
+                                        <tr className="notice-item" key={index}>
+                                            <td>{noticeItem.noticenum}</td>
+                                            <td>{noticeItem.noticetitle}</td>
+                                            <td>{noticeItem.userid}</td>
+                                            <td>{noticeItem.noticeregdate}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <p className="waring-text">공지사항이 없습니다.</p>
+                                )}
+                            </tbody>
+                        </table>
+                        <img src={section1} style={{width:"500px",height:"350px"}}/>
+                    </div>
                 </div>
             </div>
         </>

@@ -89,11 +89,10 @@ img {
 /* main */
 .notice-item{
     display: flex;
-    width: 1400px;
-    justify-content: center;
+    width: 500px;
 }
-.notice-item h4, .notice-item p{
-    margin: 20px;
+.notice-item td{
+    margin: 30px;
 }
 .main-img{
     width: 100%;
@@ -170,13 +169,25 @@ img {
 .main-festival-notice{
     margin: 200px auto;
 }
-
+.main-notice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(146, 180, 236, 0.6);
+    border-radius: 25px;
+}
 .main-festival {
     position: relative;
     height: 350px;
     cursor: pointer;
 }
-
+.main-notice thead td {
+    font-weight: bold;
+    float: left;
+}
+.main-notice table, .main-notice img{
+    margin: 0 100px;
+}
 .main-festival-info {
     position: absolute;
     bottom: 0px;
