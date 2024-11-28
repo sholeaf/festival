@@ -210,6 +210,11 @@ const BoardGet = () => {
     }
 
     const like = async () => {
+        if(loginUser == null || loginUser ==""){
+            alert("로그인 하셔야 좋아요가 가능합니다!");
+            return;
+        }
+
         const response = await axios.post(`/api/board/like/${boardnum}?userid=${loginUser}`);
         if (response.data) {
             setcheckLike(true);
@@ -398,7 +403,7 @@ const BoardGet = () => {
         }
 
         if (list == null || list.length == 0) {
-            replyList.push(<li className="no-reply" key={`li0`}>등록된 댓글이 없습니다.</li>);
+            replyList.push(<li className="no-reply" key={`li0`}><div className="rpBody_wrap" style={{textAlign:"center"}}><div style={{width:"900px"}}>등록된 댓글이 없습니다.</div></div></li>);
         }
         for (let i = 0; i < list.length; i++) {
             const reply = list[i];
@@ -475,7 +480,7 @@ const BoardGet = () => {
                     </div>
                     <div className="reply_line">
                         <div className="reply_write rpBody_wrap">
-                            {loginUser == "" ? <div>로그인 하셔야 댓글을 등록할 수 있습니다.</div>
+                            {loginUser == "" ? <div style={{textAlign:"center", width:"900px"}}>로그인 하셔야 댓글을 등록할 수 있습니다.</div>
                                 : <>
                                     <div style={{width:"40px"}}>{loginUser}</div>
                                     <div className="rpBody">

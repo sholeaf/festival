@@ -289,7 +289,7 @@ const modify = () => {
           <Header/>
           <div className="noticeWrap">
           <div id="nwrap" className="nmodify">
-            <div className="notice-title">Notice</div>
+            
             <form id="noticeForm" name="noticeForm">
               <div className="ntable">
                 <div className="row">
@@ -318,21 +318,21 @@ const modify = () => {
                   </div>
                 </div>
                 {
-                            files.map((item) => (
-                                item.thumbnail ? (
-                                    <div className="row">
-                                        <div>첨부사진</div>
-                                        <div key={item.id} className="nthumbnail_area nwritethumbnail_area">
-                                            <img src={item.thumbnail} alt={`thumbnail${item.id}`} className="nwritethumbnail" />
-                                        </div>
-                                        <div className=" row">
-                                            <Button className={"btn"} value={"파일 선택"} onClick={() => { upload(item.id); }}></Button>
-                                            <Button className={"btn"} value={"파일 삭제"} onClick={() => { removeFile(item.id); }}></Button>
-                                        </div>
-                                    </div>
-                                ) : ""
-                            ))
-                        }
+            files.map((item) => (
+                item.thumbnail ? (
+                    <div className="row ">
+                            <div>첨부사진</div>
+                    <div key={item.id} className="nthumbnail_area ">
+                        <img src={item.thumbnail} alt={`thumbnail${item.id}`} className="nwritethumbnail" />
+                    </div>
+                    <div className=" row nBtn">
+                                                <Button className={"btn"} value={"파일 선택"} onClick={() => { upload(item.id); }}></Button>
+                                                <Button className={"btn"} value={"파일 삭제"} onClick={() => { removeFile(item.id); }}></Button>
+                                            </div>
+                    </div>
+                ) : ""
+            ))
+        }
                 <div className="row">
                   <div>내용</div>
                   <div>
@@ -343,45 +343,40 @@ const modify = () => {
                     ></textarea>
                   </div>
                 </div>
-                {files.map((item) => {
-                  return (
-                    <div className={`row r${item.num}`} key={item.id}>
-                      <div>파일 첨부{item.num + 1}</div>
-                      <div className={`file${item.num}_cont row`}>
-                        <div className="cols-7">
-                          <input
-                            type="file"
-                            name="files"
-                            id={`file${item.num}`}
-                            style={{ display: "none" }}
-                            onChange={(e) => {
-                              selectFile(e, item.id, item.num);
-                            }}
-                          />
-                          <span id={`file${item.num}name`}>
-                            {item.file.name || "선택된 파일 없음"}
-                          </span>
-                        </div>
-                        <div className="cols-3 row">
-                          <Button
-                            className="btn"
-                            value="파일 선택"
-                            onClick={() => {
-                              upload(item.num);
-                            }}
-                          />
-                          <Button
-                            className="btn"
-                            value="첨부 삭제"
-                            onClick={() => {
-                              removeFile(item.id, item.num);
-                            }}
-                          />
-                        </div>
-                      </div>
-                    </div>
-                  );
-                })}
+                {files && files.map((item) => (
+  item.thumbnail ? (
+    <div className="row" key={item.id}  style={{ display: 'none' }}>
+      <div>첨부사진</div>
+      <div className="nthumbnail_area">
+        <img src={item.thumbnail} alt={`thumbnail${item.id}`} className="nwritethumbnail" />
+      </div>
+      <div className="row nBtn">
+        <Button className={"btn"} value={"파일 선택"} onClick={() => { upload(item.id); }} />
+        <Button className={"btn"} value={"파일 삭제"} onClick={() => { removeFile(item.id); }} />
+      </div>
+    </div>
+  ) : (
+    <div className={`row r${item.id}`} key={item.id}>
+      <div>파일첨부 {item.id + 1}</div>
+      <div className={`file${item.id}_cont row`}>
+        <div className="cols-7">
+          <input
+            type="file"
+            name="files"
+            id={`file${item.id}`}
+            style={{ display: 'none' }}
+            onChange={(e) => selectFile(e, item.id, item.num)} // ensure you pass num to selectFile
+          />
+          <span id={`files${item.id}name`}>{item.file.name || '선택된 파일 없음'}</span>
+        </div>
+        <div className="cols-3 row nBtn">
+          <Button className={"btn"} value={"파일 선택"} onClick={() => upload(item.id)} />
+          <Button className={"btn"} value={"파일 삭제"} onClick={() => removeFile(item.id, item.num)} />
+        </div>
+      </div>
+    </div>
+  )
+))}
               </div>
             </form>
             <table className="nbtn_area">
