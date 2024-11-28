@@ -206,7 +206,7 @@ const Notice = () => {
                         <tbody>
                             <tr>
                                 <td>
-                                    <a className="nwrite nbtn" onClick={() => navigate("/notice/nwrite", { state: cri })}>글쓰기</a>
+                                    <a className="nwriteBtn btn" onClick={() => navigate("/notice/nwrite", { state: cri })}>글쓰기</a>
                                 </td>
                             </tr>
                         </tbody>

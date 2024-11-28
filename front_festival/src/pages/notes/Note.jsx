@@ -106,7 +106,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
             pagenum: cri.pagenum,
             amount: 5,
             startrow: cri.startrow,
-            keyword: cri.keyword,
+            keyword: "",
             type:cri.type,
             userid:loginUser
             
@@ -259,10 +259,10 @@ const Note = ({ loginUser , cri, setCri, key}) => {
             {/* Modal 창 */}
             {isModalOpen && modalData && (
                 <Modal isOpen={isModalOpen} closeModal={closeModal}  >
-                    <div id="wrap" className="noteget" style={{ width: "500px" }}>
+                    <div id="ntwrap" className="noteget" style={{ width: "500px" }}>
                         <form id="notegetForm" name="notegetForm">
                             <div className="ntable notegettable">
-                                <div className="row notegetrow">
+                                <div className="notegetrow">
                                     <div>제목</div>
                                     <div>
                                         <input
@@ -275,7 +275,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="row notegetrow">
+                                <div className="notegetrow">
                                     <div>To</div>
                                     <div>
                                         <input
@@ -286,7 +286,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="row notegetrow">
+                                <div className="notegetrow">
                                     <div>From</div>
                                     <div className="sendms">
                                         {isReplyMode ? (
@@ -318,7 +318,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="row notegetrow">
+                                <div className="notegetrow">
                                     <div>내용</div>
                                     <div>
                                         <textarea
