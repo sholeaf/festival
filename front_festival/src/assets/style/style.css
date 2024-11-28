@@ -443,11 +443,45 @@ img {
 
 /* NOTICE Title */
 .notice-title {
+    position: relative; 
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 150px;
     font-family: 'EBSJSKMedium';
     font-size: 80px;
+    z-index: 1; 
+    margin-bottom: 30px;
+}
+
+.notice-title::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: url(../images/noticeimg.jpg) no-repeat center;
+    background-size: cover;
+    opacity: 0.5;
+    z-index: -1;
+}
+
+.titleSpan {
+    font-size: 19px; 
+    line-height: 1.6; 
+    color: #333; 
+    font-family: 'EBSJSKMedium'; 
+    font-weight: 500; 
+    letter-spacing: 0.5px; 
+    padding: 0 10px; 
+    background: linear-gradient(90deg, #050505, #757474); 
+    -webkit-background-clip: text;
+    color: transparent; 
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.1); /* 텍스트에 미세한 그림자 추가 */
+    display: inline-block;
+    word-wrap: break-word;
+    font-weight: bold;
 }
 
 .nlist,
@@ -534,13 +568,17 @@ no-post {
     display: block;
 }
 a.nwrite {
-    top: 53px;
+    display: inline-block;
+    top: 80px;
     padding: 5px;
     width: 60px;
     height: 30px;
     text-align: center;
     cursor: pointer;
-    position: absolute;
+    position: relative;
+    clear: both;
+    z-index: 1;
+    left: 50px;
 }
 /* 로딩 텍스트 애니메이션 */
 /* 1. 깜빡이는 애니메이션 */
@@ -646,8 +684,7 @@ a.nwrite {
     top: 0;
     left: 0;
     width: 100%;
-    height: 100%;
-    z-index: 5;
+    height: 320px;
 }
 
 @keyframes nlistWrap {
@@ -662,8 +699,8 @@ a.nwrite {
 .nwrite .ntable,
 .nget .ngettable,
 .nmodify .ntable {
-    border: 0px;
-    width: 1000px;
+    border: none;
+    width: 100%;
 }
 
 .nlist a.btn {
@@ -761,26 +798,18 @@ a.nwrite {
     text-align: center;
     vertical-align: middle;
     width: 20%;
-    
-
-
 }
 
 #noticeForm>.ntable>.row>div:nth-child(2) {
     vertical-align: middle;
     width: 80%;
-    border: 1px solid #000;
 }
 
 #noticeForm>.ntable>.row:nth-child(n+4) {
     height: auto;
 }
-#noticeForm{
-    border: 1px solid #000;
-}
-
-#noticeForm {
-    border: 1px solid #000;
+.nBtn{
+    border-bottom: none !important;
 }
 
 .nwrite input[type="text"],
@@ -795,6 +824,7 @@ a.nwrite {
     border: none;
     padding: 5px;
     outline: none;
+    border-bottom: 1px solid #ccc;
 }
 
 .nwrite textarea,
@@ -872,16 +902,6 @@ img.nthumbnail:hover {
 }
 
 /* get css */
-#nwrap .download {
-    display: none;
-    width: fit-content;
-    margin-top: 10px;
-    margin-left: 10px;
-    padding: 2px 10px;
-    box-shadow: 0px 0px 2px #000;
-    transition: all ease 0.2s;
-    line-height: 1.4;
-}
 
 #nwrap .download:hover {
     transform: scale(1.2);
@@ -892,8 +912,6 @@ img.nthumbnail:hover {
     font-size: 12px;
     padding: 10px;
 }
-
-
 .nget .nbtn_area td:nth-child(2) {
     padding: 5px;
     outline: none;
@@ -914,9 +932,145 @@ input.nrremove.btn {
     width: 80px;
 }
 
-
 /* nget css */
+/* 전체 폼 스타일 */
+#noticeForm {
+    width: 80%;
+    margin: 0 auto;
+    font-family: 'Arial', sans-serif;
+    background-color: #ffffff;
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
 
+/* 제목 및 정보 영역 */
+.ngettable .ngetrow.ngettitle {
+    display: flex;
+    justify-content: space-between;
+    font-size: 16px;
+    font-weight: bold;
+    padding: 10px 0;
+    border-bottom: 1px solid #ddd;
+    margin-bottom: 20px;
+}
+
+/* 콘텐츠 영역 */
+.ngettable .ngetrow.ngetcontent {
+    display: flex;
+    flex-direction: column;
+}
+
+/* 썸네일 이미지 */
+.ngetthumbnail_area {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+
+.ngetthumbnail {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+}
+
+.ngetthumbnail:hover {
+    transform: scale(1.1);
+}
+
+/* 텍스트 영역 */
+.ngetTextarea textarea {
+    width: 100%;
+    height: 200px;
+    padding: 12px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    resize: none;
+    background-color: #f9f9f9;
+    color: #555;
+}
+
+.filetextcontainer {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 20px;
+    font-size: 16px;
+}
+
+.filetextcontainer hr {
+    flex: 1;
+    border: 1px solid #ddd;
+}
+
+.filetext {
+    font-weight: bold;
+}
+
+/* 첨부파일 스타일 */
+.no-files {
+    font-size: 16px;
+    color: #999;
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* 다운로드 링크 및 버튼 */
+.row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 12px 0;
+}
+
+.download {
+    color: #007bff;
+    font-size: 14px;
+    text-decoration: none;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.download:hover {
+    text-decoration: underline;
+}
+
+.ndownload-btn .btn {
+    background-color: #28a745;
+    color: white;
+    padding: 8px 16px;
+    font-size: 14px;
+    border-radius: 5px;
+    cursor: pointer;
+    text-decoration: none;
+    text-align: center;
+}
+
+.ndownload-btn .btn:hover {
+    background-color: #218838;
+}
+
+/* 첨부파일이 없을 때 */
+.no-files {
+    font-size: 16px;
+    color: #999;
+    text-align: center;
+}
+
+/* 파일 항목 */
+.row .file {
+    display: flex;
+    align-items: center;
+}
+
+.row .file a {
+    margin-right: 10px;
+}
 .nget #noticecontents {
     width: 700px;
     height: 290px;
@@ -957,11 +1111,33 @@ input.nrremove.btn {
 .ngetrow textarea {
     width: 98%;
     height: 300px !important;
-    margin-left: 80px;
     margin-top: 40px;
 
 }
+.ngetfilecont {
+    display: flex; /* 한 줄로 배치 */
+    align-items: center; /* 수직 정렬 */
+    justify-content: space-between; /* 각 요소 간의 공간을 균등하게 배치 */
+    width: 100%; /* 컨테이너가 화면 너비에 맞게 확장되도록 */
+}
+.ngetfile01 {
+    margin-left: 10px;
+    padding: 2px 10px;
+    transition: all ease 0.2s;
+    line-height: 1.4;
+}
 
+.ngetfile02 {
+    flex: 3; 
+    padding: 10px;
+    text-align: center; 
+    font-size: 20px; /* 텍스트 크기 */
+}
+
+.ndownload-btn {
+    display: flex;
+    justify-content: flex-end; /* 다운로드 버튼을 오른쪽에 배치 */
+}
 .ngetdownload {
     width: 300px;
 }
@@ -1001,7 +1177,48 @@ input.nrremove.btn {
 .replycontent {
     margin-left: 30px;
 }
+.nreply {
+    display: flex; /* 한 줄로 배치 */
+    align-items: center; /* 수직 중앙 정렬 */
+    justify-content: flex-start; /* 왼쪽 정렬 */
+    width: 100%; /* 컨테이너 너비에 맞게 확장 */
+    margin-bottom: 10px; /* 항목 간 간격 */
+}
 
+.nreplyname {
+    margin-right: 10px; /* 이름과 내용 간의 간격 */
+    font-weight: bold; /* 사용자 이름 강조 */
+}
+
+.nreplycontent {
+    flex-grow: 1; /* 나머지 공간을 차지하도록 설정 */
+}
+
+.nreplycontent p {
+    margin: 0; /* p 태그 기본 마진 제거 */
+    padding: 5px; /* 적당한 여백 */
+    border: 1px solid transparent; /* 초기 상태에서 테두리 없음 */
+    border-radius: 4px; /* 테두리 둥글게 */
+    background-color: #f9f9f9; /* 배경색 */
+}
+
+.nreplycontent textarea {
+    width: 100%; /* 텍스트 영역이 부모의 너비를 모두 차지하도록 */
+    padding: 5px; /* 텍스트 영역 내부 여백 */
+    border: 1px solid #000; /* 편집 상태일 때 테두리 추가 */
+    border-radius: 4px; /* 둥근 모서리 */
+    font-size: 14px; /* 폰트 크기 */
+}
+
+.nreplycontent p, .nreplycontent textarea {
+    font-size: 14px; /* 폰트 크기 */
+    color: #333; /* 글씨 색 */
+}
+
+.nreplyname strong {
+    font-size: 16px; /* 사용자 이름 폰트 크기 */
+    color: #007bff; /* 사용자 이름 색상 */
+}
 .nreply_line>.nregist {
     display: inline-block;
     text-align: center;
@@ -1038,7 +1255,9 @@ input.nrremove.btn {
 .nreplyForm>div>input[type=text] {
     display: inline-block;
     width: 120px;
-    height: 40px;
+    height: 23px;
+    font-size: 20px;
+    margin-top: 25px;
     /* border: 2px solid #000; */
     border-radius: 5px;
     text-align: center;
@@ -1049,9 +1268,10 @@ input.nrremove.btn {
     height: 80px !important;
     border-radius: 5px;
     outline: none;
-    padding: 10px;
     font-size: 17px;
     color: #333;
+    margin-top: 0px !important;
+    border: 1px solid #ccc;
 }
 
 .nreplyForm>div>.btn {
@@ -1060,11 +1280,14 @@ input.nrremove.btn {
 }
 
 .nreplyForm>div>.nfinish {
-    margin-top: 50px;
+    margin-top: 87px;
     margin-bottom: 20px;
     vertical-align: middle;
 }
-
+input.btn.ncancel {
+    top: 33px;
+    position: relative;
+}
 .nreplies {
     border-top: 1px solid gray;
     padding: 0;
@@ -1083,9 +1306,9 @@ input.nrremove.btn {
     width: 1000px;
 }
 
-.nreplies li div:nth-child(1) {
+/* .nreplies li div:nth-child(1) {
     width: 75%;
-}
+} */
 
 .nreplies li div:nth-child(2) {
     width: 10%;
@@ -1274,9 +1497,6 @@ input.nrremove.btn {
     background-color: #fff;
 }
 
-.row:last-child {
-    border-bottom: 1px solid #ccc;
-}
 
 .rptable>.rptbody>.row>div {
     padding: 5px;
@@ -2684,6 +2904,20 @@ input.nrremove.btn {
      justify-content: center;
      height: 70px;
  }
+ /* 공지/관리자페이지 검색css 추가 */
+ input#keyword {
+    height: 32px;
+    width: 300px;
+    margin-right: 20px;
+}
+ a#search-btn {
+    width: 47px;
+    height: 32px;
+    text-align: center;
+    vertical-align: middle;
+    line-height: 2;
+}
+/* 공지/관리자페이지 검색css 끝 */
  .searchBtn{
      display: inline-block;
      width: 50px;

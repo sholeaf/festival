@@ -47,9 +47,7 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
     useEffect(() => {
         const temp = {
             ...cri, 
-            amount: 5,
-            type:"a"
-            
+            amount: 5   
         };
         axios.get(`/api/adminpage/${cri.pagenum}`, { params: temp })
             .then((resp) => {
@@ -189,11 +187,12 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
                                     <div className="rptbody">
                                         {elList}
                                     </div>
+                                    <hr />
                                     <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
                                 </div>
                                 <div className="search_area">
                                     <form name="searchForm" action="/notice/adminpage" className="row searchrow">
-                                        <Dropdown list={searchType} name={"type"} width={100} value={cri.type}  onChange={changeType}></Dropdown>
+                                        <Dropdown list={searchType} name={"type"} width={100} value={cri.type[0]}  onChange={changeType}></Dropdown>
                                         <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs || ""} onKeyDown={searchenter} />
                                         <a id="search-btn" className="btn" onClick={(e) =>clickSearch(e)}>검색</a>
                                         <input type="hidden" name="pagenum" />

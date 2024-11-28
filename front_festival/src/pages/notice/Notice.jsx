@@ -116,8 +116,7 @@ const Notice = () => {
             setCri(location.state);
         }
         console.log("공지 로케이션 상태",location.state)
-    }, [location.state, cri])
-    
+    }, [location.state])
     // 데이터가 없을 때 로딩 텍스트 표시
     const [chars, setChars] = useState([]);
     useEffect(() => {
@@ -200,7 +199,19 @@ const Notice = () => {
             <Header />
             <div className="noticeWrap">
             <div className="nwrap nlist" id="nwrap">
-                <div className="notice-title">Notice</div>
+                <div className="notice-title"><span className="titleSpan">한국 전역에서 열리는 다양한 축제들에 대한 최신 정보와 소식을<br/> 한곳에서 확인하실 수 있는 공지게시판입니다.<br/> 전통 문화의 향기를 느낄 수 있는 전통문화 축제부터, 신나는 음악 페스티벌, 그리고 자연과 함께하는 힐링 축제까지! <br/>각 지역마다 특색 있는 행사들이 여러분을 기다리고 있습니다.<br/> 모두의 축제 공지는 아래를 통해 확인해 주세요.</span></div>
+                {/* 관리자일 때만 글쓰기 버튼 보이기 */}
+                <div className={`nbtn_table ${isAdmin ? 'show' : ''}`}>
+                    <table>
+                        <tbody>
+                            <tr>
+                                <td>
+                                    <a className="nwrite nbtn" onClick={() => navigate("/notice/nwrite", { state: cri })}>글쓰기</a>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
                 <div className="tar w1000 notice-cnt">글 개수 :{data.pageMaker.total} </div>
                 <div className="nlist ntable">
                     <div className="nthead tac">
@@ -226,22 +237,11 @@ const Notice = () => {
                 </div>
                 <Pagination pageMaker={pageMaker} url="/notice/list" />
 
-                {/* 관리자일 때만 글쓰기 버튼 보이기 */}
-                <div className={`nbtn_table ${isAdmin ? 'show' : ''}`}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a className="nwrite nbtn" onClick={() => navigate("/notice/nwrite", { state: cri })}>글쓰기</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
+                
 
                 <div className="search_area">
                     <form name="searchForm" action="/notice/list" className="row searchrow">
-                        <Dropdown list={searchType} name={"type"} width={100} value={cri.type} onChange={changeType}>
+                        <Dropdown list={searchType} name={"type"} width={100} value={cri.type[0]} onChange={changeType}>
                         </Dropdown>
                         <input type="search" id="keyword" name="keyword" onChange={inputkeyword} value={inputs} onKeyDown={searchenter} />
                         <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
