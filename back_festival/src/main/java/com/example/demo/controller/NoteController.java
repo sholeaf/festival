@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.example.demo.domain.Criteria;
+import com.example.demo.domain.NoteCriteria;
 import com.example.demo.domain.NoteDTO;
 import com.example.demo.mapper.NoteMapper;
 import com.example.demo.service.NoteService;
@@ -36,22 +37,22 @@ public class NoteController {
 
 	@GetMapping("list/{notenum}")
 	@ResponseBody
-	public ResponseEntity<HashMap<String, Object>> getList(Criteria cri, @PathVariable("notenum") int notenum) {
+	public ResponseEntity<HashMap<String, Object>> getList(NoteCriteria cri, @PathVariable("notenum") int notenum) {
 		HashMap<String, Object> response = new HashMap<>();
+		System.out.println("Note쪽 서버에서 받는 요청 : "+cri);
+		System.out.println("Note쪽 서버에서 받는 요청 : "+notenum);
 	    try {
 	        cri.setPagenum(notenum);
-	        cri.setStartrow((cri.getPagenum() - 1) * cri.getAmount());
 	        HashMap<String, Object> result = ntservice.getList(cri);
-
 	        if (result == null || result.isEmpty()) {
 	            response.put("error", "데이터가 없습니다.");
 	            return new ResponseEntity<>(response, HttpStatus.NO_CONTENT);
 	        }
-
+	        System.out.println("NoteController List : "+result );
 	        return new ResponseEntity<>(result, HttpStatus.OK);
 	    } catch (Exception e) {
 	        // 예외 발생 시 로그 기록 및 오류 메시지 반환
-	        response.put("error", "서버 처리 중 오류가 발생했습니다.");
+	        response.put("error", "Note서버 처리 중 오류가 발생했습니다.");
 	        response.put("message", e.getMessage());
 	        e.printStackTrace();  // 서버 로그를 위한 스택 트레이스 출력
 	        return new ResponseEntity<>(response, HttpStatus.INTERNAL_SERVER_ERROR);

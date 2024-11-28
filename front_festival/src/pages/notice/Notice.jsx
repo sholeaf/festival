@@ -215,7 +215,7 @@ const Notice = () => {
                 <div className="tar w1000 notice-cnt">글 개수 :{data.pageMaker.total} </div>
                 <div className="nlist ntable">
                     <div className="nthead tac">
-                        <div className="row">
+                        <div className="row ntheadrow">
                             <div>번호</div>
                             <div>제목</div>
                             <div>작성자</div>

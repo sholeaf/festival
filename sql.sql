@@ -27,7 +27,7 @@ create table bookmark(
 );
 
 drop table bookmark;
-
+select * from bookmark;
 select * from bookmark where userid="apple";
 insert into bookmark(userid,contentid) value("apple","3392074");
 
