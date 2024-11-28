@@ -78,7 +78,7 @@ const Header = () => {
                         <a onClick={() => navigate("/board/list")}>축제 후기</a>
                     </div>
                     <div className="notice_btn">
-                        <a onClick={() => handleNavigation("/notice/list")}>공지사항</a>
+                        <a onClick={() => navigate("/notice/list")}>공지사항</a>
                     </div>
 
                     {/* 관리자가 아닐 경우에만 '마이페이지' 버튼을 보여주고, 관리자가 아닐 경우 '관리자페이지'는 감춤 */}
@@ -91,7 +91,7 @@ const Header = () => {
                     {/* 관리자인 경우에만 '관리자페이지' 버튼을 보여주고, '마이페이지'는 감춤 */}
                     {isAdmin && (
                         <div className="mypage_btn">
-                            <a onClick={() => handleNavigation("/notice/adminpage")}>관리자페이지</a>
+                            <a onClick={() => navigate("/notice/adminpage")}>관리자페이지</a>
                         </div>
                     )}
 

@@ -256,14 +256,18 @@ const Nget = () => {
         const reply = list[i];
         replyList.push(
             <li className={`li${reply.replynum} row`} key={`li${reply.replynum}`}>
-                <div className="row">
+                <div className="row nreply">
+                    <div className="nreplyname">
                     <strong className={`userid${reply.userid}`}>{reply.userid}</strong>
+                    </div>
+                    <div className="nreplycontent">
                     <p className={`reply${reply.replynum} replycontent`} style={{ border: reply.isEditing ? '1px solid #000' : 'none' }}>
                         {reply.isEditing ?
                             <textarea className={`mdf${reply.replynum}`} defaultValue={reply.replycontent}></textarea>
                             : reply.replycontent
                         }
                     </p>
+                    </div>
                 </div>
                 <div>
                     <strong></strong>
@@ -288,7 +292,7 @@ const Nget = () => {
         <>
             <Header />
         <div className="noticeWrap">
-        <div id="wrap" className="nget">
+        <div id="nwrap" className="nget">
             <form id="noticeForm getNoticeForm" name="noticeForm">
                 <div className="ngettable">
                     <div className="ngetrow ngettitle">
@@ -366,12 +370,12 @@ const Nget = () => {
             return (
                 <div className={`row r${i}`} key={`r${i}`}>
 
-                    <div className={`file${i}_cont row`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-                        <div className="clos-6"></div>
-                        <div className="cols-2">
+                    <div className={`file${i}_cont ngetfilecont`} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+                        <div className="ngetfile01"></div>
+                        <div className="ngetfile02">
                             {/* 파일명 클릭 시 다운로드 */}
                             <a
-                                className="download"
+                                className="ndownload"
                                 id={`file${i}name`}
                                 href={`/api/notice/file/download/${file.systemname}`}
                                 download
@@ -379,14 +383,7 @@ const Nget = () => {
                                 {file.orgname}
                             </a>
                         </div>
-                        {isModalOpen && (
-                                                <Modal isOpen={isModalOpen} closeModal={closeModal} modalStyle={{ top: '30%' }}>
-                                                    <div onClick={(e) => e.stopPropagation()}>
-                                                        <img src={modalImage} alt="Full size" style={{ width: '100%', height: 'auto', top: '20%' }} />
-                                                    </div>
-                                                </Modal>
-                                            )}
-                        <div className="ndownload-btn" style={{ flex: '0 0 auto' }}>
+                        <div className="ndownload-btn nBtn" style={{ flex: '0 0 auto' }}>
                             <a
                                 href={`/api/notice/file/download/${file.systemname}`}
                                 className="btn nownload-file-btn"
@@ -395,6 +392,13 @@ const Nget = () => {
                             </a>
                         </div>
                     </div>
+                                    {isModalOpen && (
+                                                            <Modal isOpen={isModalOpen} closeModal={closeModal} modalStyle={{ top: '30%' }}>
+                                                                <div onClick={(e) => e.stopPropagation()}>
+                                                                    <img src={modalImage} alt="Full size" style={{ width: '100%', height: 'auto', top: '20%' }} />
+                                                                </div>
+                                                            </Modal>
+                                                        )}
                 </div>
             );
         })
