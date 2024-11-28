@@ -26,11 +26,14 @@
 		insert into note(receiveuser, senduser, title, content) values (#{receiveuser},#{senduser},#{title},#{content})
 	</insert>
 	<select id="getList">
-		select * from note
-		where
-		<include refid="cri"></include>
-		notenum > 0 order by notenum desc limit #{startrow}, #{amount}
-	</select>
+    select * from note
+    where
+    <include refid="cri"></include>
+    receiveuser = #{userid} <!-- 로그인한 사용자와 receiveuser가 일치하는 조건 추가 -->
+    and notenum > 0
+    order by notenum desc
+    limit #{startrow}, #{amount}
+</select>
 	<select id="getTotal">
 		select count(*) from note
 		where
