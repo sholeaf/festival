@@ -456,7 +456,9 @@ img {
     font-family: 'GowunDodum-Regular';
     text-align: center;
 }
-
+.searchrow{
+    border-bottom: none !important;
+}
 .nlist.ntable>.ntbody>.row:nth-child(2n+1) {
     background-color: #fff;
 }
@@ -674,53 +676,6 @@ a.nwrite {
     cursor: pointer;
 }
 
-.nsearch_area .common-dropdown {
-    position: relative;
-    display: inline-block;
-    width: 200px;
-}
-
-.nsearch_area .dropdown-button {
-    background-color: #fff;
-    padding: 10px;
-    cursor: pointer;
-    border-radius: 18px;
-    font-size: 14px;
-}
-
-.nsearch_area .dropdown-content {
-    position: absolute;
-    top: 100%;
-    left: 0;
-    text-align: center;
-    overflow: hidden;
-    max-height: 0;
-    transition: max-height 0.3s ease-in-out;
-    margin-left: 1px;
-    margin-top: 1px;
-}
-
-.nsearch_area .dropdown-content li {
-    height: 30px;
-    line-height: 30px;
-    cursor: pointer;
-}
-
-.nsearch_area .dropdown-content li:hover {
-    background-color: rgb(193, 239, 253);
-}
-
-.nsearch_area .dropdown-content.show {
-    max-height: 500px;
-    transition: max-height 0.3s ease-in-out;
-}
-.searchrow:last-child {
-    border-bottom: none !important;
-}
-
-.searchrow:last-child {
-    border-bottom: none !important;
-}
 
 /* Notice list css */
 
@@ -1217,24 +1172,6 @@ input.nrremove.btn {
     background-color: yellow;
 }
 
-/* Search are css 공지 검색 */
-.nsearch_area {
-    display: inline-block;
-    margin-bottom: 130px;
-}
-
-input#nkeyword,
-input#akeyword {
-    width: 320px;
-    height: 41px;
-    margin-left: 5px;
-    border-radius: 10px;
-}
-
-a#nsearch-btn {
-    padding-top: 7px;
-    padding-left: 15px;
-}
 
 /* 파일첨부 글자 css */
 .filetextcontainer {
@@ -1443,9 +1380,7 @@ a#nsearch-btn {
     width: 80%;
 }
 
-.adminsearch_area {
-    margin-left: 10%;
-}
+
 
 .replymodal {
     padding: 20px;

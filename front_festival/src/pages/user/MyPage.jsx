@@ -462,7 +462,6 @@ const MyPage = () => {
     const showCommunity = () => {
         setItemsPerPage(9); // 9개로 설정
         setCurrentPage(1); // 첫 페이지로 설정
-        document.getElementById("openCommunity").style.display = 'none';
         document.getElementById("closeCommunity").style.display = 'inline-block';
         document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
@@ -471,7 +470,7 @@ const MyPage = () => {
     const closeCommunity = () => {
         setItemsPerPage(3); // 3개로 설정
         setCurrentPage(1);
-        document.getElementById("openCommunity").style.display = 'inline-block';
+
         document.getElementById("closeCommunity").style.display = 'none';
         document.getElementsByClassName("bookmark")[0].style.display = 'block';
         setIsAllBoard(false);
@@ -479,15 +478,14 @@ const MyPage = () => {
     const showBookmark = () => {
         setItemsPerPage(9); // 9개로 설정
         setCurrentPage(1); // 첫 페이지로 설정
-        document.getElementById("openBookmark").style.display = 'none';
+
         document.getElementById("closeBookmark").style.display = 'inline-block';
         document.getElementsByClassName("community")[0].style.display = 'none';
         setIsAllBoard(true);
     };
     const closeBookmark = () => {
         setItemsPerPage(3); // 3개로 설정
-        setCurrentPage(1);
-        document.getElementById("openBookmark").style.display = 'inline-block';
+        setCurrentPage(1);;
         document.getElementById("closeBookmark").style.display = 'none';
         document.getElementsByClassName("community")[0].style.display = 'block';
         setIsAllBoard(false);
