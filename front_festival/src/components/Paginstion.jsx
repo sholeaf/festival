@@ -51,7 +51,7 @@ const Pagination = ({ pageMaker, url, replyPageMaker, fetchReplies  }) => {
             elList.push(<span className="nowPage" key={i}>{i}</span>);
         } else {
             elList.push(
-                <a className="btn changePage" href={i} key={i} onClick={clickBtn}>{i}</a>
+                <a className="changePage" href={i} key={i} onClick={clickBtn}>{i}</a>
             );
         }
     }
@@ -72,21 +72,21 @@ const Pagination = ({ pageMaker, url, replyPageMaker, fetchReplies  }) => {
         <div className="pagination w1000 tac"> 
     {replyPageMaker ? (
         replyPageMaker.prev ? 
-        <a className="btn changePage" href={replyStartPage - 1} key={replyStartPage - 1} onClick={(e) => clickBtn(e, replyStartPage - 1, true)}>&lt;</a> 
+        <a className=" changePage" href={replyStartPage - 1} key={replyStartPage - 1} onClick={(e) => clickBtn(e, replyStartPage - 1, true)}>&lt;</a> 
         : ""
     ) : (
         pageMaker.prev ? 
-        <a className="btn changePage" href={startPage - 1} key={startPage - 1} onClick={clickBtn}>&lt;</a> 
+        <a className=" changePage" href={startPage - 1} key={startPage - 1} onClick={clickBtn}>&lt;</a> 
         : ""
     )} 
     {replyPageMaker ? replyElList : elList}  
     {replyPageMaker ? (
         replyPageMaker.next ? 
-        <a className="btn changePage" href={replyEndPage + 1} key={replyEndPage + 1} onClick={(e) => clickBtn(e, replyEndPage + 1, true)}>&gt;</a> 
+        <a className=" changePage" href={replyEndPage + 1} key={replyEndPage + 1} onClick={(e) => clickBtn(e, replyEndPage + 1, true)}>&gt;</a> 
         : ""
     ) : (
         pageMaker.next ? 
-        <a className="btn changePage" href={endPage + 1} key={endPage + 1} onClick={clickBtn}>&gt;</a> 
+        <a className="changePage" href={endPage + 1} key={endPage + 1} onClick={clickBtn}>&gt;</a> 
         : ""
     )}
 </div>

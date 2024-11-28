@@ -210,7 +210,7 @@ img {
     max-width: 840px;
     margin-bottom: 20px;
     margin-top: 10px;
-    display: flex;
+    /* display: flex; */
     justify-content: center;
 }
 
@@ -225,15 +225,15 @@ img {
 
 .pagination a {
     padding: 5px;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     margin-right: 5px;
 }
 
 .nowPage {
     padding: 5px;
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
     display: inline-block;
     border-radius: 3px;
     /* background-color: #fff; */
@@ -2677,7 +2677,7 @@ a#nsearch-btn {
      min-height: 140px;
      margin-bottom: 60px;
      background-color: #ebf7ff;
-     padding: 5px;
+     padding: 10px;
      border-radius: 10px;
  }
  
@@ -2902,5 +2902,8 @@ a#nsearch-btn {
      color: rgb(79, 73, 134);
  }
  
+ .changePage{
+    color: black;
+ }
 
  

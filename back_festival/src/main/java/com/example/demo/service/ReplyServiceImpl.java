@@ -41,6 +41,7 @@ public class ReplyServiceImpl implements ReplyService {
 //			return true;
 //		}
 //		else return false;
+		rmapper.deleteReportByReplynum(replynum);
 		return (rmapper.removeReply(replynum) == 1)? true : false;
 	}
 
