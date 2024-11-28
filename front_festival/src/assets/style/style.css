@@ -87,6 +87,13 @@ img {
 }
 
 /* main */
+.notice-item{
+    display: flex;
+    width: 500px;
+}
+.notice-item td{
+    margin: 30px;
+}
 .main-img{
     width: 100%;
     height: 400px;
@@ -162,13 +169,25 @@ img {
 .main-festival-notice{
     margin: 200px auto;
 }
-
+.main-notice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(146, 180, 236, 0.6);
+    border-radius: 25px;
+}
 .main-festival {
     position: relative;
     height: 350px;
     cursor: pointer;
 }
-
+.main-notice thead td {
+    font-weight: bold;
+    float: left;
+}
+.main-notice table, .main-notice img{
+    margin: 0 100px;
+}
 .main-festival-info {
     position: absolute;
     bottom: 0px;
@@ -2646,7 +2665,7 @@ input.btn.ncancel {
     font-size: 20px;
     line-height: 34px;
     letter-spacing: 2px;
-    margin: 150px auto;
+    margin: 100px auto;
     opacity: 0;
 }
 
@@ -2700,10 +2719,13 @@ input.btn.ncancel {
 }
 
 .festival-intro1,
-.festival-intro2,
 .festival-intro3 {
     height: 600px;
     margin-top: 150px;
+}
+
+.festival-intro2{
+    margin-top: 300px;
 }
 
 .festival-intro3 {
