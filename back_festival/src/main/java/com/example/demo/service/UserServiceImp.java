@@ -199,6 +199,15 @@ public class UserServiceImp implements UserService{
 	
 	@Override
 	public int deleteUser(String userid) {
+		List<BoardDTO> result = bmapper.getListByUserid(userid);
+		for(int i = 0; i < result.size(); i++) {
+			BoardDTO board = result.get(i);
+			String boardcontent = board.getBoardcontent();
+			if(boardcontent != "" && boardcontent != null) {
+				
+			}
+		}
+		
 		long[] boardnum = bmapper.getBoardnumByUserid(userid);
 		if(boardnum != null && boardnum.length != 0) {
 			for(int i = 0; i < boardnum.length; i++) {

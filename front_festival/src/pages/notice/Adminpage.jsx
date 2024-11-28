@@ -52,7 +52,6 @@ const Adminpage = () => {
     useEffect(() => {
         setCri(prevCri => ({
             ...prevCri,
-            type:"a",
             pagenum: 1  // viewMode가 변경되면 pagenum을 1로 초기화
         }));
     }, [viewMode]);
