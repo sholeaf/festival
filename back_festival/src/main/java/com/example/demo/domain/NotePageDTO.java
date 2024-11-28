@@ -3,15 +3,15 @@ package com.example.demo.domain;
 import lombok.Data;
 
 @Data
-public class PageDTO {
+public class NotePageDTO {
 	private int startPage;
 	private int endPage;
 	private int realEnd;
 	private long total;
 	private boolean prev, next;
-	private Criteria cri;
+	private NoteCriteria cri;
 	
-	public PageDTO(long total,Criteria cri) {
+	public NotePageDTO(long total, NoteCriteria cri) {
 		this.cri = cri;
 		this.total = total;
 		this.endPage = (int)Math.ceil(cri.getPagenum()/(double)cri.getAmount())*cri.getAmount();
@@ -28,8 +28,6 @@ public class PageDTO {
 		
 		this.prev = this.startPage != 1;
 		this.next = this.endPage < this.realEnd;
-		
 	}
 
-	
 }
