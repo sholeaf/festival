@@ -518,6 +518,28 @@ img {
 }
 
 /* 공지사항 리스트 배치 */
+.row.ntheadrow {
+    width: 95%;
+}
+/* .nlist.ntable .ntheadrow div:nth-child(1) {
+    width: 8%;
+}
+
+.nlist.ntable .ntheadrow div:nth-child(2) {
+    width: 65% !important;
+}
+
+.nlist.ntable .ntheadrow div:nth-child(3) {
+    width: 15%;
+}
+
+.nlist.ntable .ntheadrow div:nth-child(4) {
+    width: 30% !important;
+}
+
+.nlist.ntable .ntheadrow div:nth-child(5) {
+    width: 8% !important;
+} */
 .nlist.ntable .row div:nth-child(1) {
     width: 8%;
 }
@@ -729,7 +751,14 @@ a.nwrite {
 }
 
 .nthead {
-    border: 1px solid #b3b3b3;
+    border: 1px solid #b3b3b3; /* 기본 테두리 */
+    background-color: #f4f4f4; /* 부드러운 회색 배경 */
+    color: #333;
+    padding-left: 2px;
+    font-size: 16px; 
+    font-weight: bold; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+    border-radius: 6px 6px 0 0; /* 상단 테두리 둥글게 */
 }
 
 .nlist.ntable #nreply_cnt {
@@ -1266,7 +1295,7 @@ input.nrremove.btn {
     height: 23px;
     font-size: 20px;
     margin-top: 25px;
-    /* border: 2px solid #000; */
+    border: none !important;
     border-radius: 5px;
     text-align: center;
 }
@@ -1293,7 +1322,7 @@ input.nrremove.btn {
     vertical-align: middle;
 }
 input.btn.ncancel {
-    top: 33px;
+    top: 34px;
     position: relative;
 }
 .nreplies {
