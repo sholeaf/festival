@@ -521,25 +521,6 @@ img {
 .row.ntheadrow {
     width: 95%;
 }
-/* .nlist.ntable .ntheadrow div:nth-child(1) {
-    width: 8%;
-}
-
-.nlist.ntable .ntheadrow div:nth-child(2) {
-    width: 65% !important;
-}
-
-.nlist.ntable .ntheadrow div:nth-child(3) {
-    width: 15%;
-}
-
-.nlist.ntable .ntheadrow div:nth-child(4) {
-    width: 30% !important;
-}
-
-.nlist.ntable .ntheadrow div:nth-child(5) {
-    width: 8% !important;
-} */
 .nlist.ntable .row div:nth-child(1) {
     width: 8%;
 }
