@@ -14,7 +14,6 @@ const Modal = ({isOpen, children, closeModal, modalStyle }) => {
             position:"absolute",
             top:"50%",
             left:"50%",
-            transform:"translate(-50%,-50%)",
             maxWidth:"100%",
             maxHeight:"80%",
             overflowY:"auto",

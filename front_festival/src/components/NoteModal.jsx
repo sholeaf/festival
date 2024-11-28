@@ -36,7 +36,7 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                 <div className="notesend-modal-background"></div>
                 <div className="notesend-modal-content" onClick={(e) => e.stopPropagation()}>
                     <span className="notesend-close" onClick={closeModal}>&times;</span>
-                    <div className="notesend-row row">
+                    <div className="notesend-row">
                         <div>To</div>
                         <div>
                             <input 
@@ -47,7 +47,7 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                             />
                         </div>
                     </div>
-                    <div className="notesend-row row">
+                    <div className="notesend-row">
                         <div>From</div>
                         <div>
                             <input 
@@ -57,7 +57,7 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                                 readOnly 
                             />
                         </div>
-                        <div className="notesend-row row">
+                        <div className="notesend-row">
                         <div className="notesend-sendms">
                             <button 
                                 type="button" 
@@ -69,7 +69,7 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                         </div>
                     </div>
                     </div>
-                    <div className="notesend-row row ">
+                    <div className="notesend-row">
                         <div>제목</div>
                         <div>
                             <input
@@ -81,7 +81,7 @@ const NoteModal = ({ isOpen, closeModal, toUserId, loginUser }) => {
                             />
                         </div>
                     </div>
-                    <div className="notesend-row row">
+                    <div className="notesend-row">
                         <div>내용</div>
                         <div>
                             <textarea
