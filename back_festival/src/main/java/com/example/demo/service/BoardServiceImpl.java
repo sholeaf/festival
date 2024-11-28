@@ -57,6 +57,7 @@ public class BoardServiceImpl implements BoardService {
 	public HashMap<String, Object> getList(Criteria cri) {
 		HashMap<String, Object> result = new HashMap<>();
 		List<BoardDTO> list = bmapper.getList(cri);
+		System.out.println(list);
 		for(BoardDTO board : list) {
 			board.setLikeCnt(bmapper.likeCnt(board.getBoardnum()));
 			board.setReplyCnt(bmapper.replyCnt(board.getBoardnum()));
@@ -79,6 +80,8 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public long remove(long boardnum) {
 		rmapper.deleteAllReplyByBoardnum(boardnum);
+		bmapper.deleteLikeByBoardnum(boardnum);
+		bmapper.deleteReportByBoardnum(boardnum);
 		if(bmapper.deleteBoard(boardnum) == 1) {
 			return boardnum;
 		}
