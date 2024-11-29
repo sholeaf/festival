@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import '../../assets/style/usercss.css';
 import Dropdown from "../../components/Dropdown";
 import { useLocation, useNavigate } from "react-router-dom";
 import axios from 'axios';
