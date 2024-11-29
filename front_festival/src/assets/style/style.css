@@ -454,7 +454,31 @@ img {
     /* 스크롤바 손잡이 경계 */
 }
 
+/* 스크롤바 스타일 */
+.scrollbar {
+    max-height: 80vh; /* 최대 높이를 80vh로 제한 */
+    overflow-y: scroll; /* 세로 스크롤바가 필요하면 자동으로 생성 */
+}
 
+/* 웹킷 기반 스크롤바 스타일 */
+.scrollbar::-webkit-scrollbar {
+    width: 10px; /* 스크롤바 너비 */
+}
+
+.scrollbar::-webkit-scrollbar-thumb {
+    background-color: #92B4EC; /* 스크롤바 슬라이더 색상 */
+    border-radius: 10px; /* 슬라이더 모서리 둥글게 */
+    transition: background-color 0.3s ease; /* 호버 시 색상 변경 */
+}
+
+.scrollbar::-webkit-scrollbar-thumb:hover {
+    background-color: #555; /* 스크롤바 슬라이더 호버 색상 */
+}
+
+.scrollbar::-webkit-scrollbar-track {
+    background-color: rgba(146, 180, 236, 0.2); /* 스크롤바 트랙 배경 */
+    border-radius: 10px; /* 트랙 모서리 둥글게 */
+}
 /* 김영민 파트 시작 */
 /* notice area 공지페이지 시작 */
 .noticeWrap {
