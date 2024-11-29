@@ -135,7 +135,7 @@ header {
 
 .joinpage .wrap {
     width: 1000px;
-    margin: -25px auto;
+    margin: -15px 0 0 600px;
 }
 
 .joinpage .wrap .logo p {
@@ -146,7 +146,8 @@ header {
     width: 300px;
     background-color: #fff;
     border-radius: 15px;
-    margin-bottom: 10px;
+    margin-bottom: 0px;
+    margin-left: 170px;
 }
 
 
@@ -157,12 +158,13 @@ header {
 
 .joinpage .wrap form input {
     width: 600px;
-    height: 50px;
+    height: 35px;
     border: none;
     border-radius: 15px;
     padding: 10px;
+    padding-left: 20px;
     font-size: 15px;
-    margin: 5px;
+    margin: 15px 15px 0 15px;
 }
 
 .joinpage .wrap form #username,
@@ -170,9 +172,23 @@ header {
     width: 400px;
     display: inline-block;
 }
+.joinpage .wrap form #userid{
+    margin-bottom: 25px;
+}
+.joinpage .wrap form #userpw{
+    margin-bottom: 5px;
+}
+.joinpage .wrap form #userpw_re{
+    margin: 0 0 25px 15px;
+
+}
+.joinpage .wrap form #addretc{
+    margin-bottom: 15px;
+
+}
 
 .joinpage .wrap form .infoSelect {
-    width: 200px;
+    width: 180px;
     display: inline-block;
     text-align: center;
 }
@@ -200,7 +216,7 @@ header {
 
 .joinpage .wrap form .radioBox {
     display: inline-block;
-    margin: 5px 0px 5px 5px;
+    margin: 15px 15px 0 15px;
     width: 400px;
 }
 
@@ -220,9 +236,9 @@ header {
     display: inline-block;
     width: 200px;
     background-color: #fff;
-    height: 50px;
+    height: 35px;
     text-align: center;
-    padding: 15px;
+    padding: 5px;
     border-radius: 15px;
 }
 
@@ -233,22 +249,20 @@ header {
 #id_result,
 #pw_result {
     background-color: #fff;
+    position: absolute;
+    left: 15px;
+    width: 350px;
+    text-align: center;
+    border-radius: 10px;
+    margin: 0;
 }
 
 #id_result {
-    position: absolute;
-    right: -360px;
-    top: 0;
-    width: 350px;
-    text-align: center;
+    top: 53px;
 }
 
 #pw_result {
-    position: absolute;
-    right: -360px;
-    top: 80px;
-    width: 350px;
-    text-align: center;
+    top: 168px;
 }
 
 .codeGet,
@@ -266,7 +280,6 @@ header {
     position: absolute;
     right: 0;
     margin: 5px;
-    background-color: #ccc;
     border: none;
     font-size: 16px;
     border-radius: 15px;
@@ -325,7 +338,7 @@ header {
     width: 800px;
     margin: 0 auto;
     margin-bottom: 50px;
-    background-color: #ccc;
+    background-color: rgba(146, 180, 236, 0.2);
     border-radius: 30px;
     padding: 25px;
     position: relative;
@@ -538,6 +551,11 @@ header {
     cursor: pointer;
 }
 
+.mypage .community .pagination, 
+.mypage .bookmark .pagination {
+    display: flex;
+    justify-content: center;
+}
 .mypage .community .pagination span,
 .mypage .bookmark .pagination span{
     font-size: 20px;
