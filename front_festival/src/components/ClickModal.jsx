@@ -30,13 +30,12 @@ const ClickModal = ({ isModalOpen, children, closeModal, modalStyle }) => {
                     overflowY: "auto",
                     backgroundColor: "white",
                     zIndex: 11,
-                    borderRadius: "30px",
                     textAlign: "center",
                     ...modalStyle
                 }} 
                 onClick={(e) => e.stopPropagation()} 
             >
-                <div className="children">{children}</div>
+                <div className="children scrollbar">{children}</div>
             </div>
         </div>
     );
