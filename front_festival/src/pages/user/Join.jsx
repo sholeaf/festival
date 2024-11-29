@@ -332,7 +332,7 @@ const Join = () => {
                         <input type="text" name="addrdetail" id="addrdetail" placeholder="상세주소" />
                         <input type="text" name="addretc" id="addretc" placeholder="참고항목" readOnly />
                     </div>
-                    <Button value="회원가입" className="joinBtn" onClick={() => {
+                    <Button value="회원가입" className="joinBtn btn" onClick={() => {
                         clickJoin()
                     }}></Button>
                 </form>
