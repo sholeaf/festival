@@ -12,8 +12,8 @@ const Modal = ({isOpen, children, closeModal, modalStyle }) => {
            }}></div>
            <div style={{
             position:"absolute",
-            top:"50%",
-            left:"50%",
+            top:"30%",
+            left:"40%",
             maxWidth:"100%",
             maxHeight:"80%",
             overflowY:"auto",

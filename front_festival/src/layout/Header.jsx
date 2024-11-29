@@ -67,7 +67,7 @@ const Header = () => {
             <div className="header_area">
                 <div className="navigate">
                     <div className="logo" onClick={() =>
-                        handleNavigation("/")
+                        navigate("/")
                         }>
                         <a>모두의 축제</a>
                     </div>

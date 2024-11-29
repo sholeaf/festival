@@ -12,15 +12,7 @@ import Note from "../notes/Note";
 const MyPage = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
     const navigate = useNavigate();
-    const [cri, setCri] = useState(
-        {
-            pagenum: 1,
-            amount: 10,
-            type: "a",
-            keyword: "",
-            startrow: 0
-        }
-    );
+
     const [loginUser, setLoginUser] = useState("");
     const [list, setList] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -45,6 +37,13 @@ const MyPage = () => {
         nameinfo: '',
         emailinfo: '',
         genderinfo: ''
+    });
+    const [cri, setCri] = useState({
+        pagenum: 1,
+        amount: 10,
+        type: "a",
+        keyword: "",
+        startrow: 0
     });
 
     // 즐겨찾기 목록, contentid를 담은 배열
@@ -464,7 +463,6 @@ const MyPage = () => {
     const showCommunity = () => {
         setItemsPerPage(9); // 9개로 설정
         setCurrentPage(1); // 첫 페이지로 설정
-        document.getElementById("openCommunity").style.display = 'none';
         document.getElementById("closeCommunity").style.display = 'inline-block';
         document.getElementsByClassName("bookmark")[0].style.display = 'none';
         setIsAllBoard(true);
@@ -473,7 +471,7 @@ const MyPage = () => {
     const closeCommunity = () => {
         setItemsPerPage(3); // 3개로 설정
         setCurrentPage(1);
-        document.getElementById("openCommunity").style.display = 'inline-block';
+
         document.getElementById("closeCommunity").style.display = 'none';
         document.getElementsByClassName("bookmark")[0].style.display = 'block';
         setIsAllBoard(false);
@@ -481,15 +479,14 @@ const MyPage = () => {
     const showBookmark = () => {
         setItemsPerPage(9); // 9개로 설정
         setCurrentPage(1); // 첫 페이지로 설정
-        document.getElementById("openBookmark").style.display = 'none';
+
         document.getElementById("closeBookmark").style.display = 'inline-block';
         document.getElementsByClassName("community")[0].style.display = 'none';
         setIsAllBoard(true);
     };
     const closeBookmark = () => {
         setItemsPerPage(3); // 3개로 설정
-        setCurrentPage(1);
-        document.getElementById("openBookmark").style.display = 'inline-block';
+        setCurrentPage(1);;
         document.getElementById("closeBookmark").style.display = 'none';
         document.getElementsByClassName("community")[0].style.display = 'block';
         setIsAllBoard(false);
@@ -601,246 +598,248 @@ const MyPage = () => {
                 <>
                     <Header />
                     {!isAdmin && (
-                        <div className="mypage">
-                            <div className="profile">
-                                <div className="info_area">
-                                    <div className='img'>
-                                        <img src={`/api/user/file/thumbnail/${deleteFile}`} alt="" />
-                                    </div>
-                                    <div className='info'>
-                                        <div>이름 : {user.username}</div>
-                                        <div>이메일 : {user.useremail}</div>
-                                        <div>전화번호 : {userphone()}
-                                        </div>
-                                        <div>주소 : {user.addr + user.addretc}</div>
-                                    </div>
-                                </div>
-                                <div className="btn_area">
-                                    <p onClick={openModal1}>개인정보 변경</p>
-                                    <p onClick={openModal2}>비밀번호 변경</p>
-                                    <p onClick={openModal3}>프로필 변경</p>
-                                    <p onClick={openModal4}>정보공개 변경</p>
-                                    <p onClick={openModal5}>회원 탈퇴</p>
-                                </div>
-                            </div>
-                            <div className="bookmark">
-                                <p>즐겨찾기 목록</p>
-                                {bookmarks.length > itemsPerPage && (<span onClick={showBookmark} id='openBookmark' className='btn'>더 보기...</span>
-                                )}
-                                <span onClick={closeBookmark} id='closeBookmark' className='btn'>돌아가기</span>
-                                <div className='list'>
-                                    {bookmarks.length > 0 ? <div>{festivalList}</div> : <div className='no_list'>목록이 존재하지 않습니다.</div>}
-                                </div>
-
-                                {/* 페이징 버튼 */}
-                                {isAllBoard && (
-                                    <div className="pagination">
-                                        {/* "<" 버튼 - 이전 그룹으로 이동 */}
-                                        {currentGroupStart > 1 && (
-                                            <span onClick={() => paginate(bookmarkPrev)}>&lt;</span>
-                                        )}
-
-                                        {/* 페이지 번호 버튼 */}
-                                        {bookmarkToShow.map(number => (
-                                            <span
-                                                key={number}
-                                                onClick={() => paginate(number)}
-                                                className={currentPage === number ? 'active' : ''}
-                                            >
-                                                {number}
-                                            </span>
-                                        ))}
-
-                                        {/* ">" 버튼 - 다음 그룹으로 이동 */}
-                                        {bookmarkCurrentGroupEnd < bookmarkPageNumbers.length && (
-                                            <span onClick={() => paginate(bookmarkNext)}>&gt;</span>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                            <div className="community">
-                                <p>후기 목록</p>
-                                {list.length > itemsPerPage && (
-                                    <span onClick={showCommunity} id='openCommunity' className='btn'>
-                                        더 보기...
-                                    </span>
-                                )}
-                                <span onClick={closeCommunity} id='closeCommunity' className='btn'>돌아가기</span>
-                                <div className='list'>
-                                    {list.length > 0 ? <div>{boardList}</div> : <div className='no_list'>목록이 존재하지 않습니다.</div>}
-                                </div>
-
-                                {/* 페이징 버튼 */}
-                                {isAllBoard && (
-                                    <div className="pagination">
-                                        {/* "<" 버튼 - 이전 그룹으로 이동 */}
-                                        {currentGroupStart > 1 && (
-                                            <span onClick={() => paginate(boardPrev)}>&lt;</span>
-                                        )}
-
-                                        {/* 페이지 번호 버튼 */}
-                                        {boardToShow.map(number => (
-                                            <span
-                                                key={number}
-                                                onClick={() => paginate(number)}
-                                                className={currentPage === number ? 'active' : ''}
-                                            >
-                                                {number}
-                                            </span>
-                                        ))}
-
-                                        {/* ">" 버튼 - 다음 그룹으로 이동 */}
-                                        {boardCurrentGroupEnd < boardPageNumbers.length && (
-                                            <span onClick={() => paginate(boardNext)}>&gt;</span>
-                                        )}
-                                    </div>
-                                )}
-                            </div>
-                            <Modal isOpen={isModalOpen} closeModal={closeModal}>
-                                {activeModal === 'userModify' && (
-                                    <div id='userModify'>
-                                        <h3>개인정보 변경</h3>
-                                        <form action="/user/modify" method="post" name="modifyForm" className='modifyForm'>
-                                            <div>전화번호</div><input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" defaultValue={user.userphone} />
-                                            <div>이메일</div>
-                                            <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" defaultValue={user.useremail} />
-                                            <input type="button" className='btn code_btn' value="인증번호 받기" onClick={getCode} />
-                                            <input type="text" name="codeCheck" id="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e) => {
-                                                codeCheck(e)
-                                            }} style={{ display: 'none' }} />
-                                            <div className="zipcode_area">
-                                                <div>주소</div>
-                                                <DaumPostCode defaultValue={user.zipcode}></DaumPostCode>
-                                                <input type="text" name="addr" id="addr" placeholder="주소" readOnly defaultValue={user.addr} />
-                                                <input type="text" name="addrdetail" id="addrdetail" placeholder="상세주소" defaultValue={user.addrdetail} />
-                                                <input type="text" name="addretc" id="addretc" placeholder="참고항목" readOnly defaultValue={user.addretc} />
-                                                <input type="hidden" name="orgZipcode" id="orgZipcode" readOnly value={user.zipcode} />
-                                            </div>
-                                        </form>
-                                        <Button value="변경" onClick={userModify} className={"btn modal_btn"}></Button>
-                                        <Button value="취소" onClick={() => {
-                                            setIsModalOpen(false)
-                                        }} className={"btn modal_btn"}></Button>
-                                    </div>
-                                )}
-                                {activeModal === 'pwModify' && (
-                                    <div id='pwModify'>
-                                        <h3>비밀번호 변경</h3>
-                                        <div className='pwBox' onKeyDown={(e) => {
-                                            if (e.key == 'Enter') {
-                                                e.preventDefault();
-                                                pwModify();
-                                            }
-                                        }}>
-                                            <input type="password" name="orgPw" id="orgPw" placeholder='현재 비밀번호' />
-                                            <input type="password" name="newPw" id="newPw" placeholder='새 비밀번호' />
-                                            <input type="password" name="newPw_re" id="newPw_re" placeholder='새 비밀번호 확인' />
-                                        </div>
-                                        <Button value="변경" onClick={pwModify} className={"btn modal_btn"}></Button>
-                                        <Button value="취소" onClick={() => {
-                                            setIsModalOpen(false)
-                                        }} className={"btn modal_btn"}></Button>
-                                    </div>
-                                )}
-                                {activeModal === 'profileModify' && (
-                                    <div id='profileModify'>
-                                        <h3>프로필 변경</h3>
+                        <>
+                            <div className="mypage">
+                                <div className="profile">
+                                    <div className="info_area">
                                         <div className='img'>
-                                            <img src={profileImg} alt="" id='profileImg' />
+                                            <img src={`/api/user/file/thumbnail/${deleteFile}`} alt="" />
                                         </div>
-                                        <Button onClick={openFile} value="프로필 변경" className={"btn"}></Button>
-                                        <Button value="기본 프로필 변경" onClick={returnProfile} className={"btn"}></Button>
-                                        <Button value="적용" onClick={profileModify} className={"btn modal_btn"}></Button>
-                                        <Button value="취소" onClick={() => {
-                                            setIsModalOpen(false)
-                                        }} className={"btn modal_btn"}></Button>
-                                        <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
+                                        <div className='info'>
+                                            <div>이름 : {user.username}</div>
+                                            <div>이메일 : {user.useremail}</div>
+                                            <div>전화번호 : {userphone()}
+                                            </div>
+                                            <div>주소 : {user.addr + user.addretc}</div>
+                                        </div>
                                     </div>
-                                )}
-                                {activeModal === 'infoModify' && (
-                                    <div id='infoModify'>
-                                        <h3>정보공개 변경</h3>
-                                        <table>
-                                            <thead>
-                                                <tr>
-                                                    <th>정보</th>
-                                                    <th>공개</th>
-                                                    <th>비공개</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                <tr>
-                                                    <td>이름</td>
-                                                    <td>
-                                                        {userInfo.nameinfo == "T" ? <input type="radio" name="name" id="name1" value="T" checked />
-                                                            :
-                                                            <input type="radio" name="name" id="name1" value="T" />
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        {userInfo.nameinfo == "F" ? <input type="radio" name="name" id="name2" value="F" checked />
-                                                            :
-                                                            <input type="radio" name="name" id="name2" value="F" />
-                                                        }
+                                    <div className="btn_area">
+                                        <p onClick={openModal1}>개인정보 변경</p>
+                                        <p onClick={openModal2}>비밀번호 변경</p>
+                                        <p onClick={openModal3}>프로필 변경</p>
+                                        <p onClick={openModal4}>정보공개 변경</p>
+                                        <p onClick={openModal5}>회원 탈퇴</p>
+                                    </div>
+                                </div>
+                                <div className="bookmark">
+                                    <p>즐겨찾기 목록</p>
+                                    {bookmarks.length > itemsPerPage && (<span onClick={showBookmark} id='openBookmark' className='btn'>더 보기...</span>
+                                    )}
+                                    <span onClick={closeBookmark} id='closeBookmark' className='btn'>돌아가기</span>
+                                    <div className='list'>
+                                        {bookmarks.length > 0 ? <div>{festivalList}</div> : <div className='no_list'>목록이 존재하지 않습니다.</div>}
+                                    </div>
 
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>이메일</td>
-                                                    <td>
-                                                        {userInfo.emailinfo == "T" ? <input type="radio" name="email" id="email1" value="T" checked />
-                                                            :
-                                                            <input type="radio" name="email" id="email1" value="T" />
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        {userInfo.emailinfo == "F" ? <input type="radio" name="email" id="email2" value="F" checked />
-                                                            :
-                                                            <input type="radio" name="email" id="email2" value="F" />
-                                                        }
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>성별</td>
-                                                    <td>
-                                                        {userInfo.genderinfo == "T" ? <input type="radio" name="gender" id="gender1" value="T" checked />
-                                                            :
-                                                            <input type="radio" name="gender" id="gender1" value="T" />
-                                                        }
-                                                    </td>
-                                                    <td>
-                                                        {userInfo.genderinfo == "F" ? <input type="radio" name="gender" id="gender2" value="F" checked />
-                                                            :
-                                                            <input type="radio" name="gender" id="gender2" value="F" />
-                                                        }
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                        <Button value={"변경"} onClick={infoModify} className={"btn modal_btn"}></Button>
-                                        <Button value={"취소"} onClick={() => {
-                                            setIsModalOpen(false)
-                                        }} className={"btn modal_btn"}></Button>
-                                    </div>
-                                )}
-                                {activeModal === 'userDelete' && (
-                                    <div id='userDelete'>
-                                        <h3>회원 탈퇴</h3>
-                                        <div>
-                                            <p>비밀번호 확인</p>
-                                            <input type="password" name="userpw" id="userpw" placeholder='비밀번호' />
+                                    {/* 페이징 버튼 */}
+                                    {isAllBoard && (
+                                        <div className="pagination">
+                                            {/* "<" 버튼 - 이전 그룹으로 이동 */}
+                                            {currentGroupStart > 1 && (
+                                                <span onClick={() => paginate(bookmarkPrev)}>&lt;</span>
+                                            )}
+
+                                            {/* 페이지 번호 버튼 */}
+                                            {bookmarkToShow.map(number => (
+                                                <span
+                                                    key={number}
+                                                    onClick={() => paginate(number)}
+                                                    className={currentPage === number ? 'active' : ''}
+                                                >
+                                                    {number}
+                                                </span>
+                                            ))}
+
+                                            {/* ">" 버튼 - 다음 그룹으로 이동 */}
+                                            {bookmarkCurrentGroupEnd < bookmarkPageNumbers.length && (
+                                                <span onClick={() => paginate(bookmarkNext)}>&gt;</span>
+                                            )}
                                         </div>
-                                        <Button value="탈퇴" onClick={deleteUser} className={"btn modal_btn"}></Button>
-                                        <Button value="취소" onClick={() => {
-                                            setIsModalOpen(false)
-                                        }} className={"btn modal_btn"}></Button>
+                                    )}
+                                </div>
+                                <div className="community">
+                                    <p>후기 목록</p>
+                                    {list.length > itemsPerPage && (
+                                        <span onClick={showCommunity} id='openCommunity' className='btn'>
+                                            더 보기...
+                                        </span>
+                                    )}
+                                    <span onClick={closeCommunity} id='closeCommunity' className='btn'>돌아가기</span>
+                                    <div className='list'>
+                                        {list.length > 0 ? <div>{boardList}</div> : <div className='no_list'>목록이 존재하지 않습니다.</div>}
                                     </div>
-                                )}
-                            </Modal>
-                            <div>
-                                <Note loginUser={loginUser} cri={cri} setCri={setCri} />
+
+                                    {/* 페이징 버튼 */}
+                                    {isAllBoard && (
+                                        <div className="pagination">
+                                            {/* "<" 버튼 - 이전 그룹으로 이동 */}
+                                            {currentGroupStart > 1 && (
+                                                <span onClick={() => paginate(boardPrev)}>&lt;</span>
+                                            )}
+
+                                            {/* 페이지 번호 버튼 */}
+                                            {boardToShow.map(number => (
+                                                <span
+                                                    key={number}
+                                                    onClick={() => paginate(number)}
+                                                    className={currentPage === number ? 'active' : ''}
+                                                >
+                                                    {number}
+                                                </span>
+                                            ))}
+
+                                            {/* ">" 버튼 - 다음 그룹으로 이동 */}
+                                            {boardCurrentGroupEnd < boardPageNumbers.length && (
+                                                <span onClick={() => paginate(boardNext)}>&gt;</span>
+                                            )}
+                                        </div>
+                                    )}
+                                </div>
+                                <Modal isOpen={isModalOpen} closeModal={closeModal}>
+                                    {activeModal === 'userModify' && (
+                                        <div id='userModify'>
+                                            <h3>개인정보 변경</h3>
+                                            <form action="/user/modify" method="post" name="modifyForm" className='modifyForm'>
+                                                <div>전화번호</div><input type="text" name="userphone" id="userphone" placeholder="전화번호를 입력 하세요" defaultValue={user.userphone} />
+                                                <div>이메일</div>
+                                                <input type="email" name="useremail" id="useremail" placeholder="이메일을 입력 하세요" defaultValue={user.useremail} />
+                                                <input type="button" className='btn code_btn' value="인증번호 받기" onClick={getCode} />
+                                                <input type="text" name="codeCheck" id="codeCheck" placeholder="인증번호를 입력 하세요" onChange={(e) => {
+                                                    codeCheck(e)
+                                                }} style={{ display: 'none' }} />
+                                                <div className="zipcode_area">
+                                                    <div>주소</div>
+                                                    <DaumPostCode defaultValue={user.zipcode}></DaumPostCode>
+                                                    <input type="text" name="addr" id="addr" placeholder="주소" readOnly defaultValue={user.addr} />
+                                                    <input type="text" name="addrdetail" id="addrdetail" placeholder="상세주소" defaultValue={user.addrdetail} />
+                                                    <input type="text" name="addretc" id="addretc" placeholder="참고항목" readOnly defaultValue={user.addretc} />
+                                                    <input type="hidden" name="orgZipcode" id="orgZipcode" readOnly value={user.zipcode} />
+                                                </div>
+                                            </form>
+                                            <Button value="변경" onClick={userModify} className={"btn modal_btn"}></Button>
+                                            <Button value="취소" onClick={() => {
+                                                setIsModalOpen(false)
+                                            }} className={"btn modal_btn"}></Button>
+                                        </div>
+                                    )}
+                                    {activeModal === 'pwModify' && (
+                                        <div id='pwModify'>
+                                            <h3>비밀번호 변경</h3>
+                                            <div className='pwBox' onKeyDown={(e) => {
+                                                if (e.key == 'Enter') {
+                                                    e.preventDefault();
+                                                    pwModify();
+                                                }
+                                            }}>
+                                                <input type="password" name="orgPw" id="orgPw" placeholder='현재 비밀번호' />
+                                                <input type="password" name="newPw" id="newPw" placeholder='새 비밀번호' />
+                                                <input type="password" name="newPw_re" id="newPw_re" placeholder='새 비밀번호 확인' />
+                                            </div>
+                                            <Button value="변경" onClick={pwModify} className={"btn modal_btn"}></Button>
+                                            <Button value="취소" onClick={() => {
+                                                setIsModalOpen(false)
+                                            }} className={"btn modal_btn"}></Button>
+                                        </div>
+                                    )}
+                                    {activeModal === 'profileModify' && (
+                                        <div id='profileModify'>
+                                            <h3>프로필 변경</h3>
+                                            <div className='img'>
+                                                <img src={profileImg} alt="" id='profileImg' />
+                                            </div>
+                                            <Button onClick={openFile} value="프로필 변경" className={"btn profile_btn"}></Button>
+                                            <Button value="기본 프로필 변경" onClick={returnProfile} className={"btn profile_btn"}></Button>
+                                            <Button value="적용" onClick={profileModify} className={"btn modal_btn"}></Button>
+                                            <Button value="취소" onClick={() => {
+                                                setIsModalOpen(false)
+                                            }} className={"btn modal_btn"}></Button>
+                                            <input type="file" name="profile" id="profile" style={{ display: 'none' }} onChange={selectFile} />
+                                        </div>
+                                    )}
+                                    {activeModal === 'infoModify' && (
+                                        <div id='infoModify'>
+                                            <h3>정보공개 변경</h3>
+                                            <table>
+                                                <thead>
+                                                    <tr>
+                                                        <th>정보</th>
+                                                        <th>공개</th>
+                                                        <th>비공개</th>
+                                                    </tr>
+                                                </thead>
+                                                <tbody>
+                                                    <tr>
+                                                        <td>이름</td>
+                                                        <td>
+                                                            {userInfo.nameinfo == "T" ? <input type="radio" name="name" id="name1" value="T" checked />
+                                                                :
+                                                                <input type="radio" name="name" id="name1" value="T" />
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            {userInfo.nameinfo == "F" ? <input type="radio" name="name" id="name2" value="F" checked />
+                                                                :
+                                                                <input type="radio" name="name" id="name2" value="F" />
+                                                            }
+
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>이메일</td>
+                                                        <td>
+                                                            {userInfo.emailinfo == "T" ? <input type="radio" name="email" id="email1" value="T" checked />
+                                                                :
+                                                                <input type="radio" name="email" id="email1" value="T" />
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            {userInfo.emailinfo == "F" ? <input type="radio" name="email" id="email2" value="F" checked />
+                                                                :
+                                                                <input type="radio" name="email" id="email2" value="F" />
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                    <tr>
+                                                        <td>성별</td>
+                                                        <td>
+                                                            {userInfo.genderinfo == "T" ? <input type="radio" name="gender" id="gender1" value="T" checked />
+                                                                :
+                                                                <input type="radio" name="gender" id="gender1" value="T" />
+                                                            }
+                                                        </td>
+                                                        <td>
+                                                            {userInfo.genderinfo == "F" ? <input type="radio" name="gender" id="gender2" value="F" checked />
+                                                                :
+                                                                <input type="radio" name="gender" id="gender2" value="F" />
+                                                            }
+                                                        </td>
+                                                    </tr>
+                                                </tbody>
+                                            </table>
+                                            <Button value={"변경"} onClick={infoModify} className={"btn modal_btn"}></Button>
+                                            <Button value={"취소"} onClick={() => {
+                                                setIsModalOpen(false)
+                                            }} className={"btn modal_btn"}></Button>
+                                        </div>
+                                    )}
+                                    {activeModal === 'userDelete' && (
+                                        <div id='userDelete'>
+                                            <h3>회원 탈퇴</h3>
+                                            <div>
+                                                <p>비밀번호 확인</p>
+                                                <input type="password" name="userpw" id="userpw" placeholder='비밀번호' />
+                                            </div>
+                                            <Button value="탈퇴" onClick={deleteUser} className={"btn modal_btn"}></Button>
+                                            <Button value="취소" onClick={() => {
+                                                setIsModalOpen(false)
+                                            }} className={"btn modal_btn"}></Button>
+                                        </div>
+                                    )}
+                                </Modal>
+                                <div>
+                                    <Note loginUser={loginUser} cri={cri} setCri={setCri} />
+                                </div>
                             </div>
-                        </div>
+                        </>
                     )}
                 </>
             ) : (
