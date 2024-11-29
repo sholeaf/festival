@@ -132,10 +132,10 @@ public class NoticeServiceImpl implements NoticeService{
                 System.out.println("Current viewed notices: " + currentViewedNotices);  // 현재 본 게시글 목록 로그
                 setViewedNoticeCookie(resp, currentViewedNotices, noticenum); // 새로운 쿠키 추가
             } else {
-                System.out.println("User has already viewed the notice or is the author."); // 이미 본 게시글이거나 작성자일 경우
+                System.out.println("User has already viewed the notice or is the author. 이미 봤거나 게시글장석자입니다."); // 이미 본 게시글이거나 작성자일 경우
             }
         } else {
-            System.out.println("Notice has already been viewed. No increment in readcount.");
+            System.out.println("Notice has already been viewed. No increment in readcount.이미 본 게시글입니다.");
         }
 
         result.put("notice", notice);
@@ -151,7 +151,7 @@ public class NoticeServiceImpl implements NoticeService{
             for (Cookie cookie : cookies) {
                 if ("viewedNotice".equals(cookie.getName())) {
                     viewedNotices = cookie.getValue(); // 기존 쿠키값을 가져옴
-                    System.out.println("Existing viewed notices from cookie: " + viewedNotices); // 쿠키에 저장된 본 게시글 목록 출력
+                    System.out.println("쿠키에 저장된 게시글 불러오기: " + viewedNotices); // 쿠키에 저장된 본 게시글 목록 출력
                     break;
                 }
             }
@@ -168,7 +168,7 @@ public class NoticeServiceImpl implements NoticeService{
         Cookie viewedCookie = new Cookie("viewedNotice", newViewedNotices);
         viewedCookie.setMaxAge(5 * 60);
         viewedCookie.setPath("/"); // 전체 도메인에 적용
-        System.out.println("Setting new cookie with value: " + newViewedNotices);  // 쿠키 값 출력
+        System.out.println("셋팅된 쿠키값: " + newViewedNotices);  // 쿠키 값 출력
         resp.addCookie(viewedCookie); // 응답에 쿠키 추가
     }
 
