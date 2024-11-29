@@ -117,7 +117,6 @@ public class NoticeServiceImpl implements NoticeService{
                 }
             }
         }
-
         // 처음 보는 게시글인 경우에만 readcount 증가
         if (!checkViewed && notice != null) {
             // 로그인한 사용자가 게시글 작성자가 아닌 경우에만 조회수 증가
@@ -168,6 +167,8 @@ public class NoticeServiceImpl implements NoticeService{
         Cookie viewedCookie = new Cookie("viewedNotice", newViewedNotices);
         viewedCookie.setMaxAge(5 * 60);
         viewedCookie.setPath("/"); // 전체 도메인에 적용
+        viewedCookie.setSecure(true); // 보안 설정 (필요시)
+        viewedCookie.setHttpOnly(true);
         System.out.println("셋팅된 쿠키값: " + newViewedNotices);  // 쿠키 값 출력
         resp.addCookie(viewedCookie); // 응답에 쿠키 추가
     }
