@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -199,6 +201,32 @@ public class UserServiceImp implements UserService{
 	
 	@Override
 	public int deleteUser(String userid) {
+		List<BoardDTO> result = bmapper.getListByUserid(userid);
+		for(int i = 0; i < result.size(); i++) {
+			BoardDTO board = result.get(i);
+			String boardcontent = board.getBoardcontent();
+			if(!boardcontent.isEmpty() && boardcontent != null) {
+				Pattern pattern = Pattern.compile("systemname=([^\"]+)");
+				Matcher matcher = pattern.matcher(boardcontent);
+				
+				List<String> systemnameList = new ArrayList<>();
+				
+				while (matcher.find()) {
+		            String systemname = matcher.group(1);
+		            File file = new File(saveFolder, systemname);
+		            
+		            // 파일이 존재하면 삭제
+		            if (file.exists()) {
+		                boolean deleted = file.delete();
+		                if (!deleted) {
+		                    // 파일 삭제 실패 시 로그를 남기는 등의 처리가 필요할 수 있음
+		                    System.out.println("Failed to delete file: " + file.getPath());
+		                }
+		            }
+		        }
+			}
+		}
+		
 		long[] boardnum = bmapper.getBoardnumByUserid(userid);
 		if(boardnum != null && boardnum.length != 0) {
 			for(int i = 0; i < boardnum.length; i++) {
@@ -232,7 +260,8 @@ public class UserServiceImp implements UserService{
 		uimapper.deleteUserInfo(userid);
 		bmapper.deleteBoardByUserid(userid);
 		bmmapper.removeAllBookmark(userid);
-		return umapper.deleteUser(userid);
+		umapper.deleteUser(userid);
+		return 1;
 	}
 
 	@Override
