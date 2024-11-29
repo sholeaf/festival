@@ -552,9 +552,7 @@ header {
 .mypage .bookmark .pagination .active{
     background-color: lightblue;
 }
-.mypage .myModal {
-    transform: translate(-50%, -50%);
-}
+
 
 
 /* 보드 쪽지 및 회원 정보 팝업 / 모달 */
