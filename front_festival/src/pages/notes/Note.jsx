@@ -22,7 +22,8 @@ const Note = ({ loginUser , cri, setCri, key}) => {
     useEffect(() => {
         setCri((prevCri) => ({
             ...prevCri,
-            pagenum: 1 // key 변경 시 pagenum을 1로 설정
+            pagenum: 1, // key 변경 시 pagenum을 1로 설정
+            startrow:1
         }));
     }, [key]);
     useEffect(() => {
@@ -105,8 +106,12 @@ const Note = ({ loginUser , cri, setCri, key}) => {
             pagenum: cri.pagenum,
             amount: 5,
             startrow: cri.startrow,
+            keyword: "",
+            type:cri.type,
+            userid:loginUser
             
         };
+        console.log("note temp",temp);
         axios.get(`/api/note/list/${cri.pagenum}`, { params: temp })
             .then((resp) => {
                 setNote(resp.data);
@@ -115,7 +120,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
             .catch((error) => {
                 console.error("쪽지 API 호출 중 오류:", error);
             });
-    }, [cri]);
+    }, [cri, loginUser]);
 
     useEffect(() => {
         if (location.state) {
@@ -243,10 +248,10 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                     <div className="tbody notetbody">
                         {noteList}
                     </div>
+                    <hr />
                     <div className="noteselectbtn">
                         <button onClick={handleDeleteSelected}>선택삭제</button>
                     </div>
-                    <hr />
                     <Pagination pageMaker={pageMaker} url={dynamicUrl} />
                 </div>
             </div>
@@ -254,10 +259,10 @@ const Note = ({ loginUser , cri, setCri, key}) => {
             {/* Modal 창 */}
             {isModalOpen && modalData && (
                 <Modal isOpen={isModalOpen} closeModal={closeModal}  >
-                    <div id="wrap" className="noteget" style={{ width: "500px" }}>
+                    <div id="ntwrap" className="noteget" style={{ width: "500px" }}>
                         <form id="notegetForm" name="notegetForm">
                             <div className="ntable notegettable">
-                                <div className="row notegetrow">
+                                <div className="notegetrow">
                                     <div>제목</div>
                                     <div>
                                         <input
@@ -270,7 +275,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="row notegetrow">
+                                <div className="notegetrow">
                                     <div>To</div>
                                     <div>
                                         <input
@@ -281,7 +286,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="row notegetrow">
+                                <div className="notegetrow">
                                     <div>From</div>
                                     <div className="sendms">
                                         {isReplyMode ? (
@@ -313,7 +318,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                                         />
                                     </div>
                                 </div>
-                                <div className="row notegetrow">
+                                <div className="notegetrow">
                                     <div>내용</div>
                                     <div>
                                         <textarea

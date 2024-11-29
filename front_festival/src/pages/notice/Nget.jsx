@@ -40,7 +40,7 @@ const Nget = () => {
     const remove = () => {
         axios.delete(`/api/notice/${notice.noticenum}`)
             .then((resp) => {
-                alert(`${resp.data}번 게시글 삭제!`)
+                alert(`${resp.data}번 게시글이 삭제 되었습니다!`)
                 navigate(`/notice/list`, { state: cri });
             })
     }
@@ -80,7 +80,7 @@ const Nget = () => {
 
         axios.post(`/api/nreply/regist`, reply)
             .then(resp => {
-                alert(`${resp.data}번 댓글 등록 완료!`);
+                alert(`공지글에 댓글 등록이 완료되었습니다.`);
                 reply.replynum = resp.data;
                 if (list.length === 5) {
                     setNowPage(Math.ceil((replyCnt + 1) / 5));
@@ -94,7 +94,7 @@ const Nget = () => {
             })
             .catch(error => {
                 console.error("Error registering the reply:", error.response ? error.response.data : error.message);
-                alert("댓글 등록 실패");
+                alert("댓글 등록이 실패했습니다.");
             });
     };
 
@@ -126,7 +126,7 @@ const Nget = () => {
     const modifyReplyOk = (e, replynum) => {
         const replycontent = document.querySelector(`.mdf${replynum}`);
         if (replycontent.value === "") {
-            alert("수정댓글내용입력");
+            alert("수정 할 내용을 입력하세요");
             replycontent.focus();
             return;
         }
@@ -134,7 +134,7 @@ const Nget = () => {
         const updatedReply = { replynum, replycontent: replycontent.value, userid: loginUser };
         axios.put(`/api/nreply/${replynum}`, updatedReply)
             .then(resp => {
-                alert(`${resp.data}번 댓글 수정 완료`);
+                alert(`댓글 수정 완료`);
                 setList(list.map(reply =>
                     reply.replynum === replynum ? { ...reply, replycontent: replycontent.value, isEditing: false } : reply
                 ));
@@ -145,7 +145,7 @@ const Nget = () => {
     const removeReply = (e, replynum) => {
         axios.delete(`/api/nreply/${replynum}`)
             .then(resp => {
-                alert(`${resp.data}번 댓글 삭제 완료`);
+                alert(`댓글 삭제 완료`);
                 const updatedList = list.filter((data) => data.replynum !== replynum);
                 setList(updatedList);
                 if (list.length == 1 && nowPage != 1) {

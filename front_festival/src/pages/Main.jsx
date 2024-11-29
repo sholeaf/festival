@@ -6,6 +6,7 @@ import TodayDate from "../hooks/TodayDate";
 import { useNavigate } from "react-router-dom";
 import noimage from "../assets/images/no-image.jpg";
 import mainimg from "../assets/images/mainimg.jpg"
+import section1 from "../assets/images/section1.jpg"
 
 const Main = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -152,7 +153,7 @@ const Main = () => {
                         bestReview.map((review, index) => (
                             <div className="review-item" key={index} onClick={() => { navigate(`/board/${review.boardnum}`) }}>
                                 <div>제목 :{review.boardtitle}</div>
-                                <div>내용 :{extractTextFromHTML(review.boardcontent, 103) == ""|| null ? "글이 없는 게시글" :extractTextFromHTML(review.boardcontent, 103) }</div>
+                                <div>내용 :{extractTextFromHTML(review.boardcontent, 103) == "" || null ? "글이 없는 게시글" : extractTextFromHTML(review.boardcontent, 103)}</div>
                                 <div>{review.userid}</div>
                                 <div>좋아요 {review.likeCnt}</div>
                                 {review.titleImage == null ? <img src={noimage} style={{ width: "90px", height: "90px" }} /> : <img src={reviewimg + review.titleImage} style={{ width: "90px", height: "90px" }} />}
@@ -194,17 +195,35 @@ const Main = () => {
 
                 <div className="main-festival-notice">
                     <h2>공지사항</h2>
-                    {notice.length > 0 ? (
-                        notice.map((noticeItem, index) => (
-                            <div className="notice-item" key={index}>
-                                <h3>{noticeItem.noticetitle}</h3>
-                                <p>{noticeItem.userid}</p>
-                                <p>{noticeItem.noticeregdate}</p>
-                            </div>
-                        ))
-                    ) : (
-                        <p className="waring-text">공지사항이 없습니다.</p>
-                    )}
+                    <div className="main-notice">
+                        <table>
+                            <thead>
+                                <tr className="notice-item">
+                                    <td>번호</td>
+                                    <td>제목</td>
+                                    <td>작성자</td>
+                                    <td>등록일</td>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {notice.length > 0 ? (
+                                    notice.map((noticeItem, index) => (
+                                        <tr className="notice-item" key={index} onClick={()=>{
+                                            navigate(`/notice/${noticeItem.noticenum}`)
+                                        }}>
+                                            <td>{noticeItem.noticenum}</td>
+                                            <td>{noticeItem.noticetitle}</td>
+                                            <td>{noticeItem.userid}</td>
+                                            <td>{noticeItem.noticeregdate}</td>
+                                        </tr>
+                                    ))
+                                ) : (
+                                    <p className="waring-text">공지사항이 없습니다.</p>
+                                )}
+                            </tbody>
+                        </table>
+                        <img src={section1} style={{width:"500px",height:"350px"}}/>
+                    </div>
                 </div>
             </div>
         </>

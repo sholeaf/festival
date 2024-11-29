@@ -35,7 +35,9 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
             keyword: inputs,
             pagenum: 1
         };
-        setCri(changedCri);  // reply에 대한 상태만 업데이트
+        setCri(changedCri);
+        setInputs(""); 
+        document.getElementById("type").value = "";
     };
     const searchenter = (e) => {
         if (e.key === 'Enter') {

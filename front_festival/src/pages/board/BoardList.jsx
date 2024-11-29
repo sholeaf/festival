@@ -59,7 +59,7 @@ const BoardList = () => {
         setInputs(e.target.value);
     }
     const clickSearch = (e) => {
-        e.preventDefault();
+        // e.preventDefault();
         const changedCri = {
             ...cri,
             type: document.getElementById("type").value,
@@ -181,7 +181,12 @@ const BoardList = () => {
             })
     }
 
-
+    const handleKeyDown = (e)=>{
+        if (e.key === 'Enter'){
+            e.preventDefault();
+            clickSearch();
+        }
+    }
 
 
     if (!data) {
@@ -218,10 +223,11 @@ const BoardList = () => {
             <>
                 <Header></Header>
                 <div id="board_wrap" className="list">
-                    <div style={{fontSize:"20px", paddingLeft:"160px"}}>
+                    <div style={{fontSize:"20px", paddingLeft:"0px", textAlign:"center"}}>
                         자신의 경험과 느낌을 후기로 공유하는 공간입니다.<br></br>
                         회원님들의 생생하고 솔직한 후기를 다른 회원님들과 나눠보세요!
                     </div>
+                    {/* <input type="search" id="keyword2" name="keyword2"/> */}
                     <div style={{display:"flex", justifyContent:"right", paddingRight:"20px"}}>
                         <a className="btn writeBoard" onClick={() => {
                             if (loginUser == null || loginUser == "") {
@@ -233,7 +239,8 @@ const BoardList = () => {
                     </div>
                     <div style={{ height: "30px" }}>
                     </div>
-                    <div>{data.list == null || data.list == "" ? <div>등록된 글이 없습니다!</div>
+                    <div>{data.list == null || data.list == "" ?
+                     <div className="board_obj" style={{textAlign:"center",lineHeight:"120px"}}>등록된 글이 없습니다!</div>
                         : elList
                     }
                     </div>
@@ -241,7 +248,7 @@ const BoardList = () => {
                     <div className="search_area">
                         <form name="searchForm" id="searchForm" action="/board/list" className="row">
                             <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
-                            <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} />
+                            <input type="text" id="keyword" name="keyword" onChange={inputKeyword} onKeyDown={handleKeyDown} value={inputs} />
                             <a id="search-btn" className="btn searchBtn" onClick={clickSearch}>검색</a>
                             <input type="hidden" name="pagenum" />
                             <input type="hidden" name="amount" />

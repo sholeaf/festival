@@ -87,6 +87,16 @@ img {
 }
 
 /* main */
+.notice-item{
+    display: flex;
+    width: 500px;
+    border-bottom: 1px solid white;
+    cursor: pointer;
+}
+
+.notice-item td{
+    margin: 30px;
+}
 .main-img{
     width: 100%;
     height: 400px;
@@ -109,6 +119,8 @@ img {
     box-shadow: 2px 4px 6px rgba(0, 0, 0, 0.2);
     cursor: pointer;
 }
+
+
 
 .review-item:last-child{
     margin-bottom: 100px;
@@ -162,13 +174,30 @@ img {
 .main-festival-notice{
     margin: 200px auto;
 }
-
+.main-notice{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(146, 180, 236, 0.6);
+    border-radius: 25px;
+    height: 500px;
+    margin: 80px 0 0 30px;
+}
 .main-festival {
     position: relative;
     height: 350px;
     cursor: pointer;
 }
-
+.main-notice thead td {
+    font-weight: bold;
+    float: left;
+}
+.main-notice thead .notice-item{
+    cursor:default;
+}
+.main-notice table, .main-notice img{
+    margin: 0 100px;
+}
 .main-festival-info {
     position: absolute;
     bottom: 0px;
@@ -452,6 +481,7 @@ img {
     font-size: 80px;
     z-index: 1; 
     margin-bottom: 30px;
+    
 }
 
 .notice-title::before {
@@ -465,6 +495,7 @@ img {
     background-size: cover;
     opacity: 0.5;
     z-index: -1;
+    border-radius: 30px;
 }
 
 .titleSpan {
@@ -510,6 +541,9 @@ img {
 }
 
 /* 공지사항 리스트 배치 */
+.row.ntheadrow {
+    width: 100%;
+}
 .nlist.ntable .row div:nth-child(1) {
     width: 8%;
 }
@@ -567,12 +601,12 @@ no-post {
 .nbtn_table.show {
     display: block;
 }
-a.nwrite {
+.nwriteBtn {
     display: inline-block;
     top: 80px;
     padding: 5px;
     width: 60px;
-    height: 30px;
+    height: 30px !important;
     text-align: center;
     cursor: pointer;
     position: relative;
@@ -721,7 +755,14 @@ a.nwrite {
 }
 
 .nthead {
-    border: 1px solid #b3b3b3;
+    border: 1px solid #b3b3b3; /* 기본 테두리 */
+    background-color: #f4f4f4; /* 부드러운 회색 배경 */
+    color: #333;
+    padding-left: 2px;
+    font-size: 16px; 
+    font-weight: bold; 
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* 부드러운 그림자 효과 */
+    border-radius: 6px 6px 0 0; /* 상단 테두리 둥글게 */
 }
 
 .nlist.ntable #nreply_cnt {
@@ -1258,7 +1299,7 @@ input.nrremove.btn {
     height: 23px;
     font-size: 20px;
     margin-top: 25px;
-    /* border: 2px solid #000; */
+    border: none !important;
     border-radius: 5px;
     text-align: center;
 }
@@ -1285,7 +1326,7 @@ input.nrremove.btn {
     vertical-align: middle;
 }
 input.btn.ncancel {
-    top: 33px;
+    top: 34px;
     position: relative;
 }
 .nreplies {
@@ -1689,7 +1730,7 @@ input.btn.ncancel {
     margin-top: 20px;
 }
 /* 전체 wrapper 스타일 */
-#wrap.noteget {
+#ntwrap.noteget {
     width: 500px;
     margin: 0 auto;
     border-radius: 10px;
@@ -1697,6 +1738,12 @@ input.btn.ncancel {
     padding: 20px;
     font-family: Arial, sans-serif;
     background-color: #f9f9f9;
+    position: fixed;
+    z-index: 22;
+    left: 33%;
+    top:25%;
+    transform: none !important;
+    background: linear-gradient(135deg, #f6efe1, #f8c2d0);
 }
 
 /* 테이블 영역 */
@@ -1778,6 +1825,10 @@ input.btn.ncancel {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
+    position: fixed;
+    width: 90px;
+    left: 55%;
+    top: 34.5%;
 }
 
 .sendms button:hover {
@@ -1797,155 +1848,123 @@ input.btn.ncancel {
 
 /* noteModal send 부분 디자인 */
 /* Modal overlay style */
-.notesend-row {
-    padding-top: 0;
-}
-
+/* 모달 오버레이: 화면 중앙에 위치하도록 설정 */
 .notesend-modal-overlay {
-    display: block;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     position: fixed;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.35);
-    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5); /* 반투명 검정 배경 */
+    z-index: 999; /* 다른 요소 위에 표시 */
 }
 
-.notesend-modal-overlay.hidden {
-    display: none;
-}
-
-/* Background behind the modal */
+/* 모달 배경 */
 .notesend-modal-background {
     position: absolute;
     top: 0;
     left: 0;
-    width: 100vw;
-    height: 100vh;
-    background-color: rgba(0, 0, 0, 0.35);
-    z-index: 10;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);
 }
 
-.notesend-modal-content .notesend-row div:nth-child(1) {
-    width: 80px !important;
-    border-bottom: none;
-}
-
-.notesend-modal-content .notesend-row input:nth-child(2) {
-    width: 300px !important;
-}
-
-.notesend-row:last-child {
-    border-bottom: none;
-}
-
-/* Modal content style */
+/* 모달 내용 */
 .notesend-modal-content {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    max-height: 120%;
-    overflow-y: auto;
-    background-color: #f9f9f9;
-    z-index: 11;
-    border-radius: 30px;
-    text-align: center;
+    position: relative;
+    background: linear-gradient(135deg, #f6efe1, #f8c2d0);
     padding: 20px;
     width: 500px;
-    height: 700px;
-}
-.notesend-modal-content th, .notesend-modal-content td {
-    height: 59px !important;
-}
-
-.notesend-modal-content th,
-.notesend-modal-content td {
-    height: 59px !important;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    z-index: 1000; /* 배경 위에 표시 */
 }
 
-/* Input field and textarea */
-.notesend-note-input {
-    width: 80%;
-    padding: 8px;
-    margin: 10px 0;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-}
-
-.notesendtitle {
-    width: 300px !important;
-    margin-left: 18px;
-}
-
-.notesend-note-textarea {
-    width: 300px;
-    padding: 8px;
-    margin: 10px 0 10px 18px;
-    border: 1px solid #ccc;
-    border-radius: 5px;
-    height: 200px;
-    resize: none;
-}
-
-/* Button styles */
-.notesend-btn {
-    padding: 10px 20px;
-    width: 80px;
-    color: white;
-    border: none;
-    margin: 0 0 18px 18px;
-    border-radius: 5px;
-    cursor: pointer;
-}
-
-/* 보내기버튼 */
-.notesend-btn-send {
-    background-color: #28a745;
-}
-
-.notesend-btn:hover {
-    background-color: #218838;
-}
-
-.notesend-notegetbtn_area {
-    vertical-align: middle;
-    display: inline-block;
-}
-
-/* 취소버튼 */
-.notesend-msbtn {
-    background-color: #007BFF;
-}
-
-.notesend-msbtn:hover {
-    background-color: #0056b3;
-}
-
-
-
-.notesend-sendms {
-    margin-top: 15px;
-}
-
-/* Modal Close button */
+/* 모달 닫기 버튼 */
 .notesend-close {
-    font-size: 30px;
-    font-weight: bold;
-    cursor: pointer;
     position: absolute;
     top: 10px;
     right: 10px;
-    color: #aaa;
-}
-
-.notesend-close:hover,
-.notesend-close:focus {
-    color: black;
-    text-decoration: none;
+    font-size: 24px;
+    color: #333;
     cursor: pointer;
 }
+
+/* 입력 필드 스타일 */
+.notesend-note-input,
+.notesend-note-textarea {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    margin-top: 5px;
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+
+/* 제목 입력 필드 스타일 */
+.notesendtitle {
+    width: 316px !important;
+}
+
+/* 버튼 스타일 */
+.notesend-btn {
+    padding: 10px 10px;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    color: white;
+    font-weight: bold;
+    font-size: 16px;
+    margin-top: -11px !important;
+    margin-left: 20px;
+    width: 70px;
+}
+
+/* 보내기 버튼 스타일 */
+.notesend-btn-send {
+    background-color: #92B4EC; /* 초록색 */
+}
+
+/* 취소 버튼 스타일 */
+.notesend-msbtn {
+    background-color: #fd927a; /* 빨간색 */
+}
+
+/* 각 행 스타일 (To, From, 제목, 내용) */
+.notesend-row {
+    display: flex;
+}
+
+/* 각 항목 라벨 스타일 */
+.notesend-row div:first-child {
+    font-weight: bold;
+    font-size: 16px;
+    width: 80px;
+    margin: 13px 0 0 6px;
+    text-align: center;
+}
+
+/* 텍스트 영역 스타일 */
+.notesend-note-textarea {
+    resize: none;
+    height: 200px;
+    width: 315px;
+}
+
+/* 버튼 영역 */
+.notesend-notegetbtn_area {
+    width: 100%;
+    text-align: center;
+}
+
+.notesend-btn:not(:last-child) {
+    margin-right: 10px;
+}
+
 
 /* noteModal send 부분 디자인 끝 */
 
@@ -2636,7 +2655,7 @@ input.btn.ncancel {
     font-size: 20px;
     line-height: 34px;
     letter-spacing: 2px;
-    margin: 150px auto;
+    margin: 100px auto;
     opacity: 0;
 }
 
@@ -2690,10 +2709,13 @@ input.btn.ncancel {
 }
 
 .festival-intro1,
-.festival-intro2,
 .festival-intro3 {
     height: 600px;
     margin-top: 150px;
+}
+
+.festival-intro2{
+    margin-top: 300px;
 }
 
 .festival-intro3 {
