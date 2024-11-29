@@ -90,7 +90,10 @@ img {
 .notice-item{
     display: flex;
     width: 500px;
+    border-bottom: 1px solid white;
+    cursor: pointer;
 }
+
 .notice-item td{
     margin: 30px;
 }
@@ -177,6 +180,8 @@ img {
     align-items: center;
     background-color: rgba(146, 180, 236, 0.6);
     border-radius: 25px;
+    height: 500px;
+    margin: 80px 0 0 30px;
 }
 .main-festival {
     position: relative;
@@ -186,6 +191,9 @@ img {
 .main-notice thead td {
     font-weight: bold;
     float: left;
+}
+.main-notice thead .notice-item{
+    cursor:default;
 }
 .main-notice table, .main-notice img{
     margin: 0 100px;
