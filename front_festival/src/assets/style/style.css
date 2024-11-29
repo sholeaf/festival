@@ -1758,7 +1758,6 @@ input.btn.ncancel {
     left: 33%;
     top:25%;
     transform: none !important;
-    background: linear-gradient(135deg, #f6efe1, #f8c2d0);
 }
 
 /* 테이블 영역 */
@@ -1790,7 +1789,7 @@ input.btn.ncancel {
     font-size: 14px;
     border: 1px solid #ddd;
     border-radius: 5px;
-    background-color: #fff;
+    background-color: rgba(146, 180, 236, 0.2);
     transition: border-color 0.3s ease;
 }
 
@@ -1852,13 +1851,14 @@ input.btn.ncancel {
 
 /* 읽기 전용 input 스타일 */
 .notegetrow input[readonly] {
-    background-color: #f1f1f1;
+    background-color: rgba(146, 180, 236, 0.2);
     border: 1px solid #ccc;
     color: #777;
 }
 
 .notegetrow input {
     border: 1px solid #ccc !important;
+    background-color: rgba(146, 180, 236, 0.2);
 }
 
 /* noteModal send 부분 디자인 */
@@ -1890,7 +1890,7 @@ input.btn.ncancel {
 /* 모달 내용 */
 .notesend-modal-content {
     position: relative;
-    background: linear-gradient(135deg, #f6efe1, #f8c2d0);
+    background-color:white ;
     padding: 20px;
     width: 500px;
     border-radius: 8px;
@@ -1909,8 +1909,7 @@ input.btn.ncancel {
 }
 
 /* 입력 필드 스타일 */
-.notesend-note-input,
-.notesend-note-textarea {
+.notesend-note-input, .notesend-note-textarea {
     width: 100%;
     padding: 10px;
     border: 1px solid #ccc;
@@ -1918,6 +1917,7 @@ input.btn.ncancel {
     margin-top: 5px;
     margin-bottom: 15px;
     font-size: 16px;
+    background-color: rgba(146, 180, 236, 0.2);
 }
 
 /* 제목 입력 필드 스타일 */
