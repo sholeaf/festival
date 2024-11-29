@@ -22,6 +22,7 @@ import com.example.demo.mapper.UserMapper;
 import com.example.demo.service.NoticeService;
 
 import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.web.bind.annotation.PutMapping;
 
@@ -67,14 +68,14 @@ public class NoticeController {
 		}
 	}
 	@GetMapping("/{noticenum}")
-	public ResponseEntity<HashMap<String, Object>> nget(@PathVariable("noticenum") long noticenum, HttpServletRequest req) {
+	public ResponseEntity<HashMap<String, Object>> nget(@PathVariable("noticenum") long noticenum, HttpServletRequest req, HttpServletResponse resp) {
 	    HttpSession session = req.getSession();
 	    String loginUser = (String) session.getAttribute("loginUser");
 
 	    // 디버깅용 로그
 	    System.out.println("Fetching details for noticenum: " + noticenum + " by user: " + loginUser);
 
-	    HashMap<String, Object> result = service.getDetail(noticenum, loginUser);
+	    HashMap<String, Object> result = service.getDetail(noticenum, loginUser,req, resp);
 	    if (result.get("notice") != null) {
 	        return new ResponseEntity<HashMap<String, Object>>(result, HttpStatus.OK);
 	    } else {

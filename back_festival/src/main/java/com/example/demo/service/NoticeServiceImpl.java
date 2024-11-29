@@ -24,6 +24,10 @@ import com.example.demo.mapper.NoticeFileMapper;
 import com.example.demo.mapper.NoticeMapper;
 import com.example.demo.mapper.NoticeReplyMapper;
 
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+
 
 @Service
 public class NoticeServiceImpl implements NoticeService{
@@ -94,23 +98,81 @@ public class NoticeServiceImpl implements NoticeService{
     }
 
     @Override
-    public HashMap<String, Object> getDetail(long noticenum, String loginUser) {
+    public HashMap<String, Object> getDetail(long noticenum, String loginUser, HttpServletRequest req , HttpServletResponse resp ) {
         HashMap<String, Object> result = new HashMap<>();
 
+        // 게시글 조회
         NoticeDTO notice = nmapper.getNoticeByNoticenum(noticenum);
         List<NoticeFileDTO> files = nfmapper.getFiles(noticenum);
-
-     // 로그인한 사용자와 관계없이 readcount를 증가시키도록 수정
-        if (notice != null) {
-            nmapper.updateReadCount(noticenum, notice.getReadcount() + 1);
-            notice.setReadcount(notice.getReadcount() + 1);
+        
+        boolean checkViewed = false;
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            // 쿠키에서 해당 게시글을 본 기록이 있는지 확인
+            for (Cookie cookie : cookies) {
+                System.out.println("Found cookie: " + cookie.getName() + " = " + cookie.getValue());  // 쿠키 이름과 값을 출력
+                if ("viewedNotice".equals(cookie.getName()) && cookie.getValue().contains(String.valueOf(noticenum))) {
+                    checkViewed = true; // 이미 본 게시글인 경우
+                    break;
+                }
+            }
         }
+
+        // 처음 보는 게시글인 경우에만 readcount 증가
+        if (!checkViewed && notice != null) {
+            // 로그인한 사용자가 게시글 작성자가 아닌 경우에만 조회수 증가
+            if (loginUser != null && !loginUser.equals(notice.getUserid())) {
+                // 조회수 증가
+                System.out.println("Incrementing readcount for noticenum: " + noticenum);  // readcount 증가 로그
+                nmapper.updateReadCount(noticenum, notice.getReadcount() + 1);
+                notice.setReadcount(notice.getReadcount() + 1);
+                
+                // 쿠키에 본 게시글을 기록
+                String currentViewedNotices = getViewedNotices(req); // 현재 본 게시글 목록 가져오기
+                System.out.println("Current viewed notices: " + currentViewedNotices);  // 현재 본 게시글 목록 로그
+                setViewedNoticeCookie(resp, currentViewedNotices, noticenum); // 새로운 쿠키 추가
+            } else {
+                System.out.println("User has already viewed the notice or is the author."); // 이미 본 게시글이거나 작성자일 경우
+            }
+        } else {
+            System.out.println("Notice has already been viewed. No increment in readcount.");
+        }
+
         result.put("notice", notice);
         result.put("files", files);
         return result;
     }
 
-    @Override
+    // 쿠키에서 본 게시글 목록을 가져오는 메서드
+    private String getViewedNotices(HttpServletRequest req) {
+        String viewedNotices = "";
+        Cookie[] cookies = req.getCookies();
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                if ("viewedNotice".equals(cookie.getName())) {
+                    viewedNotices = cookie.getValue(); // 기존 쿠키값을 가져옴
+                    System.out.println("Existing viewed notices from cookie: " + viewedNotices); // 쿠키에 저장된 본 게시글 목록 출력
+                    break;
+                }
+            }
+        }
+        return viewedNotices;
+    }
+
+    // 본 게시글 번호를 쿠키에 저장하는 메서드
+    private void setViewedNoticeCookie(HttpServletResponse resp, String currentViewedNotices, long noticenum) {
+        // 기존 본 게시글 목록에 새로운 게시글을 추가
+        String newViewedNotices = currentViewedNotices.isEmpty() ? String.valueOf(noticenum) : currentViewedNotices + "," + noticenum;
+
+        // 쿠키 생성
+        Cookie viewedCookie = new Cookie("viewedNotice", newViewedNotices);
+        viewedCookie.setMaxAge(3 * 60 * 60); // 3시간 동안 유효
+        viewedCookie.setPath("/"); // 전체 도메인에 적용
+        System.out.println("Setting new cookie with value: " + newViewedNotices);  // 쿠키 값 출력
+        resp.addCookie(viewedCookie); // 응답에 쿠키 추가
+    }
+
+	@Override
     public long nmodify(NoticeDTO notice, MultipartFile[] files, String[] deleteFiles) throws Exception {
         long noticenum = notice.getNoticenum();
         NoticeDTO orgNotice = nmapper.getNoticeByNoticenum(noticenum);
