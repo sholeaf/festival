@@ -105,7 +105,7 @@ public class AdminPageController {
         }
     }
     //신고된 댓글 삭제 (reply_report 데이터 삭제)
-    @DeleteMapping("/{replynum}")
+    @DeleteMapping("/replyremove/{replynum}")
     public ResponseEntity<Long> deletereply(@PathVariable long replynum){
     	if(apservice.deletereply(replynum) != -1) {
 			return new ResponseEntity<>(replynum, HttpStatus.OK);

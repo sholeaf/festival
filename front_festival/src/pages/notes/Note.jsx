@@ -32,7 +32,8 @@ const Note = ({ loginUser , cri, setCri, key}) => {
     }, [cri]); 
     const [isModalOpen, setIsModalOpen] = useState(false); // Modal 열림 상태
     const [modalData, setModalData] = useState(null); // Modal에 표시할 데이터
-
+    // Pagination에 동적으로 URL 전달
+    const dynamicUrl = location.pathname;
     // 삭제 요청 함수
     const removenote = (notenum) => {
         axios.delete(`/api/note/${notenum}`)
@@ -245,7 +246,8 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                     <div className="noteselectbtn">
                         <button onClick={handleDeleteSelected}>선택삭제</button>
                     </div>
-                    <Pagination pageMaker={pageMaker} url="/notice/adminpage" />
+                    <hr />
+                    <Pagination pageMaker={pageMaker} url={dynamicUrl} />
                 </div>
             </div>
             
