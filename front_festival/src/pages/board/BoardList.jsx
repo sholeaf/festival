@@ -68,6 +68,12 @@ const BoardList = () => {
         };
         setCri(changedCri);
     }
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();  // Enter 키에 의한 폼 제출 방지
+            clickSearch(e);  // 엔터 키 입력 시 검색 실행
+        }
+    }
 
     useEffect(() => {
         axios.get(`/api/board/list/${cri.pagenum}`, { params: cri }).then((resp) => {
@@ -248,8 +254,13 @@ const BoardList = () => {
                     <div className="search_area">
                         <form name="searchForm" id="searchForm" action="/board/list" className="row">
                             <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
+<<<<<<< HEAD
                             <input type="text" id="keyword" name="keyword" onChange={inputKeyword} onKeyDown={handleKeyDown} value={inputs} />
                             <a id="search-btn" className="btn searchBtn" onClick={clickSearch}>검색</a>
+=======
+                            <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={handleKeyPress}/>
+                            <a id="search-btn" className="btn searchBtn" onClick={clickSearch} >검색</a>
+>>>>>>> 956dfe33d4372fd7c50127178021a4fd8e47071a
                             <input type="hidden" name="pagenum" />
                             <input type="hidden" name="amount" />
                         </form>
