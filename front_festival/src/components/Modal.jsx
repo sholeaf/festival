@@ -14,7 +14,6 @@ const Modal = ({isOpen, children, closeModal, modalStyle }) => {
             position:"absolute",
             top:"50%",
             left:"50%",
-            transform:"translate(-50%,-50%)",
             maxWidth:"100%",
             maxHeight:"80%",
             overflowY:"auto",
@@ -23,7 +22,7 @@ const Modal = ({isOpen, children, closeModal, modalStyle }) => {
             borderRadius:"30px",
             textAlign:"center",
             ...modalStyle
-           }}  onClick={(e) => e.stopPropagation()} >
+           }}className="myModal"  onClick={(e) => e.stopPropagation()} >
             <div className="children">{children}</div>
            </div>
         </div>

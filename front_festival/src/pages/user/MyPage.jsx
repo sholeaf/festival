@@ -12,6 +12,7 @@ import Note from "../notes/Note";
 const MyPage = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
     const navigate = useNavigate();
+    
     const [loginUser, setLoginUser] = useState("");
     const [list, setList] = useState([]);
     const [isAdmin, setIsAdmin] = useState(false);
@@ -39,7 +40,7 @@ const MyPage = () => {
     });
     const [cri, setCri] = useState({
         pagenum: 1,
-        amount: 10,
+        amount: 5,
         type: "a",
         keyword: "",
         startrow: 0
@@ -92,7 +93,7 @@ const MyPage = () => {
 
     const getCode = () => {
         const email = document.modifyForm.useremail.value;
-        if(user.useremail == email){
+        if (user.useremail == email) {
             alert("동일한 이메일 입니다.");
             return;
         }
@@ -834,7 +835,7 @@ const MyPage = () => {
                                 )}
                             </Modal>
                             <div>
-                                <Note loginUser={loginUser} setCri={setCri} cri={cri}/>
+                                <Note loginUser={loginUser} cri={cri} setCri={setCri} />
                             </div>
                         </div>
                     )}
