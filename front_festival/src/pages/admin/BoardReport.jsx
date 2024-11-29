@@ -155,8 +155,8 @@ const BoardReport = ({loginUser, cri, setCri, key}) =>{
                     <div>{board.reportcnt}</div>
                     <div>
                         {/* 클릭 시 신고 횟수 0으로 변경 */}
-                        <button onClick={() => handleReportReset(board.boardnum)}>신고해제</button>
-                        <button onClick={() => deleteList(board.boardnum)}>게시글삭제</button>
+                        <button className="btn" onClick={() => handleReportReset(board.boardnum)}>신고해제</button>
+                        <button className="btn" onClick={() => deleteList(board.boardnum)}>게시글삭제</button>
                     </div>
                 </div>
             );
