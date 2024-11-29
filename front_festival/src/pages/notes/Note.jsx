@@ -250,7 +250,7 @@ const Note = ({ loginUser , cri, setCri, key}) => {
                     </div>
                     <hr />
                     <div className="noteselectbtn">
-                        <button onClick={handleDeleteSelected}>선택삭제</button>
+                        <button className="remove-btn btn" onClick={handleDeleteSelected}>선택삭제</button>
                     </div>
                     <Pagination pageMaker={pageMaker} url={dynamicUrl} />
                 </div>

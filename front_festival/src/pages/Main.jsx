@@ -195,6 +195,9 @@ const Main = () => {
 
                 <div className="main-festival-notice">
                     <h2>공지사항</h2>
+                    <div className="more-btn btn" onClick={() => {
+                        navigate('/notice/list');
+                    }}>more+</div>
                     <div className="main-notice">
                         <table>
                             <thead>

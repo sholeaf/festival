@@ -5,6 +5,7 @@ import Pagination from "../../components/Paginstion";
 import Header from "../../layout/Header";
 import axios from "axios";
 import NoteModal from "../../components/NoteModal";
+import img from "../../assets/images/noticeimg.jpg"
 
 const Notice = () => {
     const navigate = useNavigate();
@@ -28,23 +29,23 @@ const Notice = () => {
                 setIsAdmin(response.data.admin);
             })
             .catch(error => {
-                setIsAdmin(false); 
+                setIsAdmin(false);
             });
     }, []);
     //모달테스트
-    const [isModalOpen, setIsModalOpen] = useState(false);  
-    const [selectedUserId, setSelectedUserId] = useState(''); 
-    
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedUserId, setSelectedUserId] = useState('');
+
     // 모달 열기
     const openModal = (userId) => {
-        setSelectedUserId(userId); 
-        setIsModalOpen(true);  
+        setSelectedUserId(userId);
+        setIsModalOpen(true);
     };
 
     // 모달 닫기
     const closeModal = () => {
         setIsModalOpen(false);
-        setSelectedUserId('');  
+        setSelectedUserId('');
     };
     const [cri, setCri] = useState({
         pagenum: 1,
@@ -78,7 +79,7 @@ const Notice = () => {
             pagenum: 1
         };
         setCri(changedCri);
-        setInputs(""); 
+        setInputs("");
         document.getElementById("type").value = "";
     };
     const searchenter = (e) => {
@@ -96,7 +97,7 @@ const Notice = () => {
             keyword: cri.keyword,
             startrow: cri.startrow
         };
-        
+
         axios.get(`/api/notice/list/${cri.pagenum}`, { params: cri })
             .then((resp) => {
                 setData(resp.data);
@@ -115,7 +116,7 @@ const Notice = () => {
         if (location.state) {
             setCri(location.state);
         }
-        console.log("공지 로케이션 상태",location.state)
+        console.log("공지 로케이션 상태", location.state)
     }, [location.state])
     // 데이터가 없을 때 로딩 텍스트 표시
     const [chars, setChars] = useState([]);
@@ -164,7 +165,7 @@ const Notice = () => {
                             {notice.nreplyCnt !== 0 && <span id="nreply_cnt">[{notice.nreplyCnt}]</span>}
                         </a>
                     </div>
-                    <div><a onClick={(e) =>{e.stopPropagation(); openModal(notice.userid)}}>{notice.userid}</a>
+                    <div><a onClick={(e) => { e.stopPropagation(); openModal(notice.userid) }}>{notice.userid}</a>
                     </div>
                     <div>
                         {notice.noticeregdate}
@@ -197,59 +198,59 @@ const Notice = () => {
     return (
         <>
             <Header />
+            <img className="notice-title" src={img}/>
             <div className="noticeWrap">
-            <div className="nwrap nlist" id="nwrap">
-                <div className="notice-title"><span className="titleSpan">한국 전역에서 열리는 다양한 축제들에 대한 최신 정보와 소식을<br/> 한곳에서 확인하실 수 있는 공지게시판입니다.<br/> 전통 문화의 향기를 느낄 수 있는 전통문화 축제부터, 신나는 음악 페스티벌, 그리고 자연과 함께하는 힐링 축제까지! <br/>각 지역마다 특색 있는 행사들이 여러분을 기다리고 있습니다.<br/> 모두의 축제 공지는 아래를 통해 확인해 주세요.</span></div>
-                {/* 관리자일 때만 글쓰기 버튼 보이기 */}
-                <div className={`nbtn_table ${isAdmin ? 'show' : ''}`}>
-                    <table>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <a className="nwriteBtn btn" onClick={() => navigate("/notice/nwrite", { state: cri })}>글쓰기</a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>
-                <div className="tar w1000 notice-cnt">글 개수 :{data.pageMaker.total} </div>
-                <div className="nlist ntable">
-                    <div className="nthead tac">
-                        <div className="row ntheadrow">
-                            <div>번호</div>
-                            <div>제목</div>
-                            <div>작성자</div>
-                            <div>날짜</div>
-                            <div>조회수</div>
+                <div className="nwrap nlist" id="nwrap">
+                    {/* 관리자일 때만 글쓰기 버튼 보이기 */}
+                    <div className={`nbtn_table ${isAdmin ? 'show' : ''}`}>
+                        <table>
+                            <tbody>
+                                <tr>
+                                    <td>
+                                        <a className="nwriteBtn btn" onClick={() => navigate("/notice/nwrite", { state: cri })}>글쓰기</a>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    <div className="tar w1000 notice-cnt">글 개수 :{data.pageMaker.total} </div>
+                    <div className="nlist ntable">
+                        <div className="nthead tac">
+                            <div className="row ntheadrow">
+                                <div>번호</div>
+                                <div>제목</div>
+                                <div>작성자</div>
+                                <div>날짜</div>
+                                <div>조회수</div>
+                            </div>
+                        </div>
+                        <div className="ntbody">
+                            {noticeList}
+                        </div>
+                        <div>
+                            <NoteModal
+                                isOpen={isModalOpen}
+                                closeModal={closeModal}
+                                toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
+                                loginUser={loginUser}      // 로그인된 유저의 userid를 전달
+                            />
                         </div>
                     </div>
-                    <div className="ntbody">
-                        {noticeList}
-                    </div>
-                    <div>
-                    <NoteModal
-                isOpen={isModalOpen}
-                closeModal={closeModal}
-                toUserId={selectedUserId}  // 클릭된 작성자의 userid를 전달
-                loginUser={loginUser}      // 로그인된 유저의 userid를 전달
-            />
+                    <Pagination pageMaker={pageMaker} url="/notice/list" />
+
+
+
+                    <div className="search_area">
+                        <form name="searchForm" action="/notice/list" className="row searchrow">
+                            <Dropdown list={searchType} name={"type"} width={100} value={cri.type[0]} onChange={changeType}>
+                            </Dropdown>
+                            <input type="search" id="keyword" name="keyword" onChange={inputkeyword} value={inputs} onKeyDown={searchenter} />
+                            <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
+                            <input type="hidden" name="pagenum" />
+                            <input type="hidden" name="amount" />
+                        </form>
                     </div>
                 </div>
-                <Pagination pageMaker={pageMaker} url="/notice/list" />
-
-                
-
-                <div className="search_area">
-                    <form name="searchForm" action="/notice/list" className="row searchrow">
-                        <Dropdown list={searchType} name={"type"} width={100} value={cri.type[0]} onChange={changeType}>
-                        </Dropdown>
-                        <input type="search" id="keyword" name="keyword" onChange={inputkeyword} value={inputs} onKeyDown={searchenter} />
-                        <a id="search-btn" className="btn" onClick={clickSearch}>검색</a>
-                        <input type="hidden" name="pagenum" />
-                        <input type="hidden" name="amount" />
-                    </form>
-                </div>
-            </div>
             </div>
         </>
     );
