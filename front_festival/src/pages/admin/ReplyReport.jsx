@@ -167,8 +167,8 @@ const ReplyReport =({loginUser,cri, setCri,key}) =>{
                     <div className="replylimited-text" onClick={() => { openModal(reply.replynum) }}>{reply.replycontent}</div>
                     <div>{reply.userid}</div>
                     <div>
-                        <button onClick={() => replyReset(reply.replynum)}>신고해제</button>
-                        <button onClick={() => deletereply(reply.replynum)}>댓글삭제</button>
+                        <button className="btn" onClick={() => replyReset(reply.replynum)}>신고해제</button>
+                        <button className="btn" onClick={() => deletereply(reply.replynum)}>댓글삭제</button>
                     </div>
                 </div>
             );

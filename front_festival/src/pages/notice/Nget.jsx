@@ -292,10 +292,10 @@ const Nget = () => {
         <>
             <Header />
         <div className="noticeWrap">
-        <div id="nwrap" className="nget">
+        <div id="nwrap" className="nget noticeget">
             <form id="noticeForm getNoticeForm" name="noticeForm">
                 <div className="ngettable">
-                    <div className="ngetrow ngettitle">
+                    <div className="ngetrow ngetlist">
                         <div>
                             번호: {notice.noticenum}
                         </div>

@@ -166,7 +166,7 @@ public class NoticeServiceImpl implements NoticeService{
 
         // 쿠키 생성
         Cookie viewedCookie = new Cookie("viewedNotice", newViewedNotices);
-        viewedCookie.setMaxAge(3 * 60 * 60); // 3시간 동안 유효
+        viewedCookie.setMaxAge(5 * 60);
         viewedCookie.setPath("/"); // 전체 도메인에 적용
         System.out.println("Setting new cookie with value: " + newViewedNotices);  // 쿠키 값 출력
         resp.addCookie(viewedCookie); // 응답에 쿠키 추가
