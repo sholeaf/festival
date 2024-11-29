@@ -551,6 +551,11 @@ header {
     cursor: pointer;
 }
 
+.mypage .community .pagination, 
+.mypage .bookmark .pagination {
+    display: flex;
+    justify-content: center;
+}
 .mypage .community .pagination span,
 .mypage .bookmark .pagination span{
     font-size: 20px;
