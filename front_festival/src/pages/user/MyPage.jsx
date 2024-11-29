@@ -38,13 +38,6 @@ const MyPage = () => {
         emailinfo: '',
         genderinfo: ''
     });
-    const [cri, setCri] = useState({
-        pagenum: 1,
-        amount: 5,
-        type: "a",
-        keyword: "",
-        startrow: 0
-    });
 
     // 즐겨찾기 목록, contentid를 담은 배열
     const [bookmarks, setBookmarks] = useState([]);
