@@ -208,7 +208,9 @@ const Main = () => {
                             <tbody>
                                 {notice.length > 0 ? (
                                     notice.map((noticeItem, index) => (
-                                        <tr className="notice-item" key={index}>
+                                        <tr className="notice-item" key={index} onClick={()=>{
+                                            navigate(`/notice/${noticeItem.noticenum}`)
+                                        }}>
                                             <td>{noticeItem.noticenum}</td>
                                             <td>{noticeItem.noticetitle}</td>
                                             <td>{noticeItem.userid}</td>
