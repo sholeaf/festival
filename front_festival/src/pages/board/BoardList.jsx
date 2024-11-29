@@ -253,8 +253,8 @@ const BoardList = () => {
                     <div className="search_area">
                         <form name="searchForm" id="searchForm" action="/board/list" className="row">
                             <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
-                            <input type="search" id="keyword" name="keyword" onChange={inputKeyword} value={inputs} onKeyDown={handleKeyPress}/>
-                            <a id="search-btn" className="btn searchBtn" onClick={clickSearch} >검색</a>
+                            <input type="text" id="keyword" name="keyword" onChange={inputKeyword} onKeyDown={handleKeyDown} value={inputs} />
+                            <a id="search-btn" className="btn searchBtn" onClick={clickSearch}>검색</a>
                             <input type="hidden" name="pagenum" />
                             <input type="hidden" name="amount" />
                         </form>

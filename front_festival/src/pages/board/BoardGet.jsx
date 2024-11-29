@@ -407,8 +407,8 @@ const BoardGet = () => {
         for (let i = 0; i < list.length; i++) {
             const reply = list[i];
             replyList.push(
-                <li className={`li${reply.replynum} row`} key={`li${reply.replynum}`}>
-                    <div className=" rrow rpBody_wrap">
+                <li className={`li${reply.replynum}`} key={`li${reply.replynum}`}>
+                    <div className="rrow rpBody_wrap">
                         <a className="getBoard" onClick={(e) => openPopup(e, reply.userid)} style={{width:"40px"}}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
                         <div className={`reply${reply.replynum}`} >
                             {reply.reportcnt < 5 ? (
