@@ -59,7 +59,7 @@ const Adminpage = () => {
     return (
         <>
             <Header />
-            <div className="noticeWrap">
+            <div className="adminWrap">
                 <div className="admin-top">
                     <button onClick={() => topButtonClick('쪽지리스트')}>쪽지리스트</button>
                     <button onClick={() => topButtonClick('게시글리스트')}>게시글리스트</button>

@@ -1,5 +1,4 @@
 import axios from "axios";
-import '../../assets/style/usercss.css';
 import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/Button";
@@ -408,7 +407,7 @@ const BoardGet = () => {
         for (let i = 0; i < list.length; i++) {
             const reply = list[i];
             replyList.push(
-                <li className={`li${reply.replynum} row`} key={`li${reply.replynum}`}>
+                <li className={`li${reply.replynum}`} key={`li${reply.replynum}`}>
                     <div className=" rrow rpBody_wrap">
                         <a className="getBoard" onClick={(e) => openPopup(e, reply.userid)} style={{width:"40px"}}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
                         <div className={`reply${reply.replynum}`} >

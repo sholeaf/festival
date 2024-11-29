@@ -1,5 +1,4 @@
 import { useLocation, useNavigate } from "react-router-dom";
-import '../../assets/style/usercss.css';
 import loginImg from '../../assets/images/로그인바탕.png'
 import { useEffect, useRef, useState } from "react";
 import axios from "axios";
