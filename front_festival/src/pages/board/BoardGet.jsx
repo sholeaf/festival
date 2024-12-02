@@ -411,7 +411,7 @@ const BoardGet = () => {
             const reply = list[i];
             replyList.push(
                 <li className={`li${reply.replynum}`} key={`li${reply.replynum}`}>
-                    <div className="rrow rpBody_wrap">
+                    <div className=" rrow rpBody_wrap">
                         <a className="getBoard" onClick={(e) => openPopup(e, reply.userid)} style={{width:"40px"}}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
                         <div className={`reply${reply.replynum}`} >
                             {reply.reportcnt < 5 ? (
