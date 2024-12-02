@@ -6,6 +6,7 @@ import Pagination from "../../components/Paginstion";
 import Header from "../../layout/Header";
 import NoteModal from "../../components/NoteModal";
 import Modal from "../../components/Modal";
+import like from "../../assets/images/likeA.png";
 
 const BoardList = () => {
     const navigate = useNavigate();
@@ -215,7 +216,7 @@ const BoardList = () => {
                                 <div>{board.boardregdate}</div>
                             </div>
                             <div className="boardbox5 boardbox">
-                                <div><img src="/api/file/thumbnail?systemname=likeA.png" style={{width:"19px", marginRight:"-4px",marginTop:"3px"}}></img></div>
+                                <div><img src={like} style={{width:"19px", marginRight:"-4px",marginTop:"3px"}}></img></div>
                                     <div>{board.likeCnt}</div>
                                 <div>댓글 {board.replyCnt}</div>
                             </div>

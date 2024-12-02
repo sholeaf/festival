@@ -5,6 +5,9 @@ import Button from "../../components/Button";
 import Header from "../../layout/Header";
 import NoteModal from "../../components/NoteModal";
 import Modal from "../../components/Modal";
+import likeA from "../../assets/images/likeA.png";
+import likeN from "../../assets/images/likeN.png";
+import report from "../../assets/images/report1.png";
 
 const BoardGet = () => {
     const { boardnum } = useParams();
@@ -418,7 +421,7 @@ const BoardGet = () => {
                             }</div>
                         <div className="rpDate">
                             <div className={`reply${reply.replyregdate} rpDate`}>{reply.replyregdate}</div>
-                            <div className="getBoard" onClick={() => reportReply(reply.replynum)}><img src="/api/file/thumbnail?systemname=report1.png" style={{width: "18px", marginLeft:"10px", marginTop:"5px"}}></img></div>
+                            <div className="getBoard" onClick={() => reportReply(reply.replynum)}><img src={report} style={{width: "18px", marginLeft:"10px", marginTop:"5px"}}></img></div>
                         </div>
                     </div>
                     <div>
@@ -439,7 +442,7 @@ const BoardGet = () => {
                     </div>
                     <div className="bgDate" style={{ display: "flex", justifyContent: "flex-end" }}>
                         <div>{data.boardregdate}</div>
-                        <div className="getBoard" onClick={reportBoard}><img src="/api/file/thumbnail?systemname=report1.png" style={{width: "25px"}}></img></div>
+                        <div className="getBoard" onClick={reportBoard}><img src={report} style={{width: "25px"}}></img></div>
                     </div>
                     <div className="bgContent">
                         <div dangerouslySetInnerHTML={{ __html: data.boardcontent }} />
@@ -447,9 +450,9 @@ const BoardGet = () => {
                     <div className="boardTag">{data.tag.replace(/\\/g, ' ')}</div>
                     <div style={{ display: "flex", justifyContent: "space-between", padding: "20px" }}>
                         <div>{checkLike ?
-                             <div className="getBoard" onClick={like}><img src="/api/file/thumbnail?systemname=likeA.png" style={{width: "30px"}}></img></div>
+                             <div className="getBoard" onClick={like}><img src={likeA} style={{width: "30px"}}></img></div>
                             : 
-                            <div className="getBoard" onClick={like}><img src="/api/file/thumbnail?systemname=likeN.png" style={{width: "30px"}}></img></div>
+                            <div className="getBoard" onClick={like}><img src={likeN} style={{width: "30px"}}></img></div>
                         }
                         </div>
                         <div className="btnArea">
