@@ -3415,6 +3415,11 @@ input.btn.ncancel {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
+.login_wrap .main .findPw #userId{
+    margin-bottom: 2px;
+    position: relative;
+    left: -54px;
+}
 
 .login_wrap .main .findPw #userId{
     margin-bottom: 2px;
@@ -3749,6 +3754,7 @@ footer {
 }
 
 .footer_rayout{
+    width: 100%;
    background-color: rgba(146, 160, 230, 0.9);   
    padding: 25px;
    display: flex;
