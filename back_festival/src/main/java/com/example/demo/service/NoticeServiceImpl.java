@@ -2,6 +2,10 @@ package com.example.demo.service;
 
 import java.io.File;
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -155,22 +159,36 @@ public class NoticeServiceImpl implements NoticeService{
                 }
             }
         }
+
+        // 쿠키 값 디코딩 처리 (Charset 사용)
+        try {
+            viewedNotices = URLDecoder.decode(viewedNotices, Charset.forName("UTF-8"));
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 디코딩 실패 시, 원본 값을 그대로 사용
+        }
+
         return viewedNotices;
     }
-
     // 본 게시글 번호를 쿠키에 저장하는 메서드
     private void setViewedNoticeCookie(HttpServletResponse resp, String currentViewedNotices, long noticenum) {
-        // 기존 본 게시글 목록에 새로운 게시글을 추가
-        String newViewedNotices = currentViewedNotices.isEmpty() ? String.valueOf(noticenum) : currentViewedNotices + "," + noticenum;
+        try {
+            // 기존 본 게시글 목록에 새로운 게시글을 추가 (URL 인코딩)
+            String encodedNotice = URLEncoder.encode(String.valueOf(noticenum), Charset.forName("UTF-8").toString());
+            String newViewedNotices = currentViewedNotices.isEmpty() ? encodedNotice : currentViewedNotices + "," + encodedNotice;
 
-        // 쿠키 생성
-        Cookie viewedCookie = new Cookie("viewedNotice", newViewedNotices);
-        viewedCookie.setMaxAge(5 * 60);
-        viewedCookie.setPath("/"); // 전체 도메인에 적용
-        viewedCookie.setSecure(true); // 보안 설정 (필요시)
-        viewedCookie.setHttpOnly(true);
-        System.out.println("셋팅된 쿠키값: " + newViewedNotices);  // 쿠키 값 출력
-        resp.addCookie(viewedCookie); // 응답에 쿠키 추가
+            // 쿠키 생성
+            Cookie viewedCookie = new Cookie("viewedNotice", newViewedNotices);
+            viewedCookie.setMaxAge(5 * 60);
+            viewedCookie.setPath("/"); // 전체 도메인에 적용
+            viewedCookie.setSecure(true); // 보안 설정 (필요시)
+            viewedCookie.setHttpOnly(true);
+            System.out.println("셋팅된 쿠키값: " + newViewedNotices);  // 쿠키 값 출력
+            resp.addCookie(viewedCookie); // 응답에 쿠키 추가
+        } catch (Exception e) {
+            e.printStackTrace();
+            // 예외 처리 (인코딩 실패시 로그 찍기)
+        }
     }
 
 	@Override
