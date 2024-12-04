@@ -164,17 +164,31 @@ const Nget = () => {
     const prevPageRef = useRef(1);
 
     useEffect(() => {
+        console.log("noticenum changed:", noticenum);
+    
+        if (!noticenum) {
+            console.error("noticenum is not defined or invalid");
+            return;
+        }
+    
         axios.get(`/api/notice/${noticenum}`)
             .then((resp) => {
                 setData(resp.data);
             })
-        axios.get(`/api/user/loginCheck`).then(resp => {
-            if (resp.data.trim() != "") {
-                setLoginUser(resp.data.trim());
-            }
-        })
-    }, [])
-
+            .catch((error) => {
+                console.error("Error fetching notice:", error);
+            });
+    
+        axios.get(`/api/user/loginCheck`)
+            .then(resp => {
+                if (resp.data.trim() !== "") {
+                    setLoginUser(resp.data.trim());
+                }
+            })
+            .catch((error) => {
+                console.error("Error checking login:", error);
+            });
+    }, [noticenum]);
     useEffect(() => {
         axios.get(`/api/nreply/${noticenum}/${nowPage}`)
             .then(resp => {
