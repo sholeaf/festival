@@ -10,9 +10,12 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Set;
 import java.util.UUID;
+import java.util.LinkedHashSet;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -121,6 +124,7 @@ public class NoticeServiceImpl implements NoticeService{
                 }
             }
         }
+        
         // 처음 보는 게시글인 경우에만 readcount 증가
         if (!checkViewed && notice != null) {
             // 로그인한 사용자가 게시글 작성자가 아닌 경우에만 조회수 증가
@@ -135,7 +139,7 @@ public class NoticeServiceImpl implements NoticeService{
                 System.out.println("Current viewed notices: " + currentViewedNotices);  // 현재 본 게시글 목록 로그
                 setViewedNoticeCookie(resp, currentViewedNotices, noticenum); // 새로운 쿠키 추가
             } else {
-                System.out.println("User has already viewed the notice or is the author. 이미 봤거나 게시글장석자입니다."); // 이미 본 게시글이거나 작성자일 경우
+                System.out.println("User has already viewed the notice or is the author. 이미 봤거나 게시글 작성자입니다."); // 이미 본 게시글이거나 작성자일 경우
             }
         } else {
             System.out.println("Notice has already been viewed. No increment in readcount.이미 본 게시글입니다.");
@@ -162,7 +166,7 @@ public class NoticeServiceImpl implements NoticeService{
 
         // 쿠키 값 디코딩 처리 (Charset 사용)
         try {
-            viewedNotices = URLDecoder.decode(viewedNotices, Charset.forName("UTF-8"));
+            viewedNotices = URLDecoder.decode(viewedNotices, "UTF-8");
         } catch (Exception e) {
             e.printStackTrace();
             // 디코딩 실패 시, 원본 값을 그대로 사용
@@ -170,21 +174,29 @@ public class NoticeServiceImpl implements NoticeService{
 
         return viewedNotices;
     }
+
     // 본 게시글 번호를 쿠키에 저장하는 메서드
     private void setViewedNoticeCookie(HttpServletResponse resp, String currentViewedNotices, long noticenum) {
         try {
             // 기존 본 게시글 목록에 새로운 게시글을 추가 (URL 인코딩)
-            String encodedNotice = URLEncoder.encode(String.valueOf(noticenum), Charset.forName("UTF-8").toString());
-            String newViewedNotices = currentViewedNotices.isEmpty() ? encodedNotice : currentViewedNotices + "," + encodedNotice;
+            String encodedNotice = URLEncoder.encode(String.valueOf(noticenum), "UTF-8");
+            
+            // 현재 저장된 게시글 번호 목록이 비어있지 않으면 추가 (중복 체크)
+            String newViewedNotices = currentViewedNotices.isEmpty() ? encodedNotice : currentViewedNotices + "|" + encodedNotice;
+            
+            // 중복된 게시글 번호가 있는지 확인 후, 중복 제거
+            String[] noticesArray = newViewedNotices.split("\\|");  // 구분자를 '|'로 변경
+            Set<String> uniqueNotices = new LinkedHashSet<>(Arrays.asList(noticesArray));
+            newViewedNotices = String.join("|", uniqueNotices);  // 다시 '|'로 구분하여 합침
 
             // 쿠키 생성
             Cookie viewedCookie = new Cookie("viewedNotice", newViewedNotices);
-            viewedCookie.setMaxAge(5 * 60);
-            viewedCookie.setPath("/"); // 전체 도메인에 적용
-            viewedCookie.setSecure(true); // 보안 설정 (필요시)
-            viewedCookie.setHttpOnly(true);
+            viewedCookie.setMaxAge(5 * 60);  // 쿠키 유효기간 (5분)
+            viewedCookie.setPath("/");  // 전체 도메인에 적용
+            viewedCookie.setSecure(true);  // 보안 설정 (필요시)
+            viewedCookie.setHttpOnly(true);  // JavaScript로 쿠키에 접근 불가
             System.out.println("셋팅된 쿠키값: " + newViewedNotices);  // 쿠키 값 출력
-            resp.addCookie(viewedCookie); // 응답에 쿠키 추가
+            resp.addCookie(viewedCookie);  // 응답에 쿠키 추가
         } catch (Exception e) {
             e.printStackTrace();
             // 예외 처리 (인코딩 실패시 로그 찍기)
