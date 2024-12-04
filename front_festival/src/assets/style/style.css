@@ -3442,9 +3442,6 @@ input.btn.ncancel {
     position: relative;
     left: -54px;
 }
-.login_wrap .main .findPw .findPw_wrap{
-    width: 350px;
-}
 
 .login_wrap .main .findPw #userId{
     margin-bottom: 2px;
@@ -3767,10 +3764,6 @@ footer {
 .noticeWrap+footer{
     margin-top: 100px;
 }
-<<<<<<< HEAD
-
-=======
->>>>>>> 971761aa55bc3495629566deea5f161ba0311dd9
 
 .footer_area{
    margin-top: 50px;
