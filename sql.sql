@@ -27,7 +27,7 @@ create table bookmark(
 );
 
 drop table bookmark;
-
+select * from bookmark;
 select * from bookmark where userid="apple";
 insert into bookmark(userid,contentid) value("apple","3392074");
 
@@ -47,7 +47,11 @@ create table user_info(
     emailinfo char(3),
     genderinfo char(3)
 ); 
+
+insert into user_info value("apple", "T", "T", "T");
+
 insert into user_info value("admin", "T", "T", "T");
+
 select * from user_info;
 drop table user_info;
 
@@ -59,15 +63,13 @@ create table board(
     userid varchar(50),
     boardregdate datetime default now(),
     boardreadcnt bigint default 0,
-    tag varchar(300), 
+    tag varchar(300),
     titleImage varchar(300)
 );
 
 delete from user where userid="apple";
 
 select * from board;
-
-insert into board_report values(19, "banana");
 
 SELECT 
     b.boardnum, 
@@ -89,14 +91,11 @@ GROUP BY
 ORDER BY 
     like_count DESC limit 4;
 
-insert into board (boardtitle,boardcontent,userid,boardregdate) value('테스트','test','?????','2024-10-21 11:50:57');
+insert into board (boardtitle,boardcontent,userid,boardregdate) value('test','test','test','2024-10-21 11:50:57');
 select * from board;
 insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('1','신고테스트','테스트중입니다','apple','1',now(),'1');
 insert into board (boardnum, boardtitle, boardcontent, userid, boardreadcnt, boardregdate, reportcnt) values ('2','신고테스트','테스트중입니다','apple','1',now(),'6');
 drop table board;
-
-
-insert into note (senduser, receiveuser, title, content, regdate) values ('apple','admin','쪽지테스트','제발~',now());
 
 create table board_photo(
 	boardnum bigint,
@@ -110,9 +109,6 @@ create table reply(
     boardnum bigint,
     replyregdate datetime default now()
 );
-drop table reply;
-insert into reply(replycontent,userid,boardnum) value("dd","apple",27);
-
 
 
 select * from reply where replynum = 1;
@@ -121,15 +117,24 @@ create table board_like(
 	boardnum bigint,
     userid varchar(50)
 );
-drop table board_like;
+
+select * from board_like;
+
+create table board_report(
+	boardnum bigint,
+    userid varchar(50)
+);
+select * from board_report;
+drop table board_report;
+
+
 create table reply_report(
     replynum bigint,
     userid varchar(50)
 );
 
-select * from reply;
 drop table reply_report;
-insert into reply_report values(5, "admin");
+insert into reply_report values(1, "1", 1);
 insert into reply_report values(1, "1", 2);
 insert into reply_report values(1, "2", 3);
 
@@ -140,14 +145,8 @@ delete from reply_report where replynum = 1;
 drop table reply_report;
 select * from reply_report;
 
-create table board_report(
-	boardnum bigint,
-    userid varchar(50)
-);
 
-
-drop table board_report;
-insert into board_report values(27, "banana");
+insert into board_report values(7, "banana");
 insert into board_report values(8, "banana");
 insert into board_report values(9, "banana");
 select boardnum from board_report group by boardnum having count(*)>4;
@@ -201,8 +200,6 @@ create table notice_reply(
 	ON DELETE CASCADE
     ON UPDATE CASCADE
 );
-
-
 drop table notice_reply;
 
 
