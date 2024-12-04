@@ -1493,6 +1493,7 @@ input.btn.ncancel {
     margin: 0 auto;
     width: 1000px;
     margin-top: 100px;
+    min-height: 507px;
 }
 #rpwrap {
     max-width: 1000px;
@@ -2876,6 +2877,7 @@ input.btn.ncancel {
      margin-top: 100px;
     width: 1000px;
      /* text-align: center; */
+     min-height: 507px;
  }
  .writeBoard{
      display: inline-block;
@@ -3382,7 +3384,7 @@ input.btn.ncancel {
 
 .joinpage .wrap .joinBtn {
     position: absolute;
-    right: 0;
+    right: 230px;
     margin: 5px;
     border: none;
     font-size: 16px;
