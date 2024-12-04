@@ -38,6 +38,12 @@ const Notice = () => {
 
     // 모달 열기
     const openModal = (userId) => {
+        if (!loginUser) {
+            // 로그인되지 않은 경우, 알림을 띄운 후 종료
+            alert("로그인 후 이용 가능합니다.");
+            return;
+        }
+        // 로그인된 경우, 모달을 엽니다.
         setSelectedUserId(userId);
         setIsModalOpen(true);
     };
