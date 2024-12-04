@@ -3052,7 +3052,7 @@ input.btn.ncancel {
 .rpBody_wrap textarea{
     background-color: #f2f8ff;
     resize: none;
-    width: 680px;
+    width: 660px;
     height: 40px;
     padding: 5px;
     border: 1px solid rgb(108, 157, 177);
@@ -3068,7 +3068,7 @@ input.btn.ncancel {
     border:1px solid blue;
 } */
 .rpBody{
-    width: 741px;
+    width: 721px;
     margin-left: 20px;
     display: flex;
     align-items: center;
