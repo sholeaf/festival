@@ -51,15 +51,15 @@ const Login = () => {
     const login = () => {
         let from = "";
         let detailFestival = false;
-        if(location.state != null){
+        if (location.state != null) {
             from = location.state.state.from;
             const txt = from.split('/');
             console.log(txt)
-            if(txt[1] == "festival" && txt.length >= 3){
+            if (txt[1] == "festival" && txt.length >= 3) {
                 detailFestival = true;
             }
         }
-        else{
+        else {
             from = '/';
         }
 
@@ -79,10 +79,10 @@ const Login = () => {
         axios.get('/api/user/login', { params: user }).then((resp) => {
             if (resp.data.trim() == "O") {
                 alert(`${userid}님 환영합니다!`);
-                if(detailFestival){
-                    navigate(`${from}`, { state: { API_KEY }});
+                if (detailFestival) {
+                    navigate(`${from}`, { state: { API_KEY } });
                 }
-                else{
+                else {
                     navigate(`${from}`);
                 }
 
@@ -280,9 +280,9 @@ const Login = () => {
                             <div className="findId">
                                 <h2>아이디 찾기</h2>
                                 <input type="email" name="useremail" id="useremail1" placeholder="이메일" />
-                                <Button id={getCode1} value="인증번호 받기" onClick={getCode1}></Button>
+                                <Button id={getCode1} value="인증번호 받기" onClick={getCode1} className={"btn"}></Button>
                                 <input type="text" name="code" id="code1" placeholder="인증번호" />
-                                <Button id={codeCheck1} value="인증번호 확인" onClick={codeCheck1}></Button>
+                                <Button id={codeCheck1} value="인증번호 확인" onClick={codeCheck1} className={"btn"}></Button>
                                 <div id="result1">
                                     <h4>찾으시는 아이디</h4>
                                     <p id="result_id"></p>
@@ -293,11 +293,11 @@ const Login = () => {
                         activeModal === 'findPw' && (
                             <div className="findPw">
                                 <h2>비밀번호 찾기</h2>
-                                <input type="text" name="userId" id="userId" placeholder="아이디" />
+                                <input type="text" name="userId" id="userId" placeholder="아이디"/>
                                 <input type="email" name="useremail" id="useremail2" placeholder="이메일" />
-                                <Button id={getCode2} value="인증번호 받기" onClick={getCode2}></Button>
+                                <Button id={getCode2} value="인증번호 받기" onClick={getCode2} className={"btn"}></Button>
                                 <input type="text" name="code" id="code2" placeholder="인증번호" />
-                                <Button id={codeCheck2} value="인증번호 확인" onClick={codeCheck2}></Button>
+                                <Button id={codeCheck2} value="인증번호 확인" onClick={codeCheck2} className={"btn"}></Button>
                                 <div id="result2">
                                     <h4>찾으시는 비밀번호</h4>
                                     <p id="result_pw"></p>
