@@ -340,7 +340,7 @@ const BoardGet = () => {
                 ) : (
                     // 수정 모드가 아닐 때, 댓글 내용 표시
                     <>
-                        <div style={{width:"680px"}}>{reply.replycontent}</div>
+                        <div style={{width:"660px"}}>{reply.replycontent}</div>
                         <div className="rpBtn" >{
                             reply.userid == loginUser ?
                                 <>
@@ -373,7 +373,9 @@ const BoardGet = () => {
     }
 
     if (!data) {
-        return <>로딩중...</>
+        return <>
+            <Header></Header>
+            로딩중...</>
     }
     else {
         const replyList = [];
@@ -413,7 +415,7 @@ const BoardGet = () => {
             replyList.push(
                 <li className={`li${reply.replynum}`} key={`li${reply.replynum}`}>
                     <div className=" rrow rpBody_wrap">
-                        <a className="getBoard" onClick={(e) => openPopup(e, reply.userid)} style={{width:"40px"}}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
+                        <a className="getBoard" onClick={(e) => openPopup(e, reply.userid)} style={{width:"60px"}}><strong className={`userid${reply.userid}`}>{reply.userid}</strong></a>
                         <div className={`reply${reply.replynum}`} >
                             {reply.reportcnt < 5 ? (
                                 <NormalReply reply={reply} />
@@ -485,7 +487,7 @@ const BoardGet = () => {
                         <div className="reply_write rpBody_wrap">
                             {loginUser == "" ? <div style={{textAlign:"center", width:"900px"}}>로그인 하셔야 댓글을 등록할 수 있습니다.</div>
                                 : <>
-                                    <div style={{width:"40px"}}>{loginUser}</div>
+                                    <div style={{width:"60px"}}>{loginUser}</div>
                                     <div className="rpBody">
                                         <textarea name="replycontents" id="replycontents"  className="replycontents" placeholder="댓글 입력"></textarea>
                                         <div className="rpBtn">

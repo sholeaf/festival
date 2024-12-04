@@ -197,7 +197,7 @@ const BoardList = () => {
 
 
     if (!data) {
-        return <>로딩중...</>
+        return <><Header></Header>로딩중...</>
     }
     else {
         const list = data.list;
