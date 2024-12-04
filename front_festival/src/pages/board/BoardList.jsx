@@ -209,7 +209,7 @@ const BoardList = () => {
                     <div className="board_obj" key={board.boardnum} >
                         <div className="board_title getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{board.boardtitle}</div>
                         <div className="boardbox2 boardbox">
-                            <div className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{extractTextFromHTML(board.boardcontent, 203)}</div>
+                            <div className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{extractTextFromHTML(board.boardcontent, 195)}</div>
                             <div><img src={board.titleImage ? `/api/file/thumbnail?systemname=` + board.titleImage : ""} className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}></img></div>
                         </div>
                         <div className="boardbox3 boardbox">

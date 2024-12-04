@@ -2914,11 +2914,11 @@ input.btn.ncancel {
  }
  
  .boardbox2 div:nth-child(2){
-     position: absolute;
-     top: -25px;
-     right: 0;
-     width: 140px;
-     height: 120px;
+     /* position: absolute; */
+     /* top: -20px; */
+     /* right: 0; */
+     max-width: 140px;
+     max-height: 120px;
      display: grid;           /* Grid 사용 */
      place-items: center; 
  }
@@ -3418,6 +3418,17 @@ input.btn.ncancel {
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
     border-radius: 15px;
 }
+.login_wrap .main .findPw #userId{
+    margin-bottom: 2px;
+    position: relative;
+    left: -54px;
+}
+
+.login_wrap .main .findPw #userId{
+    margin-bottom: 2px;
+    position: relative;
+    left: -54px;
+}
 
 .login_wrap .main .findId #result1,
 .login_wrap .main .findPw #result2 {
@@ -3696,7 +3707,7 @@ input.btn.ncancel {
 .boardget_wrap .popup a,
 #board_wrap .popup a{
     display: block;
-    width: 80px;
+    width: 100px;
     margin: 5px;
     text-align: center;
 }
@@ -3734,7 +3745,10 @@ footer {
 .noticeWrap+footer{
     margin-top: 100px;
 }
+<<<<<<< HEAD
 
+=======
+>>>>>>> 971761aa55bc3495629566deea5f161ba0311dd9
 
 .footer_area{
    margin-top: 50px;
@@ -3744,6 +3758,7 @@ footer {
 }
 
 .footer_rayout{
+    width: 100%;
    background-color: rgba(146, 160, 230, 0.9);   
    padding: 25px;
    display: flex;
