@@ -2739,6 +2739,7 @@ input.btn.ncancel {
     font-size: 18px;
     font-weight: bold;
     color: white;
+    cursor: pointer;
 }
 
 .festival-location {
@@ -3437,6 +3438,9 @@ input.btn.ncancel {
     margin-bottom: 2px;
     position: relative;
     left: -54px;
+}
+.login_wrap .main .findPw .findPw_wrap{
+    width: 350px;
 }
 
 .login_wrap .main .findPw #userId{
