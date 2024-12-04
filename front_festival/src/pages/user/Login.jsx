@@ -293,16 +293,20 @@ const Login = () => {
                         activeModal === 'findPw' && (
                             <div className="findPw">
                                 <h2>비밀번호 찾기</h2>
-                                <div className="findPw_wrap">
+                                <div>
                                     <input type="text" name="userId" id="userId" placeholder="아이디" />
+                                </div>
+                                <div>
                                     <input type="email" name="useremail" id="useremail2" placeholder="이메일" />
                                     <Button id={getCode2} value="인증번호 받기" onClick={getCode2} className={"btn"}></Button>
+                                </div>
+                                <div>
                                     <input type="text" name="code" id="code2" placeholder="인증번호" />
                                     <Button id={codeCheck2} value="인증번호 확인" onClick={codeCheck2} className={"btn"}></Button>
-                                    <div id="result2">
-                                        <h4>찾으시는 비밀번호</h4>
-                                        <p id="result_pw"></p>
-                                    </div>
+                                </div>
+                                <div id="result2">
+                                    <h4>찾으시는 비밀번호</h4>
+                                    <p id="result_pw"></p>
                                 </div>
                             </div>
                         )}
