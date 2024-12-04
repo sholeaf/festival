@@ -3277,8 +3277,8 @@ input.btn.ncancel {
 
 
 .joinpage .wrap {
-    width: 1000px;
-    margin: -15px 0 0 600px;
+    width: 33%;
+    margin: 0 auto;
 }
 
 .joinpage .wrap .logo p {
