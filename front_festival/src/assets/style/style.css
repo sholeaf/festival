@@ -3416,6 +3416,12 @@ input.btn.ncancel {
     border-radius: 15px;
 }
 
+.login_wrap .main .findPw #userId{
+    margin-bottom: 2px;
+    position: relative;
+    left: -54px;
+}
+
 .login_wrap .main .findId #result1,
 .login_wrap .main .findPw #result2 {
     margin-top: 30px;
@@ -3693,7 +3699,7 @@ input.btn.ncancel {
 .boardget_wrap .popup a,
 #board_wrap .popup a{
     display: block;
-    width: 80px;
+    width: 100px;
     margin: 5px;
     text-align: center;
 }
