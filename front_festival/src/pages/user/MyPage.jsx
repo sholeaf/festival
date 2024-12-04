@@ -7,6 +7,7 @@ import DaumPostCode from '../../components/DaumPostCode';
 import Button from '../../components/Button';
 import noimage from "../../assets/images/no-image.jpg";
 import Note from "../notes/Note";
+import Footer from "../../layout/Footer";
 
 const MyPage = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';

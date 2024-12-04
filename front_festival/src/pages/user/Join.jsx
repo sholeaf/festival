@@ -15,9 +15,12 @@ const Join = () => {
         let userid = user.value;
         if (e.target.value == "" || e.target.value == null) {
             result.style.display = "none";
+            result.style.backgroundColor = 'white';
             return;
         }
         if (e.target.value.length > 12) {
+            result.style.backgroundColor = 'red';
+            result.innerHTML = "아이디는 최대 12자 입니다!";
             user.blur();
             return;
         }
@@ -27,13 +30,12 @@ const Join = () => {
                 .then(resp => {
                     if (resp.data == "O") {
                         result.innerHTML = "사용할 수 있는 아이디입니다!";
-                        if (user.value.length > 12) {
-                            result.innerHTML = "아이디는 최대 12자 입니다!";
-                            return;
-                        }
+                        result.style.backgroundColor = 'green';
+                        return;
                     }
                     else {
                         result.innerHTML = "중복된 아이디가 있습니다!";
+                        result.style.backgroundColor = 'red';
                         return;
                     }
                 })
@@ -41,6 +43,7 @@ const Join = () => {
         if (user.value.length < 5) {
             result.style.display = "block";
             result.innerHTML = "아이디는 최소 5자 입니다!";
+            result.style.backgroundColor = 'red';
             return;
         }
     }
