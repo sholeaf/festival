@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import Hobby from "../../components/Hobby";
 import Header from "../../layout/Header";
+import Footer from "../../layout/Footer";
 
 const BoardModify = () =>{
     const location = useLocation();
@@ -254,6 +255,7 @@ const BoardModify = () =>{
                     </div>
                 </form>
             </div>
+            <Footer></Footer>
             </>                
         )
     }

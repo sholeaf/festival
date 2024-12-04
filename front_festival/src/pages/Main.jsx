@@ -7,6 +7,7 @@ import { useNavigate } from "react-router-dom";
 import noimage from "../assets/images/no-image.jpg";
 import mainimg from "../assets/images/mainimg.jpg"
 import section1 from "../assets/images/section1.jpg"
+import Footer from "../layout/Footer";
 
 const Main = () => {
     const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -229,6 +230,7 @@ const Main = () => {
                     </div>
                 </div>
             </div>
+            <Footer></Footer>
         </>
     );
 };

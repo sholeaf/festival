@@ -8,6 +8,7 @@ import Modal from "../../components/Modal";
 import likeA from "../../assets/images/likeA.png";
 import likeN from "../../assets/images/likeN.png";
 import report from "../../assets/images/report1.png";
+import Footer from "../../layout/Footer";
 
 const BoardGet = () => {
     const { boardnum } = useParams();
@@ -545,6 +546,7 @@ const BoardGet = () => {
                         loginUser={loginUser}      // 로그인된 유저의 userid를 전달
                     />
                 </div>
+                <Footer></Footer>
             </>
         )
     }

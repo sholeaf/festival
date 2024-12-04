@@ -88,62 +88,64 @@ const FestivalCalendar = (props) => {
     }, [hasMore, isLoading]);
 
 
-    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
+    const handleBookmarkClick = (festivalContentid, festivalTitle, festivalImage) => {
         ClickBookmark(festivalContentid, festivalTitle, festivalImage, bmlist, setBmlist, userid, setSampleData);
     };
 
     return (
-        <div>
-            <Calendar onChange={handleDateChange} />
-            {/* 축제 목록 */}
-            {festivals.length > 0 && (
-                <div>
-                    <h3>축제 목록</h3>
-                    <ul className="festival-list">
-                        {festivals.map((festival) => {
-                            const isBookmarked = bmlist.includes(festival.contentid); // 즐겨찾기 여부 확인
+        <>
+            <div>
+                <Calendar onChange={handleDateChange} />
+                {/* 축제 목록 */}
+                {festivals.length > 0 && (
+                    <div>
+                        <h3>축제 목록</h3>
+                        <ul className="festival-list">
+                            {festivals.map((festival) => {
+                                const isBookmarked = bmlist.includes(festival.contentid); // 즐겨찾기 여부 확인
 
-                            return (
-                                <li className={`festival-${festival.contentid}`} key={festival.contentid}
-                                    onClick={() => {
-                                        navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist } })
-                                    }}>
-                                    <p className="festival-title">{festival.title}</p>
-                                    <div className="festival-list-area">
-                                        {festival.firstimage ? (
-                                            <img className="festival-img" src={festival.firstimage} alt={festival.title} style={{ width: "100%", height: "150px" }} />
-                                        ) : (
-                                            <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
-                                        )}
-                                        <div className="festival-small-info">
-                                            <div>
-                                                <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
-                                                <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
-                                            </div>
-                                            <div onClick={(e) => {
-                                                e.stopPropagation();  // 클릭 이벤트가 목록 아이템에 전파되지 않도록 방지
-                                                handleBookmarkClick(festival.contentid,festival.title,festival.firstimage); // 북마크 클릭 처리
-                                            }}>
-                                                <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
+                                return (
+                                    <li className={`festival-${festival.contentid}`} key={festival.contentid}
+                                        onClick={() => {
+                                            navigate(`/festival/${festival.contentid}`, { state: { API_KEY, activeTab, bmlist } })
+                                        }}>
+                                        <p className="festival-title">{festival.title}</p>
+                                        <div className="festival-list-area">
+                                            {festival.firstimage ? (
+                                                <img className="festival-img" src={festival.firstimage} alt={festival.title} style={{ width: "100%", height: "150px" }} />
+                                            ) : (
+                                                <img className="festival-img" src={noimage} alt="no-image" style={{ width: "100%", height: "150px" }} />
+                                            )}
+                                            <div className="festival-small-info">
+                                                <div>
+                                                    <p className="festival-addr">{festival.addr1.split(" ")[0]} {festival.addr1.split(" ")[1]}</p>
+                                                    <p className="festival-date">{festival.eventstartdate} ~ {festival.eventenddate}</p>
+                                                </div>
+                                                <div onClick={(e) => {
+                                                    e.stopPropagation();  // 클릭 이벤트가 목록 아이템에 전파되지 않도록 방지
+                                                    handleBookmarkClick(festival.contentid, festival.title, festival.firstimage); // 북마크 클릭 처리
+                                                }}>
+                                                    <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="bookmark" />
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                            );
-                        })}
-                    </ul>
-                </div>
-            )}
+                                    </li>
+                                );
+                            })}
+                        </ul>
+                    </div>
+                )}
 
-            {/* 축제 목록이 없을 때 */}
-            {festivals.length === 0 && <p className="waring-text">해당 날짜에 대한 축제가 없습니다.</p>}
+                {/* 축제 목록이 없을 때 */}
+                {festivals.length === 0 && <p className="waring-text">해당 날짜에 대한 축제가 없습니다.</p>}
 
-            {/* 로딩 상태 */}
-            {isLoading && <p>Loading...</p>}
+                {/* 로딩 상태 */}
+                {isLoading && <p>Loading...</p>}
 
-            {/* 더 이상 데이터가 없을 때 */}
-            {!hasMore && <p className="waring-text">더 이상 축제가 없습니다.</p>}
-        </div>
+                {/* 더 이상 데이터가 없을 때 */}
+                {!hasMore && <p className="waring-text">더 이상 축제가 없습니다.</p>}
+            </div>
+        </>
     );
 };
 

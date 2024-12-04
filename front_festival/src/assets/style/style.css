@@ -3283,7 +3283,7 @@ input.btn.ncancel {
     padding: 10px;
     padding-left: 20px;
     font-size: 15px;
-    margin: 15px 15px 0 15px;
+    margin: 25px 15px 0 15px;
     box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
@@ -3318,6 +3318,7 @@ input.btn.ncancel {
     display: inline-block;
     width: 80px;
     border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .infoSelect div input[type="radio"]:checked+label {
@@ -3350,6 +3351,7 @@ input.btn.ncancel {
     text-align: center;
     padding: 5px;
     border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .flexBox .radio_item input[type="radio"]:checked+label {
@@ -3358,19 +3360,13 @@ input.btn.ncancel {
 
 #id_result,
 #pw_result {
+    display: none;
     background-color: #fff;
     width: 298px;
-    border-radius: 10px;
+    border-radius: 15px;
     margin: 15px 0px 0px 15px;
     padding: 5px 0 5px 15px;
-}
-
-#id_result {
-    top: 53px;
-}
-
-#pw_result {
-    top: 168px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .codeGet,
@@ -3727,6 +3723,11 @@ input.btn.ncancel {
 footer {
     height: 300px;
     user-select: none;
+    margin-top: 50px;
+}
+
+.noticeWrap+footer{
+    margin-top: 100px;
 }
 #footerft div,a{
    font-family: 'TTLaundryGothicB';
@@ -3740,7 +3741,6 @@ footer {
 }
 
 .footer_rayout{
-   width: 100%;
    background-color: rgba(146, 160, 230, 0.9);   
    padding: 25px;
    display: flex;

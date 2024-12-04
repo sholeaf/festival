@@ -839,6 +839,7 @@ const MyPage = () => {
                                     <Note loginUser={loginUser} cri={cri} setCri={setCri} />
                                 </div>
                             </div>
+                            <Footer></Footer>
                         </>
                     )}
                 </>

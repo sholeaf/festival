@@ -43,7 +43,6 @@ function App() {
           <Route path="/board/modify" element={<BoardModify></BoardModify>}></Route>
         </Routes>
       </BrowserRouter>
-      <Footer></Footer>
     </>
   )
 }

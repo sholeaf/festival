@@ -30,6 +30,7 @@ import gyeongnam from "../../assets/images/festivalImg/gyeongnam.jpg";
 import ulsan from "../../assets/images/festivalImg/ulsan.jpg";
 import area from "../../assets/images/festivalImg/areadefault.jpg";
 import { useLocation } from "react-router-dom";
+import Footer from "../../layout/Footer";
 
 const API_URL = 'https://apis.data.go.kr/B551011/KorService1/searchFestival1?MobileOS=ETC&MobileApp=AppTest&_type=json&listYN=Y&';
 const API_KEY = 'ADUQciriMbR143Lb7A8xLWVlcBZQXuCPTgGmksfopPBMwtmLQhkIrGlBror4PosCYnLLVqtrEnZz1T%2F4N9atVg%3D%3D';
@@ -258,6 +259,7 @@ const Festival = () => {
                     {activeTab === 'search' && <FestivalSearch {...props} />}
                 </div>
             </div>
+            <Footer></Footer>
         </>
     );
 }

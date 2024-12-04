@@ -4,6 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Button from "../../components/Button";
 import Header from "../../layout/Header";
 import ClickModal from "../../components/ClickModal";
+import Footer from "../../layout/Footer";
 
 const Nget = () => {
     const { noticenum } = useParams();
@@ -448,6 +449,7 @@ const Nget = () => {
                     </div>
                 </div>
             </div>
+            <Footer></Footer>
         </>
     )
 }
