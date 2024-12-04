@@ -3439,9 +3439,6 @@ input.btn.ncancel {
     position: relative;
     left: -54px;
 }
-.login_wrap .main .findPw .findPw_wrap{
-    width: 350px;
-}
 
 .login_wrap .main .findPw #userId{
     margin-bottom: 2px;
