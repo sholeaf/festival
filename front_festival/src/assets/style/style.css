@@ -2933,11 +2933,11 @@ input.btn.ncancel {
  }
  
  .boardbox2 div:nth-child(2){
-     position: absolute;
-     top: -25px;
-     right: 0;
-     width: 140px;
-     height: 120px;
+     /* position: absolute; */
+     /* top: -20px; */
+     /* right: 0; */
+     max-width: 140px;
+     max-height: 120px;
      display: grid;           /* Grid 사용 */
      place-items: center; 
  }
@@ -3050,6 +3050,9 @@ input.btn.ncancel {
     display: inline-block;
     width: 60px;
     height: 30px;
+}
+.bBtn{
+    font-family: 'GowunDodum-Regular';
 }
 
  .rrow{
@@ -3761,6 +3764,10 @@ footer {
 .noticeWrap+footer{
     margin-top: 100px;
 }
+<<<<<<< HEAD
+
+=======
+>>>>>>> 971761aa55bc3495629566deea5f161ba0311dd9
 
 .footer_area{
    margin-top: 50px;
