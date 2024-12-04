@@ -1,14 +1,14 @@
+import { useEffect, useRef, useState } from "react";
 import axios from "axios";
 import Slider from 'react-slick';
-import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import Header from "../../layout/Header";
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import map_img from "../../assets/images/festivalImg/map_img.png";
 import noimage from "../../assets/images/no-image.jpg";
-import bookmark from "../../assets/images/bookmark.png"
-import nobookmark from "../../assets/images/nobookmark.png"
+import bookmark from "../../assets/images/bookmark.png";
+import nobookmark from "../../assets/images/nobookmark.png";
 import ClickBookmark from "../../hooks/ClickBookmark";
 import Footer from "../../layout/Footer";
 
@@ -22,12 +22,13 @@ const DetailFestival = () => {
     const [images, setImages] = useState([]);
     const [intro, setIntro] = useState({});
     const [userid, setUserid] = useState();
-    const [list, setList] = useState(bmlist || []);  // 초기 값으로 location에서 전달된 bmlist를 사용
-    const [sampleData, setSampleData] = useState(bmlist || []); 
+    const [list, setList] = useState(bmlist || []);
+    const [sampleData, setSampleData] = useState(bmlist || []);
 
     const introRef = useRef(null);
     const festivalInfoRef = useRef(null);
     const locationRef = useRef(null);
+    const mapContainerRef = useRef(null);  // 지도 DOM을 참조할 ref
 
     const settings = {
         dots: true,
@@ -48,8 +49,8 @@ const DetailFestival = () => {
         return `${year}.${month}.${day}`;
     };
 
-    const handleBookmarkClick = (festivalContentid,festivalTitle,festivalImage) => {
-        ClickBookmark(festivalContentid,festivalTitle,festivalImage, list, setList, userid, setSampleData);
+    const handleBookmarkClick = (festivalContentid, festivalTitle, festivalImage) => {
+        ClickBookmark(festivalContentid, festivalTitle, festivalImage, list, setList, userid, setSampleData);
     };
 
     useEffect(() => {
@@ -66,7 +67,6 @@ const DetailFestival = () => {
             behavior: 'smooth'
         });
     }, []);
-    console.log("loginuser : ",userid);
 
     useEffect(() => {
         axios.get(`https://apis.data.go.kr/B551011/KorService1/detailCommon1?MobileOS=ETC&MobileApp=AppTest&_type=json&contentTypeId=15&defaultYN=Y&firstImageYN=Y&areacodeYN=Y&catcodeYN=Y&addrinfoYN=Y&mapinfoYN=Y&overviewYN=Y&numOfRows=10&pageNo=1&serviceKey=${API_KEY}&contentId=${contentid}`)
@@ -115,58 +115,56 @@ const DetailFestival = () => {
             if (locationRef.current) observer.unobserve(locationRef.current);
         };
     }, [data]);
-      // 지도 로딩
+
+    // 지도 로딩
     useEffect(() => {
         if (data.mapx && data.mapy) {
             const script = document.createElement('script');
             script.src = `https://dapi.kakao.com/v2/maps/sdk.js?appkey=db24bdb6dad4a16a8feeb6f6ef35d0e7&libraries=services,clusterer`;
             script.onload = () => {
-                const container = document.getElementById("map");
+                const container = mapContainerRef.current;
                 const options = {
                     center: new window.kakao.maps.LatLng(data.mapy, data.mapx),
                     level: 3, // 지도 확대 레벨
+                    scrollwheel: false, // 마우스 스크롤로 줌을 비활성화
                 };
                 const map = new window.kakao.maps.Map(container, options);
                 const marker = new window.kakao.maps.Marker({
                     position: new window.kakao.maps.LatLng(data.mapy, data.mapx)
                 });
                 marker.setMap(map);
+
+                // 확대/축소를 위한 기능
+                const zoomInButton = document.getElementById("zoom-in");
+                const zoomOutButton = document.getElementById("zoom-out");
+
+                zoomInButton.addEventListener("click", () => {
+                    const currentLevel = map.getLevel();
+                    map.setLevel(currentLevel - 1);  // 줌인
+                });
+
+                zoomOutButton.addEventListener("click", () => {
+                    const currentLevel = map.getLevel();
+                    map.setLevel(currentLevel + 1);  // 줌아웃
+                });
             };
             document.body.appendChild(script);
         }
     }, [data]);
 
-    useEffect(() => {
-        if (userid == '' || userid == null) {
-            return;
-        }
+    const isBookmarked = list.some(item => item.contentid === contentid);
 
-        axios.get(`/api/bookmark/checkBookmark`, { params: { userid } })
-            .then((resp) => {
-                setList(resp.data);
-                console.log("요청 하기! : ", resp.data);
-            })
-            .catch((error) => {
-                console.log("bmlist 오류", error);
-            });
-    }, [userid, sampleData]);
+    // 스크롤 이동 함수
+    const scrollToSection = (ref) => {
+        window.scrollTo({
+            top: ref.current.offsetTop,
+            behavior: "smooth",
+        });
+    };
 
     if (!data || data.length === 0) {
         return <>로딩중...</>;
     }
-
-    const isBookmarked = list.includes(contentid);  // bmlist 대신 list를 사용
-
-    const scrollToSection = (ref) => {
-        if (ref.current) {
-            const offset = ref.current.offsetTop + 250; // 예시로 80px을 빼서 위치를 조정
-            window.scrollTo({
-                top: offset,
-                behavior: 'smooth',
-            });
-        }
-    };
-    
 
     return (
         <>
@@ -189,7 +187,7 @@ const DetailFestival = () => {
                         }
                     </div>
 
-                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid,data.title,data.firstimage)}>
+                    <div className="festival-detail-bookmark" onClick={() => handleBookmarkClick(contentid, data.title, data.firstimage)}>
                         <img className="bookmark-img" src={isBookmarked ? bookmark : nobookmark} alt="Bookmark" />
                     </div>
 
@@ -248,13 +246,19 @@ const DetailFestival = () => {
                                     <img src={map_img} alt="Map" />
                                 </div>
                                 <div className="map-addr-area">
-                                    <div id="map" style={{ width: "100%", height: "400px", marginTop: "20px" }}></div>
+                                    <div ref={mapContainerRef} id="map" style={{ width: "100%", height: "400px", marginTop: "20px" }}></div>
+                                    <div className="zoom-controls">
+                                        <button id="zoom-in">+</button>
+                                        <button id="zoom-out">-</button>
+                                    </div>
                                     <div className="festival-addr">
                                         <div dangerouslySetInnerHTML={{ __html: data.addr1 }} />
                                     </div>
+                                   
                                 </div>
                             </div>
                         </div>
+
 
                         <div className="remote-area">
                             <div onClick={() => scrollToSection(introRef)}>소개</div>
@@ -265,7 +269,7 @@ const DetailFestival = () => {
                     </div>
                 </div>
             </div>
-            <Footer></Footer>
+            <Footer />
         </>
     );
 };
