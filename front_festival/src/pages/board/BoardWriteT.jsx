@@ -5,6 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import Hobby from "../../components/Hobby";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../layout/Header";
+import Footer from "../../layout/Footer";
 
 const BoardWriteT = () => {
   const quillRef = useRef(null);
@@ -230,6 +231,7 @@ const BoardWriteT = () => {
         </div>
       </form>
     </div>
+    <Footer></Footer>
     </>
   );
 };

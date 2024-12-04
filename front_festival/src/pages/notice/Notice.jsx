@@ -6,6 +6,7 @@ import Header from "../../layout/Header";
 import axios from "axios";
 import NoteModal from "../../components/NoteModal";
 import img from "../../assets/images/noticeimg.jpg"
+import Footer from "../../layout/Footer";
 
 const Notice = () => {
     const navigate = useNavigate();
@@ -258,6 +259,7 @@ const Notice = () => {
                     </div>
                 </div>
             </div>
+            <Footer></Footer>
         </>
     );
 };

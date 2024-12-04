@@ -17,7 +17,7 @@ import BoardList from './pages/board/BoardList';
 import BoardGet from './pages/board/BoardGet';
 import BoardModify from './pages/board/BoardModify';
 import BoardWriteT from './pages/board/BoardWriteT';
-
+import Footer from './layout/Footer';
 
 function App() {
   return (

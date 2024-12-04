@@ -5,6 +5,7 @@ import Header from "../../layout/Header";
 import Note from "../notes/Note";
 import ReplyReport from "../admin/ReplyReport";
 import BoardReport from "../admin/BoardReport";
+import Footer from "../../layout/Footer";
 
 const Adminpage = () => {
     const location = useLocation();
@@ -88,6 +89,7 @@ const Adminpage = () => {
 
                 </div>
             </div>
+            <Footer></Footer>
         </>
     );
 };

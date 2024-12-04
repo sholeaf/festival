@@ -1493,6 +1493,7 @@ input.btn.ncancel {
     margin: 0 auto;
     width: 1000px;
     margin-top: 100px;
+    min-height: 507px;
 }
 #rpwrap {
     max-width: 1000px;
@@ -1761,7 +1762,8 @@ input.btn.ncancel {
 .sendms {
     width: 100px !important;
     right: 40px;
-    position: fixed;
+    position: absolute;
+    top: 90px;
 }
 
 
@@ -1863,10 +1865,7 @@ input.btn.ncancel {
     border-radius: 5px;
     cursor: pointer;
     transition: background-color 0.3s ease;
-    position: fixed;
     width: 90px;
-    left: 55%;
-    top: 34.5%;
 }
 
 .sendms button:hover {
@@ -2878,6 +2877,7 @@ input.btn.ncancel {
      margin-top: 100px;
     width: 1000px;
      /* text-align: center; */
+     min-height: 507px;
  }
  .writeBoard{
      display: inline-block;
@@ -3052,7 +3052,7 @@ input.btn.ncancel {
 .rpBody_wrap textarea{
     background-color: #f2f8ff;
     resize: none;
-    width: 680px;
+    width: 660px;
     height: 40px;
     padding: 5px;
     border: 1px solid rgb(108, 157, 177);
@@ -3068,7 +3068,7 @@ input.btn.ncancel {
     border:1px solid blue;
 } */
 .rpBody{
-    width: 741px;
+    width: 721px;
     margin-left: 20px;
     display: flex;
     align-items: center;
@@ -3251,11 +3251,8 @@ input.btn.ncancel {
 /* Join page */
 .joinpage {
     width: 100%;
-    background: no-repeat url(../images/회원가입바탕.png);
-    background-size: cover;
-    height: 100%;
-    position: absolute;
 }
+
 
 .joinpage .wrap {
     width: 1000px;
@@ -3288,23 +3285,14 @@ input.btn.ncancel {
     padding: 10px;
     padding-left: 20px;
     font-size: 15px;
-    margin: 15px 15px 0 15px;
+    margin: 25px 15px 0 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .joinpage .wrap form #username,
 .joinpage .wrap form #useremail {
     width: 400px;
     display: inline-block;
-}
-.joinpage .wrap form #userid{
-    margin-bottom: 25px;
-}
-.joinpage .wrap form #userpw{
-    margin-bottom: 5px;
-}
-.joinpage .wrap form #userpw_re{
-    margin: 0 0 25px 15px;
-
 }
 .joinpage .wrap form #addretc{
     margin-bottom: 15px;
@@ -3332,6 +3320,7 @@ input.btn.ncancel {
     display: inline-block;
     width: 80px;
     border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .infoSelect div input[type="radio"]:checked+label {
@@ -3364,6 +3353,7 @@ input.btn.ncancel {
     text-align: center;
     padding: 5px;
     border-radius: 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .flexBox .radio_item input[type="radio"]:checked+label {
@@ -3372,21 +3362,13 @@ input.btn.ncancel {
 
 #id_result,
 #pw_result {
+    display: none;
     background-color: #fff;
-    position: absolute;
-    left: 15px;
-    width: 350px;
-    text-align: center;
-    border-radius: 10px;
-    margin: 0;
-}
-
-#id_result {
-    top: 53px;
-}
-
-#pw_result {
-    top: 168px;
+    width: 298px;
+    border-radius: 15px;
+    margin: 15px 0px 0px 15px;
+    padding: 5px 0 5px 15px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
 }
 
 .codeGet,
@@ -3402,7 +3384,7 @@ input.btn.ncancel {
 
 .joinpage .wrap .joinBtn {
     position: absolute;
-    right: 0;
+    right: 230px;
     margin: 5px;
     border: none;
     font-size: 16px;
@@ -3692,7 +3674,8 @@ input.btn.ncancel {
 }
 .mypage .community .pagination .active,
 .mypage .bookmark .pagination .active{
-    background-color: lightblue;
+    background-color: #92B4EC;
+    color: white;
 }
 
 
@@ -3737,3 +3720,131 @@ input.btn.ncancel {
     font-weight: bold;
     cursor: pointer;
 }
+
+/* 푸터 */
+footer {
+    height: 300px;
+    user-select: none;
+    margin-top: 50px;
+}
+
+.noticeWrap+footer{
+    margin-top: 100px;
+}
+#footerft div,a{
+   font-family: 'TTLaundryGothicB';
+}
+
+.footer_area{
+   margin-top: 50px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.footer_rayout{
+   background-color: rgba(146, 160, 230, 0.9);   
+   padding: 25px;
+   display: flex;
+   justify-content: center;
+   align-items: center;
+}
+
+.footer_logo{
+   text-align: center;
+}
+
+.footer_logo img{
+    width: 180px;
+}
+
+.footer_logo div{
+    color: #FFFFFF;
+    font-size: 12px;
+}
+
+.footer_box{
+    margin-left: 50px;
+    padding: 10px;
+   width: 1270px;
+}
+
+.team_info{
+    display: flex;
+}
+.team_info div {
+    margin: 10px;
+    box-sizing: border-box; /* 패딩과 보더를 포함 */
+    font-size: 13px;
+    color: #FFFFFF;
+   width: 300px;
+}
+
+.team_info a{
+    font-size: 13px;
+    margin: 10px;
+   color: #FFFFFF;
+}
+
+.Team_Notion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 10px;
+}
+
+.Team_Notion div{
+    padding: 10px;
+    color: #FFFFFF;
+    font-size: 25px;
+   text-align: center;
+}
+
+.Team_Notion a{
+    color: #f9d686;
+    font-size: 25px !important;
+}
+
+.Team_Notion a:hover{
+    text-shadow: 0 4px 0 rgba(51, 51, 51, 0.2);
+}
+
+.tool_info{
+    margin-top: 20px;
+    color: #FFFFFF;
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+    border-top: 2px solid #f2f2f2;
+}
+
+.toolbox{
+    display: flex;
+    align-items: center;
+    margin: 20px;
+}
+
+.tool_info img{
+    width: 30px;
+}
+
+#erd_round{
+    border-radius: 20px;
+}
+
+.toolbox div{
+	text-align: center;
+    margin-left: 10px;
+}
+
+.ppt a div{
+	text-align: center;
+	color: #FFFFFF;
+}
+
+.joinpage+footer,
+.login_wrap+footer{
+    display: none;
+}
+
