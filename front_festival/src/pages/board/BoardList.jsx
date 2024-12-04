@@ -191,6 +191,7 @@ const BoardList = () => {
     const handleKeyDown = (e)=>{
         if (e.key === 'Enter'){
             e.preventDefault();
+            console.log("check");
             clickSearch();
         }
     }
@@ -208,7 +209,7 @@ const BoardList = () => {
                     <div className="board_obj" key={board.boardnum} >
                         <div className="board_title getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{board.boardtitle}</div>
                         <div className="boardbox2 boardbox">
-                            <div className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{extractTextFromHTML(board.boardcontent, 203)}</div>
+                            <div className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}>{extractTextFromHTML(board.boardcontent, 195)}</div>
                             <div><img src={board.titleImage ? `/api/file/thumbnail?systemname=` + board.titleImage : ""} className="getBoard" onClick={() => { navigate(`/board/${board.boardnum}`, { state: cri }) }}></img></div>
                         </div>
                         <div className="boardbox3 boardbox">
@@ -256,7 +257,7 @@ const BoardList = () => {
                         <form name="searchForm" id="searchForm" action="/board/list" className="row">
                             <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
                             <input type="text" id="keyword" name="keyword" onChange={inputKeyword} onKeyDown={handleKeyDown} value={inputs} />
-                            <a id="search-btn" className="btn searchBtn" onClick={clickSearch}>검색</a>
+                            <a id="search-btn" className="btn bBtn searchBtn" onClick={clickSearch}>검색</a>
                             <input type="hidden" name="pagenum" />
                             <input type="hidden" name="amount" />
                         </form>
