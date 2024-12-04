@@ -4,6 +4,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import ReactQuill from 'react-quill';
 import Hobby from "../../components/Hobby";
 import Header from "../../layout/Header";
+import Footer from "../../layout/Footer";
 
 const BoardModify = () =>{
     const location = useLocation();
@@ -248,12 +249,13 @@ const BoardModify = () =>{
                         <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"600px", borderRadius: "10px important!"}}/>
                         </div>
                         <div style={{textAlign:"center"}}>
-                        <input className="btn bgBtn" type="button" value="수정" onClick={modify}></input>
-                        <input className="btn bgBtn" type="button" value="취소" onClick={()=>{
+                        <input className="btn bBtn bgBtn" type="button" value="수정" onClick={modify}></input>
+                        <input className="btn bBtn bgBtn" type="button" value="취소" onClick={()=>{
                             navigate(`/board/${boardnum}`, { state: cri })}}></input>
                     </div>
                 </form>
             </div>
+            <Footer></Footer>
             </>                
         )
     }

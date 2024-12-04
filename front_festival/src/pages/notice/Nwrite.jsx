@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../layout/Header";
 import Button from "../../components/Button";
+import Footer from "../../layout/Footer";
 
 const Nwrite = () => {
     const location = useLocation();
@@ -184,6 +185,7 @@ const Nwrite = () => {
                 </table>
             </div>
             </div>
+            <Footer></Footer>
         </>
     )
 }

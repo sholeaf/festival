@@ -5,6 +5,7 @@ import 'react-quill/dist/quill.snow.css';
 import Hobby from "../../components/Hobby";
 import { useLocation, useNavigate } from "react-router-dom";
 import Header from "../../layout/Header";
+import Footer from "../../layout/Footer";
 
 const BoardWriteT = () => {
   const quillRef = useRef(null);
@@ -223,13 +224,14 @@ const BoardWriteT = () => {
           <ReactQuill theme="snow" ref={quillRef} modules={modules} formats={formats} value={content} onChange={handleContent} style={{width:"1000px", height:"600px"}}/>
         </div>
         <div style={{textAlign:"center"}}>
-          <input className="btn bwBtn" type="button" value="작성완료" onClick={regist}></input>
-          <input className="btn bwBtn" type="button" value="돌아가기" onClick={()=>{
+          <input className="btn bBtn bwBtn" type="button" value="작성완료" onClick={regist}></input>
+          <input className="btn bBtn bwBtn" type="button" value="돌아가기" onClick={()=>{
             // canselWrite();
             navigate('/board/list',{state: cri})}}></input>
         </div>
       </form>
     </div>
+    <Footer></Footer>
     </>
   );
 };

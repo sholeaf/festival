@@ -7,6 +7,7 @@ import Header from "../../layout/Header";
 import NoteModal from "../../components/NoteModal";
 import Modal from "../../components/Modal";
 import like from "../../assets/images/likeA.png";
+import Footer from "../../layout/Footer";
 
 const BoardList = () => {
     const navigate = useNavigate();
@@ -190,6 +191,7 @@ const BoardList = () => {
     const handleKeyDown = (e)=>{
         if (e.key === 'Enter'){
             e.preventDefault();
+            console.log("check");
             clickSearch();
         }
     }
@@ -255,7 +257,7 @@ const BoardList = () => {
                         <form name="searchForm" id="searchForm" action="/board/list" className="row">
                             <Dropdown list={searchType} name={"type"} width={150} value={cri.type} onChange={changeType}></Dropdown>
                             <input type="text" id="keyword" name="keyword" onChange={inputKeyword} onKeyDown={handleKeyDown} value={inputs} />
-                            <a id="search-btn" className="btn searchBtn" onClick={clickSearch}>검색</a>
+                            <a id="search-btn" className="btn bBtn searchBtn" onClick={clickSearch}>검색</a>
                             <input type="hidden" name="pagenum" />
                             <input type="hidden" name="amount" />
                         </form>
@@ -303,6 +305,7 @@ const BoardList = () => {
                         loginUser={loginUser}      // 로그인된 유저의 userid를 전달
                     />
                 </div>
+                <Footer></Footer>
             </>
         )
     }
