@@ -7,6 +7,7 @@ import Header from "../../layout/Header";
 import NoteModal from "../../components/NoteModal";
 import Modal from "../../components/Modal";
 import like from "../../assets/images/likeA.png";
+import Footer from "../../layout/Footer";
 
 const BoardList = () => {
     const navigate = useNavigate();
@@ -303,6 +304,7 @@ const BoardList = () => {
                         loginUser={loginUser}      // 로그인된 유저의 userid를 전달
                     />
                 </div>
+                <Footer></Footer>
             </>
         )
     }

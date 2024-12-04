@@ -3,6 +3,7 @@ import { useEffect, useRef, useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import Button from "../../components/Button";
 import Header from "../../layout/Header";
+import Footer from "../../layout/Footer";
 
 const Nmodify = () => {
     const location = useLocation();
@@ -397,6 +398,7 @@ const modify = () => {
             </table>
           </div>
           </div>
+          <Footer></Footer>
           </>    
         );
     }

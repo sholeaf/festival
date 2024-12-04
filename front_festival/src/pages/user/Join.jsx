@@ -15,9 +15,12 @@ const Join = () => {
         let userid = user.value;
         if (e.target.value == "" || e.target.value == null) {
             result.style.display = "none";
+            result.style.color = 'black';
             return;
         }
         if (e.target.value.length > 12) {
+            result.style.color = 'red';
+            result.innerHTML = "아이디는 최대 12자 입니다!";
             user.blur();
             return;
         }
@@ -27,13 +30,12 @@ const Join = () => {
                 .then(resp => {
                     if (resp.data == "O") {
                         result.innerHTML = "사용할 수 있는 아이디입니다!";
-                        if (user.value.length > 12) {
-                            result.innerHTML = "아이디는 최대 12자 입니다!";
-                            return;
-                        }
+                        result.style.color = 'green';
+                        return;
                     }
                     else {
                         result.innerHTML = "중복된 아이디가 있습니다!";
+                        result.style.color = 'red';
                         return;
                     }
                 })
@@ -41,6 +43,7 @@ const Join = () => {
         if (user.value.length < 5) {
             result.style.display = "block";
             result.innerHTML = "아이디는 최소 5자 입니다!";
+            result.style.color = 'black';
             return;
         }
     }
@@ -56,27 +59,33 @@ const Join = () => {
         }
         if (userpw.value.length <= 8) {
             pw_result.style.display = "block";
+            pw_result.style.color = "black";
             pw_result.innerHTML = "비밀번호의 길이는 최소 9자 입니다!";
             return;
         }
         if (userpw.value.length > 12) {
+            pw_result.style.color = "red";
             pw_result.innerHTML = "비밀번호의 길이는 최대 12자 입니다!";
             return;
         }
         if (!reg.test(userpw.value)) {
+            pw_result.style.color = "red";
             pw_result.innerHTML = "비밀번호는 영어 대문자, 소문자, 숫자, 특수문자(~,?,!,@,#,$,%,^,&,-)를 조합해서 만들어주세요";
             return;
         }
-        if (userpw.value.length != userpw_re.value.length) {
+        if (userpw.value.length >= 9 && userpw_re.value == "" || userpw_re.value == null) {
+            pw_result.style.color = "black";
             pw_result.innerHTML = "비밀번호 확인을 완료해주세요!";
             return;
         }
 
         if (userpw.value != userpw_re.value) {
+            pw_result.style.color = "red";
             pw_result.innerHTML = "비밀번호가 일치하지 않습니다!";
             return;
         }
         else {
+            pw_result.style.color = "green";
             pw_result.innerHTML = "비밀번호 확인 완료!";
             document.joinForm.username.focus();
         }

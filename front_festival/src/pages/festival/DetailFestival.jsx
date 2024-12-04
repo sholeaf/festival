@@ -10,6 +10,7 @@ import noimage from "../../assets/images/no-image.jpg";
 import bookmark from "../../assets/images/bookmark.png"
 import nobookmark from "../../assets/images/nobookmark.png"
 import ClickBookmark from "../../hooks/ClickBookmark";
+import Footer from "../../layout/Footer";
 
 const DetailFestival = () => {
     const { contentid } = useParams();
@@ -264,6 +265,7 @@ const DetailFestival = () => {
                     </div>
                 </div>
             </div>
+            <Footer></Footer>
         </>
     );
 };
