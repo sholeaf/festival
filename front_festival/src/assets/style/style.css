@@ -2724,11 +2724,29 @@ input.btn.ncancel {
     box-shadow: 0px 0px 6px rgba(0, 0, 0, 0.2);
 }
 
+.zoom-controls {
+    float: right;
+}
+
+.zoom-controls button{
+    background-color: #92B4EC;
+    border: 0;
+    width: 30px;
+    height: 30px;
+    margin-top:10px;
+    margin-right: 10px;
+    border-radius: 5px;
+    font-size: 18px;
+    font-weight: bold;
+    color: white;
+}
+
 .festival-location {
     display: flex;
     background-color: rgba(146, 180, 236, 0.2);
     border-radius: 15px;
     justify-content: space-around;
+    height: 530px;
     margin: 0 176px;
     opacity: 0;
 }
@@ -2743,7 +2761,7 @@ input.btn.ncancel {
 
 
 .festival-info .festival-addr {
-    margin-top: 20px;
+    margin-top: 50px;
 }
 
 .festival-intro1,
