@@ -60,7 +60,7 @@ const Hobby = ({name,data}) => {
     return (
         <div>
             <div className="hobby_input">
-                <input type="text"  name="hobby" ref={inputRef} onKeyDown={handleKeyDown}/><Button className="btn hbBtn" value="추가"  onClick={addData}/>
+                <input type="text"  name="hobby" ref={inputRef} onKeyDown={handleKeyDown}/><Button className="btn hbBtn bBtn" value="추가"  onClick={addData}/>
             </div>
             <div className="hobby_list">
                 {

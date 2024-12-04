@@ -462,21 +462,21 @@ const BoardGet = () => {
                             {data.userid == loginUser ?
                                 <>
                                     <div>
-                                        <input className="btn bgBtn" type="button" value="수정" onClick={() => {
+                                        <input className="btn bBtn bgBtn" type="button" value="수정" onClick={() => {
                                             navigate('/board/modify', { state: { "cri": cri, "boardnum": data.boardnum } })
                                         }}></input>
                                     </div>
                                     <div>
-                                        <input className="btn bgBtn" type="button" value="삭제" onClick={remove}></input>
+                                        <input className="btn bBtn bgBtn" type="button" value="삭제" onClick={remove}></input>
                                     </div>
                                     <div>
-                                        <input className="btn bgBtn" type="button" value="목록" onClick={() => {
+                                        <input className="btn bBtn bgBtn" type="button" value="목록" onClick={() => {
                                             navigate('/board/list', { state: cri })
                                         }}></input>
                                     </div>
                                 </> :
                                 <div>
-                                    <input className="btn bgBtn" type="button" value="목록" onClick={() => {
+                                    <input className="btn bBtn bgBtn" type="button" value="목록" onClick={() => {
                                         navigate('/board/list', { state: cri })
                                     }}></input>
                                 </div>
@@ -491,7 +491,7 @@ const BoardGet = () => {
                                     <div className="rpBody">
                                         <textarea name="replycontents" id="replycontents"  className="replycontents" placeholder="댓글 입력"></textarea>
                                         <div className="rpBtn">
-                                            <input type="button" value="등록" className="btn rpreg" onClick={clickRegist} />
+                                            <input type="button" value="등록" className="btn rpreg" onClick={clickRegist} style={{fontFamily:'GowunDodum-Regular'}} />
                                         </div>
                                     </div>
                                 </>
