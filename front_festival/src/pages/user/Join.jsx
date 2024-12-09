@@ -100,7 +100,7 @@ const Join = () => {
 
         axios.post('/api/mail/confirm.json', formData)
             .then((resp) => {
-                alert("인증번호 : " + resp.data);
+                alert("인증번호가 발송되었습니다.");
                 setEmailCode(resp.data);
             })
             .catch((err) => {
