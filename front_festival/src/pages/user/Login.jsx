@@ -106,7 +106,7 @@ const Login = () => {
         axios.post('/api/mail/confirm.json', formData)
             .then((resp) => {
                 setEmailCode(resp.data);
-                alert("인증번호 : " + resp.data);
+                alert("인증번호가 발송되었습니다.");
             })
             .catch((err) => {
                 alert("실패");
@@ -180,7 +180,7 @@ const Login = () => {
                     axios.post('/api/mail/confirm.json', formData)
                         .then((resp) => {
                             setEmailCode(resp.data);
-                            alert("인증번호 : " + resp.data);
+                            alert("인증번호가 발송되었습니다.");
                         })
                         .catch((err) => {
                             alert("실패");
