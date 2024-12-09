@@ -17,14 +17,7 @@
 
 
 ### 프로젝트 기간 : 2024-11-4 ~ 2024-12-11
-
-
-
 ---
-
-
-
-
 ## 주제 선정 이유
 >  코로나 이후 계속해서 축제가 늘어남에 따라 축제에 방문하는 사람들이 증가하고 있으며 24년 하반기 김천의 김밥 축제에서 김밥의 그릇을 뻥튀기로 사용하며 사람들에게 친환경적이고 재미있었다, 아이디어가 좋았다 등 긍정적인 후기를 보며 축제를 주제로 잡았습니다
 >
@@ -62,6 +55,7 @@
 ### ERD
 > <img src="https://github.com/sholeaf/festival/blob/main/erd.png?raw=true">
 ### 타임테이블
+> <img src="https://github.com/sholeaf/festival/blob/main/timetable.png?raw=true">
 
 ### 기획서 + 발표자료
 * [기획서](https://www.canva.com/design/DAGVqDlgTBw/K4WldxHBrfRPFM1VLZ9tOw/edit?utm_content=DAGVqDlgTBw&utm_campaign=designshare&utm_medium=link2&utm_source=sharebutton)
