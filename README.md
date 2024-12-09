@@ -60,7 +60,7 @@
 
 
 ### ERD
-
+> <img src="https://github.com/sholeaf/festival/blob/main/erd.png?raw=true">
 ### 타임테이블
 
 ### 기획서 + 발표자료
