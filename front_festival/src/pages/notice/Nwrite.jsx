@@ -100,8 +100,7 @@ const Nwrite = () => {
             <Header />
             <div className="noticeWrap">
             <div id="nwrap" className="nwrite">
-                <div className="notice-title nlist"><span className="titleSpan">한국 전역에서 열리는 다양한 축제들에 대한 최신 정보와 소식을<br/> 한곳에서 확인하실 수 있는 공지게시판입니다.<br/> 전통 문화의 향기를 느낄 수 있는 전통문화 축제부터, 신나는 음악 페스티벌, 그리고 자연과 함께하는 힐링 축제까지! <br/>각 지역마다 특색 있는 행사들이 여러분을 기다리고 있습니다.<br/> 모두의 축제 공지는 아래를 통해 확인해 주세요.</span></div>
-                <form id="noticeForm" name="noticeForm">
+                <form id="noticeForm" name="noticeForm" style={{marginTop:"150px"}}>
                     <div className="ntable">
                         <div className="row">
                             <div>제목</div>
