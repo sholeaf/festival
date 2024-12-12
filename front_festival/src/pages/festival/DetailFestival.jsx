@@ -40,6 +40,7 @@ const DetailFestival = () => {
         autoplaySpeed: 5000,
     };
 
+
     const formatDate = (dateStr) => {
         if (!dateStr) return "-";
         const date = new Date(dateStr.slice(0, 4), dateStr.slice(4, 6) - 1, dateStr.slice(6, 8));
@@ -152,7 +153,7 @@ const DetailFestival = () => {
         }
     }, [data]);
 
-    const isBookmarked = list.some(item => item.contentid === contentid);
+    const isBookmarked = list.includes(contentid);  // bmlist 대신 list를 사용
 
     // 스크롤 이동 함수
     const scrollToSection = (ref) => {
