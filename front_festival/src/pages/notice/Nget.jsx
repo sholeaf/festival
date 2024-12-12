@@ -29,6 +29,7 @@ const Nget = () => {
     const [modalImage, setModalImage] = useState(""); // 원본 이미지 URL 저장
 
     const handleThumbnailClick = (imageUrl) => {
+        console.log(imageUrl)
         setModalImage(imageUrl); // 클릭한 썸네일 이미지 URL 저장
         setIsModalOpen(true); // 모달 열기
     };
@@ -45,6 +46,7 @@ const Nget = () => {
             })
     }
     useEffect(() => {
+        console.log(isModalOpen)
     }, [isModalOpen]);
     const [nowPage, setNowPage] = useState(1);
     const [list, setList] = useState([]);
@@ -165,12 +167,12 @@ const Nget = () => {
 
     useEffect(() => {
         console.log("noticenum changed:", noticenum);
-    
+
         if (!noticenum) {
             console.error("noticenum is not defined or invalid");
             return;
         }
-    
+
         axios.get(`/api/notice/${noticenum}`)
             .then((resp) => {
                 setData(resp.data);
@@ -178,7 +180,7 @@ const Nget = () => {
             .catch((error) => {
                 console.error("Error fetching notice:", error);
             });
-    
+
         axios.get(`/api/user/loginCheck`)
             .then(resp => {
                 if (resp.data.trim() !== "") {
@@ -367,6 +369,13 @@ const Nget = () => {
                                     <b className="filetext">첨부파일</b>
                                     <hr className="line-right" />
                                 </div>
+                                {isModalOpen && (
+                                    <ClickModal isModalOpen={isModalOpen} closeModal={closeModal} >
+                                        <div onClick={(e) => e.stopPropagation()}>
+                                            <img src={modalImage} alt="Full size" style={{ width: '100%', height: 'auto', top: '20%' }} />
+                                        </div>
+                                    </ClickModal>
+                                )}
                             </div>
                             {
                                 files.length === 0 ? (
@@ -406,13 +415,6 @@ const Nget = () => {
                                                         </a>
                                                     </div>
                                                 </div>
-                                                {isModalOpen && (
-                                                    <ClickModal isModalOpen={isModalOpen} closeModal={closeModal} >
-                                                        <div onClick={(e) => e.stopPropagation()}>
-                                                            <img src={modalImage} alt="Full size" style={{ width: '100%', height: 'auto', top: '20%' }} />
-                                                        </div>
-                                                    </ClickModal>
-                                                )}
                                             </div>
                                         );
                                     })
